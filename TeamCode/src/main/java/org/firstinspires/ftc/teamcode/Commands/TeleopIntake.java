@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 
 public class TeleopIntake extends CommandBase {
-
+    double floorIntakePosition = 0;
     InTake inTake;
 
     public TeleopIntake(InTake inTake){
@@ -16,6 +16,7 @@ public class TeleopIntake extends CommandBase {
 
     @Override
     public void initialize() {
+        inTake.setPosition(floorIntakePosition);
         inTake.setPower(0.9);
     }
 

@@ -26,7 +26,7 @@ public class OpMode extends CommandOpMode{
                 ,hardwareMap.dcMotor.get("motorFR")
                 ,hardwareMap.dcMotor.get("motorFL"));
             driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain,gamepad1));
-         inTake = new InTake(hardwareMap.dcMotor.get("inTake"));
+         inTake = new InTake(hardwareMap.dcMotor.get("inTake"),hardwareMap.servo.get("intakeAngel"));
          elbow = new Elbow(hardwareMap.dcMotor.get("elbow"));
 
         GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
