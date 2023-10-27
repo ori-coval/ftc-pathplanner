@@ -18,7 +18,7 @@ public class ElbowGetToAngle extends CommandBase {
     public void initialize() {
         double currentAngle = elbow.getAngle();
         double deltaAngle = goalAngle - currentAngle;
-        directionUp = deltaAngle >=0;
+        directionUp = (deltaAngle >= 0);
     }
 
 
