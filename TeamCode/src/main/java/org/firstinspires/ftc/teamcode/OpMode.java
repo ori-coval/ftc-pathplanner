@@ -13,12 +13,16 @@ import org.firstinspires.ftc.teamcode.Commands.TeleopIntake;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
+import org.firstinspires.ftc.teamcode.SubSystems.Turret;
+
+import java.time.temporal.TemporalUnit;
 
 @TeleOp(name = "DriveTrein")
 public class OpMode extends CommandOpMode{
     DriveTrain driveTrain;
     InTake inTake;
     Elbow elbow;
+    Turret turret;
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
@@ -29,6 +33,12 @@ public class OpMode extends CommandOpMode{
             driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain,gamepad1));
          inTake = new InTake(hardwareMap.dcMotor.get("inTake"),hardwareMap.servo.get("intakeAngel"));
          elbow = new Elbow(hardwareMap.dcMotor.get("elbow"));
+        turret = new Turret(
+                hardwareMap.crservo.get("turretMotorA"),
+                hardwareMap.crservo.get("turretMotorB"),
+                hardwareMap.analogInput.get("turretEncoder")
+
+        );
 
 
         GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
