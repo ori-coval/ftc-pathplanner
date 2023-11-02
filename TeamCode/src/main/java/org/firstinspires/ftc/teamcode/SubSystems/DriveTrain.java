@@ -7,16 +7,16 @@ import org.firstinspires.ftc.robotcontroller.external.samples.RobotHardware;
 
 public class DriveTrain extends SubsystemBase {
 
-    DcMotor motor_FR;
-    DcMotor motor_FL;
-    DcMotor motor_BL;
-    DcMotor motor_BR;
+    DcMotor motorFR;
+    DcMotor motorFL;
+    DcMotor motorBL;
+    DcMotor motorBR;
 
     public DriveTrain(DcMotor motor_BL, DcMotor motor_BR, DcMotor motor_FL, DcMotor motor_FR) {
-        this.motor_BL = motor_BL;
-        this.motor_FL = motor_FL;
-        this.motor_FR = motor_FR;
-        this.motor_BR = motor_BR;
+        this.motorBL = motor_BL;
+        this.motorFL = motor_FL;
+        this.motorFR = motor_FR;
+        this.motorBR = motor_BR;
     }
     private double[] calculationOfPowerRatio(double x, double y , double turn){
         //                     {STRAIGHT}                 {STRAFE}                {TURN}
@@ -36,10 +36,10 @@ public class DriveTrain extends SubsystemBase {
         return power;
     }
     private void setMotorPower(double[] normalize){
-        motor_FR.setPower(normalize[0]);
-        motor_FL.setPower(normalize[1]);
-        motor_BR.setPower(normalize[2]);
-        motor_BL.setPower(normalize[3]);
+        motorFR.setPower(normalize[0]);
+        motorFL.setPower(normalize[1]);
+        motorBR.setPower(normalize[2]);
+        motorBL.setPower(normalize[3]);
     }
     public void drive(double x,double y, double turn){
         setMotorPower(normalize(calculationOfPowerRatio(x, y, turn)));

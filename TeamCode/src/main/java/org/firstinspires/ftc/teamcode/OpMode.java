@@ -17,8 +17,8 @@ import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 @TeleOp(name = "DriveTrein")
 public class OpMode extends CommandOpMode{
     DriveTrain driveTrain;
-    InTake inTake;
-    Elbow elbow;
+    //InTake inTake;
+   // Elbow elbow;
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
@@ -27,15 +27,15 @@ public class OpMode extends CommandOpMode{
                 ,hardwareMap.dcMotor.get("motorFR")
                 ,hardwareMap.dcMotor.get("motorFL"));
             driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain,gamepad1));
-         inTake = new InTake(hardwareMap.dcMotor.get("inTake"),hardwareMap.servo.get("intakeAngel"));
-         elbow = new Elbow(hardwareMap.dcMotor.get("elbow"));
+        // inTake = new InTake(hardwareMap.dcMotor.get("inTake"),hardwareMap.servo.get("intakeAngel"));
+         //elbow = new Elbow(hardwareMap.dcMotor.get("elbow"));
 
 
-        GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenActive(new IntakeFromStack(inTake));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenActive(new TeleopIntake(inTake));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).toggleWhenActive(new TeleopIntake(inTake));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenActive(new InstantCommand(inTake::stop));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenActive(new ElbowGetToAngle(elbow, 0));
+       //GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
+       //gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenActive(new IntakeFromStack(inTake));
+       //gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenActive(new TeleopIntake(inTake));
+       //gamepadEx1.getGamepadButton(GamepadKeys.Button.X).toggleWhenActive(new TeleopIntake(inTake));
+       //gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenActive(new InstantCommand(inTake::stop));
+       //gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenActive(new ElbowGetToAngle(elbow, 0));
     }
 }
