@@ -6,16 +6,14 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Commands.ElbowGetToAngle;
-import org.firstinspires.ftc.teamcode.Commands.IntakeFromStack;
-import org.firstinspires.ftc.teamcode.Commands.TeleopDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.TeleopIntake;
+import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToAngle;
+import org.firstinspires.ftc.teamcode.Commands.intake.IntakeFromStack;
+import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.intake.TeleopIntake;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
-
-import java.time.temporal.TemporalUnit;
 
 @TeleOp(name = "DriveTrein")
 public class OpMode extends CommandOpMode{
