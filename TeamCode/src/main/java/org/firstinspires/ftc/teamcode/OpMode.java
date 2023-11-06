@@ -70,7 +70,7 @@ public class OpMode extends CommandOpMode{
         telemetry.addData("and after", DriveTrain.normalize(driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x))[1]);
         telemetry.addData("and after", DriveTrain.normalize(driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x))[2]);
         telemetry.addData("and after", DriveTrain.normalize(driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x))[3]);
-        telemetry.addData("and after",driveTrain.getYaw());
+        telemetry.addData("and after",driveTrain.getYawInDegrees());
         telemetry.update();
     }
 }

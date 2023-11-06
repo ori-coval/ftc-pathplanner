@@ -29,7 +29,7 @@ public class DriveTrain extends SubsystemBase {
         this.imu = imu;
     }
 
-    public double getYaw(){
+    public double getYawInDegrees(){
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
     public double[] calculationOfPowerRatio(double x, double y , double turn){
@@ -60,7 +60,9 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void fieldOrientedDrive(double x, double y, double turn){
-
+        Vector2d joyStickDirection = new Vector2d(x,y);
+        Vector2d fieldOrientedVector = joyStickDirection.rotateBy(-getYawInDegrees());
+        drive(fieldOrientedVector.getX(),fieldOrientedVector.getY(),turn);
     }
 
 
