@@ -17,9 +17,9 @@ public class DriveTrain extends SubsystemBase {
     private DcMotor motorFL;
     private DcMotor motorBL;
     private DcMotor motorBR;
-    private BHI260IMU imu;
+    private BNO055IMU imu;
 
-    public DriveTrain(DcMotor motor_BL, DcMotor motor_BR, DcMotor motor_FL, DcMotor motor_FR, BHI260IMU imu) {
+    public DriveTrain(DcMotor motor_BL, DcMotor motor_BR, DcMotor motor_FL, DcMotor motor_FR, BNO055IMU imu) {
         this.motorBL = motor_BL;
         this.motorFL = motor_FL;
         this.motorFR = motor_FR;
@@ -30,20 +30,29 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public double getYawInDegrees(){
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        return imu.getAngularOrientation().firstAngle;
+    }
+    public double getRollInDegrees(){
+        return imu.getAngularOrientation().secondAngle;
+    }
+    public double getPitchInDegrees(){
+        return imu.getAngularOrientation().thirdAngle;
     }
     public double[] calculationOfPowerRatio(double x, double y , double turn){
         //                     {STRAIGHT}                 {STRAFE}                  {TURN}
-        double FR_Power =           y            +            x           -          turn         ;
-        double FL_Power =           y            -            x           +          turn         ;
-        double BR_Power =           y            -            x           -          turn         ;
-        double BL_Power =           y            +            x           +          turn         ;
+        double FR_Power =           -y           -            x           -          turn         ;
+        double FL_Power =           -y           +            x           +          turn         ;
+        double BR_Power =           y            +            x           -          turn         ;
+        double BL_Power =           y            -            x           +          turn         ;
         double[] PowerRatio = {FR_Power,FL_Power,BR_Power,BL_Power};
         return PowerRatio;
     }
     public static double[] normalize(double[] ratiopower){
         double[] power = ratiopower;
-        double highestAbsulutNum = Math.max(Math.max(ratiopower[2],ratiopower[3]),Math.max(ratiopower[0],ratiopower[1]));
+        double highestAbsulutNum = Math.max(
+                Math.max(Math.abs(ratiopower[2]),Math.abs(ratiopower[3])),
+                Math.max(Math.abs(ratiopower[0]),Math.abs(ratiopower[1])));
+        if (highestAbsulutNum < 1){return ratiopower;}
         for (int i = 0; i < 4; i++) {
             power[i] = ratiopower[i] / highestAbsulutNum;
         }

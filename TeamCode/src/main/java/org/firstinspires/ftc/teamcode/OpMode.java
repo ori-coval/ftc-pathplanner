@@ -30,9 +30,11 @@ public class OpMode extends CommandOpMode{
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-        BHI260IMU imu = hardwareMap.get(BHI260IMU.class, "imu");
-        BHI260IMU.Parameters parameters = new BHI260IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT, RevHubOrientationOnRobot.UsbFacingDirection.UP));
+        BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
+
 
         driveTrain = new DriveTrain(hardwareMap.dcMotor.get("motorBL")
                 ,hardwareMap.dcMotor.get("motorBR")
@@ -62,15 +64,10 @@ public class OpMode extends CommandOpMode{
     @Override
     public void run() {
         super.run();
-        telemetry.addData("before the normelize fr",driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x)[0]);
-        telemetry.addData("before the normelize fl",driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x)[1]);
-        telemetry.addData("before the normelize br",driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x)[2]);
-        telemetry.addData("before the normelize bl",driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x)[3]);
-        telemetry.addData("and after", DriveTrain.normalize(driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x))[0]);
-        telemetry.addData("and after", DriveTrain.normalize(driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x))[1]);
-        telemetry.addData("and after", DriveTrain.normalize(driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x))[2]);
-        telemetry.addData("and after", DriveTrain.normalize(driveTrain.calculationOfPowerRatio(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x))[3]);
-        telemetry.addData("and after",driveTrain.getYawInDegrees());
+        telemetry.addData("getYaw",driveTrain.getYawInDegrees());
+        telemetry.addData("getPitcv",driveTrain.getPitchInDegrees());
+        telemetry.addData("getRoll",driveTrain.getRollInDegrees());
+        telemetry.addData("time",getRuntime());
         telemetry.update();
     }
 }
