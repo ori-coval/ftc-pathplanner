@@ -35,7 +35,7 @@ public class OpMode extends CommandOpMode{
         turret = new Turret(
                 hardwareMap.crservo.get("turretMotorA"),
                 hardwareMap.crservo.get("turretMotorB"),
-                hardwareMap.analogInput.get("turretEncoder")
+                hardwareMap.dcMotor.get("frontLeftLin")
         );
 
 
