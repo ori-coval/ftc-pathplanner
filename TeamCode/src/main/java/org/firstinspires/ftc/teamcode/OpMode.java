@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPower;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
+import org.firstinspires.ftc.teamcode.SubSystems.Odometry;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 @TeleOp(name = "DriveTrein")
@@ -26,6 +27,7 @@ public class OpMode extends CommandOpMode{
 //    InTake inTake;
 //    Elbow elbow;
 //    Turret turret;
+    Odometry odometry;
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
@@ -36,10 +38,10 @@ public class OpMode extends CommandOpMode{
         imu.initialize(parameters);
 
 
-        driveTrain = new DriveTrain(hardwareMap.dcMotor.get("motorBL")
-                ,hardwareMap.dcMotor.get("motorBR")
-                ,hardwareMap.dcMotor.get("motorFR")
-                ,hardwareMap.dcMotor.get("motorFL")
+        driveTrain = new DriveTrain(hardwareMap.dcMotor.get("backLeftLin")
+                ,hardwareMap.dcMotor.get("backRightLin")
+                ,hardwareMap.dcMotor.get("frontRightLin")
+                ,hardwareMap.dcMotor.get("frontLeftLin")
                 ,imu);
             driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain,gamepad1));
 //         inTake = new InTake(hardwareMap.dcMotor.get("inTake"),hardwareMap.servo.get("intakeAngel"));
@@ -48,7 +50,11 @@ public class OpMode extends CommandOpMode{
 //                hardwareMap.crservo.get("turretMotorA"),
 //                hardwareMap.crservo.get("turretMotorB"),
 //                hardwareMap.dcMotor.get("frontLeftLin")
-//        );
+//      );
+        odometry = new Odometry(
+                hardwareMap.dcMotor.get("frontLeftLin"),
+                hardwareMap.dcMotor.get("backLeftLin")
+        );
 
 
 
@@ -58,6 +64,7 @@ public class OpMode extends CommandOpMode{
     @Override
     public void run() {
         super.run();
+        telemetry.addData("odometry", odometry.getLocation());
         telemetry.update();
     }
 }
