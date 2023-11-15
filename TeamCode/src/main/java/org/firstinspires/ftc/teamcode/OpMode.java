@@ -1,26 +1,27 @@
 package org.firstinspires.ftc.teamcode;
+import android.util.Size;
+
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToAngle;
-import org.firstinspires.ftc.teamcode.Commands.intake.IntakeFromStack;
-import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.intake.TeleopIntake;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPower;
-import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
-import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
-import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
+import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
+import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
+import org.firstinspires.ftc.vision.VisionPortal;
 
 @TeleOp(name = "DriveTrein")
 public class OpMode extends CommandOpMode{
 //    DriveTrain driveTrain;
 //    InTake inTake;
 //    Elbow elbow;
+    TeamPropDetector teamPropDetector;
+    VisionPortal portal;
     Turret turret;
     @Override
     public void initialize() {
@@ -32,11 +33,23 @@ public class OpMode extends CommandOpMode{
 //            driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain,gamepad1));
 //         inTake = new InTake(hardwareMap.dcMotor.get("inTake"),hardwareMap.servo.get("intakeAngel"));
 //         elbow = new Elbow(hardwareMap.dcMotor.get("elbow"));
-        turret = new Turret(
-                hardwareMap.crservo.get("turretMotorA"),
-                hardwareMap.crservo.get("turretMotorB"),
-                hardwareMap.analogInput.get("turretEncoder")
-        );
+//        turret = new Turret(
+//                hardwareMap.crservo.get("turretMotorA"),
+//                hardwareMap.crservo.get("turretMotorB"),
+//                hardwareMap.analogInput.get("turretEncoder")
+//        );
+
+        teamPropDetector = new TeamPropDetector(AllianceColor.RED);
+        portal = new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Webcam"))
+                .setCameraResolution(new Size(1920, 1080))
+                .setCamera(BuiltinCameraDirection.BACK)
+                .addProcessor(teamPropDetector)
+//                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
+                .enableLiveView(true)
+                .setAutoStopLiveView(true)
+                .build();
+
 
 
 
@@ -47,7 +60,8 @@ public class OpMode extends CommandOpMode{
     @Override
     public void run() {
         super.run();
-        telemetry.addData("encoder value",turret.getEncoderValue());
+
+        telemetry.addData("LeftBlue",teamPropDetector.leftTotalRGBColors.val[2]);
         telemetry.update();
     }
 }
