@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Vision;
 
 import android.graphics.Canvas;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
 import org.firstinspires.ftc.teamcode.Vision.Side;
@@ -18,9 +19,9 @@ public class TeamPropDetector implements VisionProcessor {
     private final AllianceColor allianceColor;
     private Side teamPropSide;
 
-    private final Rect rightRectangle = new Rect(0, 0, 0, 0);
-    private final Rect leftRectangle = new Rect();
-    private final Rect centerRectangle = new Rect();
+    private final Rect rightRectangle = new Rect(852, 0, 426, 720);
+    private final Rect leftRectangle = new Rect(0,0,426,720);
+    private final Rect centerRectangle = new Rect(426,0,426,720);
 
     public Scalar leftTotalRGBColors;
     public Scalar rightTotalRGBColors;
@@ -28,6 +29,8 @@ public class TeamPropDetector implements VisionProcessor {
 
     private static HashMap<Side, Double> blueTolerances= new HashMap<>();
     private static HashMap<Side, Double> redTolerances= new HashMap<>();
+
+    Telemetry telemetry;
 
     static {
         blueTolerances.put(Side.LEFT,0.0);
@@ -40,18 +43,20 @@ public class TeamPropDetector implements VisionProcessor {
 
 
 
-    public TeamPropDetector(AllianceColor allianceColor) {
+    public TeamPropDetector(AllianceColor allianceColor, Telemetry telemetry) {
         this.allianceColor = allianceColor;
+        this.telemetry = telemetry;
 
     }
 
     @Override
     public void init(int width, int height, CameraCalibration calibration) {
-
+        telemetry.addData("init", "yes");
     }
 
     @Override
     public Object processFrame(Mat frame, long captureTimeNanos) {
+        telemetry.addData("process", "yes");
         Mat leftMat = frame.submat(leftRectangle);
         Mat rightMat = frame.submat(rightRectangle);
         Mat centerMat = frame.submat(centerRectangle);

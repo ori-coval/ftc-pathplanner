@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPower;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
@@ -39,19 +40,8 @@ public class OpMode extends CommandOpMode{
 //                hardwareMap.analogInput.get("turretEncoder")
 //        );
 
-        teamPropDetector = new TeamPropDetector(AllianceColor.RED);
-        portal = new VisionPortal.Builder()
-                .setCamera(hardwareMap.get(WebcamName.class, "Webcam"))
-                .setCameraResolution(new Size(1920, 1080))
-                .setCamera(BuiltinCameraDirection.BACK)
-                .addProcessor(teamPropDetector)
-//                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-                .enableLiveView(true)
-                .setAutoStopLiveView(true)
-                .build();
-
-
-
+        teamPropDetector = new TeamPropDetector(AllianceColor.RED, telemetry);
+        portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), teamPropDetector);
 
         GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whileActiveOnce(new RotateTurretByPower(0.2, turret));
@@ -61,7 +51,14 @@ public class OpMode extends CommandOpMode{
     public void run() {
         super.run();
 
-        telemetry.addData("LeftBlue",teamPropDetector.leftTotalRGBColors.val[2]);
-        telemetry.update();
+        if (opModeIsActive()) {
+//            telemetry.addData("LeftBlue", teamPropDetector.leftTotalRGBColors.val[2]);
+//            telemetry.addData("RightBlue", teamPropDetector.rightTotalRGBColors.val[2]);
+//            telemetry.addData("CenterBlue", teamPropDetector.centerTotalRGBColors.val[2]);
+//            telemetry.addData("LeftRed", teamPropDetector.leftTotalRGBColors.val[0]);
+//            telemetry.addData("RightRed", teamPropDetector.rightTotalRGBColors.val[0]);
+//            telemetry.addData("CenterRed", teamPropDetector.centerTotalRGBColors.val[0]);
+            telemetry.update();
+        }
     }
 }
