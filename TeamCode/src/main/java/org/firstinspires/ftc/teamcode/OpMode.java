@@ -59,6 +59,7 @@ public class OpMode extends CommandOpMode{
 
 
         GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(()-> odometry.resetLocation()));
     }
 
     @Override

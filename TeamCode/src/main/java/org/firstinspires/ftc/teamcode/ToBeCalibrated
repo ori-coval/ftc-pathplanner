@@ -1,0 +1,12 @@
+Turret
+    pid
+    ticks per degree
+    offset
+
+Odometry
+    ticks per m
+
+Elbow
+    pid
+    ticks per degree
+    offset
