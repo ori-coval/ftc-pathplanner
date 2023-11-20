@@ -19,35 +19,49 @@ public class TeamPropDetector implements VisionProcessor {
     private final AllianceColor allianceColor;
     private Side teamPropSide;
 
-    private final Rect rightRectangle = new Rect(852, 0, 426, 720);
-    private final Rect leftRectangle = new Rect(0,0,426,720);
-    private final Rect centerRectangle = new Rect(426,0,426,720);
+    private final Rect rightRectangle = new Rect(426, 0, 213, 480);
+    private final Rect leftRectangle = new Rect(0,  0,213,480);
+    private Rect centerRectangle = new Rect(213, 0, 213, 480);
 
     public Scalar leftTotalRGBColors;
     public Scalar rightTotalRGBColors;
     public Scalar centerTotalRGBColors;
 
-    private static HashMap<Side, Double> blueTolerances= new HashMap<>();
-    private static HashMap<Side, Double> redTolerances= new HashMap<>();
+    private static HashMap<Side, Double> blueTolerances;
+    private static HashMap<Side, Double> redTolerances;
 
     Telemetry telemetry;
 
-    static {
-        blueTolerances.put(Side.LEFT,0.0);
-        blueTolerances.put(Side.RIGHT,0.0);
-        blueTolerances.put(Side.CENTER,0.0);
-        redTolerances.put(Side.LEFT, 0.0);
-        redTolerances.put(Side.RIGHT, 0.0);
-        redTolerances.put(Side.CENTER, 0.0);
-    }
+  //static {
+  //    blueTolerances.put(Side.LEFT,0.0);
+  //    blueTolerances.put(Side.RIGHT,0.0);
+  //    blueTolerances.put(Side.CENTER,0.0);
+  //    redTolerances.put(Side.LEFT, 0.0);
+  //    redTolerances.put(Side.RIGHT, 0.0);
+  //    redTolerances.put(Side.CENTER, 0.0);
+  //}
 
 
 
     public TeamPropDetector(AllianceColor allianceColor, Telemetry telemetry) {
         this.allianceColor = allianceColor;
         this.telemetry = telemetry;
+        blueTolerances = new HashMap<>();
+        redTolerances = new HashMap<>();
+        blueTolerances.put(Side.LEFT,0.0);
+        blueTolerances.put(Side.RIGHT,0.0);
+        blueTolerances.put(Side.CENTER,0.0);
+        redTolerances.put(Side.LEFT, 0.0);
+        redTolerances.put(Side.RIGHT, 0.0);
+        redTolerances.put(Side.CENTER, 0.0);
+        leftTotalRGBColors = new Scalar(0, 0, 0, 0);
+        rightTotalRGBColors = new Scalar(0, 0, 0, 0);
+        centerTotalRGBColors = new Scalar(0, 0, 0, 0);
 
     }
+
+
+
 
     @Override
     public void init(int width, int height, CameraCalibration calibration) {

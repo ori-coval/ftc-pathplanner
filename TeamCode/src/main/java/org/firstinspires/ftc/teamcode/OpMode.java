@@ -41,7 +41,7 @@ public class OpMode extends CommandOpMode{
 //        );
 
         teamPropDetector = new TeamPropDetector(AllianceColor.RED, telemetry);
-        portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), teamPropDetector);
+        portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Weiss cam"), teamPropDetector); //webcam 1
 
         GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whileActiveOnce(new RotateTurretByPower(0.2, turret));
@@ -52,12 +52,12 @@ public class OpMode extends CommandOpMode{
         super.run();
 
         if (opModeIsActive()) {
-//            telemetry.addData("LeftBlue", teamPropDetector.leftTotalRGBColors.val[2]);
-//            telemetry.addData("RightBlue", teamPropDetector.rightTotalRGBColors.val[2]);
-//            telemetry.addData("CenterBlue", teamPropDetector.centerTotalRGBColors.val[2]);
-//            telemetry.addData("LeftRed", teamPropDetector.leftTotalRGBColors.val[0]);
-//            telemetry.addData("RightRed", teamPropDetector.rightTotalRGBColors.val[0]);
-//            telemetry.addData("CenterRed", teamPropDetector.centerTotalRGBColors.val[0]);
+            telemetry.addData("LeftBlue", teamPropDetector.leftTotalRGBColors.val[2]);
+            telemetry.addData("RightBlue", teamPropDetector.rightTotalRGBColors.val[2]);
+            telemetry.addData("CenterBlue", teamPropDetector.centerTotalRGBColors.val[2]);
+            telemetry.addData("LeftRed", teamPropDetector.leftTotalRGBColors.val[0]);
+            telemetry.addData("RightRed", teamPropDetector.rightTotalRGBColors.val[0]);
+            telemetry.addData("CenterRed", teamPropDetector.centerTotalRGBColors.val[0]);
             telemetry.update();
         }
     }
