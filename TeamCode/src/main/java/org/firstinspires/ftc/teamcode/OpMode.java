@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode;
-import android.util.Size;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
@@ -7,23 +6,23 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPower;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
+import org.firstinspires.ftc.teamcode.Vision.Side;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @TeleOp(name = "DriveTrein")
-public class OpMode extends CommandOpMode{
-//    DriveTrain driveTrain;
+public class OpMode extends CommandOpMode {
+    //    DriveTrain driveTrain;
 //    InTake inTake;
 //    Elbow elbow;
     TeamPropDetector teamPropDetector;
     VisionPortal portal;
     Turret turret;
+
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
@@ -40,7 +39,7 @@ public class OpMode extends CommandOpMode{
 //                hardwareMap.analogInput.get("turretEncoder")
 //        );
 
-        teamPropDetector = new TeamPropDetector(AllianceColor.RED, telemetry);
+        teamPropDetector = new TeamPropDetector(AllianceColor.RED);
         portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Weiss cam"), teamPropDetector); //webcam 1
 
         GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
@@ -52,12 +51,12 @@ public class OpMode extends CommandOpMode{
         super.run();
 
         if (opModeIsActive()) {
-            telemetry.addData("LeftBlue", teamPropDetector.leftTotalRGBColors.val[2]);
-            telemetry.addData("RightBlue", teamPropDetector.rightTotalRGBColors.val[2]);
-            telemetry.addData("CenterBlue", teamPropDetector.centerTotalRGBColors.val[2]);
-            telemetry.addData("LeftRed", teamPropDetector.leftTotalRGBColors.val[0]);
-            telemetry.addData("RightRed", teamPropDetector.rightTotalRGBColors.val[0]);
-            telemetry.addData("CenterRed", teamPropDetector.centerTotalRGBColors.val[0]);
+            telemetry.addData("LeftBlue", teamPropDetector.getSideColor(Side.LEFT,2));
+            telemetry.addData("RightBlue", teamPropDetector.getSideColor(Side.RIGHT,2));
+            telemetry.addData("CenterBlue", teamPropDetector.getSideColor(Side.CENTER,2));
+            telemetry.addData("LeftRed", teamPropDetector.getSideColor(Side.LEFT,0));
+            telemetry.addData("RightRed", teamPropDetector.getSideColor(Side.RIGHT,0));
+            telemetry.addData("CenterRed", teamPropDetector.getSideColor(Side.CENTER,0));
             telemetry.update();
         }
     }
