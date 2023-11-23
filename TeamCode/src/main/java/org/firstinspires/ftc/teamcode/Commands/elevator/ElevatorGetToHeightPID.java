@@ -13,7 +13,6 @@ public class ElevatorGetToHeightPID extends CommandBase {
         this.elevator = elevator;
         this.goalHeight = goalHeight;
         addRequirements(elevator);
-        pidcontroller.setSetPoint(1);
     }
     @Override
     public void execute() {
@@ -22,7 +21,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        elevator.reset();
+        elevator.setPower(0);
     }
 
     @Override

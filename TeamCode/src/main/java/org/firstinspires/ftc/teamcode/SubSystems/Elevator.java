@@ -18,8 +18,5 @@ public class Elevator extends SubsystemBase {
         elevatorMotor.setPower(power);
     }
 
-    public void reset() {
-        elevatorMotor.setPower(0);
-    }
 }
 
