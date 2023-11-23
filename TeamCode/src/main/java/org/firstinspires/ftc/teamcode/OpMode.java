@@ -10,11 +10,13 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorIMUNonOrthogonal;
+import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretParallel;
 import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToAngle;
 import org.firstinspires.ftc.teamcode.Commands.intake.IntakeFromStack;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.intake.TeleopIntake;
 import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPower;
+import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
@@ -27,6 +29,7 @@ public class OpMode extends CommandOpMode{
 //    InTake inTake;
 //    Elbow elbow;
 //    Turret turret;
+//    AntiTurret antiTurret;
     Odometry odometry;
     @Override
     public void initialize() {
@@ -55,6 +58,9 @@ public class OpMode extends CommandOpMode{
                 hardwareMap.dcMotor.get("frontLeftLin"),
                 hardwareMap.dcMotor.get("backLeftLin")
         );
+//        antiTurret = new AntiTurret(hardwareMap.servo.get("antiTurret"));
+//        antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, ()-> turret.getEncoderValue()));
+
 
 
 
