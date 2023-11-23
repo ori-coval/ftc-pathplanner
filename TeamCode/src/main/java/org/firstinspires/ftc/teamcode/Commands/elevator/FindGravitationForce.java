@@ -9,27 +9,34 @@ public class FindGravitationForce extends CommandBase {
     double power = 0;
     Elevator elevator;
     Telemetry telemetry;
+    double previousHeight = 0;
+    private final double THRESHOLD = 0;
     public FindGravitationForce(Elevator elevator){
         this.elevator = elevator;
         this.telemetry = telemetry;
+        addRequirements(elevator);
+    }
+    public boolean isHeightSimilar(){
+        return Math.abs(elevator.getHeight() - previousHeight) < THRESHOLD;
     }
     @Override
     public void execute() {
-        if (elevator.height - previousHeight){
+        if (isHeightSimilar()){
             power += 0.02;
         }
+        previousHeight = elevator.getHeight();
         elevator.setPower(power);
     }
 
     @Override
     public boolean isFinished() {
-        return elevator.height != previousHeight;
+        return !isHeightSimilar();
     }
 
     @Override
     public void end(boolean interrupted) {
         elevator.setPower(0);
-        telemetry.addData("telemetry", )
+        telemetry.addData("min power", power);
         telemetry.update();
     }
 }
