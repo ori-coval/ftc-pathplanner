@@ -5,12 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class InTake extends SubsystemBase {
-    DcMotor inTakeMotor;
-    final double servoToIntakeRatio = 1;
-
-    final double tolerance = 2.5;
-
-
+    private DcMotor inTakeMotor;
     public InTake(DcMotor inTakeMotor){
         this.inTakeMotor = inTakeMotor;
     }

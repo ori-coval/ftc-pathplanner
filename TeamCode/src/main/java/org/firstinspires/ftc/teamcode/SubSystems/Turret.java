@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -10,6 +11,8 @@ public class Turret extends SubsystemBase {
     CRServo turretServoB;
     DcMotor encoder;
     final double offset = 0;
+    private PIDController pidController = new PIDController(1.0/180,0,0);
+
     public Turret(CRServo turretMotorA, CRServo turretMotorB, DcMotor encoder){
         this.turretServoA = turretMotorA;
         this.turretServoB = turretMotorB;
@@ -27,5 +30,8 @@ public class Turret extends SubsystemBase {
         setPower(0);
     }
 
+    public PIDController getPidController() {
+        return pidController;
+    }
 }
 

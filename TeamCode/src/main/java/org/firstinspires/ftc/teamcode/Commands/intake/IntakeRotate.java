@@ -5,7 +5,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 
 public class IntakeRotate extends CommandBase {
-    InTake inTake;
+    private InTake inTake;
 
     public IntakeRotate(InTake inTake){
         this.inTake = inTake;
