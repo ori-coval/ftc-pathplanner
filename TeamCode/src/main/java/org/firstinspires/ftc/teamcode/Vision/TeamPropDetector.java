@@ -13,11 +13,12 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class TeamPropDetector implements VisionProcessor {
+public class TeamPropDetector extends OpenCvPipeline {
     private final AllianceColor allianceColor;
     private Side teamPropSide;
     private final Rect rightRectangle = new Rect(426, 0, 213, 480);
@@ -54,11 +55,11 @@ public class TeamPropDetector implements VisionProcessor {
 
 
     @Override
-    public void init(int width, int height, CameraCalibration calibration) {
+    public void init(Mat mat) {
     }
 
     @Override
-    public Mat processFrame(Mat frame, long captureTimeNanos) {
+    public Mat processFrame(Mat frame) {
         Mat leftMat = frame.submat(leftRectangle);
         Mat rightMat = frame.submat(rightRectangle);
         Mat centerMat = frame.submat(centerRectangle);
@@ -73,22 +74,21 @@ public class TeamPropDetector implements VisionProcessor {
                     teamPropSide = Side.LEFT;
                 } else if (getNormalizedColorFromScalar(rightTotalRGBColors, 0)>redTolerances.get(Side.RIGHT)){
                     teamPropSide = Side.RIGHT;
-                } else if (getNormalizedColorFromScalar(centerTotalRGBColors, 0)>redTolerances.get(Side.CENTER))
+                } else if (getNormalizedColorFromScalar(centerTotalRGBColors, 0)>redTolerances.get(Side.CENTER)) {
+                    teamPropSide = Side.CENTER;
+                }
                 break;
             case BLUE:
                 if (getNormalizedColorFromScalar(leftTotalRGBColors, 2)>blueTolerances.get(Side.LEFT)){
                     teamPropSide = Side.LEFT;
                 } else if (getNormalizedColorFromScalar(rightTotalRGBColors, 2)>blueTolerances.get(Side.RIGHT)){
                     teamPropSide = Side.RIGHT;
-                } else if (getNormalizedColorFromScalar(centerTotalRGBColors, 2)>blueTolerances.get(Side.CENTER))
+                } else if (getNormalizedColorFromScalar(centerTotalRGBColors, 2)>blueTolerances.get(Side.CENTER)) {
+                    teamPropSide = Side.CENTER;
+                }
                 break;
         }
         return rightMat;
-    }
-
-    @Override
-    public void onDrawFrame(Canvas canvas, int onscreenWidth, int onscreenHeight, float scaleBmpPxToCanvasPx, float scaleCanvasDensity, Object userContext) {
-
     }
 
     public Side getSide() {

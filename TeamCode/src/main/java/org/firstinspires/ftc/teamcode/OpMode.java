@@ -26,6 +26,9 @@ import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
 import org.firstinspires.ftc.teamcode.Vision.Side;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @TeleOp(name = "DriveTrein")
 public class OpMode extends CommandOpMode{
@@ -34,8 +37,9 @@ public class OpMode extends CommandOpMode{
 //    Elbow elbow;
 //    Turret turret;
 //    AntiTurret antiTurret;
+
     TeamPropDetector teamPropDetector;
-    VisionPortal portal;
+    OpenCvCamera webcam;
     Odometry odometry;
     @Override
     public void initialize() {
@@ -67,8 +71,22 @@ public class OpMode extends CommandOpMode{
 //        antiTurret = new AntiTurret(hardwareMap.servo.get("antiTurret"));
 //        antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, ()-> turret.getEncoderValue()));
 
+
         teamPropDetector = new TeamPropDetector(AllianceColor.RED);
-        portal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Weiss cam"), teamPropDetector); //webcam 1
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Weiss cam"), cameraMonitorViewId);
+
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam.startStreaming(720, 640, OpenCvCameraRotation.UPSIDE_DOWN);
+            }
+
+            @Override
+            public void onError(int errorCode) {}
+        });
+
+        webcam.setPipeline(teamPropDetector);
 
         GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(()-> odometry.resetLocation()));
@@ -87,6 +105,9 @@ public class OpMode extends CommandOpMode{
             telemetry.addData("CenterRed", teamPropDetector.getSideColor(Side.CENTER,0));
             telemetry.update();
         }
+
+        //webcam.stopStreaming();
+
         telemetry.addData("odometry", odometry.getLocation());
         telemetry.update();
     }
