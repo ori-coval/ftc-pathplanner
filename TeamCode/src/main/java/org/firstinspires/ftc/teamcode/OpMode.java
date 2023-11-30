@@ -30,7 +30,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@TeleOp(name = "DriveTrein")
+@TeleOp(name = "DriveTrain")
 public class OpMode extends CommandOpMode{
     DriveTrain driveTrain;
 //    InTake inTake;
@@ -51,12 +51,12 @@ public class OpMode extends CommandOpMode{
         imu.initialize(parameters);
 
 
-        driveTrain = new DriveTrain(hardwareMap.dcMotor.get("backLeftLin")
-                ,hardwareMap.dcMotor.get("backRightLin")
-                ,hardwareMap.dcMotor.get("frontRightLin")
-                ,hardwareMap.dcMotor.get("frontLeftLin")
-                ,imu);
-            driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain,gamepad1));
+//        driveTrain = new DriveTrain(hardwareMap.dcMotor.get("backLeftLin")
+//                ,hardwareMap.dcMotor.get("backRightLin")
+//                ,hardwareMap.dcMotor.get("frontRightLin")
+//                ,hardwareMap.dcMotor.get("frontLeftLin")
+//                ,imu);
+//            driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain,gamepad1));
 //         inTake = new InTake(hardwareMap.dcMotor.get("inTake"),hardwareMap.servo.get("intakeAngel"));
 //         elbow = new Elbow(hardwareMap.dcMotor.get("elbow"));
 //         turret = new Turret(
@@ -64,10 +64,10 @@ public class OpMode extends CommandOpMode{
 //                hardwareMap.crservo.get("turretMotorB"),
 //                hardwareMap.dcMotor.get("frontLeftLin")
 //      );
-        odometry = new Odometry(
-                hardwareMap.dcMotor.get("frontLeftLin"),
-                hardwareMap.dcMotor.get("backLeftLin")
-        );
+//        odometry = new Odometry(
+//                hardwareMap.dcMotor.get("frontLeftLin"),
+//                hardwareMap.dcMotor.get("backLeftLin")
+//        );
 //        antiTurret = new AntiTurret(hardwareMap.servo.get("antiTurret"));
 //        antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, ()-> turret.getEncoderValue()));
 
@@ -79,7 +79,7 @@ public class OpMode extends CommandOpMode{
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                webcam.startStreaming(720, 640, OpenCvCameraRotation.UPSIDE_DOWN);
+                webcam.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
@@ -100,15 +100,17 @@ public class OpMode extends CommandOpMode{
             telemetry.addData("LeftBlue", teamPropDetector.getSideColor(Side.LEFT,2));
             telemetry.addData("RightBlue", teamPropDetector.getSideColor(Side.RIGHT,2));
             telemetry.addData("CenterBlue", teamPropDetector.getSideColor(Side.CENTER,2));
-            telemetry.addData("LeftRed", teamPropDetector.getSideColor(Side.LEFT,0));
-            telemetry.addData("RightRed", teamPropDetector.getSideColor(Side.RIGHT,0));
-            telemetry.addData("CenterRed", teamPropDetector.getSideColor(Side.CENTER,0));
+            telemetry.addData("LeftRed", teamPropDetector.getSideColor(Side.LEFT,1));
+            telemetry.addData("RightRed", teamPropDetector.getSideColor(Side.RIGHT,1));
+            telemetry.addData("CenterRed", teamPropDetector.getSideColor(Side.CENTER,1));
+            telemetry.addData("Side", teamPropDetector.getSide());
             telemetry.update();
         }
 
         //webcam.stopStreaming();
 
-        telemetry.addData("odometry", odometry.getLocation());
+
+//        telemetry.addData("odometry", odometry.getLocation());
         telemetry.update();
     }
 }
