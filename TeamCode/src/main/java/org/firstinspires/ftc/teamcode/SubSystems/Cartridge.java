@@ -25,14 +25,18 @@ public class Cartridge extends SubsystemBase {
         lastState = state;
     }
 
+    public void openCartidge() {
+        setState(State.OPEN);
+    }
+    public void closedCartidge() {
+        setState(State.CLOSED);
+    }
+    public void semiOpenSartidge() {
+        setState(State.SEMI_OPEN);
+    }
     public State getState(){
         return lastState;
     }
-
-
-
-
-
 
 
 }

@@ -4,22 +4,34 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 
-public class CartridgeClose extends CommandBase {
+public class CartringAllActions extends CommandBase {
     private Cartridge cartridge;
 
-    public CartridgeClose(Cartridge cartridge) {
+    public CartringAllActions(Cartridge cartridge) {
         this.cartridge = cartridge;
         addRequirements(cartridge);
+
+
     }
 
-    @Override
-    public void initialize() {
-        cartridge.setState(Cartridge.State.CLOSED);
+    public void openCartidge() {
+        cartridge.setState(Cartridge.State.OPEN);
+    }
+
+    public void close() {
+
     }
 
     @Override
     public boolean isFinished() {
         return true;
     }
-
 }
+
+
+
+
+
+
+
+
