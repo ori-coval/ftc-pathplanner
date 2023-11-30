@@ -31,12 +31,12 @@ public class TeamPropDetector extends OpenCvPipeline {
     private Mat Cr = new Mat();
     private Mat Cb = new Mat();
 
-    private Scalar blueLeft;
-    private Scalar redLeft;
-    private Scalar blueRight;
-    private Scalar redRight;
-    private Scalar blueCenter;
-    private Scalar redCenter;
+    private Scalar blueLeft = new Scalar(0, 0, 0, 0);
+    private Scalar redLeft = new Scalar(0, 0, 0, 0);
+    private Scalar blueRight = new Scalar(0, 0, 0, 0);
+    private Scalar redRight = new Scalar(0, 0, 0, 0);
+    private Scalar blueCenter = new Scalar(0, 0, 0, 0);
+    private Scalar redCenter = new Scalar(0, 0, 0, 0);
 
 //    private final double RGBValuesNormalizer = 1 / Math.pow(10,6);
 
@@ -49,19 +49,19 @@ public class TeamPropDetector extends OpenCvPipeline {
         blueTolerances = new HashMap<>();
         redTolerances = new HashMap<>();
 
-        blueTolerances.put(Side.LEFT,0.0);
-        blueTolerances.put(Side.RIGHT,0.0);
-        blueTolerances.put(Side.CENTER,0.0);
-        redTolerances.put(Side.LEFT, 0.0);
-        redTolerances.put(Side.RIGHT, 0.0);
-        redTolerances.put(Side.CENTER, 0.0);
+        blueTolerances.put(Side.LEFT,126.5);
+        blueTolerances.put(Side.RIGHT,126.5);
+        blueTolerances.put(Side.CENTER,126.5);
+        redTolerances.put(Side.LEFT, 129.0);
+        redTolerances.put(Side.RIGHT, 129.0);
+        redTolerances.put(Side.CENTER, 129.0);
 
-        blueLeft = new Scalar(0, 0, 0, 0);
-        redLeft = new Scalar(0, 0, 0, 0);
-        blueRight = new Scalar(0, 0, 0, 0);
-        redRight = new Scalar(0, 0, 0, 0);
-        blueCenter = new Scalar(0, 0, 0, 0);
-        redCenter = new Scalar(0, 0, 0, 0);
+//        blueLeft = new Scalar(0, 0, 0, 0);
+//        redLeft = new Scalar(0, 0, 0, 0);
+//        blueRight = new Scalar(0, 0, 0, 0);
+//        redRight = new Scalar(0, 0, 0, 0);
+//        blueCenter = new Scalar(0, 0, 0, 0);
+//        redCenter = new Scalar(0, 0, 0, 0);
     }
 
 
@@ -74,6 +74,7 @@ public class TeamPropDetector extends OpenCvPipeline {
     @Override
     public Mat processFrame(Mat frame) {
 
+        Imgproc.GaussianBlur(frame, frame, new Size(15,15), 0.0);
         Imgproc.cvtColor(frame, YCrCb, Imgproc.COLOR_RGB2YCrCb);
         Core.extractChannel(YCrCb, Cr, 1);
         Core.extractChannel(YCrCb, Cb, 2);
@@ -85,7 +86,6 @@ public class TeamPropDetector extends OpenCvPipeline {
         Mat centerMatCr = Cr.submat(centerRectangle);
         Mat centerMatCb = Cb.submat(centerRectangle);
 
-        Imgproc.GaussianBlur(frame, frame, new Size(5,5), 0.0);
         Imgproc.rectangle(frame, leftRectangle, new Scalar(255, 0, 0), 5);
         Imgproc.rectangle(frame, centerRectangle, new Scalar(0, 255, 0), 5);
         Imgproc.rectangle(frame, rightRectangle, new Scalar(0, 0, 255), 5);

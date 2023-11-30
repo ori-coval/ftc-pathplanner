@@ -72,7 +72,7 @@ public class OpMode extends CommandOpMode{
 //        antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, ()-> turret.getEncoderValue()));
 
 
-        teamPropDetector = new TeamPropDetector(AllianceColor.RED);
+        teamPropDetector = new TeamPropDetector(AllianceColor.BLUE);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Weiss cam"), cameraMonitorViewId);
 
