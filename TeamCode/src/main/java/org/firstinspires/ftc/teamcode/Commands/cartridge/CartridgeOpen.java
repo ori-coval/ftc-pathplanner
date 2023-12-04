@@ -1,19 +1,21 @@
-package org.firstinspires.ftc.teamcode.Commands.placer;
+package org.firstinspires.ftc.teamcode.Commands.cartridge;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 
-public class CartridgeSemiOpen extends CommandBase {
+public class CartridgeOpen extends CommandBase {
+
     private Cartridge cartridge;
 
-    public CartridgeSemiOpen(Cartridge cartridge) {
+    public CartridgeOpen(Cartridge cartridge) {
         this.cartridge = cartridge;
         addRequirements(cartridge);
     }
+
     @Override
     public void initialize() {
-        cartridge.setState(Cartridge.State.SEMI_OPEN);
+        cartridge.setState(Cartridge.State.OPEN);
     }
 
     @Override
@@ -21,5 +23,3 @@ public class CartridgeSemiOpen extends CommandBase {
         return true;
     }
 }
-
-
