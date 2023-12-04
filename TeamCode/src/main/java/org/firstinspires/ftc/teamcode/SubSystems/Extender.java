@@ -4,15 +4,25 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Extender extends SubsystemBase {
+
+    public enum Length {
+        CLOSED(0), MID_WAY(0.25), OPEN(0.5);
+        private final double servoPosition;
+        Length(double length){
+            this.servoPosition = length;
+        }
+    }
     private Servo linearServo;
+    private Length currentLength;
+
     public Extender (Servo linearServo){
         this.linearServo = linearServo;
     }
-    public void setPosition(double position){
-        linearServo.setPosition(position);
-
+    public void setPosition(Length length){
+        linearServo.setPosition(length.servoPosition);
+        currentLength = length;
     }
-    public double getPosition(){
-        return linearServo.getPosition();
+    public Length getPosition(){
+        return currentLength;
     }
 }
