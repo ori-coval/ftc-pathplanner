@@ -7,22 +7,22 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 
 public class ElbowGetToAnglePID extends CommandBase {
 
-    Elbow elbow;
-    PIDController pid = new PIDController(0,0,0);
-    double goalAngle;
+    private Elbow elbow;
+    private double goalAngle;
+    private PIDController pidController;
 
 
     public ElbowGetToAnglePID(double goalAngle, Elbow elbow){
         this.elbow = elbow;
         this.goalAngle = goalAngle;
         addRequirements(elbow);
-        pid.setSetPoint(goalAngle);
-        pid.setTolerance(5);
+        pidController.setSetPoint(goalAngle);
+        pidController.setTolerance(5);
     }
 
     @Override
     public void execute() {
-        elbow.setPower(pid.calculate(elbow.getAngle()));
+        elbow.setPower(pidController.calculate(elbow.getAngle()));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ElbowGetToAnglePID extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return pid.atSetPoint();
+        return pidController.atSetPoint();
     }
 }
 

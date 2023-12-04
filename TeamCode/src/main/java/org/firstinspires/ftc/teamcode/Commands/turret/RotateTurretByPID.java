@@ -6,15 +6,12 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class RotateTurretByPID extends CommandBase {
-    double setPoint;
-    PIDController pidController;
-    Turret turret;
+    private double setPoint;
+    private PIDController pidController;
+    private Turret turret;
     public RotateTurretByPID(double setPoint, Turret turret){
         this.setPoint= setPoint;
-        pidController = new PIDController(1.0/180,0,0);
         this.turret = turret;
-
-
         addRequirements(turret);
 
     }

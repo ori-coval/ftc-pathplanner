@@ -6,15 +6,14 @@ import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Odometry extends SubsystemBase {
-    DcMotor odometryX;
-    DcMotor odometryY;
-    Translation2d location;
+    private DcMotor odometryX;
+    private DcMotor odometryY;
+    private Translation2d location;
     private final double CIRCUMFERENCE = 0.048 * Math.PI;
     private final double TICKS_PER_REV = 2000;
     private final double TICKS_PER_METER = TICKS_PER_REV / CIRCUMFERENCE;
     private double offsetX = 0;
     private double offsetY = 0;
-    Translation2d prevLocation;
     public Odometry(DcMotor odometryX, DcMotor odometryY) {
         this.odometryX = odometryX;
         this.odometryY = odometryY;

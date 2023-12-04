@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import java.util.function.DoubleSupplier;
 
 public class AntiTurretParallel extends CommandBase {
-    AntiTurret antiTurret;
-    DoubleSupplier turretAngle;
+    private AntiTurret antiTurret;
+    private DoubleSupplier turretAngle;
     public AntiTurretParallel(AntiTurret antiTurret, DoubleSupplier turretAngle){
         this.antiTurret = antiTurret;
         this.turretAngle = turretAngle;
