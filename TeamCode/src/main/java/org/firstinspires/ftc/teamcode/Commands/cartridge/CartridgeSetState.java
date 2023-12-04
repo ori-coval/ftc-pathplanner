@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.placer;
+package org.firstinspires.ftc.teamcode.Commands.cartridge;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 
