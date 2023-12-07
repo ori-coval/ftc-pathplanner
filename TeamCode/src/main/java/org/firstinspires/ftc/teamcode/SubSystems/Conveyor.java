@@ -19,6 +19,7 @@ public class Conveyor extends SubsystemBase {
     public void setPower(double power){
         motor.setPower(power);
     }
+    public void stop(){setPower(0);}
     public boolean isPressed(){
         return limitSwitch.getState();
     }
