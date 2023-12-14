@@ -19,6 +19,7 @@ public class OpMode extends CommandOpMode{
 //    Turret turret;
 //    AntiTurret antiTurret;
     Odometry odometry;
+    GamepadEx gamepadEx1;
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
@@ -52,7 +53,7 @@ public class OpMode extends CommandOpMode{
 
 
 
-        GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
+        gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(()-> odometry.resetLocation()));
     }
 
