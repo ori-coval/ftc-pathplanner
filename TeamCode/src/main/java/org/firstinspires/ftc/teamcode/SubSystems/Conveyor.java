@@ -8,6 +8,9 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 public class Conveyor extends SubsystemBase {
     private DcMotor motor;
     private DigitalChannel limitSwitch;
+    public final double IN_POWER = 0.5;
+    public final double OUT_POWER = -0.5;
+
     private int pixelCount = 0;
     private boolean wasPressed;
 
@@ -29,6 +32,9 @@ public class Conveyor extends SubsystemBase {
     }
     public int getPixelCount(){return pixelCount;}
 
+    public boolean isRobotFull(){
+        return getPixelCount() >= 2;
+    }
     @Override
     public void periodic() {
         updatePixelCount();
