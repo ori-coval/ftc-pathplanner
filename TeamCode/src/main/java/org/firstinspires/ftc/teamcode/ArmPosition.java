@@ -11,6 +11,9 @@ public enum ArmPosition {
     SCORE_TOP_CLOSE(0, 0, 0, true),
     SCORE_TOP_MID(0, 0, 0, true),
     SCORE_TOP_FAR(0, 0, 0, true),
+    SCORE_FRONT_TOP(0,0,0,true),
+    SCORE_FRONT_MID(0,0,0,true),
+    SCORE_FRONT_BOTTOM(0,0,0,true),
     INTAKE(0, 0, 0, false);
 
     private final double elevatorHeight;
