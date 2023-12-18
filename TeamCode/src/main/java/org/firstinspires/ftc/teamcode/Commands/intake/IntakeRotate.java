@@ -6,15 +6,17 @@ import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 
 public class IntakeRotate extends CommandBase {
     private InTake inTake;
+    private final double power;
 
-    public IntakeRotate(InTake inTake){
+    public IntakeRotate(InTake inTake, double power){
         this.inTake = inTake;
+        this.power = power;
         this.addRequirements(inTake);
     }
 
     @Override
     public void initialize() {
-        inTake.setPower(0.7);
+        inTake.setPower(power);
     }
 
     @Override
