@@ -11,6 +11,7 @@ public class Elevator extends SubsystemBase {
     private final double CIRCUMFERENCE = 0;
     private final double TICKS_PER_REV = 0;
     private final double kg = 0;
+    public final double TOP_DIST_FROM_FLOOR = 0;
     private PIDController pidController = new PIDController(1,0,1);
 
 

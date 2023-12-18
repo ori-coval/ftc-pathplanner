@@ -12,7 +12,7 @@ public class ElbowGetToAnglePID extends CommandBase {
     private PIDController pidController;
 
 
-    public ElbowGetToAnglePID(double goalAngle, Elbow elbow){
+    public ElbowGetToAnglePID(Elbow elbow, double goalAngle){
         this.elbow = elbow;
         this.goalAngle = goalAngle;
         addRequirements(elbow);
