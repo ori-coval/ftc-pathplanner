@@ -28,6 +28,7 @@ public class OpMode extends CommandOpMode{
     TeamPropDetector teamPropDetector;
     OpenCvCamera webcam;
     Odometry odometry;
+    GamepadEx gamepadEx1;
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
@@ -75,7 +76,7 @@ public class OpMode extends CommandOpMode{
 
         webcam.setPipeline(teamPropDetector);
 
-        GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
+        gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(()-> odometry.resetLocation()));
     }
 
