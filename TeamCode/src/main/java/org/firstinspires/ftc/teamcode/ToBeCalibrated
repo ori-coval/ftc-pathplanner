@@ -10,6 +10,7 @@ Elbow
     pid
     ticks per degree
     offset
+    length of elbow0 + elbow1
 Elevator
     meter value
 Arm Positions
