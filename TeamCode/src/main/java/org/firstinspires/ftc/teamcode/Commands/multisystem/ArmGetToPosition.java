@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.multisystem;
 
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
@@ -19,7 +17,7 @@ public class ArmGetToPosition extends ParallelCommandGroup {
     Elevator elevator;
     Extender extender;
     Elbow elbow;
-    private boolean canArmMove(){
+    private boolean armCanMove(){
         final double minCartridgeHeightToMoveArm = 0;
         double axisDistFromFloor = elevator.TOP_DIST_FROM_FLOOR + elevator.getHeight();
         double l = extender.getLength();
@@ -33,8 +31,7 @@ public class ArmGetToPosition extends ParallelCommandGroup {
         addCommands(
                 new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
                 new ElbowGetToAnglePID(elbow, position.getElbowAngle()),
-                new SequentialCommandGroup(
-                        new WaitUntilCommand(()-> canArmMove()),
+                new WaitUntilCommand(()-> armCanMove()).andThen(
                         new ParallelCommandGroup(
                                 new ExtenderSetLength(extender, position.getExtenderLength()),
                                 new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard))
