@@ -112,19 +112,8 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-
         if (opModeIsActive()) {
-            telemetry.addData("LeftBlue", teamPropDetector.getSideColor(Side.LEFT, 2));
-            telemetry.addData("RightBlue", teamPropDetector.getSideColor(Side.RIGHT, 2));
-            telemetry.addData("CenterBlue", teamPropDetector.getSideColor(Side.CENTER, 2));
-            telemetry.addData("LeftRed", teamPropDetector.getSideColor(Side.LEFT, 1));
-            telemetry.addData("RightRed", teamPropDetector.getSideColor(Side.RIGHT, 1));
-            telemetry.addData("CenterRed", teamPropDetector.getSideColor(Side.CENTER, 1));
-            telemetry.addData("Side", teamPropDetector.getSide());
-            telemetry.update();
         }
-
-//        telemetry.addData("odometry", odometry.getLocation());
         telemetry.update();
     }
 }
