@@ -24,7 +24,7 @@ public class RotateTurretByPID extends CommandBase {
 
     @Override
     public void execute() {
-        turret.setPower(pidController.calculate(turret.getEncoderValue()));
+        turret.setPower(pidController.calculate(turret.getAngle()));
     }
 
     @Override

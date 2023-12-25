@@ -14,24 +14,37 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class ArmGetToPosition extends ParallelCommandGroup {
-    Elevator elevator;
-    Extender extender;
-    Elbow elbow;
-    private boolean armCanMove(){
+    private Elevator elevator;
+    private Extender extender;
+    private Elbow elbow;
+    private Turret turret;
+    private final double ANGLE_THRESHOLD = 0;
+
+    private boolean armCanRotate() {
         final double minCartridgeHeightToMoveArm = 0;
         double axisDistFromFloor = elevator.TOP_DIST_FROM_FLOOR + elevator.getHeight();
         double l = extender.getLength();
-        double CartridgeHeight = axisDistFromFloor - l*Math.cos(Math.toRadians(elbow.getAngle()));
+        double CartridgeHeight = axisDistFromFloor - l * Math.cos(Math.toRadians(elbow.getAngle()));
         return CartridgeHeight > minCartridgeHeightToMoveArm;
     }
-    public ArmGetToPosition(Elevator elevator, Elbow elbow, Extender extender, Turret turret, ArmPosition position, boolean isLeftOfBoard){
+
+    private boolean armInCenter() {
+        return (turret.getAngle() < ANGLE_THRESHOLD) && (turret.getAngle() > -ANGLE_THRESHOLD);
+    }
+
+    public ArmGetToPosition(Elevator elevator, Elbow elbow, Extender extender, Turret turret, ArmPosition position, boolean isLeftOfBoard) {
         this.elevator = elevator;
         this.extender = extender;
-
+        this.elbow = elbow;
+        this.turret = turret;
         addCommands(
-                new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
-                new ElbowGetToAnglePID(elbow, position.getElbowAngle()),
-                new WaitUntilCommand(()-> armCanMove()).andThen(
+                new WaitUntilCommand(this::armInCenter).andThen(
+                        new ParallelCommandGroup(
+                                new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
+                                new ElbowGetToAnglePID(elbow, position.getElbowAngle())
+                        )
+                ),
+                new WaitUntilCommand(this::armCanRotate).andThen(
                         new ParallelCommandGroup(
                                 new ExtenderSetLength(extender, position.getExtenderLength()),
                                 new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard))

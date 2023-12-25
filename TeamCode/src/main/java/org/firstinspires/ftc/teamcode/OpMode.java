@@ -48,7 +48,7 @@ public class OpMode extends CommandOpMode{
                 hardwareMap.dcMotor.get("backLeftLin")
         );
 //        antiTurret = new AntiTurret(hardwareMap.servo.get("antiTurret"));
-//        antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, ()-> turret.getEncoderValue()));
+//        antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, ()-> turret.getAngle()));
 
 
 
