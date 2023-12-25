@@ -32,7 +32,6 @@ public class OpMode extends CommandOpMode {
     Turret turret;
     AntiTurret antiTurret;
     BNO055IMU imu;
-
     TeamPropDetector teamPropDetector;
     OpenCvCamera webcam;
     Odometry odometry;
@@ -65,6 +64,12 @@ public class OpMode extends CommandOpMode {
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
     }
+    public void OdometryInit() {
+        odometry = new Odometry(
+                hardwareMap.dcMotor.get("frontLeftLin"),
+                hardwareMap.dcMotor.get("backLeftLin")
+        );
+    }
     public void IntakeInit() {
 
         inTake = new InTake(hardwareMap.dcMotor.get("inTake"));
@@ -78,12 +83,6 @@ public class OpMode extends CommandOpMode {
                 hardwareMap.crservo.get("turretMotorA"),
                 hardwareMap.crservo.get("turretMotorB"),
                 hardwareMap.dcMotor.get("frontLeftLin")
-        );
-    }
-    public void OdometryInit() {
-        odometry = new Odometry(
-                hardwareMap.dcMotor.get("frontLeftLin"),
-                hardwareMap.dcMotor.get("backLeftLin")
         );
     }
     public void AntiTurretInit() {
@@ -112,8 +111,7 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        if (opModeIsActive()) {
-        }
-        telemetry.update();
+
+
     }
 }
