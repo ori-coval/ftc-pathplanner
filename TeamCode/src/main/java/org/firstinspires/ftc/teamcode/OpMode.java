@@ -35,7 +35,7 @@ public class OpMode extends CommandOpMode {
     TeamPropDetector teamPropDetector;
     OpenCvCamera webcam;
     Odometry odometry;
-    GamepadEx gamepadEx1;
+    GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
 
     @Override
     public void initialize() {
@@ -46,7 +46,6 @@ public class OpMode extends CommandOpMode {
         OdometryInit();
         IntakeInit();
 
-        gamepadEx1 = new GamepadEx(gamepad1);
       //  gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> odometry.resetLocation()));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> inTake.setPower(-inTake.COLLECT_POWER)));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> inTake.stop()));
@@ -76,9 +75,7 @@ public class OpMode extends CommandOpMode {
         );
     }
     public void IntakeInit() {
-        inTake = new InTake(
-            hardwareMap.dcMotor.get("inTake"),
-            hardwareMap.servo.get("inTakeAngle"));
+        inTake = new InTake(hardwareMap.dcMotor.get("inTake"), hardwareMap.servo.get("inTakeAngle"), gamepadEx1);
     }
     public void ElbowInit() {
         elbow = new Elbow(hardwareMap.dcMotor.get("elbow"));
