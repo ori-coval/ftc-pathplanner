@@ -4,12 +4,13 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class InTake extends SubsystemBase {
     private DcMotor inTakeMotor;
     private Servo inTakeAngle;
-    private GamepadEx gamepadEx;
+    private Gamepad gamepad;
     public final double COLLECT_POWER = 0.8;
     public final double EJECT_POWER = -0.9;
     public final double[] STACK_POSITION = {0.49, 0.52, 0.55, 0.58, 0.62};
@@ -23,10 +24,10 @@ public class InTake extends SubsystemBase {
     // the fifth value to 1 pixel is 0.49
     // כשהאיסוף למעלה 0.67
 
-    public InTake(DcMotor inTakeMotor, Servo inTakeAngle, GamepadEx gamepadEx){
+    public InTake(DcMotor inTakeMotor, Servo inTakeAngle, Gamepad gamepad){
         this.inTakeMotor = inTakeMotor;
         this.inTakeAngle = inTakeAngle;
-        this.gamepadEx = gamepadEx;
+        this.gamepad = gamepad;
     }
     public void setPower(double power){
         inTakeMotor.setPower(power);
@@ -51,13 +52,19 @@ public class InTake extends SubsystemBase {
 
     public void updatePosition() {
         /*I've made it this way in order to have a way to access the stack position in the future.*/
-        if(gamepadEx.getButton(GamepadKeys.Button.DPAD_UP)) setStackPosition(4);
-        if(gamepadEx.getButton(GamepadKeys.Button.DPAD_RIGHT)) setStackPosition(3);
-        if(gamepadEx.getButton(GamepadKeys.Button.DPAD_DOWN)) setStackPosition(2);
-        if(gamepadEx.getButton(GamepadKeys.Button.DPAD_LEFT)) setStackPosition(1);
-        /*I've made the back button (temporarily) as the default configuration of the intake (the lowest position it needs to be in)*/
-        if(gamepadEx.getButton(GamepadKeys.Button.BACK)) setPosition(0);
+        if(gamepad.dpad_up) setStackPosition(4);
+        if(gamepad.dpad_right) setStackPosition(3);
+        if(gamepad.dpad_down) setStackPosition(2);
+        if(gamepad.dpad_left) setStackPosition(1);
+        /*I've made the y button (*temporarily*) as the default configuration of the intake (the lowest position it needs to be in)*/
+        if(gamepad.y) setStackPosition(0);
         setPosition(getStackPosition());
+
+        /*
+        I think that using 5 buttons for the intake is incredibly wasteful,
+        in my opinion it'll be better using some kind of steeper mechanism that whenever I press some kind of button
+        it goes between states of the intake. Like the more I press the higher it gets. That way we can use only one button.
+         */
     }
 
     @Override
