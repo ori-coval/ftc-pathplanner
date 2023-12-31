@@ -1,23 +1,22 @@
 package org.firstinspires.ftc.teamcode.Commands.intake;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 
-public class TeleopIntake extends CommandBase {
-    double floorIntakePosition = 0;
-    InTake inTake;
+public class IntakeRotate extends CommandBase {
+    private InTake inTake;
+    private final double power;
 
-    public TeleopIntake(InTake inTake){
+    public IntakeRotate(InTake inTake, double power){
         this.inTake = inTake;
+        this.power = power;
         this.addRequirements(inTake);
     }
 
     @Override
     public void initialize() {
-        inTake.setPosition(floorIntakePosition);
-        inTake.setPower(0.9);
+        inTake.setPower(power);
     }
 
     @Override

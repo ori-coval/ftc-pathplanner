@@ -6,24 +6,25 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 
 public class ElevatorGetToHeightPID extends CommandBase {
-    Elevator elevator;
-    double goalHeight;
-    PIDController pidcontroller = new PIDController(1,0,1);
+    private Elevator elevator;
+    private double goalHeight;
+    private PIDController pidController;
+
     public ElevatorGetToHeightPID(double goalHeight, Elevator elevator){
         this.elevator = elevator;
         this.goalHeight = goalHeight;
+        pidController = elevator.getPidController();
         addRequirements(elevator);
     }
-
     @Override
     public void initialize() {
-        pidcontroller.setSetPoint(goalHeight);
-        pidcontroller.setTolerance(0.5);
+        pidController.setSetPoint(goalHeight);
+        pidController.setTolerance(0.5);
     }
 
     @Override
     public void execute() {
-        elevator.setPower(pidcontroller.calculate(elevator.getHeight()));
+        elevator.setPower(pidController.calculate(elevator.getHeight()) + elevator.getKg());
     }
 
     @Override
@@ -33,6 +34,6 @@ public class ElevatorGetToHeightPID extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return pidcontroller.atSetPoint();
+        return pidController.atSetPoint();
     }
 }

@@ -6,10 +6,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 
 public class FindGravitationForce extends CommandBase {
-    double power = 0;
-    Elevator elevator;
-    Telemetry telemetry;
-    double previousHeight = 0;
+    private double power = 0;
+    private Elevator elevator;
+    private Telemetry telemetry;
+    private double previousHeight = 0;
     private final double THRESHOLD = 0;
     public FindGravitationForce(Elevator elevator){
         this.elevator = elevator;

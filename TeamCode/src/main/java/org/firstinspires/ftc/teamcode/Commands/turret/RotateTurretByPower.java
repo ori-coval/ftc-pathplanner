@@ -5,8 +5,8 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class RotateTurretByPower extends CommandBase {
-    Turret turret;
-    double power;
+    private Turret turret;
+    private double power;
     public RotateTurretByPower(double power, Turret turret){
         this.power = power;
         this.turret = turret;

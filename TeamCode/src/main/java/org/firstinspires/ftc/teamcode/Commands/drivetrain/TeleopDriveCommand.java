@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 
 public class TeleopDriveCommand extends CommandBase {
-    DriveTrain driveTrain;
+    private DriveTrain driveTrain;
 
-    Gamepad gamepad;
+    private Gamepad gamepad;
 
     public TeleopDriveCommand(DriveTrain driveTrain,Gamepad gamepad){
         this.driveTrain = driveTrain;
