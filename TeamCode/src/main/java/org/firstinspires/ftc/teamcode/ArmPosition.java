@@ -2,6 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 public enum ArmPosition {
 
+    /*
+    XXX
+    XXX
+    XXX
+
+     */
+
     SCORE_BOTTOM_CLOSE(0, 0, 0, 0, Cluster.cluster0),
     SCORE_BOTTOM_FAR(0, 0, 0, 0, Cluster.cluster0),
     SCORE_MID_CLOSE(0, 0, 0, 0, Cluster.cluster0),
