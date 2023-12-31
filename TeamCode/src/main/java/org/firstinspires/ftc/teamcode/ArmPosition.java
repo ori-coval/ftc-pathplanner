@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 public enum ArmPosition {
 
     /*
+    clusters- each cluster is a group containing multiple positions that
     XXX
     XXX
     XXX
@@ -15,9 +16,9 @@ public enum ArmPosition {
     SCORE_MID_FAR(0, 0, 0, 0, Cluster.cluster0),
     SCORE_TOP_CLOSE(0, 0, 0, 0, Cluster.cluster0),
     SCORE_TOP_FAR(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_FRONT_TOP(0,0,0,0, Cluster.cluster0),
-    SCORE_FRONT_MID(0,0,0,0, Cluster.cluster0),
-    SCORE_FRONT_BOTTOM(0,0,0,0, Cluster.cluster0),
+    SCORE_FRONT_SCORE_TOP(0,0,0,0, Cluster.cluster0),
+    SCORE_FRONT_SCORE_MID(0,0,0,0, Cluster.cluster0),
+    SCORE_FRONT_SCORE_BOTTOM(0,0,0,0, Cluster.cluster0),
     INTAKE(0, 0, 0,0, Cluster.cluster0),
     SAFE_PLACE(0,0,0,0,Cluster.cluster0);
 

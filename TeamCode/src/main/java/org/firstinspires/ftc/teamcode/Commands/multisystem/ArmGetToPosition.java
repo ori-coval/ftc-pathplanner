@@ -31,6 +31,7 @@ public class ArmGetToPosition extends ParallelCommandGroup {
         addCommands(
                 new ConditionalCommand(
                         new UnsafeMoveArmParallel(elevator, elbow, extender, turret, position, isLeftOfBoard),
+                        // will the unsafe work for safePlace? because for example is robot is in intake it won't work
                         new UnsafeMoveArmParallel(elevator, elbow, extender, turret, ArmPosition.SAFE_PLACE, isLeftOfBoard).andThen(
                                 new UnsafeMoveArmParallel(elevator, elbow, extender, turret, position, isLeftOfBoard)
                         ),
