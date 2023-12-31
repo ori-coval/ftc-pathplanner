@@ -11,18 +11,17 @@ public class InTake extends SubsystemBase {
     private DcMotor inTakeMotor;
     private Servo inTakeAngle;
     private Gamepad gamepad;
-    public final double COLLECT_POWER = 0.8;
+    public final double COLLECT_POWER = 1;
     public final double EJECT_POWER = -0.9;
-    public final double[] STACK_POSITION = {0.49, 0.52, 0.55, 0.58, 0.62};
+    public final double[] STACK_POSITION = {0, 0.07, 0.13, 0.21, 0.77};
+    /*
+    0.77 - The default position (Highest)
+    0.21 - Before the 5th pixel
+    0.13 - The first pixel
+    0.07 - Next pixels
+    0 - lowest position
+    */
     private double currentStackPosition = STACK_POSITION[4];
-
-
-    // the first value to 5 pixel is 0.62
-    // the second value to 4 pixel is 0.58
-    // the third value to 3 pixel is 0.55
-    // the fourth value to 2 pixel is 0.52
-    // the fifth value to 1 pixel is 0.49
-    // כשהאיסוף למעלה 0.67
 
     public InTake(DcMotor inTakeMotor, Servo inTakeAngle, Gamepad gamepad){
         this.inTakeMotor = inTakeMotor;
@@ -56,7 +55,6 @@ public class InTake extends SubsystemBase {
         if(gamepad.dpad_right) setStackPosition(3);
         if(gamepad.dpad_down) setStackPosition(2);
         if(gamepad.dpad_left) setStackPosition(1);
-        /*I've made the y button (*temporarily*) as the default configuration of the intake (the lowest position it needs to be in)*/
         if(gamepad.y) setStackPosition(0);
         setPosition(getStackPosition());
 
