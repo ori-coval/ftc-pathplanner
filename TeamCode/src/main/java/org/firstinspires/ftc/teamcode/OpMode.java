@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Commands.intake.IntakeRotate;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
+import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 import org.firstinspires.ftc.teamcode.SubSystems.Odometry;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
@@ -31,6 +33,7 @@ public class OpMode extends CommandOpMode {
     InTake inTake;
     Elbow elbow;
     Turret turret;
+    Elevator elevator;
     AntiTurret antiTurret;
     BNO055IMU imu;
     TeamPropDetector teamPropDetector;
@@ -42,20 +45,19 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-        IMUInit();
-        DriveTrainInit();
-        OdometryInit();
-        IntakeInit();
+//        IMUInit();
+//        DriveTrainInit();
+//        OdometryInit();
+//        IntakeInit();
+        ElevatorInit();
 
         gamepadEx1 = new GamepadEx(gamepad1);
       //  gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> odometry.resetLocation()));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, inTake.COLLECT_POWER));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(3)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> inTake.setStackPosition(2)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(1)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> elevator.setPower(0.4)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> elevator.setPower(-0.2)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> elevator.setPower(0)));
+
+
     }
 
     public void DriveTrainInit() {
@@ -93,6 +95,15 @@ public class OpMode extends CommandOpMode {
                 hardwareMap.dcMotor.get("frontLeftLin")
         );
     }
+
+    public void ElevatorInit() {
+        elevator = new Elevator(
+                hardwareMap.dcMotor.get("elevatorMotorUp"),
+                hardwareMap.dcMotor.get("elevatorMotorMid"),
+                hardwareMap.dcMotor.get("elevatorMotorDown")
+        );
+    }
+
     public void AntiTurretInit() {
         antiTurret = new AntiTurret(hardwareMap.servo.get("antiTurret"));
         antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, () -> turret.getEncoderValue()));
@@ -119,7 +130,7 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        telemetry.addData("pos",inTake.getPosition());
+        telemetry.addData("height", elevator.getEncoderValue());
         telemetry.update();
     }
 }
