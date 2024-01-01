@@ -13,7 +13,7 @@ public class InTake extends SubsystemBase {
     private Gamepad gamepad;
     public final double COLLECT_POWER = 1;
     public final double EJECT_POWER = -0.9;
-    public final double[] STACK_POSITION = {0, 0.07, 0.13, 0.21, 0.77};
+    public final double[] STACK_POSITION = {0, 0.07, 0.13, 0.21, 0.77}; //TODO: Change to Enum
     /*
     0.77 - The default position (Highest)
     0.21 - Before the 5th pixel
@@ -42,6 +42,7 @@ public class InTake extends SubsystemBase {
     public double getPosition(){return inTakeAngle.getPosition();}
 
     public void setStackPosition(int position) {
+        //TODO: throw error exception in case pos > 4
         currentStackPosition = STACK_POSITION[position];
     }
 

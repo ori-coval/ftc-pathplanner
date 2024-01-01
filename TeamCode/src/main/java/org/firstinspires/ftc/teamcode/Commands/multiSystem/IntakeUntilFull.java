@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
-import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.ParallelDeadlineGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 
-import org.firstinspires.ftc.teamcode.Commands.Conveyer.ConveyorConvey;
+import org.firstinspires.ftc.teamcode.Commands.conveyer.ConveyorConvey;
 import org.firstinspires.ftc.teamcode.Commands.intake.IntakeRotate;
 import org.firstinspires.ftc.teamcode.SubSystems.Conveyor;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;

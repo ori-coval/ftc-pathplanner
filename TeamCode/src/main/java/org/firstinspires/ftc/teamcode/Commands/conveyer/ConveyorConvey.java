@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.Conveyer;
+package org.firstinspires.ftc.teamcode.Commands.conveyer;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
