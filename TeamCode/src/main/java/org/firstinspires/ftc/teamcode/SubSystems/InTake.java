@@ -50,14 +50,7 @@ public class InTake extends SubsystemBase {
     }
 
     public void updatePosition() {
-        /*I've made it this way in order to have a way to access the stack position in the future.*/
-        if(gamepad.dpad_up) setStackPosition(4);
-        if(gamepad.dpad_right) setStackPosition(3);
-        if(gamepad.dpad_down) setStackPosition(2);
-        if(gamepad.dpad_left) setStackPosition(1);
-        if(gamepad.y) setStackPosition(0);
         setPosition(getStackPosition());
-
         /*
         I think that using 5 buttons for the intake is incredibly wasteful,
         in my opinion it'll be better using some kind of steeper mechanism that whenever I press some kind of button
