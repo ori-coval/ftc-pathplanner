@@ -17,10 +17,8 @@ public class ArmPositionSelector {
     int Y = 1;
     int X = 1;
 
-
-
     public void moveXRight() {
-        if (!(X == 1)) {
+        if (!(X == 2)) {
             X++;
         }
     }
@@ -29,17 +27,18 @@ public class ArmPositionSelector {
             X--;
         }
     }
-    public void moveSelectedHeightIdUp() {
+    public void moveYRight() {
         if (!(Y == 2)) {
             Y++;
         }
     }
-    public void moveSelectedHeightIdDown() {
+    public void moveYLeft() {
         if (!(Y == 0)) {
             Y--;
         }
     }
-
-
+    public ArmPosition getPosition() {
+        return sideScorePositions[X][Y]; //TODO
+    }
 }
 
