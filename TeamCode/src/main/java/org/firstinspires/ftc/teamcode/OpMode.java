@@ -8,10 +8,6 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Commands.positionSelector.PositionSelectorXLeft;
-import org.firstinspires.ftc.teamcode.Commands.positionSelector.PositionSelectorXRight;
-import org.firstinspires.ftc.teamcode.Commands.positionSelector.PositionSelectorYDown;
-import org.firstinspires.ftc.teamcode.Commands.positionSelector.PositionSelectorYUp;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Odometry;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
@@ -84,10 +80,10 @@ public class OpMode extends CommandOpMode{
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(()-> odometry.resetLocation()));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new PositionSelectorYUp());
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new PositionSelectorYDown());
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new PositionSelectorXRight());
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new PositionSelectorXLeft());
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(()-> ArmPositionSelector.moveUp()));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(()-> ArmPositionSelector.moveRight()));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(()-> ArmPositionSelector.moveDown()));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(()-> ArmPositionSelector.moveLeft()));
 
     }
 
