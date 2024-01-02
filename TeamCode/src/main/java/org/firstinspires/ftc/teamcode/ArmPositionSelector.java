@@ -9,30 +9,30 @@ public class ArmPositionSelector {
     private Telemetry telemetry;
 
 
-    ArmPosition[][] sideScorePositions={
+    ArmPosition[][] sideScorePositions = {
             {ArmPosition.SCORE_TOP_CLOSE, ArmPosition.SCORE_TOP_FAR, ArmPosition.SCORE_FRONT_SCORE_TOP},
             {ArmPosition.SCORE_MID_CLOSE, ArmPosition.SCORE_MID_FAR, ArmPosition.SCORE_FRONT_SCORE_MID},
             {ArmPosition.SCORE_BOTTOM_CLOSE, ArmPosition.SCORE_BOTTOM_FAR, ArmPosition.SCORE_FRONT_SCORE_BOTTOM}
     };
-    int Y = 1;
-    int X = 1;
+    public static int Y = 1;
+    public static int X = 1;
 
-    public void moveXRight() {
+    public static void moveXRight() {
         if (!(X == 2)) {
             X++;
         }
     }
-    public void moveXLeft() {
+    public static void moveXLeft() {
         if (!(X == 0)) {
             X--;
         }
     }
-    public void moveYRight() {
+    public static void moveYUp() {
         if (!(Y == 2)) {
             Y++;
         }
     }
-    public void moveYLeft() {
+    public static void moveYDown() {
         if (!(Y == 0)) {
             Y--;
         }
