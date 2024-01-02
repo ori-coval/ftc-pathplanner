@@ -61,8 +61,8 @@ public class TestOpMode extends CommandOpMode {
     public void TurretInit() {
         turret = new Turret(
                 hardwareMap.crservo.get("turretMotorA"),
-                hardwareMap.crservo.get("turretMotorB"),
-                hardwareMap.dcMotor.get("frontLeftLin")
+                hardwareMap.crservo.get("turretMotorB")
+//                hardwareMap.dcMotor.get("frontLeftLin")
         );
     }
 

@@ -13,10 +13,10 @@ public class Turret extends SubsystemBase {
     final double offset = 0;
     private PIDController pidController = new PIDController(1.0/180,0,0);
 
-    public Turret(CRServo turretMotorA, CRServo turretMotorB, DcMotor encoder){
+    public Turret(CRServo turretMotorA, CRServo turretMotorB) {
         this.turretServoA = turretMotorA;
         this.turretServoB = turretMotorB;
-        this.encoder = encoder;
+//        this.encoder = encoder;
     }
     public void setPower (double power) {
         turretServoA.setPower(power);
