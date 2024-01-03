@@ -36,7 +36,7 @@ public class TestOpMode extends CommandOpMode {
 
         DriveTrainInit();
         IMUInit();
-        TurretInit();
+//        TurretInit();
 
         gamepadEx1 = new GamepadEx(gamepad1);
         power = gamepad1.left_trigger-gamepad1.right_trigger;
@@ -58,13 +58,13 @@ public class TestOpMode extends CommandOpMode {
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
     }
-    public void TurretInit() {
-        turret = new Turret(
-                hardwareMap.crservo.get("turretMotorA"),
-                hardwareMap.crservo.get("turretMotorB")
-//                hardwareMap.dcMotor.get("frontLeftLin")
-        );
-    }
+//    public void TurretInit() {
+//        turret = new Turret(
+//                hardwareMap.crservo.get("turretMotorA"),
+//                hardwareMap.crservo.get("turretMotorB"),
+////                new InTake()
+//        );
+//    }
 
     @Override
     public void run() {

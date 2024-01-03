@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretParallel;
@@ -42,24 +43,24 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-//        IMUInit();
-//        DriveTrainInit();
-//        OdometryInit();
-//        IntakeInit();
+        IMUInit();
+        DriveTrainInit();
+        OdometryInit();
+        IntakeInit();
         TurretInit();
 
         gamepadEx1 = new GamepadEx(gamepad1);
       //  gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> odometry.resetLocation()));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, inTake.COLLECT_POWER));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(3)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> inTake.setStackPosition(2)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(1)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> turret.setPower(0.8)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> turret.stop()));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> turret.setPower(-0.2)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(3)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> inTake.setStackPosition(2)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(1)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> turret.setPower(0.6)));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> turret.stop()));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> turret.setPower(-0.2)));
 
     }
 
@@ -85,17 +86,17 @@ public class OpMode extends CommandOpMode {
         );
     }
     public void IntakeInit() {
-        inTake = new InTake(hardwareMap.dcMotor.get("inTake"), hardwareMap.servo.get("inTakeAngle"), gamepad1);
+        inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"), hardwareMap.servo.get("inTakeAngle"), gamepad1);
     }
     public void ElbowInit() {
         elbow = new Elbow(hardwareMap.dcMotor.get("elbow"));
 
     }
-    public void TurretInit() {
+    public void TurretInit()  {
         turret = new Turret(
                 hardwareMap.crservo.get("turretMotorA"),
-                hardwareMap.crservo.get("turretMotorB")
-//                hardwareMap.dcMotor.get("frontLeftLin")
+                hardwareMap.crservo.get("turretMotorB"),
+                hardwareMap.analogInput.get("turretEncoder")
         );
     }
     public void AntiTurretInit() {
@@ -124,7 +125,8 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-//        telemetry.addData("pos",inTake.getPosition());
+        turret.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
+        telemetry.addData("Pos",turret.getEncoderValue());
         telemetry.update();
     }
 }
