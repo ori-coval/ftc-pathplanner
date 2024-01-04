@@ -104,7 +104,7 @@ public class OpMode extends CommandOpMode{
 
         //webcam.stopStreaming();
 
-
+        ArmPositionSelector.telemetry(telemetry);
 //        telemetry.addData("odometry", odometry.getLocation());
         telemetry.update();
     }

@@ -6,14 +6,6 @@ import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 
 public class ArmPositionSelector {
-    private Telemetry telemetry;
-
-
-    /*
-
-
-
-     */
 
     ArmPosition[][] sideScorePositions = {
             {ArmPosition.SCORE_TOP_CLOSE, ArmPosition.SCORE_TOP_FAR, ArmPosition.SCORE_FRONT_SCORE_TOP},
@@ -45,6 +37,21 @@ public class ArmPositionSelector {
     }
     public ArmPosition getPosition() {
         return sideScorePositions[X][Y]; //TODO
+    }
+
+    public static void telemetry(Telemetry telemetry) {
+        for (int yCounter = 0; yCounter < 3; yCounter++) {
+            for (int xCounter = 0; xCounter < 3; xCounter++) {
+                String tempStr = "";
+                if(xCounter == X && yCounter == Y) {
+                    tempStr += "O";
+                } else {
+                    tempStr += "X";
+                }
+                telemetry.addLine(tempStr);
+            }
+        }
+        telemetry.update();
     }
 }
 
