@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.multiSystem;
+package org.firstinspires.ftc.teamcode.Commands.multisystem;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;

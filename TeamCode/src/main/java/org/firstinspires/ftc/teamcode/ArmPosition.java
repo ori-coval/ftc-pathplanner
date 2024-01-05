@@ -4,21 +4,46 @@ public enum ArmPosition {
 
     /*
     clusters- each cluster is a group containing multiple positions that
-    XXX
-    XXX
-    XXX
+
+
+    Assuming the robot is in the right side of the board:
+
+          far  close
+           |      |
+           v      v
+     X     X      X  <- top
+     X     X      X  <- mid
+     X     X      X  <- bottom
+
+     Robot's on the left side:
+
+   close  far
+     |     |
+     v     v
+     X     X      X  <- top
+     X     X      X  <- mid
+     X     X      X  <- bottom
+
+    Robot's on the front of the board:
+
+         front
+           |
+           v
+     X     X      X  <- top
+     X     X      X  <- mid
+     X     X      X  <- bottom
 
      */
 
-    SCORE_BOTTOM_CLOSE(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_BOTTOM_FAR(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_MID_CLOSE(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_MID_FAR(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_TOP_CLOSE(0, 0, 0, 0, Cluster.cluster0),
     SCORE_TOP_FAR(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_FRONT_SCORE_TOP(0,0,0,0, Cluster.cluster0),
-    SCORE_FRONT_SCORE_MID(0,0,0,0, Cluster.cluster0),
-    SCORE_FRONT_SCORE_BOTTOM(0,0,0,0, Cluster.cluster0),
+    SCORE_TOP_FRONT(0, 0, 0, 0, Cluster.cluster0),
+    SCORE_TOP_CLOSE(0, 0, 0, 0, Cluster.cluster0),
+    SCORE_MID_FAR(0, 0, 0, 0, Cluster.cluster0),
+    SCORE_MID_FRONT(0, 0, 0, 0, Cluster.cluster0),
+    SCORE_MID_CLOSE(0, 0, 0, 0, Cluster.cluster0),
+    SCORE_BOTTOM_FAR(0,0,0,0, Cluster.cluster0),
+    SCORE_BOTTOM_FRONT(0,0,0,0, Cluster.cluster0),
+    SCORE_BOTTOM_CLOSE(0,0,0,0, Cluster.cluster0),
     INTAKE(0, 0, 0,0, Cluster.cluster0),
     SAFE_PLACE(0,0,0,0,Cluster.cluster0);
 

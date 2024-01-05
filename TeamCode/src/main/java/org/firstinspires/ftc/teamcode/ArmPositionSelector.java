@@ -6,17 +6,31 @@ import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 
 public class ArmPositionSelector {
-
     ArmPosition[][] sideScorePositions = {
-            {ArmPosition.SCORE_TOP_CLOSE, ArmPosition.SCORE_TOP_FAR, ArmPosition.SCORE_FRONT_SCORE_TOP},
-            {ArmPosition.SCORE_MID_CLOSE, ArmPosition.SCORE_MID_FAR, ArmPosition.SCORE_FRONT_SCORE_MID},
-            {ArmPosition.SCORE_BOTTOM_CLOSE, ArmPosition.SCORE_BOTTOM_FAR, ArmPosition.SCORE_FRONT_SCORE_BOTTOM}
+            {ArmPosition.SCORE_BOTTOM_CLOSE, ArmPosition.SCORE_BOTTOM_FRONT, ArmPosition.SCORE_BOTTOM_FAR},
+            {ArmPosition.SCORE_MID_CLOSE, ArmPosition.SCORE_MID_FRONT, ArmPosition.SCORE_MID_FAR},
+            {ArmPosition.SCORE_TOP_CLOSE, ArmPosition.SCORE_TOP_FRONT, ArmPosition.SCORE_TOP_FAR}
     };
+    String[] robotPosition = {"Left", "Front", "Right"};
+    /*
+        TODO: Left  and Right - X can be 0 or 2 (close or far)
+              Front - X can be only 1 (Front). which means only Y can change
+              These limitations needs to happen in the move methods
+              for example if the position is Left then jump 2 each press in the code.
+              do these changes limitations in the code only,
+              the telemetry view has to stay simple, and constant. In order to not confuse the 2nd driver.
+              In telemetry add another line that indicates which column the user can use to score
+              for example use ^ under the XXX
+              use buttons to choose which position the robot is in: Left, Front or Right.
+    */
+
+
     public static int Y = 1;
-    public static int X = 1;
+    public static int X = 0;
+    public static String position;
 
     public static void moveRight() {
-        if (!(X == 2)) {
+        if (X != 2) {
             X++;
         }
     }
@@ -36,7 +50,7 @@ public class ArmPositionSelector {
         }
     }
     public ArmPosition getPosition() {
-        return sideScorePositions[X][Y]; //TODO
+        return sideScorePositions[Y][X];
     }
 
     public static void telemetry(Telemetry telemetry) {
@@ -51,6 +65,7 @@ public class ArmPositionSelector {
                 telemetry.addLine(tempStr);
             }
         }
+
         telemetry.update();
     }
 }
