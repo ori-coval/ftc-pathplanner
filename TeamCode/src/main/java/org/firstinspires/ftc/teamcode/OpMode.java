@@ -43,14 +43,17 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-        IMUInit();
-        DriveTrainInit();
-        OdometryInit();
-        IntakeInit();
-        TurretInit();
+        gamePadInit();
+        driveTrainInit();
+        odometryInit();
+        intakeInit();
+        turretInit();
 
+    }
+
+    public void gamePadInit() {
         gamepadEx1 = new GamepadEx(gamepad1);
-      //  gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> odometry.resetLocation()));
+        //  gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> odometry.resetLocation()));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
@@ -64,7 +67,7 @@ public class OpMode extends CommandOpMode {
 
     }
 
-    public void DriveTrainInit() {
+    public void driveTrainInit() {
         IMUInit();
         driveTrain = new DriveTrain(hardwareMap.dcMotor.get("backLeftLin")
                 , hardwareMap.dcMotor.get("backRightLin")
@@ -79,31 +82,31 @@ public class OpMode extends CommandOpMode {
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
     }
-    public void OdometryInit() {
+    public void odometryInit() {
         odometry = new Odometry(
                 hardwareMap.dcMotor.get("frontLeftLin"),
                 hardwareMap.dcMotor.get("backLeftLin")
         );
     }
-    public void IntakeInit() {
+    public void intakeInit() {
         inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"), hardwareMap.servo.get("inTakeAngle"), gamepad1);
     }
-    public void ElbowInit() {
+    public void elbowInit() {
         elbow = new Elbow(hardwareMap.dcMotor.get("elbow"));
 
     }
-    public void TurretInit()  {
+    public void turretInit()  {
         turret = new Turret(
                 hardwareMap.crservo.get("turretMotorA"),
                 hardwareMap.crservo.get("turretMotorB"),
                 hardwareMap.analogInput.get("turretEncoder")
         );
     }
-    public void AntiTurretInit() {
+    public void antiTurretInit() {
         antiTurret = new AntiTurret(hardwareMap.servo.get("antiTurret"));
         antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, () -> turret.getEncoderValue()));
     }
-    public void VisionInit(){
+    public void visionInit(){
         teamPropDetector = new TeamPropDetector(AllianceColor.BLUE);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Weiss cam"), cameraMonitorViewId);
