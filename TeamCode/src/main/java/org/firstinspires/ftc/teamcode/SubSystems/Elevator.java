@@ -3,9 +3,12 @@ package org.firstinspires.ftc.teamcode.SubSystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class Elevator extends SubsystemBase {
-    private DcMotor elevatorMotor;
+    private DcMotor motorUp;
+    private DcMotor motorMid;
+    private DcMotor motorDown;
     private DcMotor encoder;
     private final double LEVELS = 3;
     private final double CIRCUMFERENCE = 0;
@@ -15,13 +18,18 @@ public class Elevator extends SubsystemBase {
     private PIDController pidController = new PIDController(1,0,1);
 
 
-    public Elevator(DcMotor elevatorMotor) {
-        this.elevatorMotor = elevatorMotor;
+    public Elevator(DcMotor motorDown,DcMotor motorMid,DcMotor motorUp) {
+        this.motorUp = motorUp;
+        this.motorMid = motorMid;
+        this.motorDown = motorDown;
+        this.motorMid.setDirection(DcMotorSimple.Direction.REVERSE);
         this.encoder = encoder;
     }
 
     public void setPower(double power) {
-        elevatorMotor.setPower(power);
+        motorDown.setPower(power);
+        motorMid.setPower (power);
+        motorUp.setPower  (power);
     }
     public double getEncoderValue(){
         return encoder.getCurrentPosition();

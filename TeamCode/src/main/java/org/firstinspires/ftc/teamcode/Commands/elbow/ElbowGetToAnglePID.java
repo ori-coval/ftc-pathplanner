@@ -22,12 +22,12 @@ public class ElbowGetToAnglePID extends CommandBase {
 
     @Override
     public void execute() {
-        elbow.setPower(pidController.calculate(elbow.getAngle()));
+
     }
 
     @Override
     public void end(boolean interrupted) {
-        elbow.stop();
+
     }
 
     @Override

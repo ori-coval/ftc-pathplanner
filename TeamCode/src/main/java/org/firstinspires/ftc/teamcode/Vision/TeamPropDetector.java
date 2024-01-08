@@ -1,6 +1,16 @@
 package org.firstinspires.ftc.teamcode.Vision;
 
 import org.firstinspires.ftc.teamcode.Side;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.function.Consumer;
+import org.firstinspires.ftc.robotcore.external.function.Continuation;
+import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
+import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
+import org.firstinspires.ftc.vision.VisionProcessor;
+import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -152,5 +162,16 @@ public class TeamPropDetector extends OpenCvPipeline {
                 return -1;
         }
         return -1;
+    }
+
+    public void RGBTelemetry(Telemetry telemetry){
+        telemetry.addData("LeftBlue", this.getSideColor(Side.LEFT, 2));
+        telemetry.addData("RightBlue", this.getSideColor(Side.RIGHT, 2));
+        telemetry.addData("CenterBlue", this.getSideColor(Side.CENTER, 2));
+        telemetry.addData("LeftRed", this.getSideColor(Side.LEFT, 1));
+        telemetry.addData("RightRed", this.getSideColor(Side.RIGHT, 1));
+        telemetry.addData("CenterRed", this.getSideColor(Side.CENTER, 1));
+        telemetry.addData("Side", this.getSide());
+        telemetry.update();
     }
 }
