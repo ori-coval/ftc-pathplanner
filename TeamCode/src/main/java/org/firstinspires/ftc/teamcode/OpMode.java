@@ -25,7 +25,6 @@ import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 import org.firstinspires.ftc.teamcode.SubSystems.Odometry;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
-import org.firstinspires.ftc.teamcode.Vision.Side;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -34,7 +33,6 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @TeleOp(name = "DriveTrain")
 public class OpMode extends CommandOpMode {
 
-    // region SUBSYSTEMS
     DriveTrain driveTrain;
     InTake inTake;
     Elbow elbow;
@@ -46,24 +44,19 @@ public class OpMode extends CommandOpMode {
     BNO055IMU imu;
     TeamPropDetector teamPropDetector;
     OpenCvCamera webcam;
-    Odometry odometry;
     GamepadEx gamepadEx1;
     Extender extender;
-    // endregion
-    
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-        IMUInit();
-        DriveTrainInit();
-        OdometryInit();
-        IntakeInit();
-        TurretInit();
-        ElevatorInit();
-        ElbowInit();
-        ConveyorInit();
-        ExtenderInit();
+        initIMU();
+        initDriveTrain();
+        initIntake();
+        initElevator();
+        initElbow();
+        initConveyor();
+        initExtender();
 
 
         gamepadEx1 = new GamepadEx(gamepad1);
@@ -75,28 +68,25 @@ public class OpMode extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(1)));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> conveyor.setPower(0.5)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> turret.setPower(0.6)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> turret.stop()));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> turret.setPower(-0.2)));
 
     }
 
-    public void DriveTrainInit() {
-        IMUInit();
-        driveTrain = new DriveTrain(hardwareMap.dcMotor.get("backLeftLin")
-                , hardwareMap.dcMotor.get("backRightLin")
-                , hardwareMap.dcMotor.get("frontRightLin")
-                , hardwareMap.dcMotor.get("frontLeftLin")
+    public void initDriveTrain() {
+        initIMU();
+        driveTrain = new DriveTrain(hardwareMap.dcMotor.get("backLeft")
+                , hardwareMap.dcMotor.get("backRight")
+                , hardwareMap.dcMotor.get("frontRight")
+                , hardwareMap.dcMotor.get("frontLeft")
                 , imu);
         driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
     }
-    public void IntakeInit() {
+    public void initIntake() {
         inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"), hardwareMap.servo.get("intakeServo"), gamepad1);
     }
-    public void TurretInit()  {
+    public void initTurret() {
         turret = new Turret(
-                hardwareMap.crservo.get("turretA"),
-                hardwareMap.crservo.get("turretB"),
+                hardwareMap.crservo.get("turretRight"),
+                hardwareMap.crservo.get("turretLeft"),
                 hardwareMap.analogInput.get("turretEncoder")
         );
     }
@@ -104,7 +94,7 @@ public class OpMode extends CommandOpMode {
         antiTurret = new AntiTurret(hardwareMap.servo.get("antiTurret"));
         antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, () -> turret.getEncoderValue()));
     }
-    public void VisionInit(){
+    public void VisionInit() {
         teamPropDetector = new TeamPropDetector(AllianceColor.BLUE);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Weiss cam"), cameraMonitorViewId);
@@ -122,48 +112,39 @@ public class OpMode extends CommandOpMode {
 
         webcam.setPipeline(teamPropDetector);
     }
-    public void ConveyorInit(){
-        conveyor = new Conveyor((CRServo) hardwareMap.servo.get("conveyor"),0);
+    public void initConveyor() {
+        conveyor = new Conveyor(hardwareMap.crservo.get("conveyor"), 0);
 
     }
-    public void ElevatorInit(){
+    public void initElevator() {
         elevator = new Elevator(
                 hardwareMap.dcMotor.get("elevatorDown"),
-                hardwareMap.dcMotor.get("motorMid"),
-                hardwareMap.dcMotor.get("motorUp"));
+                hardwareMap.dcMotor.get("elevatorMid"),
+                hardwareMap.dcMotor.get("elevatorUp"));
     }
-    public void ElbowInit() {
-        elbow = new Elbow(hardwareMap.dcMotor.get("elbow"));
+    public void initElbow() {
+        elbow = new Elbow(hardwareMap.servo.get("elbowRight"),hardwareMap.servo.get("elbowLeft"));
 
     }
-    public void ExtenderInit(){
+    public void initExtender() {
         extender = new Extender(hardwareMap.servo.get("extender"));
 
     }
-    public void CartridgeInit(){
+    public void CartridgeInit() {
         cartridge = new Cartridge(hardwareMap.servo.get("cartridge"));
 
     }
-    public void IMUInit() {
+    public void initIMU() {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
     }
-    public void OdometryInit() {
-        odometry = new Odometry(
-                hardwareMap.dcMotor.get("frontLeftLin"),
-                hardwareMap.dcMotor.get("backLeftLin")
-        );
-    }
-
 
 
     @Override
     public void run() {
         super.run();
-        turret.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
-        telemetry.addData("Pos",turret.getEncoderValue());
-        telemetry.update();
+
     }
 }

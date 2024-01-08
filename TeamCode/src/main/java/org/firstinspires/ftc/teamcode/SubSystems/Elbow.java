@@ -3,23 +3,22 @@ package org.firstinspires.ftc.teamcode.SubSystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Elbow extends SubsystemBase {
-    private DcMotor elbowMotor;
-    private final double elbowTicksPerRotation = 1;
+    private Servo servoRight;
+    private Servo servoLeft;
     private PIDController pidController = new PIDController(0,0,0);
-    public Elbow (DcMotor elbowMotor){
-        this.elbowMotor = elbowMotor;
+    public Elbow (Servo servoLeft,Servo servoRight){
+        this.servoLeft = servoLeft;
+        this.servoRight = servoRight;
     }
-    public void setPower(double power){
-        elbowMotor.setPower(power);
-    }
-    public void stop(){
-        setPower(0);
+    public void setPosition(double position){
+        servoLeft.setPosition(position);
+        servoRight.setPosition(position);
     }
     public double getAngle(){
-        int ticks = elbowMotor.getCurrentPosition();
-        return (ticks/elbowTicksPerRotation)*360;
+        return servoRight.getPosition();
     }
 
     public PIDController getPidController() {

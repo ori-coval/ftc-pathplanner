@@ -24,13 +24,13 @@ public class Conveyor extends SubsystemBase {
         servo.setPower(power);
     }
     public void stop(){setPower(0);}
-    public boolean isPressed(){
-        return limitSwitch.getState();
-    }
-    private void updatePixelCount(){
-        if (wasPressed && !isPressed()){pixelCount += 1;}
-        if (isPressed()){wasPressed = true;}
-    }
+//    public boolean isPressed(){
+//        return limitSwitch.getState();
+//    }
+//    private void updatePixelCount(){
+//        if (wasPressed && !isPressed()){pixelCount += 1;}
+//        if (isPressed()){wasPressed = true;}
+//    }
     public int getPixelCount(){return pixelCount;}
 
     public boolean isRobotFull(){
@@ -38,6 +38,6 @@ public class Conveyor extends SubsystemBase {
     }
     @Override
     public void periodic() {
-        updatePixelCount();
+
     }
 }
