@@ -1,14 +1,6 @@
 package org.firstinspires.ftc.teamcode.Vision;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-
-import org.firstinspires.ftc.robotcore.external.function.Consumer;
-import org.firstinspires.ftc.robotcore.external.function.Continuation;
-import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
-import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
-import org.firstinspires.ftc.vision.VisionProcessor;
-import org.opencv.android.Utils;
+import org.firstinspires.ftc.teamcode.Side;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -18,7 +10,6 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class TeamPropDetector extends OpenCvPipeline {
     private final AllianceColor allianceColor;

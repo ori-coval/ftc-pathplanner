@@ -6,32 +6,32 @@ public enum ArmPosition {
     clusters- each cluster is a group containing multiple positions that
 
 
-    Assuming the robot is in the right side of the board:
+    Assuming the robot is in the right selectedRobotSide of the board:
 
           far  close
            |      |
            v      v
-     X     X      X  <- top
-     X     X      X  <- mid
-     X     X      X  <- bottom
+     isSelectedScoreSideLeft     isSelectedScoreSideLeft      isSelectedScoreSideLeft  <- top
+     isSelectedScoreSideLeft     isSelectedScoreSideLeft      isSelectedScoreSideLeft  <- mid
+     isSelectedScoreSideLeft     isSelectedScoreSideLeft      isSelectedScoreSideLeft  <- bottom
 
-     Robot's on the left side:
+     Robot's on the left selectedRobotSide:
 
    close  far
      |     |
      v     v
-     X     X      X  <- top
-     X     X      X  <- mid
-     X     X      X  <- bottom
+     isSelectedScoreSideLeft     isSelectedScoreSideLeft      isSelectedScoreSideLeft  <- top
+     isSelectedScoreSideLeft     isSelectedScoreSideLeft      isSelectedScoreSideLeft  <- mid
+     isSelectedScoreSideLeft     isSelectedScoreSideLeft      isSelectedScoreSideLeft  <- bottom
 
     Robot's on the front of the board:
 
          front
            |
            v
-     X     X      X  <- top
-     X     X      X  <- mid
-     X     X      X  <- bottom
+     isSelectedScoreSideLeft     isSelectedScoreSideLeft      isSelectedScoreSideLeft  <- top
+     isSelectedScoreSideLeft     isSelectedScoreSideLeft      isSelectedScoreSideLeft  <- mid
+     isSelectedScoreSideLeft     isSelectedScoreSideLeft      isSelectedScoreSideLeft  <- bottom
 
      */
 

@@ -11,7 +11,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Odometry;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
-import org.firstinspires.ftc.teamcode.Vision.Side;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -84,9 +83,9 @@ public class OpMode extends CommandOpMode{
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(()-> ArmPositionSelector.setPosition("Left")));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> ArmPositionSelector.setPosition("Front")));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(()-> ArmPositionSelector.setPosition("Right")));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.LEFT)));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.CENTER)));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.RIGHT)));
 
 
     }
@@ -96,13 +95,14 @@ public class OpMode extends CommandOpMode{
         super.run();
 
         if (opModeIsActive()) {
-            telemetry.addData("LeftBlue", teamPropDetector.getSideColor(Side.LEFT,2));
-            telemetry.addData("RightBlue", teamPropDetector.getSideColor(Side.RIGHT,2));
-            telemetry.addData("CenterBlue", teamPropDetector.getSideColor(Side.CENTER,2));
-            telemetry.addData("LeftRed", teamPropDetector.getSideColor(Side.LEFT,1));
-            telemetry.addData("RightRed", teamPropDetector.getSideColor(Side.RIGHT,1));
-            telemetry.addData("CenterRed", teamPropDetector.getSideColor(Side.CENTER,1));
-            telemetry.addData("Side", teamPropDetector.getSide());
+//            telemetry.addData("LeftBlue", teamPropDetector.getSideColor(Side.LEFT,2));
+//            telemetry.addData("RightBlue", teamPropDetector.getSideColor(Side.RIGHT,2));
+//            telemetry.addData("CenterBlue", teamPropDetector.getSideColor(Side.CENTER,2));
+//            telemetry.addData("LeftRed", teamPropDetector.getSideColor(Side.LEFT,1));
+//            telemetry.addData("RightRed", teamPropDetector.getSideColor(Side.RIGHT,1));
+//            telemetry.addData("CenterRed", teamPropDetector.getSideColor(Side.CENTER,1));
+//            telemetry.addData("Side", teamPropDetector.getSide());
+            telemetry.addData("selectedArmPos", ArmPositionSelector.getPosition());
             telemetry.update();
         }
 
