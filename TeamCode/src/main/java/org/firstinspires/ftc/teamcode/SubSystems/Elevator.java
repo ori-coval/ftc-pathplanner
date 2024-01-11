@@ -9,9 +9,10 @@ public class Elevator extends SubsystemBase {
     private DcMotor[] elevatorMotors = new DcMotor[3];
     private DcMotor encoder;
     private final double LEVELS = 3;
-    private final double CIRCUMFERENCE = 0;
-    private final double TICKS_PER_REV = 0;
-    private final double kg = 0;
+    private final double TEETH_PER_REV = 8;
+    private final double CHAIN_LINK_DISTANCE = 0.8;
+    private final double TICKS_PER_REV = 384.5;
+    private final double KG = 0;
     private PIDController pidController = new PIDController(1,0,1);
 
 
@@ -21,6 +22,7 @@ public class Elevator extends SubsystemBase {
         this.elevatorMotors[2] = elevatorMotor3;
         elevatorMotor2.setDirection(DcMotorSimple.Direction.REVERSE);
         this.encoder = elevatorMotor1;
+        this.encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void setPower(double power) {
@@ -28,16 +30,16 @@ public class Elevator extends SubsystemBase {
             motor.setPower(power);
         }
     }
-    public double getEncoderValue(){
-        return encoder.getCurrentPosition();
-    }
+
     public double getHeight(){
-        double PULLED_LENGTH = CIRCUMFERENCE * encoder.getCurrentPosition() / TICKS_PER_REV;
-        return LEVELS * PULLED_LENGTH;
+        double motorRevs = encoder.getCurrentPosition() / TICKS_PER_REV;
+        double lengthPerRev = CHAIN_LINK_DISTANCE * TEETH_PER_REV;
+        double pulledLength = lengthPerRev * motorRevs;
+        return LEVELS * pulledLength;
     }
 
-    public double getKg() {
-        return kg;
+    public double getKG() {
+        return KG;
     }
 
     public PIDController getPidController() {

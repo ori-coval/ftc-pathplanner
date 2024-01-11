@@ -10,7 +10,7 @@ public class FindGravitationForce extends CommandBase {
     private Elevator elevator;
     private Telemetry telemetry;
     private double previousHeight = 0;
-    private final double THRESHOLD = 0;
+    private final double THRESHOLD = 0.2;
     public FindGravitationForce(Elevator elevator){
         this.elevator = elevator;
         this.telemetry = telemetry;

@@ -24,7 +24,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
 
     @Override
     public void execute() {
-        elevator.setPower(pidController.calculate(elevator.getHeight()) + elevator.getKg());
+        elevator.setPower(pidController.calculate(elevator.getHeight()) + elevator.getKG());
     }
 
     @Override
