@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.Commands.elevator;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 
 public class ElevatorGetToHeightPID extends CommandBase {
@@ -24,7 +26,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
 
     @Override
     public void execute() {
-        elevator.setPower(pidController.calculate(elevator.getHeight()) + elevator.getKG());
+        elevator.setPower(pidController.calculate(elevator.getHeight()) + elevator.getKF());
     }
 
     @Override

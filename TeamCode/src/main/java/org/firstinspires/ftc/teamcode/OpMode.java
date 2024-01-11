@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -13,6 +14,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretParallel;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorGetToHeightPID;
+import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorStayInPlace;
+import org.firstinspires.ftc.teamcode.Commands.elevator.FindGravitationForce;
 import org.firstinspires.ftc.teamcode.Commands.intake.IntakeRotate;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -52,16 +56,19 @@ public class OpMode extends CommandOpMode {
 
 //        initIMU();
 //        initDriveTrain();
-//        initIntake();
+        initIntake();
         initElevator();
 //        initElbow();
 //        initConveyor();
 //        initExtender();
 
 
-//        gamepadEx1 = new GamepadEx(gamepad1);
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
+        gamepadEx1 = new GamepadEx(gamepad1);
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ElevatorGetToHeightPID(20, elevator));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> elevator.setPower(0)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
+
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(3)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> inTake.setStackPosition(2)));
@@ -120,7 +127,8 @@ public class OpMode extends CommandOpMode {
         elevator = new Elevator(
                 hardwareMap.dcMotor.get("elevatorDown"),
                 hardwareMap.dcMotor.get("elevatorMid"),
-                hardwareMap.dcMotor.get("elevatorUp"));
+                hardwareMap.dcMotor.get("elevatorUp"),
+                FtcDashboard.getInstance());
     }
     public void initElbow() {
         elbow = new Elbow(hardwareMap.servo.get("elbowRight"),hardwareMap.servo.get("elbowLeft"));
@@ -145,8 +153,8 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        telemetry.addData("elevatorHeight", elevator.getHeight());
-        telemetry.update();
+//        telemetry.addData("elevatorHeight", elevator.getHeight());
+//        telemetry.update();/
 
     }
 }
