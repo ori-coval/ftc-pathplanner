@@ -24,7 +24,7 @@ public class ArmPositionSelector {
 
     private static int selectedScoreHeight = 1;
     private static boolean isSelectedScoreSideLeft = false;
-    private static Side selectedRobotSide;
+    private static Side selectedRobotSide = Side.CENTER;
 
     public static void setRobotSide(Side side) {
         selectedRobotSide = side;
@@ -61,16 +61,16 @@ public class ArmPositionSelector {
     }
 
     public static void telemetry(Telemetry telemetry) {
-        for (int yCounter = 0; yCounter < 3; yCounter++) {
+        for (int yCounter = 2; yCounter >= 0; yCounter-- ) {
+            String tempStr = "";
             for (int xCounter = 0; xCounter < 2; xCounter++) {
-                String tempStr = "";
                 if (xCounter == (isSelectedScoreSideLeft?0:1) && yCounter == selectedScoreHeight) {
                     tempStr += "X";
                 } else {
                     tempStr += "O";
                 }
-                telemetry.addLine(tempStr);
             }
+            telemetry.addLine(tempStr);
         }
         if (selectedRobotSide.equals(Side.RIGHT)) {
             telemetry.addLine("__^");
