@@ -56,7 +56,7 @@ public class OpMode extends CommandOpMode {
 
 //        initIMU();
 //        initDriveTrain();
-        initIntake();
+//        initIntake();
         initElevator();
 //        initElbow();
 //        initConveyor();
@@ -64,10 +64,12 @@ public class OpMode extends CommandOpMode {
 
 
         gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ElevatorGetToHeightPID(20, elevator));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new FindGravitationForce(elevator, telemetry));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ElevatorGetToHeightPID(25, elevator));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ElevatorGetToHeightPID(0, elevator));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> elevator.setPower(0)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
 
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(3)));
@@ -154,7 +156,7 @@ public class OpMode extends CommandOpMode {
     public void run() {
         super.run();
 //        telemetry.addData("elevatorHeight", elevator.getHeight());
-//        telemetry.update();/
+//        telemetry.update();
 
     }
 }

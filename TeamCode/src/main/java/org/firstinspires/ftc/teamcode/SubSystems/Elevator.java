@@ -19,10 +19,10 @@ public class Elevator extends SubsystemBase {
     private final double TEETH_PER_REV = 8;
     private final double CHAIN_LINK_DISTANCE = 0.8;
     private final double TICKS_PER_REV = 384.5;
-    public static double kP = 0.057;
+    public static double kP = 0.12; //0.057
     public static double kI = 0;
     public static double kD = 0;
-    public static double kF = 0.24;
+    public static double kF = 0.132;
     public static PIDController pidController = new PIDController(kP,kI,kD);
 
 
@@ -50,10 +50,15 @@ public class Elevator extends SubsystemBase {
         return LEVELS * pulledLength;
     }
 
+    public void telemetry() {
+        telemetry.addData("Position", getHeight());
+        telemetry.addData("Target Position", pidController.getSetPoint());
+        telemetry.update();
+    }
+
     @Override
     public void periodic() {
-        telemetry.addData("Position", getHeight());
-        telemetry.update();
+        telemetry();
     }
 
     public double getKF() {
