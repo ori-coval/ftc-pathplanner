@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.message.redux.ReceiveGamepadState;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -14,6 +15,8 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretParallel;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.intake.IntakeRotate;
+import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPID;
+import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPower;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.Conveyor;
@@ -77,7 +80,7 @@ public class OpMode extends CommandOpMode {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.LEFT)));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.CENTER)));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.RIGHT)));
-
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new RotateTurretByPower(0.5, turret));
     }
 
     public void initDriveTrain() {
@@ -98,7 +101,7 @@ public class OpMode extends CommandOpMode {
         turret = new Turret(
                 hardwareMap.crservo.get("turretRight"),
                 hardwareMap.crservo.get("turretLeft"),
-                hardwareMap.analogInput.get("turretEncoder")
+                hardwareMap.dcMotor.get("turretEncoder")
         );
     }
 
@@ -164,8 +167,8 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        telemetry.addData("selectedArmPos", ArmPositionSelector.getPosition());
-        ArmPositionSelector.telemetry(telemetry);
+        telemetry.addData("turretAngle", turret.getAngle());
+        telemetry.addData("anti turret angle", antiTurret.getPosition());
         telemetry.update();
     }
 }
