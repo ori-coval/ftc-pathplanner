@@ -167,8 +167,10 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        telemetry.addData("turretAngle", turret.getAngle());
-        telemetry.addData("anti turret angle", antiTurret.getPosition());
+//        telemetry.addData("turretAngle", turret.getAngle());
+//        telemetry.addData("anti turret angle", antiTurret.getPosition());
+        ArmPositionSelector.telemetry(telemetry);
+        telemetry.addData("arm position: ", ArmPositionSelector.getPosition());
         telemetry.update();
     }
 }

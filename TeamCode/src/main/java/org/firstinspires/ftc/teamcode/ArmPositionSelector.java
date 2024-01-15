@@ -8,7 +8,7 @@ public class ArmPositionSelector {
             {ArmPosition.SCORE_MID_CLOSE, ArmPosition.SCORE_MID_FAR},
             {ArmPosition.SCORE_BOTTOM_CLOSE, ArmPosition.SCORE_BOTTOM_FAR}
     };
-    public static ArmPosition[] frontScorePositions = {ArmPosition.SCORE_BOTTOM_FRONT, ArmPosition.SCORE_MID_FRONT, ArmPosition.SCORE_TOP_FRONT};
+    public static ArmPosition[] frontScorePositions = {ArmPosition.SCORE_TOP_FRONT, ArmPosition.SCORE_MID_FRONT, ArmPosition.SCORE_BOTTOM_FRONT};
     private static int selectedScoreHeight = 1;
     private static boolean isSelectedScoreSideLeft = false;
     private static Side selectedRobotSide = Side.CENTER;
@@ -28,14 +28,14 @@ public class ArmPositionSelector {
         isSelectedScoreSideLeft = true;}
 
     public static void moveUp() {
-        if (selectedScoreHeight != 2) {
-            selectedScoreHeight++;
+        if (selectedScoreHeight != 0) {
+            selectedScoreHeight--;
         }
     }
 
     public static void moveDown() {
-        if (selectedScoreHeight != 0) {
-            selectedScoreHeight--;
+        if (selectedScoreHeight != 2) {
+            selectedScoreHeight++;
         }
     }
 
@@ -48,7 +48,7 @@ public class ArmPositionSelector {
     }
 
     public static void telemetry(Telemetry telemetry) {
-        for (int yCounter = 2; yCounter >= 0; yCounter-- ) {
+        for (int yCounter = 0; yCounter < 3; yCounter++ ) {
             String tempStr = "";
             for (int xCounter = 0; xCounter < 2; xCounter++) {
                 if (xCounter == (isSelectedScoreSideLeft?0:1) && yCounter == selectedScoreHeight) {
@@ -66,7 +66,6 @@ public class ArmPositionSelector {
         } else {
             telemetry.addLine("^__");
         }
-        telemetry.update();
     }
 }
 
