@@ -23,7 +23,8 @@ public class Extender extends SubsystemBase {
         linearServo.setPosition(length.servoPosition);
         currentLength = length;
     }
-    public void setPosition(double pos){linearServo.setPosition(pos+OFSET);}
+//    public void setPosition(double pos){linearServo.setPosition(pos+OFSET);}
+    public void setPosition(double pos){linearServo.setPosition(0.05+pos);}
     public Length getPosition(){
         return currentLength;
     }

@@ -8,29 +8,20 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Conveyor extends SubsystemBase {
-    private CRServo servo;
     private DigitalChannel limitSwitch;
-    public final double IN_POWER = 0.5;
-    public final double OUT_POWER = -0.5;
-
     private int pixelCount = 0;
     private boolean wasPressed;
 
-    public Conveyor(CRServo servo, int pixelCount){
-        this.servo = servo;
+    public Conveyor(int pixelCount){
         this.pixelCount = pixelCount;
     }
-    public void setPower(double power){
-        servo.setPower(power);
+    public boolean isPressed(){
+        return limitSwitch.getState();
     }
-    public void stop(){setPower(0);}
-//    public boolean isPressed(){
-//        return limitSwitch.getState();
-//    }
-//    private void updatePixelCount(){
-//        if (wasPressed && !isPressed()){pixelCount += 1;}
-//        if (isPressed()){wasPressed = true;}
-//    }
+    private void updatePixelCount(){
+        if (wasPressed && !isPressed()){pixelCount += 1;}
+        if (isPressed()){wasPressed = true;}
+    }
     public int getPixelCount(){return pixelCount;}
 
     public boolean isRobotFull(){

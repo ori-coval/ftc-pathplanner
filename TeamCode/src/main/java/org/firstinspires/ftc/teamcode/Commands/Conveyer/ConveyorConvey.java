@@ -17,11 +17,8 @@ public class ConveyorConvey extends CommandBase {
 
     @Override
     public void initialize() {
-        conveyor.setPower(power);
     }
 
     @Override
-    public void end(boolean interrupted) {
-        conveyor.stop();
-    }
+    public void end(boolean interrupted) {}
 }

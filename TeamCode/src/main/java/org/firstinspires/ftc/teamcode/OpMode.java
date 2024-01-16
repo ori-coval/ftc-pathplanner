@@ -51,7 +51,7 @@ public class OpMode extends CommandOpMode {
         CommandScheduler.getInstance().reset();
 
         initIMU();
-//        initDriveTrain();
+        initDriveTrain();
         initIntake();
         initElevator();
         initElbow();
@@ -61,16 +61,16 @@ public class OpMode extends CommandOpMode {
 
 
         gamepadEx1 = new GamepadEx(gamepad1);
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(3)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> inTake.setStackPosition(2)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(1)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.CLOSED)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.OPEN)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.SEMI_OPEN)));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.CLOSED)));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.OPEN)));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.SEMI_OPEN)));
 
 
     }
@@ -117,7 +117,7 @@ public class OpMode extends CommandOpMode {
         webcam.setPipeline(teamPropDetector);
     }
     public void initConveyor() {
-        conveyor = new Conveyor(hardwareMap.crservo.get("conveyor"), 0);
+        conveyor = new Conveyor(0);
 
     }
     public void initElevator() {
@@ -149,6 +149,9 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-
+//        inTake.setPower(gamepad1.left_trigger);
+        extender.setPosition(gamepad1.left_trigger*0.7);
+//        telemetry.addData("meow",extender.getPosition());
+//        telemetry.update();
     }
 }

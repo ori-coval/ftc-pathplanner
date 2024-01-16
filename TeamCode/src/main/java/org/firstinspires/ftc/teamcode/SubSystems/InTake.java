@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -26,26 +27,21 @@ public class InTake extends SubsystemBase {
 
     public InTake(DcMotorEx inTakeMotor, Servo inTakeAngle, Gamepad gamepad){
         this.inTakeMotor = inTakeMotor;
+        this.inTakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.inTakeAngle = inTakeAngle;
         this.gamepad = gamepad;
     }
     public void setPower(double power){
         inTakeMotor.setPower(power);
     }
-
     public void stop(){
         setPower(0);
     }
 
-    public void setPosition(double position){
-        inTakeAngle.setPosition(position);
-    }
-    public double getPosition(){return inTakeAngle.getPosition();}
-
+    public void setPosition(double position){inTakeAngle.setPosition(position);}
     public void setStackPosition(int position) {
         currentStackPosition = STACK_POSITION[position];
     }
-
     public double getStackPosition() {
         return currentStackPosition;
     }
