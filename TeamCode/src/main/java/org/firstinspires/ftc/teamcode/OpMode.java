@@ -174,16 +174,13 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        turret.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
-//        telemetry.addData("turretAngle", turret.getAngle());
-//        telemetry.addData("anti turret angle", antiTurret.getPosition());
-        ftcDashboard.getTelemetry().addData("meow",turret.getAngle());
+        turret.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
+        ftcDashboard.getTelemetry().addData("Position", turret.getAngle());
+        ftcDashboard.getTelemetry().addData("Target", turret.getPidController().getSetPoint());
         ftcDashboard.getTelemetry().update();
-        telemetry.addData("turretAngleMeow", turret.getAngle());
-        telemetry.addData("pid?", turret.getPidController().calculate(turret.getAngle(),180));
 
-        ArmPositionSelector.telemetry(telemetry);
-        telemetry.addData("arm position: ", ArmPositionSelector.getPosition());
-        telemetry.update();
+//        ArmPositionSelector.telemetry(telemetry);
+//        telemetry.addData("arm position: ", ArmPositionSelector.getPosition());
+//        telemetry.update();
     }
 }
