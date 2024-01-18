@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretParallel;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetLength;
 import org.firstinspires.ftc.teamcode.Commands.intake.IntakeRotate;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -61,8 +62,9 @@ public class OpMode extends CommandOpMode {
 
 
         gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ExtenderSetLength(extender,Extender.Length.OPEN));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetLength(extender, Extender.Length.CLOSED));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetLength(extender,Extender.Length.MID_WAY));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(3)));
@@ -149,9 +151,8 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-//        inTake.setPower(gamepad1.left_trigger);
-        extender.setPosition(gamepad1.left_trigger*0.7);
-//        telemetry.addData("meow",extender.getPosition());
-//        telemetry.update();
+
+        telemetry.addData("meow",extender.getPosition());
+        telemetry.update();
     }
 }

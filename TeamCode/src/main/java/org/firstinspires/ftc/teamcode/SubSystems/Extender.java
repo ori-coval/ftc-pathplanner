@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Extender extends SubsystemBase {
 
     public enum Length {
-        CLOSED(0), MID_WAY(0.25), OPEN(0.5);
+        CLOSED(0.3), MID_WAY(0.17), OPEN(0.05);
         private final double servoPosition;
         Length(double length){
             this.servoPosition = length;
