@@ -56,7 +56,7 @@ public class OpMode extends CommandOpMode {
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
-         ftcDashboard = FtcDashboard.getInstance();
+        ftcDashboard = FtcDashboard.getInstance();
 
 //        initIMU();
 //        initDriveTrain();
@@ -69,24 +69,8 @@ public class OpMode extends CommandOpMode {
         initTurret();
 
         gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx2 = new GamepadEx(gamepad2);
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(3)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> inTake.setStackPosition(2)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(1)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> conveyor.setPower(0.5)));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.LEFT)));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.CENTER)));
-//        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.RIGHT)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new RotateTurretByPID(turret,180 ));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new RotateTurretByPID(turret,0 ));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new RotateTurretByPID(turret,180));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new RotateTurretByPID(turret,0));
     }
 
     public void initDriveTrain() {
@@ -174,9 +158,10 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        turret.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
+//        turret.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
         ftcDashboard.getTelemetry().addData("Position", turret.getAngle());
         ftcDashboard.getTelemetry().addData("Target", turret.getPidController().getSetPoint());
+        ftcDashboard.getTelemetry().addData("Power", turret.getPidController().calculate(turret.getAngle()));
         ftcDashboard.getTelemetry().update();
 
 //        ArmPositionSelector.telemetry(telemetry);

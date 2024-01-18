@@ -19,7 +19,7 @@ public class Turret extends SubsystemBase {
     private final double OFFSET = 0;
     private final double TICKS_PER_REV = 8192;
     private final double GEAR_RATIO = 21.0/95;
-    public static double kP = 0.0027; // I think it should be 1/180 instead of 1/360/
+    public static double kP = 0.0056;
     public static double kI = 0;
     public static double kD = 0;
 
