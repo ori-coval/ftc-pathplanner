@@ -164,8 +164,8 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        telemetry.addData("selectedArmPos", ArmPositionSelector.getPosition());
         ArmPositionSelector.telemetry(telemetry);
+        telemetry.addData("arm position: ", ArmPositionSelector.getPosition());
         telemetry.update();
     }
 }
