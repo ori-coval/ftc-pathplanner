@@ -51,17 +51,17 @@ public class OpMode extends CommandOpMode {
         CommandScheduler.getInstance().reset();
 
         initIMU();
-        initDriveTrain();
+//        initDriveTrain();
         initIntake();
-        initElevator();
-        initElbow();
+//        initElevator();
+//        initElbow();
         initConveyor();
-        initExtender();
-        initCartridge();
+//        initExtender();
+//        initCartridge();
 
 
         gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, inTake.COLLECT_POWER));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
@@ -153,6 +153,7 @@ public class OpMode extends CommandOpMode {
         super.run();
 
         telemetry.addData("Pixel Count", conveyor.getPixelCount());
+        telemetry.update();
 
     }
 }

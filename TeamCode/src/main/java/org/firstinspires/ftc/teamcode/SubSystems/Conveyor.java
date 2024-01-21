@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Conveyor extends SubsystemBase {
     private DigitalChannel limitSwitch;
-    private int pixelCount = 0;
-    private boolean wasPressed;
+    private int pixelCount;
+    private boolean wasPressed = false;
 
     public Conveyor(int pixelCount, DigitalChannel limitSwitch){
         this.pixelCount = pixelCount;
@@ -20,8 +20,14 @@ public class Conveyor extends SubsystemBase {
         return limitSwitch.getState();
     }
     private void updatePixelCount(){
-        if (wasPressed && !isPressed()){pixelCount += 1;}
-        if (isPressed()){wasPressed = true;}
+        //TODO: need to change the switch to add on press and not on release
+        if (wasPressed && !isPressed()){
+            pixelCount++;
+            wasPressed = false;
+        }
+        if (isPressed()) {
+            wasPressed = true;
+        }
     }
     public int getPixelCount(){return pixelCount;}
 
