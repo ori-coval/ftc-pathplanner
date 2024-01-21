@@ -117,7 +117,9 @@ public class OpMode extends CommandOpMode {
         webcam.setPipeline(teamPropDetector);
     }
     public void initConveyor() {
-        conveyor = new Conveyor(0);
+        conveyor = new Conveyor(0,
+                hardwareMap.digitalChannel.get("switch")
+        );
 
     }
     public void initElevator() {
@@ -149,9 +151,8 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-//        inTake.setPower(gamepad1.left_trigger);
-        extender.setPosition(gamepad1.left_trigger*0.7);
-//        telemetry.addData("meow",extender.getPosition());
-//        telemetry.update();
+
+        telemetry.addData("Pixel Count", conveyor.getPixelCount());
+
     }
 }

@@ -12,8 +12,9 @@ public class Conveyor extends SubsystemBase {
     private int pixelCount = 0;
     private boolean wasPressed;
 
-    public Conveyor(int pixelCount){
+    public Conveyor(int pixelCount, DigitalChannel limitSwitch){
         this.pixelCount = pixelCount;
+        this.limitSwitch = limitSwitch;
     }
     public boolean isPressed(){
         return limitSwitch.getState();
@@ -29,6 +30,6 @@ public class Conveyor extends SubsystemBase {
     }
     @Override
     public void periodic() {
-
+        updatePixelCount();
     }
 }
