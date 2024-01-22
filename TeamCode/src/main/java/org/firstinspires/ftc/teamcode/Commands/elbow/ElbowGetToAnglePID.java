@@ -15,6 +15,7 @@ public class ElbowGetToAnglePID extends CommandBase {
     public ElbowGetToAnglePID(Elbow elbow, double goalAngle){
         this.elbow = elbow;
         this.goalAngle = goalAngle;
+        pidController = elbow.getPidController();
         addRequirements(elbow);
         pidController.setSetPoint(goalAngle);
         pidController.setTolerance(5);

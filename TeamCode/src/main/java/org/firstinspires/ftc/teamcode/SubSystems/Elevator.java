@@ -22,8 +22,8 @@ public class Elevator extends SubsystemBase {
         this.motorUp = motorUp;
         this.motorMid = motorMid;
         this.motorDown = motorDown;
+        this.encoder = motorDown;
         this.motorMid.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.encoder = encoder;
     }
 
     public void setPower(double power) {
