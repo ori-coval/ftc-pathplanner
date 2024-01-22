@@ -34,6 +34,8 @@ public class Turret extends SubsystemBase {
         this.turretServoA.setDirection(DcMotorSimple.Direction.REVERSE);
         this.turretServoB.setDirection(DcMotorSimple.Direction.REVERSE);
         this.turretEncoder = turretEncoder;
+        turretEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); //resets encoder to 0
+        turretEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //makes it use power from -1 to 1
 
     }
     public void setPower (double power) {
