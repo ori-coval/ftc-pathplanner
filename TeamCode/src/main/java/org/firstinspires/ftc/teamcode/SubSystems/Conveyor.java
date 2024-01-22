@@ -1,33 +1,26 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.Servo;
 
 public class Conveyor extends SubsystemBase {
     private DigitalChannel limitSwitch;
     private int pixelCount;
-    private boolean wasPressed = false;
+    private boolean lastState = false;
 
     public Conveyor(int pixelCount, DigitalChannel limitSwitch){
         this.pixelCount = pixelCount;
         this.limitSwitch = limitSwitch;
     }
-    public boolean isPressed(){
+    public boolean currentState(){
         return limitSwitch.getState();
     }
     private void updatePixelCount(){
-        //TODO: need to change the switch to add on press and not on release
-        if (wasPressed && !isPressed()){
+        if (!lastState && currentState()){
             pixelCount++;
-            wasPressed = false;
         }
-        if (isPressed()) {
-            wasPressed = true;
-        }
+        lastState = currentState();
+
     }
     public int getPixelCount(){return pixelCount;}
 
