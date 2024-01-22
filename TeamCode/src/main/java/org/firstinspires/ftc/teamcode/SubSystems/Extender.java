@@ -24,4 +24,5 @@ public class Extender extends SubsystemBase {
     public double getLength(){
         return lastLength;
     }
+    public double getPos(){return linearServo.getPosition();}
 }

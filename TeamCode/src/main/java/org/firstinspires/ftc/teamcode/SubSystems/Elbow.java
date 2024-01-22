@@ -9,13 +9,13 @@ public class Elbow extends SubsystemBase {
     private Servo servoRight;
     private Servo servoLeft;
     private PIDController pidController = new PIDController(0,0,0);
-    public Elbow (Servo servoLeft,Servo servoRight, PIDController pidController){
+    public Elbow (Servo servoLeft,Servo servoRight){
         this.servoLeft = servoLeft;
         this.servoRight = servoRight;
-        this.pidController = pidController;
+        this.servoRight.setDirection(Servo.Direction.REVERSE);
     }
     public void setPosition(double position){
-        servoLeft.setPosition(position);
+        servoLeft.setPosition (position);
         servoRight.setPosition(position);
     }
     public double getAngle(){
