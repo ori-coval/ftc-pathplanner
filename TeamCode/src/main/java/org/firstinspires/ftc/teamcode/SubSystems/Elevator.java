@@ -14,7 +14,6 @@ public class Elevator extends SubsystemBase {
     private DcMotor[] elevatorMotors = new DcMotor[3];
     private DcMotor encoder;
     private final double LEVELS = 3;
-
     private final double TEETH_PER_REV = 8;
     private final double CHAIN_LINK_DISTANCE = 0.8;
     private final double TICKS_PER_REV = 384.5;

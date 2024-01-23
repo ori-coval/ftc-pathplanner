@@ -9,5 +9,4 @@ public class ExtenderSetLength extends InstantCommand {
     public ExtenderSetLength(Extender extender, double length){
         super(()->extender.setLength(length),extender);
     }
-
 }
