@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Vision;
 
+import org.firstinspires.ftc.teamcode.Side;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
@@ -19,7 +20,6 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class TeamPropDetector extends OpenCvPipeline {
     private final AllianceColor allianceColor;
