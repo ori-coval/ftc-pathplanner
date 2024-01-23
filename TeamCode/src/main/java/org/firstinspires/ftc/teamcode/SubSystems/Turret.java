@@ -16,17 +16,11 @@ public class Turret extends SubsystemBase {
     private DcMotor turretEncoder;
     private final double TICKS_PER_REV = 8192;
     private final double GEAR_RATIO = 21.0/95;
-    public static double kP = 0.0056;
+    public static double kP = 0.08;
     public static double kI = 0;
     public static double kD = 0;
 
     private PIDController pidController = new PIDController(kP, kI, kD);
-
-    /*
-    Do we really need PID for the turret?
-    How do we decide what is the 0 angle of the encoder?
-    When do we reset the encoder?
-     */
 
     public Turret(CRServo turretMotorA, CRServo turretMotorB, DcMotor turretEncoder) {
         this.turretServoA = turretMotorA;

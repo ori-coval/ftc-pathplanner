@@ -49,14 +49,11 @@ public class OpMode extends CommandOpMode {
     TeamPropDetector teamPropDetector;
     OpenCvCamera webcam;
     GamepadEx gamepadEx1;
-    GamepadEx gamepadEx2;
     Extender extender;
-    FtcDashboard ftcDashboard;
 
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
-        ftcDashboard = FtcDashboard.getInstance();
 
 //        initIMU();
 //        initDriveTrain();
@@ -69,8 +66,9 @@ public class OpMode extends CommandOpMode {
         initTurret();
 
         gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new RotateTurretByPID(turret,180));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new RotateTurretByPID(turret,0));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new RotateTurretByPID(turret,90));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new RotateTurretByPID(turret,-90));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new RotateTurretByPID(turret,0));
     }
 
     public void initDriveTrain() {
@@ -158,5 +156,6 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
+//        turret.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
     }
 }
