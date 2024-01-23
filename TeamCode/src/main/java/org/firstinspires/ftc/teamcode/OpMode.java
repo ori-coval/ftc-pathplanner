@@ -44,6 +44,7 @@ public class OpMode extends CommandOpMode {
     OpenCvCamera webcam;
     GamepadEx gamepadEx1;
     Extender extender;
+
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
@@ -56,7 +57,7 @@ public class OpMode extends CommandOpMode {
         initConveyor();
         initExtender();
         initCartridge();
-
+        initTurret();
 
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ExtenderSetLength(extender,Extender.Length.OPEN));
@@ -71,8 +72,6 @@ public class OpMode extends CommandOpMode {
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.OPEN)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.SEMI_OPEN)));
 
-
-
     }
 
     public void initDriveTrain() {
@@ -84,20 +83,24 @@ public class OpMode extends CommandOpMode {
                 , imu);
         driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
     }
+
     public void initIntake() {
         inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"), hardwareMap.servo.get("intakeServo"), gamepad1);
     }
+
     public void initTurret() {
         turret = new Turret(
                 hardwareMap.crservo.get("turretRight"),
                 hardwareMap.crservo.get("turretLeft"),
-                hardwareMap.analogInput.get("turretEncoder")
+                hardwareMap.dcMotor.get("backLeft")
         );
     }
+
     public void AntiTurretInit() {
         antiTurret = new AntiTurret(hardwareMap.servo.get("antiTurret"));
-        antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, () -> turret.getEncoderValue()));
+        antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, () -> turret.getAngle()));
     }
+
     public void VisionInit() {
         teamPropDetector = new TeamPropDetector(AllianceColor.BLUE);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -116,10 +119,12 @@ public class OpMode extends CommandOpMode {
 
         webcam.setPipeline(teamPropDetector);
     }
+
     public void initConveyor() {
         conveyor = new Conveyor(0);
 
     }
+
     public void initElevator() {
         elevator = new Elevator(
                 hardwareMap.dcMotor.get("elevatorDown"),
@@ -127,10 +132,12 @@ public class OpMode extends CommandOpMode {
                 hardwareMap.dcMotor.get("elevatorUp")
         );
     }
+
     public void initElbow() {
-        elbow = new Elbow(hardwareMap.servo.get("elbowRight"),hardwareMap.servo.get("elbowLeft"));
+        elbow = new Elbow(hardwareMap.servo.get("elbowRight"), hardwareMap.servo.get("elbowLeft"));
 
     }
+
     public void initExtender() {
         extender = new Extender(hardwareMap.servo.get("extender"));
 
@@ -139,12 +146,14 @@ public class OpMode extends CommandOpMode {
         cartridge = new Cartridge(hardwareMap.servo.get("cartridge"));
 
     }
+
     public void initIMU() {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
     }
+
 
 
     @Override

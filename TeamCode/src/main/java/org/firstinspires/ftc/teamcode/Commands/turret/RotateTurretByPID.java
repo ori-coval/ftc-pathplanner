@@ -9,9 +9,10 @@ public class RotateTurretByPID extends CommandBase {
     private double setPoint;
     private PIDController pidController;
     private Turret turret;
-    public RotateTurretByPID(double setPoint, Turret turret){
+    public RotateTurretByPID(Turret turret, double setPoint){
         this.setPoint= setPoint;
         this.turret = turret;
+        pidController = turret.getPidController();
         addRequirements(turret);
 
     }
@@ -19,12 +20,13 @@ public class RotateTurretByPID extends CommandBase {
     @Override
     public void initialize() {
         pidController.setSetPoint(setPoint);
-        pidController.setTolerance(0.08);
+//        pidController.setTolerance(0.08);
+        pidController.setTolerance(0.5);
     }
 
     @Override
     public void execute() {
-        turret.setPower(pidController.calculate(turret.getEncoderValue()));
+        turret.setPower(pidController.calculate(turret.getAngle()));
     }
 
     @Override
