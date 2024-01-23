@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetLength;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
-import org.firstinspires.ftc.teamcode.SubSystems.Conveyor;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
@@ -37,7 +36,6 @@ public class OpMode extends CommandOpMode {
     Turret turret;
     AntiTurret antiTurret;
     Cartridge cartridge;
-    Conveyor conveyor;
     Elevator elevator;
     BNO055IMU imu;
     TeamPropDetector teamPropDetector;
@@ -53,7 +51,6 @@ public class OpMode extends CommandOpMode {
 //        initIntake();
         initElevator();
         initElbow();
-        initConveyor();
         initExtender();
         initCartridge();
 
@@ -62,6 +59,7 @@ public class OpMode extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ExtenderSetLength(extender,Extender.Length.OPEN));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetLength(extender, Extender.Length.CLOSED));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetLength(extender,Extender.Length.MID_WAY));
+
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(3)));
@@ -85,7 +83,9 @@ public class OpMode extends CommandOpMode {
         driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
     }
     public void initIntake() {
-        inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"), hardwareMap.servo.get("intakeServo"), gamepad1);
+        inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"),
+                hardwareMap.servo.get("intakeServo"),
+                hardwareMap.digitalChannel.get("switch"));
     }
     public void initTurret() {
         turret = new Turret(
@@ -115,10 +115,6 @@ public class OpMode extends CommandOpMode {
         });
 
         webcam.setPipeline(teamPropDetector);
-    }
-    public void initConveyor() {
-        conveyor = new Conveyor(0);
-
     }
     public void initElevator() {
         elevator = new Elevator(
@@ -150,10 +146,7 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-//        telemetry.addData("elevatorHeight", elevator.getHeight());
-//        telemetry.update();
 
-        telemetry.addData("meow",extender.getPosition());
-        telemetry.update();
+
     }
 }
