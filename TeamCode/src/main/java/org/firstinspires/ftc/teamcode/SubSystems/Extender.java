@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Extender extends SubsystemBase {
     private Servo linearServo;
-    private final double elbow0 = 0;
-    private final double elbow1 = 0;
+    private final double elbow0 = 1;
+    private final double elbow1 = 1;
     private double lastLength;
     private double lengthToRotation(double length) {
         lastLength = length;
@@ -17,12 +19,18 @@ public class Extender extends SubsystemBase {
     public Extender (Servo linearServo){
         this.linearServo = linearServo;
     }
+
+    public void setPosition(double pos) {
+        linearServo.setPosition(pos);
+    }
+
     public void setLength(double length){
         lastLength = length;
-        linearServo.setPosition(lengthToRotation(length));
+//        linearServo.setPosition(lengthToRotation(length));
+        linearServo.setPosition(length);
     }
     public double getLength(){
         return lastLength;
     }
-    public double getPos(){return linearServo.getPosition();}
+
 }

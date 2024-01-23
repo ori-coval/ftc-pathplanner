@@ -14,9 +14,8 @@ public class AntiTurretParallel extends CommandBase {
         this.turretAngle = turretAngle;
         addRequirements(antiTurret);
     }
-
     @Override
     public void execute() {
-        antiTurret.setPosition(turretAngle.getAsDouble());
+        antiTurret.setPos(turretAngle.getAsDouble());
     }
 }

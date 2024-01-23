@@ -2,17 +2,18 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretParallel;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToAnglePID;
 import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorGetToHeightPID;
 import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetLength;
+import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPID;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -63,6 +64,12 @@ public class OpMode extends CommandOpMode {
 
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, true));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> elbow.setPosition(0.2)));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> antiTurret.setPos(1)));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> antiTurret.setPos(-1)));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> antiTurret.setPos(0)));
+
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetLength(extender, 0));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ElbowGetToAnglePID(elbow, 0));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ElevatorGetToHeightPID(elevator, 0));
@@ -93,7 +100,6 @@ public class OpMode extends CommandOpMode {
 
     public void initAntiTurret() {
         antiTurret = new AntiTurret(hardwareMap.servo.get("antiTurret"));
-        antiTurret.setDefaultCommand(new AntiTurretParallel(antiTurret, () -> turret.getAngle()));
     }
 
     public void VisionInit() {
@@ -129,12 +135,16 @@ public class OpMode extends CommandOpMode {
     }
 
     public void initElbow() {
-        elbow = new Elbow(hardwareMap.servo.get("elbowRight"),hardwareMap.servo.get("elbowLeft"));
+        elbow = new Elbow(hardwareMap.servo.get("elbowRight"),
+                hardwareMap.servo.get("elbowLeft"),
+                hardwareMap.analogInput.get("elbowEncoder")
+        );
     }
 
     public void initExtender() {
-        extender = new Extender(hardwareMap.servo.get("extender"));
-
+        extender = new Extender(
+                hardwareMap.servo.get("extender")
+        );
     }
     public void initCartridge() {
         cartridge = new Cartridge(hardwareMap.servo.get("cartridge"));
@@ -147,13 +157,12 @@ public class OpMode extends CommandOpMode {
         imu.initialize(parameters);
     }
 
-
-
     @Override
     public void run() {
         super.run();
-        telemetry.addData("extender length", extender.getLength());
-        telemetry.addData("elbow angle", elbow.getAngle());
+//        elbow.setPosition(gamepadEx2.getLeftX() * 0.2 + 0.2);
+        telemetry.addData("joystick value", gamepadEx2.getLeftX() * 0.1 + 0.2);
+        telemetry.addData("elbow angle", elbow.getPosition());
         telemetry.addData("elevator height", elevator.getHeight());
         telemetry.addData("turret angle", turret.getAngle());
         telemetry.update();
