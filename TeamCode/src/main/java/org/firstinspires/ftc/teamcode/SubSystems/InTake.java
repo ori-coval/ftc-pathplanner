@@ -6,13 +6,16 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class InTake extends SubsystemBase {
     private DcMotorEx inTakeMotor;
     private Servo inTakeAngle;
-    private Gamepad gamepad;
+    private DigitalChannel limitSwitch;
+    private int pixelCount;
+    private boolean lastState = false;
     public final double COLLECT_POWER = 1;
     public final double EJECT_POWER = -0.9;
     public final double[] STACK_POSITION = {0, 0.07, 0.13, 0.21, 0.77};
@@ -25,12 +28,29 @@ public class InTake extends SubsystemBase {
     */
     private double currentStackPosition = STACK_POSITION[4];
 
-    public InTake(DcMotorEx inTakeMotor, Servo inTakeAngle, Gamepad gamepad){
+    public InTake(DcMotorEx inTakeMotor, Servo inTakeAngle ,DigitalChannel limitSwitch){
+        this.limitSwitch = limitSwitch;
         this.inTakeMotor = inTakeMotor;
         this.inTakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.inTakeAngle = inTakeAngle;
-        this.gamepad = gamepad;
     }
+
+    public boolean currentState(){
+        return limitSwitch.getState();
+    }
+    private void updatePixelCount(){
+        if (!lastState && currentState()){
+            pixelCount++;
+        }
+        lastState = currentState();
+    }
+    public int getPixelCount(){return pixelCount;}
+    public boolean isRobotFull(){
+        return getPixelCount() >= 2;
+    }
+
+
+
     public void setPower(double power){
         inTakeMotor.setPower(power);
     }
@@ -58,5 +78,6 @@ public class InTake extends SubsystemBase {
     @Override
     public void periodic() {
         updatePosition();
+        updatePixelCount();
     }
 }

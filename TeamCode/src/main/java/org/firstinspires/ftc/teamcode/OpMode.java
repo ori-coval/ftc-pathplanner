@@ -2,12 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -16,13 +14,11 @@ import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.intake.IntakeRotate;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
-import org.firstinspires.ftc.teamcode.SubSystems.Conveyor;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
-import org.firstinspires.ftc.teamcode.SubSystems.Odometry;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
@@ -39,7 +35,6 @@ public class OpMode extends CommandOpMode {
     Turret turret;
     AntiTurret antiTurret;
     Cartridge cartridge;
-    Conveyor conveyor;
     Elevator elevator;
     BNO055IMU imu;
     TeamPropDetector teamPropDetector;
@@ -55,7 +50,7 @@ public class OpMode extends CommandOpMode {
         initIntake();
 //        initElevator();
 //        initElbow();
-        initConveyor();
+
 //        initExtender();
 //        initCartridge();
 
@@ -85,7 +80,9 @@ public class OpMode extends CommandOpMode {
         driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
     }
     public void initIntake() {
-        inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"), hardwareMap.servo.get("intakeServo"), gamepad1);
+        inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"),
+                hardwareMap.servo.get("intakeServo"),
+                hardwareMap.digitalChannel.get("switch"));
     }
     public void initTurret() {
         turret = new Turret(
@@ -116,12 +113,6 @@ public class OpMode extends CommandOpMode {
 
         webcam.setPipeline(teamPropDetector);
     }
-    public void initConveyor() {
-        conveyor = new Conveyor(0,
-                hardwareMap.digitalChannel.get("switch")
-        );
-
-    }
     public void initElevator() {
         elevator = new Elevator(
                 hardwareMap.dcMotor.get("elevatorDown"),
@@ -151,9 +142,6 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-
-        telemetry.addData("Pixel Count", conveyor.getPixelCount());
-        telemetry.update();
 
     }
 }
