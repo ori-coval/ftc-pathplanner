@@ -9,7 +9,8 @@ public class Elbow extends SubsystemBase {
     private Servo servoRight;
     private Servo servoLeft;
     private AnalogInput encoder;
-    private final double OFFSET = 0.183 + 0.089 + 0.45;
+    private final double OFFSET = 0.722;
+    private final double ENCODER_RATIO = 0.5/0.228;
     private PIDController pidController = new PIDController(0,0,0);
     public Elbow (Servo servoLeft, Servo servoRight, AnalogInput encoder){
         this.servoLeft = servoLeft;
@@ -22,7 +23,8 @@ public class Elbow extends SubsystemBase {
         servoRight.setPosition(position);
     }
     public double getPosition() {
-        return (-1) * (encoder.getVoltage() / encoder.getMaxVoltage() - OFFSET) * (0.5/0.228);
+        return (-1) * (encoder.getVoltage() / encoder.getMaxVoltage() - OFFSET) * ENCODER_RATIO;
+        //The encoder gives negative values
     }
 
     public PIDController getPidController() {

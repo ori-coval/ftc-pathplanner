@@ -1,36 +1,31 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Extender extends SubsystemBase {
-    private Servo linearServo;
-    private final double elbow0 = 1;
-    private final double elbow1 = 1;
-    private double lastLength;
-    private double lengthToRotation(double length) {
-        lastLength = length;
-        //cosine law
-        double lengthInRadians = Math.acos((elbow1*elbow1 + length*length - elbow0*elbow0) / (2 * elbow1 * length));
-        return lengthInRadians/(2*Math.PI);
+    private final Servo linearServo;
+
+    private Position curretPosition;
+
+    public enum Position {
+        CLOSED(0), MID_WAY(0.8), OPEN(1);
+        private final double servoPosition;
+        Position(double position){
+            this.servoPosition = position;
+        }
     }
+
     public Extender (Servo linearServo){
         this.linearServo = linearServo;
     }
 
-    public void setPosition(double pos) {
-        linearServo.setPosition(pos);
+    public void setPosition(Position position) {
+        linearServo.setPosition(position.servoPosition);
+        curretPosition = position;
     }
 
-    public void setLength(double length){
-        lastLength = length;
-//        linearServo.setPosition(lengthToRotation(length));
-        linearServo.setPosition(length);
+    public Position getCurretPosition() {
+        return curretPosition;
     }
-    public double getLength(){
-        return lastLength;
-    }
-
 }

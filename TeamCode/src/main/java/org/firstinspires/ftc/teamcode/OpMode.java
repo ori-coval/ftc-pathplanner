@@ -10,9 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToAnglePID;
 import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorGetToHeightPID;
-import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetLength;
+import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPID;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
@@ -70,8 +69,8 @@ public class OpMode extends CommandOpMode {
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> antiTurret.setPos(-1)));
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> antiTurret.setPos(0)));
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetLength(extender, 0));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ElbowGetToAnglePID(elbow, 0));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> elbow.setPosition(0)));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ElevatorGetToHeightPID(elevator, 0));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new RotateTurretByPID(turret, 0));
     }

@@ -40,7 +40,7 @@ public class ArmPositionSelector {
     }
 
     public static ArmPosition getPosition() {
-        if (selectedRobotSide == Side.CENTER){
+        if (selectedRobotSide == Side.CENTER) {
             return frontScorePositions[selectedScoreHeight];
         }
         boolean isClose = ((selectedRobotSide == Side.LEFT) == isSelectedScoreSideLeft);

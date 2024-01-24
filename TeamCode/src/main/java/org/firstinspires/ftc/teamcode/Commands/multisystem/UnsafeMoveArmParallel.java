@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
-import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToAnglePID;
+import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorGetToHeightPID;
-import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetLength;
+import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPID;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
@@ -30,9 +30,9 @@ public class UnsafeMoveArmParallel extends ParallelCommandGroup {
         addCommands(
                 new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
                 new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
-                new InstantCommand(() -> elbow.setPosition(position.getElbowAngle())),
-                new ExtenderSetLength(extender, position.getExtenderLength()),
-                new InstantCommand(() -> antiTurret.setPos(position.getAntiTurretAngle()))
+                new ElbowGetToPosition(elbow, position.getElbowAngle()),
+                new ExtenderSetPosition(extender, position.getExtenderPosition()),
+                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretAngle())
         );
     }
 }
