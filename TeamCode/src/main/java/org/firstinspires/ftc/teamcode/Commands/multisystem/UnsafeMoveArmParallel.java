@@ -30,9 +30,9 @@ public class UnsafeMoveArmParallel extends ParallelCommandGroup {
         addCommands(
                 new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
                 new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
-                new ElbowGetToPosition(elbow, position.getElbowAngle()),
+                new ElbowGetToPosition(elbow, position.getElbowPosition()),
                 new ExtenderSetPosition(extender, position.getExtenderPosition()),
-                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretAngle())
+                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
         );
     }
 }

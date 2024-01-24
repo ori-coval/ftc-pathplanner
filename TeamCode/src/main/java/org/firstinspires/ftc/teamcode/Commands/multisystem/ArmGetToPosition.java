@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
 import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
@@ -16,7 +17,7 @@ public class ArmGetToPosition extends ParallelCommandGroup {
     private Elbow elbow;
     private Turret turret;
     private AntiTurret antiTurret;
-    private static ArmPosition lastPosition = ArmPosition.INTAKE;
+    public static ArmPosition lastPosition = ArmPosition.INTAKE;
 
     public ArmGetToPosition(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
         lastPosition = position;
@@ -34,5 +35,6 @@ public class ArmGetToPosition extends ParallelCommandGroup {
                         ()-> lastPosition.getCluster()==position.getCluster()
                 )
         );
+        lastPosition = position;
     }
 }

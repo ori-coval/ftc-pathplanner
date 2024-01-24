@@ -16,10 +16,10 @@ public class Elbow extends SubsystemBase {
         this.servoLeft = servoLeft;
         this.servoRight = servoRight;
         this.encoder = encoder;
-        this.servoLeft.setDirection(Servo.Direction.REVERSE);
+        this.servoRight.setDirection(Servo.Direction.REVERSE);
     }
     public void setPosition(double position){
-        servoLeft.setPosition (position);
+        servoLeft.setPosition(position);
         servoRight.setPosition(position);
     }
     public double getPosition() {

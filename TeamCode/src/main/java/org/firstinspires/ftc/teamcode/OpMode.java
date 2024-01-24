@@ -10,8 +10,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorGetToHeightPID;
 import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetPosition;
+import org.firstinspires.ftc.teamcode.Commands.intake.IntakeRotate;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPID;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
@@ -64,15 +66,7 @@ public class OpMode extends CommandOpMode {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, true));
-//        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> elbow.setPosition(0.2)));
-//        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> antiTurret.setPos(1)));
-//        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> antiTurret.setPos(-1)));
-//        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> antiTurret.setPos(0)));
-
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> elbow.setPosition(0)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ElevatorGetToHeightPID(elevator, 0));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new RotateTurretByPID(turret, 0));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.TEST_POSITION, true));
     }
 
     public void initDriveTrain() {
@@ -159,8 +153,7 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-//        elbow.setPosition(gamepadEx2.getLeftX() * 0.2 + 0.2);
-        telemetry.addData("joystick value", gamepadEx2.getLeftX() * 0.1 + 0.2);
+        telemetry.addData("Last pos", ArmGetToPosition.lastPosition);
         telemetry.addData("elbow angle", elbow.getPosition());
         telemetry.addData("elevator height", elevator.getHeight());
         telemetry.addData("turret angle", turret.getAngle());

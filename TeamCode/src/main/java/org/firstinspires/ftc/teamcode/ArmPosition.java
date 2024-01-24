@@ -46,14 +46,15 @@ public enum ArmPosition {
     SCORE_BOTTOM_FAR(0,Extender.Position.CLOSED,0,0, 0, Cluster.cluster0),
     SCORE_BOTTOM_FRONT(0,Extender.Position.CLOSED,0,0, 0, Cluster.cluster0),
     SCORE_BOTTOM_CLOSE(0,Extender.Position.CLOSED,0,0, 0, Cluster.cluster0),
-    INTAKE(0, Extender.Position.CLOSED, 0,0, 0, Cluster.cluster0),
-    SAFE_PLACE(0,Extender.Position.CLOSED,0,0.2, 0, Cluster.cluster0); //Fix extender length
+    INTAKE(0, Extender.Position.CLOSED, 0,0.06, 0, Cluster.cluster0),
+    SAFE_PLACE(10, Extender.Position.CLOSED,0,0.4, 0, Cluster.cluster0),
+    TEST_POSITION(10, Extender.Position.CLOSED, 90, 0.4, 0, Cluster.cluster0);
 
     private final double elevatorHeight;
     private final Extender.Position extenderPosition;
     private final double turretAngle;
-    private final double elbowAngle;
-    private final double antiTurretAngle;
+    private final double elbowPosition;
+    private final double antiTurretPosition;
     private final Cluster cluster;
 
 
@@ -61,12 +62,12 @@ public enum ArmPosition {
         cluster0,
         cluster1
     }
-    ArmPosition(double elevatorHeight, Extender.Position extenderPosition, double turretAngle, double elbowAngle, double antiTurretAngle, Cluster cluster) {
+    ArmPosition(double elevatorHeight, Extender.Position extenderPosition, double turretAngle, double elbowPosition, double antiTurretPosition, Cluster cluster) {
         this.elevatorHeight = elevatorHeight;
-        this.elbowAngle = elbowAngle;
+        this.elbowPosition = elbowPosition;
         this.turretAngle = turretAngle;
         this.extenderPosition = extenderPosition;
-        this.antiTurretAngle = antiTurretAngle;
+        this.antiTurretPosition = antiTurretPosition;
         this.cluster = cluster;
     }
 
@@ -81,9 +82,9 @@ public enum ArmPosition {
     public double getTurretAngle(boolean isLeftOfBoard) {return turretAngle * (isLeftOfBoard ? -1 : 1);
     }
 
-    public double getElbowAngle() {return elbowAngle;}
-    public double getAntiTurretAngle() {
-        return antiTurretAngle;
+    public double getElbowPosition() {return elbowPosition;}
+    public double getAntiTurretPosition() {
+        return antiTurretPosition;
     }
 
     public Cluster getCluster(){

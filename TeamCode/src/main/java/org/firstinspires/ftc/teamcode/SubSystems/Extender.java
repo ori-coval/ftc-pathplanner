@@ -9,7 +9,7 @@ public class Extender extends SubsystemBase {
     private Position curretPosition;
 
     public enum Position {
-        CLOSED(0), MID_WAY(0.8), OPEN(1);
+        CLOSED(0.35), MID_WAY(0.175), OPEN(0);
         private final double servoPosition;
         Position(double position){
             this.servoPosition = position;
@@ -18,6 +18,10 @@ public class Extender extends SubsystemBase {
 
     public Extender (Servo linearServo){
         this.linearServo = linearServo;
+    }
+
+    public void setPos(double pos) {
+        linearServo.setPosition(pos);
     }
 
     public void setPosition(Position position) {
