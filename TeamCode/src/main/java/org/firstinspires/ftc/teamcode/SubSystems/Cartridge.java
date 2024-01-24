@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Cartridge extends SubsystemBase {
     public enum State{
-        CLOSED(0), SEMI_OPEN(0.125), OPEN(0.25);
+        CLOSED(0.3), SEMI_OPEN(0.24), OPEN(0.0);
         final double position;
         State(double position){
             this.position = position;
@@ -20,6 +20,8 @@ public class Cartridge extends SubsystemBase {
     }
 
 
+    public void setPosition(double position){latch.setPosition(position);}
+    public double getPosition(){return latch.getPosition();}
     public void setState(State state){
         latch.setPosition(state.position);
         lastState = state;

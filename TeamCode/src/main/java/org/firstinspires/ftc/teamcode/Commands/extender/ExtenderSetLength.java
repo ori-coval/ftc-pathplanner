@@ -6,8 +6,8 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 
 public class ExtenderSetLength extends InstantCommand {
 
-    public ExtenderSetLength(Extender extender, double length){
-        super(()->extender.setLength(length),extender);
+    public ExtenderSetLength(Extender extender, Extender.Length length){
+        super(()->extender.setValue(length),extender);
     }
 
 }

@@ -1,28 +1,25 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretParallel;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.intake.IntakeRotate;
+import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetLength;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
-import org.firstinspires.ftc.teamcode.SubSystems.Conveyor;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
-import org.firstinspires.ftc.teamcode.SubSystems.Odometry;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
@@ -39,44 +36,39 @@ public class OpMode extends CommandOpMode {
     Turret turret;
     AntiTurret antiTurret;
     Cartridge cartridge;
-    Conveyor conveyor;
     Elevator elevator;
     BNO055IMU imu;
     TeamPropDetector teamPropDetector;
     OpenCvCamera webcam;
     GamepadEx gamepadEx1;
-    GamepadEx gamepadEx2;
     Extender extender;
 
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-        initIMU();
-        initDriveTrain();
-        initIntake();
+//        initIMU();
+//        initDriveTrain();
+//        initIntake();
         initElevator();
         initElbow();
-        initConveyor();
         initExtender();
+        initCartridge();
+        initTurret();
 
         gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx2 = new GamepadEx(gamepad2);
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotate(inTake, -inTake.COLLECT_POWER));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(inTake, 0));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ExtenderSetLength(extender,Extender.Length.OPEN));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetLength(extender, Extender.Length.CLOSED));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetLength(extender,Extender.Length.MID_WAY));
+
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(3)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> inTake.setStackPosition(2)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> inTake.setStackPosition(1)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> conveyor.setPower(0.5)));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.LEFT)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.CENTER)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(()-> ArmPositionSelector.setRobotSide(Side.RIGHT)));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.CLOSED)));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.OPEN)));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> cartridge.setState(Cartridge.State.SEMI_OPEN)));
 
     }
 
@@ -91,14 +83,16 @@ public class OpMode extends CommandOpMode {
     }
 
     public void initIntake() {
-        inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"), hardwareMap.servo.get("intakeServo"), gamepad1);
+        inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"),
+                hardwareMap.servo.get("intakeServo"),
+                hardwareMap.digitalChannel.get("switch"));
     }
 
     public void initTurret() {
         turret = new Turret(
                 hardwareMap.crservo.get("turretRight"),
                 hardwareMap.crservo.get("turretLeft"),
-                hardwareMap.analogInput.get("turretEncoder")
+                hardwareMap.dcMotor.get("backLeft")
         );
     }
 
@@ -126,16 +120,12 @@ public class OpMode extends CommandOpMode {
         webcam.setPipeline(teamPropDetector);
     }
 
-    public void initConveyor() {
-        conveyor = new Conveyor(hardwareMap.crservo.get("conveyor"), 0);
-
-    }
-
     public void initElevator() {
         elevator = new Elevator(
                 hardwareMap.dcMotor.get("elevatorDown"),
                 hardwareMap.dcMotor.get("elevatorMid"),
-                hardwareMap.dcMotor.get("elevatorUp"));
+                hardwareMap.dcMotor.get("elevatorUp")
+        );
     }
 
     public void initElbow() {
@@ -147,8 +137,7 @@ public class OpMode extends CommandOpMode {
         extender = new Extender(hardwareMap.servo.get("extender"));
 
     }
-
-    public void CartridgeInit() {
+    public void initCartridge() {
         cartridge = new Cartridge(hardwareMap.servo.get("cartridge"));
 
     }
@@ -161,10 +150,11 @@ public class OpMode extends CommandOpMode {
     }
 
 
+
     @Override
     public void run() {
         super.run();
-        telemetry.addData("selectedArmPos", ArmPositionSelector.getPosition());
-        telemetry.update();
+
+
     }
 }
