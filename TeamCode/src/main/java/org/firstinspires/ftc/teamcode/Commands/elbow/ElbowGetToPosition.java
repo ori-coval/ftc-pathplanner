@@ -18,8 +18,12 @@ public class ElbowGetToPosition extends CommandBase {
     }
 
     @Override
-    public void execute() {
+    public void initialize() {
         elbow.setPosition(goalPos);
+    }
+
+    @Override
+    public void execute() {
         FtcDashboard.getInstance().getTelemetry().addData("elbow is finished",isFinished());
     }
 

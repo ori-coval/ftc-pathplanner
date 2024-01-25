@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -76,6 +77,7 @@ public class OpMode extends CommandOpMode {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, true));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.TEST_POSITION, true));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SECOND_TEST_POSITION, true));
     }
 
 
@@ -146,18 +148,19 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
+
+
 //        elbow.setPosition(gamepad1.left_stick_x * 0.2 + 0.2);
 //        elbow.setPosition(1 - gamepad1.left_stick_x);
 //        telemetry.addData("elbow position", 1 - gamepad1.left_stick_x);
 //        telemetry.addData("elbow position", gamepad1.left_stick_x * 0.2 + 0.2);
 //        extender.setPos(gamepad1.left_stick_x);
-//        elbow.setPosition(gamepad1.left_stick_x);
+//        elbow.setPosition(gamepad1.left_stick_x);)
 
-
-//        telemetry.addData("extender pos", extender.getPos());
-//        telemetry.addData("elbow angle", elbow.getPosition());
-//        telemetry.addData("elevator height", elevator.getHeight());
-//        telemetry.addData("turret angle", turret.getAngle());
-//        telemetry.update();
+        telemetry.addData("extender pos", extender.getPos());
+        telemetry.addData("elbow angle", elbow.getPosition());
+        telemetry.addData("elevator height", elevator.getHeight());
+        telemetry.addData("turret angle", turret.getAngle());
+        telemetry.update();
     }
 }
