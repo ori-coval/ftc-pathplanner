@@ -53,7 +53,6 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-//        initIMU();
 //        initDriveTrain();
 //        initIntake();
         initElevator();
@@ -62,7 +61,12 @@ public class OpMode extends CommandOpMode {
 //        initConveyor();
         initExtender();
         initAntiTurret();
+        initGamepad();
 
+
+    }
+
+    public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, true));
@@ -71,28 +75,20 @@ public class OpMode extends CommandOpMode {
 
     public void initDriveTrain() {
         initIMU();
-        driveTrain = new DriveTrain(hardwareMap.dcMotor.get("backLeft")
-                , hardwareMap.dcMotor.get("backRight")
-                , hardwareMap.dcMotor.get("frontRight")
-                , hardwareMap.dcMotor.get("frontLeft")
-                , imu);
+        driveTrain = new DriveTrain(hardwareMap, imu);
         driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
     }
 
     public void initIntake() {
-        inTake = new InTake((DcMotorEx) hardwareMap.dcMotor.get("inTake"), hardwareMap.servo.get("intakeServo"), gamepad1);
+        inTake = new InTake(hardwareMap);
     }
 
     public void initTurret() {
-        turret = new Turret(
-                hardwareMap.crservo.get("turretRight"),
-                hardwareMap.crservo.get("turretLeft"),
-                hardwareMap.dcMotor.get("backLeft")
-        );
+        turret = new Turret(hardwareMap);
     }
 
     public void initAntiTurret() {
-        antiTurret = new AntiTurret(hardwareMap.servo.get("antiTurret"));
+        antiTurret = new AntiTurret(hardwareMap);
     }
 
     public void VisionInit() {
@@ -120,27 +116,18 @@ public class OpMode extends CommandOpMode {
     }
 
     public void initElevator() {
-        elevator = new Elevator(
-                hardwareMap.dcMotor.get("elevatorDown"),
-                hardwareMap.dcMotor.get("elevatorMid"),
-                hardwareMap.dcMotor.get("elevatorUp")
-        );
+        elevator = new Elevator(hardwareMap);
     }
 
     public void initElbow() {
-        elbow = new Elbow(hardwareMap.servo.get("elbowRight"),
-                hardwareMap.servo.get("elbowLeft"),
-                hardwareMap.analogInput.get("elbowEncoder")
-        );
+        elbow = new Elbow(hardwareMap);
     }
 
     public void initExtender() {
-        extender = new Extender(
-                hardwareMap.servo.get("extender")
-        );
+        extender = new Extender(hardwareMap);
     }
     public void initCartridge() {
-        cartridge = new Cartridge(hardwareMap.servo.get("cartridge"));
+        cartridge = new Cartridge(hardwareMap);
     }
 
     public void initIMU() {
@@ -153,7 +140,6 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        telemetry.addData("Last pos", ArmGetToPosition.lastPosition);
         telemetry.addData("elbow angle", elbow.getPosition());
         telemetry.addData("elevator height", elevator.getHeight());
         telemetry.addData("turret angle", turret.getAngle());

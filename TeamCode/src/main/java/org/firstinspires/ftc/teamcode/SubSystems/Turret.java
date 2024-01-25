@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
 @Config
@@ -22,12 +23,12 @@ public class Turret extends SubsystemBase {
 
     private PIDController pidController = new PIDController(kP, kI, kD);
 
-    public Turret(CRServo turretMotorA, CRServo turretMotorB, DcMotor turretEncoder) {
-        this.turretServoA = turretMotorA;
-        this.turretServoB = turretMotorB;
-        this.turretServoA.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.turretServoB.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.turretEncoder = turretEncoder;
+    public Turret(HardwareMap hardwareMap) {
+        turretServoA = hardwareMap.crservo.get("turretRight");
+        turretServoB = hardwareMap.crservo.get("turretLeft");
+        turretServoA.setDirection(DcMotorSimple.Direction.REVERSE);
+        turretServoB.setDirection(DcMotorSimple.Direction.REVERSE);
+        turretEncoder = hardwareMap.dcMotor.get("backLeft");
         turretEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); //resets encoder to 0
         turretEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //makes it use power from -1 to 1
 

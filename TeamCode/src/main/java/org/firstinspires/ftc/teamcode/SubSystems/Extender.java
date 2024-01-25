@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Extender extends SubsystemBase {
@@ -16,8 +17,8 @@ public class Extender extends SubsystemBase {
         }
     }
 
-    public Extender (Servo linearServo){
-        this.linearServo = linearServo;
+    public Extender (HardwareMap hardwareMap){
+        linearServo = hardwareMap.servo.get("extender");
     }
 
     public void setPos(double pos) {
