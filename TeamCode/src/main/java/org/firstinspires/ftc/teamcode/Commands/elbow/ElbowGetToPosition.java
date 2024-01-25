@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.elbow;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.InstantCommand;
 
@@ -19,6 +20,7 @@ public class ElbowGetToPosition extends CommandBase {
     @Override
     public void execute() {
         elbow.setPosition(goalPos);
+        FtcDashboard.getInstance().getTelemetry().addData("elbow is finished",isFinished());
     }
 
     @Override

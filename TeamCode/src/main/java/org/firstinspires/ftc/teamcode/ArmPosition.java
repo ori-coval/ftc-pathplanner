@@ -48,7 +48,7 @@ public enum ArmPosition {
     SCORE_BOTTOM_CLOSE(0,Extender.Position.CLOSED,0,0, 0, Cluster.intake),
     INTAKE(0, Extender.Position.CLOSED, 0,0.06, 0, Cluster.intake),
     SAFE_PLACE(10, Extender.Position.CLOSED,0,0.4, 0, Cluster.intake),
-    TEST_POSITION(10, Extender.Position.CLOSED, -45, 0.4, 0, Cluster.scoring);
+    TEST_POSITION(10, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring);
 
     private final double elevatorHeight;
     private final Extender.Position extenderPosition;

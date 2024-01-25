@@ -10,7 +10,7 @@ public class Extender extends SubsystemBase {
     private Position curretPosition;
 
     public enum Position {
-        CLOSED(0.63), MID_WAY(0.8), OPEN(1);
+        CLOSED(0), MID_WAY(0.17), OPEN(0.34);
         private final double servoPosition;
         Position(double position){
             this.servoPosition = position;
@@ -20,6 +20,10 @@ public class Extender extends SubsystemBase {
     public Extender (HardwareMap hardwareMap){
         linearServo = hardwareMap.servo.get("extender");
         linearServo.setDirection(Servo.Direction.REVERSE);
+    }
+
+    public double getPos() {
+        return linearServo.getPosition();
     }
 
     public void setPos(double pos) {

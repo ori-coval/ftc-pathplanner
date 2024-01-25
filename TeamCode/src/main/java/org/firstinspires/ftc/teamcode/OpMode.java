@@ -63,20 +63,21 @@ public class OpMode extends CommandOpMode {
         initAntiTurret();
         initGamepad();
 
-        CommandScheduler.getInstance().schedule(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true));
+        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule();
 
     }
 
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetPosition(extender, Extender.Position.MID_WAY));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetPosition(extender, Extender.Position.OPEN));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetPosition(extender, Extender.Position.MID_WAY));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetPosition(extender, Extender.Position.OPEN));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, true));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.TEST_POSITION, true));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true));
     }
+
 
     public void initDriveTrain() {
         initIMU();
@@ -145,10 +146,18 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-//        elbow.setPosition(gamepadEx1.getLeftX() * 0.15 + 0.2);
-        telemetry.addData("elbow angle", elbow.getPosition());
-        telemetry.addData("elevator height", elevator.getHeight());
-        telemetry.addData("turret angle", turret.getAngle());
-        telemetry.update();
+//        elbow.setPosition(gamepad1.left_stick_x * 0.2 + 0.2);
+//        elbow.setPosition(1 - gamepad1.left_stick_x);
+//        telemetry.addData("elbow position", 1 - gamepad1.left_stick_x);
+//        telemetry.addData("elbow position", gamepad1.left_stick_x * 0.2 + 0.2);
+//        extender.setPos(gamepad1.left_stick_x);
+//        elbow.setPosition(gamepad1.left_stick_x);
+
+
+//        telemetry.addData("extender pos", extender.getPos());
+//        telemetry.addData("elbow angle", elbow.getPosition());
+//        telemetry.addData("elevator height", elevator.getHeight());
+//        telemetry.addData("turret angle", turret.getAngle());
+//        telemetry.update();
     }
 }

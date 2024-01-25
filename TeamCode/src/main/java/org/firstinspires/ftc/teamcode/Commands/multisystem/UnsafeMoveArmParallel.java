@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToPosition;
@@ -23,5 +26,11 @@ public class UnsafeMoveArmParallel extends ParallelCommandGroup {
                 new ExtenderSetPosition(extender, position.getExtenderPosition()),
                 new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
         );
+    }
+
+    @Override
+    public void execute() {
+        super.execute();
+        FtcDashboard.getInstance().getTelemetry().update();
     }
 }
