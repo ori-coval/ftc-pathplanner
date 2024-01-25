@@ -37,18 +37,18 @@ public enum ArmPosition {
 
      */
 
-    SCORE_TOP_FAR(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.cluster0),
-    SCORE_TOP_FRONT(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.cluster0),
-    SCORE_TOP_CLOSE(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.cluster0),
-    SCORE_MID_FAR(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.cluster0),
-    SCORE_MID_FRONT(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.cluster0),
-    SCORE_MID_CLOSE(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.cluster0),
-    SCORE_BOTTOM_FAR(0,Extender.Position.CLOSED,0,0, 0, Cluster.cluster0),
-    SCORE_BOTTOM_FRONT(0,Extender.Position.CLOSED,0,0, 0, Cluster.cluster0),
-    SCORE_BOTTOM_CLOSE(0,Extender.Position.CLOSED,0,0, 0, Cluster.cluster0),
-    INTAKE(0, Extender.Position.CLOSED, 0,0.06, 0, Cluster.cluster0),
-    SAFE_PLACE(10, Extender.Position.CLOSED,0,0.4, 0, Cluster.cluster0),
-    TEST_POSITION(10, Extender.Position.CLOSED, 90, 0.4, 0, Cluster.cluster0);
+    SCORE_TOP_FAR(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.intake),
+    SCORE_TOP_FRONT(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.intake),
+    SCORE_TOP_CLOSE(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.intake),
+    SCORE_MID_FAR(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.intake),
+    SCORE_MID_FRONT(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.intake),
+    SCORE_MID_CLOSE(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.intake),
+    SCORE_BOTTOM_FAR(0,Extender.Position.CLOSED,0,0, 0, Cluster.intake),
+    SCORE_BOTTOM_FRONT(0,Extender.Position.CLOSED,0,0, 0, Cluster.intake),
+    SCORE_BOTTOM_CLOSE(0,Extender.Position.CLOSED,0,0, 0, Cluster.intake),
+    INTAKE(0, Extender.Position.CLOSED, 0,0.06, 0, Cluster.intake),
+    SAFE_PLACE(10, Extender.Position.CLOSED,0,0.4, 0, Cluster.intake),
+    TEST_POSITION(10, Extender.Position.CLOSED, 90, 0.4, 0, Cluster.scoring);
 
     private final double elevatorHeight;
     private final Extender.Position extenderPosition;
@@ -59,8 +59,8 @@ public enum ArmPosition {
 
 
     private enum Cluster{
-        cluster0,
-        cluster1
+        intake,
+        scoring
     }
     ArmPosition(double elevatorHeight, Extender.Position extenderPosition, double turretAngle, double elbowPosition, double antiTurretPosition, Cluster cluster) {
         this.elevatorHeight = elevatorHeight;
