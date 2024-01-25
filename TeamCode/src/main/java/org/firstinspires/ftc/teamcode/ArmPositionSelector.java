@@ -67,5 +67,9 @@ public class ArmPositionSelector {
             telemetry.addLine("^__");
         }
     }
+
+    public static boolean getIsLeftOfBoard() {
+        return selectedRobotSide == Side.LEFT;
+    }
 }
 
