@@ -10,8 +10,6 @@ import org.firstinspires.ftc.teamcode.SubSystems.Conveyor;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 
 public class IntakeUntilFull extends SequentialCommandGroup {
-    private InTake inTake;
-    private Conveyor conveyor;
 
     public IntakeUntilFull(InTake inTake, Conveyor conveyor) {
         super(

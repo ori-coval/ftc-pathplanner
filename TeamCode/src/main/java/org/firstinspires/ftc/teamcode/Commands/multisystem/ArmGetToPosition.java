@@ -13,19 +13,9 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class ArmGetToPosition extends ParallelCommandGroup {
-    private Elevator elevator;
-    private Extender extender;
-    private Elbow elbow;
-    private Turret turret;
-    private AntiTurret antiTurret;
     public static ArmPosition lastPosition = ArmPosition.INTAKE;
 
     public ArmGetToPosition(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
-        this.elevator = elevator;
-        this.extender = extender;
-        this.elbow = elbow;
-        this.turret = turret;
-        this.antiTurret = antiTurret;
         addCommands(
                 new ConditionalCommand(
                         new UnsafeMoveArmParallel(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard),

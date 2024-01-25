@@ -10,7 +10,7 @@ public class RotateTurretByPID extends CommandBase {
     private PIDController pidController;
     private Turret turret;
     public RotateTurretByPID(Turret turret, double setPoint){
-        this.setPoint= setPoint;
+        this.setPoint = setPoint;
         this.turret = turret;
         pidController = turret.getPidController();
         addRequirements(turret);
