@@ -35,16 +35,20 @@ public class ElbowGetToPosition extends CommandBase {
         long timer = Calendar.getInstance().getTimeInMillis() - startTime;
         double stepSize = 0.05;
         double isDirectionPositive = Math.signum(goalPos - elbow.getEncoderPosition());
+        updateServoPosition(timer, stepSize, isDirectionPositive);
+
+        FtcDashboard.getInstance().getTelemetry().addData("elbow is finished", isFinished());
+        FtcDashboard.getInstance().getTelemetry().addData("elbow error ", Math.abs(elbow.getEncoderPosition() - goalPos));
+
+    }
+
+    private void updateServoPosition(long timer, double stepSize, double isDirectionPositive) {
         if (isDirectionPositive > 0) {
             elbow.setPosition(goalPos);
         } else if (timer > (long) 50 * stepsTaken) {
             elbow.setPosition(startPos + isDirectionPositive * stepSize * stepsTaken);
             stepsTaken += 1;
         }
-
-        FtcDashboard.getInstance().getTelemetry().addData("elbow is finished", isFinished());
-        FtcDashboard.getInstance().getTelemetry().addData("elbow error ", Math.abs(elbow.getEncoderPosition() - goalPos));
-
     }
 
     @Override
