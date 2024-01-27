@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.ProxyScheduleCommand;
 import com.arcrobotics.ftclib.command.ScheduleCommand;
@@ -31,6 +32,7 @@ public class ArmGetToSelectedPosition extends CommandBase {
     @Override
     public void initialize() {
         command = new ArmGetToPosition(elevator, elbow, extender,turret,antiTurret,ArmPositionSelector.getPosition(), ArmPositionSelector.getIsLeftOfBoard());
+        FtcDashboard.getInstance().getTelemetry().addData("POS",ArmPositionSelector.getPosition() + " " + ArmPositionSelector.getIsLeftOfBoard());
         command.schedule();
     }
 
