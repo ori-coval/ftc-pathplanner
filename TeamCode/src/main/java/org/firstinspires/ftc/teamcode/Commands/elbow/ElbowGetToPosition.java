@@ -37,7 +37,7 @@ public class ElbowGetToPosition extends CommandBase {
         double isDirectionPositive = Math.signum(goalPos - elbow.getEncoderPosition());
         if (isDirectionPositive > 0) {
             elbow.setPosition(goalPos);
-        } else if (timer > 60 * stepsTaken) {
+        } else if (timer > (long) 50 * stepsTaken) {
             elbow.setPosition(startPos + isDirectionPositive * stepSize * stepsTaken);
             stepsTaken += 1;
         }
