@@ -6,9 +6,9 @@ import com.arcrobotics.ftclib.command.WaitUntilCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 public class IntakeUntilFull extends ParallelDeadlineGroup {
-    private InTake intake;
+    private InTake.Roller intakeRoller;
 
-    public IntakeUntilFull(InTake intake) {
-        super(new WaitUntilCommand(()->intake.isRobotFull()), new IntakeRotate(intake, intake.COLLECT_POWER));
+    public IntakeUntilFull(InTake.Roller intakeRoller) {
+        super(new WaitUntilCommand(intakeRoller::isRobotFull), new IntakeRotate(intakeRoller, intakeRoller.COLLECT_POWER));
     }
 }

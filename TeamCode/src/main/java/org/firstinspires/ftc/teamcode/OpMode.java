@@ -28,7 +28,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class OpMode extends CommandOpMode {
 
     DriveTrain driveTrain;
-    InTake inTake;
+
     Elbow elbow;
     Turret turret;
     AntiTurret antiTurret;
@@ -40,6 +40,7 @@ public class OpMode extends CommandOpMode {
     GamepadEx gamepadEx1;
     GamepadEx gamepadEx2;
     Extender extender;
+    InTake intake;
 
     @Override
     public void initialize() {
@@ -76,7 +77,7 @@ public class OpMode extends CommandOpMode {
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.LEFT)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.CENTER)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.RIGHT)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed( new IntakeCollectFromStack(inTake));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed( new IntakeCollectFromStack(intake.lifter, intake.roller));
 
 
     }
@@ -89,7 +90,7 @@ public class OpMode extends CommandOpMode {
     }
 
     public void initIntake() {
-        inTake = new InTake(hardwareMap);
+        intake = new InTake(hardwareMap);
     }
 
     public void initTurret() {
@@ -144,11 +145,11 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        telemetry.addData("Intake position", inTake.getStackPositionValue());
-        telemetry.addData("Intake stack position", inTake.getStackPosition());
-        telemetry.addData("Pixel Count", inTake.getPixelCount());
-        telemetry.addData("Switch State", inTake.currentSwitchState());
-        telemetry.addData("Is robot full", inTake.isRobotFull());
+        telemetry.addData("Intake position", intake.lifter.getStackPositionValue());
+        telemetry.addData("Intake stack position", intake.lifter.getStackPosition());
+        telemetry.addData("Pixel Count", intake.roller.getPixelCount());
+        telemetry.addData("Switch State", intake.roller.currentSwitchState());
+        telemetry.addData("Is robot full", intake.roller.isRobotFull());
 
 //        elbow.setPosition(gamepad1.left_stick_x * 0.2 + 0.2);
 //        elbow.setPosition(1 - gamepad1.left_stick_x);

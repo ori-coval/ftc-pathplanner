@@ -5,11 +5,11 @@ import com.arcrobotics.ftclib.command.ConditionalCommand;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 
 public class IntakeTakeIn extends ConditionalCommand {
-    public IntakeTakeIn(InTake inTake) {
+    public IntakeTakeIn(InTake.Lifter inTakeLifter, InTake.Roller inTakeRoller) {
         super(
-                new IntakeCollectFromStack(inTake),
-                new IntakeSetStackPosition(inTake, 3),
-                () -> inTake.getStackPosition() == 3
+                new IntakeCollectFromStack(inTakeLifter, inTakeRoller),
+                new IntakeSetStackPosition(inTakeLifter, 3),
+                () -> inTakeLifter.getStackPosition() == 3
 
         );
     }
