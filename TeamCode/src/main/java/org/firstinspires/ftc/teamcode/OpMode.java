@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.intake.IntakePosition;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToSelectedPosition;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
@@ -152,7 +151,6 @@ public class OpMode extends CommandOpMode {
         telemetry.addData("Pixel Count", inTake.getPixelCount());
         telemetry.addData("Switch State", inTake.currentSwitchState());
         telemetry.addData("Is robot full", inTake.isRobotFull());
-
 
 //        elbow.setPosition(gamepad1.left_stick_x * 0.2 + 0.2);
 //        elbow.setPosition(1 - gamepad1.left_stick_x);
