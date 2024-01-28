@@ -14,6 +14,7 @@ public class IntakeRotate extends CommandBase {
         this.addRequirements(inTake);
     }
 
+
     @Override
     public void initialize() {
         inTake.setPower(power);

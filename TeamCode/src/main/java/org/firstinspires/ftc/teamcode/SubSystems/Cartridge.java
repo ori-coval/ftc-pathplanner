@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Cartridge extends SubsystemBase {
@@ -15,8 +16,8 @@ public class Cartridge extends SubsystemBase {
     private Servo latch;
     private State lastState = State.CLOSED;
 
-    public Cartridge(Servo latch){
-        this.latch = latch;
+    public Cartridge(HardwareMap hardwareMap){
+        latch = hardwareMap.servo.get("cartridge");
     }
 
 

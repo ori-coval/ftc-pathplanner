@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -24,13 +25,13 @@ public class Elevator extends SubsystemBase {
     private PIDController pidController = new PIDController(kP,kI,kD);
 
 
-    public Elevator(DcMotor elevatorMotor1, DcMotor elevatorMotor2, DcMotor elevatorMotor3) {
-        this.elevatorMotors[0] = elevatorMotor1;
-        this.elevatorMotors[1] = elevatorMotor2;
-        this.elevatorMotors[2] = elevatorMotor3;
-        elevatorMotor2.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.encoder = elevatorMotor1;
-        this.encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public Elevator(HardwareMap hardwareMap) {
+        elevatorMotors[0] = hardwareMap.dcMotor.get("elevatorDown");
+        elevatorMotors[1] = hardwareMap.dcMotor.get("elevatorMid");
+        elevatorMotors[2] = hardwareMap.dcMotor.get("elevatorUp");
+        elevatorMotors[1].setDirection(DcMotorSimple.Direction.REVERSE);
+        encoder = elevatorMotors[0];
+        encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void setPower(double power) {
