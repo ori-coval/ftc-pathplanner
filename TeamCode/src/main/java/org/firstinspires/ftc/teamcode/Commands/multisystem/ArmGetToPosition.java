@@ -1,41 +1,35 @@
-package org.firstinspires.ftc.teamcode.Commands.multisystem;
+package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
-import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToAnglePID;
-import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorGetToHeightPID;
-import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetLength;
-import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPID;
+import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class ArmGetToPosition extends ParallelCommandGroup {
-    private Elevator elevator;
-    private Extender extender;
-    private Elbow elbow;
-    private Turret turret;
-    private final double ANGLE_THRESHOLD = 0;
-    private static ArmPosition lastPosition = ArmPosition.INTAKE;
-
-    public ArmGetToPosition(Elevator elevator, Elbow elbow, Extender extender, Turret turret, ArmPosition position, boolean isLeftOfBoard) {
-        lastPosition = position;
-        this.elevator = elevator;
-        this.extender = extender;
-        this.elbow = elbow;
-        this.turret = turret;
+    public static ArmPosition lastPosition = ArmPosition.INTAKE;
+    private ArmPosition targetPosition;
+    public ArmGetToPosition(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
         addCommands(
                 new ConditionalCommand(
-                        new UnsafeMoveArmParallel(elevator, elbow, extender, turret, position, isLeftOfBoard),
-                        new UnsafeMoveArmParallel(elevator, elbow, extender, turret, ArmPosition.SAFE_PLACE, isLeftOfBoard).andThen(
-                                new UnsafeMoveArmParallel(elevator, elbow, extender, turret, position, isLeftOfBoard)
+                        new UnsafeMoveArmParallel(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard),
+                        new UnsafeMoveArmParallel(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, isLeftOfBoard).andThen(
+                                new UnsafeMoveArmParallel(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard)
                         ),
-                        ()-> lastPosition.getCluster()==position.getCluster()
+                        ()-> lastPosition.getCluster() == position.getCluster()
                 )
         );
+        this.targetPosition = position;
+    }
+
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        lastPosition = targetPosition;
     }
 }

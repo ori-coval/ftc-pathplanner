@@ -1,32 +1,41 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Extender extends SubsystemBase {
+    private final Servo linearServo;
 
-    public enum Length {
-        CLOSED(0.3), MID_WAY(0.17), OPEN(0.05);
+    private Position curretPosition;
+
+    public enum Position {
+        CLOSED(0), MID_WAY(0.17), OPEN(0.34);
         private final double servoPosition;
-        Length(double length){
-            this.servoPosition = length;
+        Position(double position){
+            this.servoPosition = position;
         }
     }
-    private Servo linearServo;
-    private Length currentLength;
-    private final double OFSET = 0.22;
 
-    public Extender (Servo linearServo){
-        this.linearServo = linearServo;
+    public Extender (HardwareMap hardwareMap){
+        linearServo = hardwareMap.servo.get("extender");
+        linearServo.setDirection(Servo.Direction.REVERSE);
     }
-    public void setValue(Length length){
-        linearServo.setPosition(length.servoPosition);
-        currentLength = length;
+
+    public double getPos() {
+        return linearServo.getPosition();
     }
-//    public void setPosition(double pos){linearServo.setPosition(pos+OFSET);}
-    public void setPosition(double pos){linearServo.setPosition(0.05+pos);}
-    public Length getPosition(){
-        return currentLength;
+
+    public void setPos(double pos) {
+        linearServo.setPosition(pos);
     }
-    public double getPos(){return linearServo.getPosition();}
+
+    public void setPosition(Position position) {
+        linearServo.setPosition(position.servoPosition);
+        curretPosition = position;
+    }
+
+    public Position getCurretPosition() {
+        return curretPosition;
+    }
 }

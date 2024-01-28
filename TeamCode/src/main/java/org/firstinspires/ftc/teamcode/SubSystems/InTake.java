@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class InTake extends SubsystemBase {
@@ -28,11 +29,11 @@ public class InTake extends SubsystemBase {
     */
     private double currentStackPosition = STACK_POSITION[4];
 
-    public InTake(DcMotorEx inTakeMotor, Servo inTakeAngle ,DigitalChannel limitSwitch){
-        this.limitSwitch = limitSwitch;
-        this.inTakeMotor = inTakeMotor;
-        this.inTakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.inTakeAngle = inTakeAngle;
+    public InTake(HardwareMap hardwareMap){
+        inTakeMotor = (DcMotorEx) hardwareMap.dcMotor.get("inTake");
+        inTakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        inTakeAngle = hardwareMap.servo.get("intakeServo");
+        limitSwitch = hardwareMap.digitalChannel.get("switch");
     }
 
     public boolean currentState(){

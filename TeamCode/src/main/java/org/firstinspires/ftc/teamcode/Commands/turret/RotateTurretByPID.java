@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.Commands.turret;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class RotateTurretByPID extends CommandBase {
@@ -10,23 +12,22 @@ public class RotateTurretByPID extends CommandBase {
     private PIDController pidController;
     private Turret turret;
     public RotateTurretByPID(Turret turret, double setPoint){
-        this.setPoint= setPoint;
+        this.setPoint = setPoint;
         this.turret = turret;
         pidController = turret.getPidController();
+        pidController.setTolerance(1.5);
         addRequirements(turret);
-
     }
 
     @Override
     public void initialize() {
         pidController.setSetPoint(setPoint);
-//        pidController.setTolerance(0.08);
-        pidController.setTolerance(0.5);
     }
 
     @Override
     public void execute() {
         turret.setPower(pidController.calculate(turret.getAngle()));
+        FtcDashboard.getInstance().getTelemetry().addData("Turret is finished", isFinished());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.teamcode.SubSystems.Extender;
+
 public enum ArmPosition {
 
     /*
@@ -35,34 +37,37 @@ public enum ArmPosition {
 
      */
 
-    SCORE_TOP_FAR(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_TOP_FRONT(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_TOP_CLOSE(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_MID_FAR(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_MID_FRONT(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_MID_CLOSE(0, 0, 0, 0, Cluster.cluster0),
-    SCORE_BOTTOM_FAR(0,0,0,0, Cluster.cluster0),
-    SCORE_BOTTOM_FRONT(0,0,0,0, Cluster.cluster0),
-    SCORE_BOTTOM_CLOSE(0,0,0,0, Cluster.cluster0),
-    INTAKE(0, 0, 0,0, Cluster.cluster0),
-    SAFE_PLACE(0,0,0,0,Cluster.cluster0);
+    SCORE_TOP_FAR(10, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SCORE_TOP_FRONT(11, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SCORE_TOP_CLOSE(12, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SCORE_MID_FAR(13, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SCORE_MID_FRONT(14, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SCORE_MID_CLOSE(15, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SCORE_BOTTOM_FAR(16, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SCORE_BOTTOM_FRONT(17, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SCORE_BOTTOM_CLOSE(18, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    INTAKE(0, Extender.Position.CLOSED, 0,0.06, 0, Cluster.intake),
+    SAFE_PLACE(10, Extender.Position.CLOSED,0,0.4, 0, Cluster.intake),
+    TEST_POSITION(10, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SECOND_TEST_POSITION(20, Extender.Position.OPEN, 30, 0.6, 0.4, Cluster.scoring);
 
     private final double elevatorHeight;
-    private final double extenderLength;
+    private final Extender.Position extenderPosition;
     private final double turretAngle;
-    private final double elbowAngle;
+    private final double elbowPosition;
+    private final double antiTurretPosition;
     private final Cluster cluster;
 
-
     private enum Cluster{
-        cluster0,
-        cluster1
+        intake,
+        scoring
     }
-    ArmPosition(double elevatorHeight, double extenderLength, double turretAngle, double elbowAngle, Cluster cluster) {
+    ArmPosition(double elevatorHeight, Extender.Position extenderPosition, double turretAngle, double elbowPosition, double antiTurretPosition, Cluster cluster) {
         this.elevatorHeight = elevatorHeight;
-        this.elbowAngle = elbowAngle;
+        this.elbowPosition = elbowPosition;
         this.turretAngle = turretAngle;
-        this.extenderLength = extenderLength;
+        this.extenderPosition = extenderPosition;
+        this.antiTurretPosition = antiTurretPosition;
         this.cluster = cluster;
     }
 
@@ -70,14 +75,18 @@ public enum ArmPosition {
         return elevatorHeight;
     }
 
-    public double getExtenderLength() {
-        return extenderLength;
+    public Extender.Position getExtenderPosition() {
+        return extenderPosition;
     }
 
     public double getTurretAngle(boolean isLeftOfBoard) {return turretAngle * (isLeftOfBoard ? -1 : 1);
     }
 
-    public double getElbowAngle() {return elbowAngle;}
+    public double getElbowPosition() {return elbowPosition;}
+    public double getAntiTurretPosition() {
+        return antiTurretPosition;
+    }
+
     public Cluster getCluster(){
         return cluster;
     }
