@@ -1,13 +1,9 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class InTake extends SubsystemBase {
@@ -26,7 +22,8 @@ public class InTake extends SubsystemBase {
     0.07 - Next pixels
     0 - lowest position
     */
-    private double currentStackPosition = STACK_POSITION[4];
+    private int currentStackPosition = 4;
+    private double currentIntakePosition = STACK_POSITION[currentStackPosition];
 
     public InTake(DcMotorEx inTakeMotor, Servo inTakeAngle ,DigitalChannel limitSwitch){
         this.limitSwitch = limitSwitch;
@@ -35,16 +32,18 @@ public class InTake extends SubsystemBase {
         this.inTakeAngle = inTakeAngle;
     }
 
-    public boolean currentState(){
+    public boolean currentSwitchState(){
         return limitSwitch.getState();
     }
     private void updatePixelCount(){
-        if (!lastState && currentState()){
+        if (!lastState && currentSwitchState()){
             pixelCount++;
         }
-        lastState = currentState();
+        lastState = currentSwitchState();
     }
-    public int getPixelCount(){return pixelCount;}
+    public int getPixelCount(){
+        return pixelCount;
+    }
     public boolean isRobotFull(){
         return getPixelCount() >= 2;
     }
@@ -58,16 +57,22 @@ public class InTake extends SubsystemBase {
         setPower(0);
     }
 
-    public void setPosition(double position){inTakeAngle.setPosition(position);}
-    public void setStackPosition(int position) {
-        currentStackPosition = STACK_POSITION[position];
+    public void setPosition(double position){
+        inTakeAngle.setPosition(position);
     }
-    public double getStackPosition() {
+    public void setStackPosition(int position) {
+        currentStackPosition = position;
+        currentIntakePosition = STACK_POSITION[currentStackPosition];
+    }
+    public int getStackPosition() {
         return currentStackPosition;
+    }
+    public double getStackPositionValue() {
+        return currentIntakePosition;
     }
 
     public void updatePosition() {
-        setPosition(getStackPosition());
+        setPosition(getStackPositionValue());
         /*
         I think that using 5 buttons for the intake is incredibly wasteful,
         in my opinion it'll be better using some kind of steeper mechanism that whenever I press some kind of button

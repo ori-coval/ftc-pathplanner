@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.multisystem;
+package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
@@ -26,8 +26,7 @@ public class UnsafeMoveArmParallel extends ParallelCommandGroup {
         addCommands(
                 new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
                 new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
-                new ElbowGetToAnglePID(elbow, position.getElbowAngle()),
-                new ExtenderSetLength(extender, position.getExtenderLength())
+                new ElbowGetToAnglePID(elbow, position.getElbowAngle())
         );
     }
 }

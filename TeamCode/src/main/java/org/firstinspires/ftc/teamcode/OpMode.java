@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -12,7 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretParallel;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetLength;
+import org.firstinspires.ftc.teamcode.Commands.intake.IntakePosition;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
@@ -49,17 +48,15 @@ public class OpMode extends CommandOpMode {
 
 //        initIMU();
 //        initDriveTrain();
-//        initIntake();
-        initElevator();
-        initElbow();
-        initExtender();
-        initCartridge();
-        initTurret();
+        initIntake();
+//        initElevator();
+//        initElbow();
+//        initExtender();
+//        initCartridge();
+//        initTurret();
 
         gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ExtenderSetLength(extender,Extender.Length.OPEN));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetLength(extender, Extender.Length.CLOSED));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetLength(extender,Extender.Length.MID_WAY));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakePosition(inTake));
 
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> inTake.setStackPosition(0)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> inTake.setStackPosition(4)));
@@ -154,7 +151,12 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
+        telemetry.addData("Intake position", inTake.getStackPositionValue());
+        telemetry.addData("Intake stack position", inTake.getStackPosition());
+        telemetry.addData("Pixel Count", inTake.getPixelCount());
+        telemetry.addData("Switch State", inTake.currentSwitchState());
+        telemetry.addData("Is robot full", inTake.isRobotFull());
 
-
+        telemetry.update();
     }
 }
