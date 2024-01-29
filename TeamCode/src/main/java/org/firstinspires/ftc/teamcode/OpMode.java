@@ -9,7 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.intakeElbow.IntakeCollectFromStack;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeCollectFromStack;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
@@ -77,7 +78,7 @@ public class OpMode extends CommandOpMode {
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.LEFT)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.CENTER)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.RIGHT)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed( new IntakeCollectFromStack(intake.lifter, intake.roller));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
 
 
     }
@@ -149,6 +150,8 @@ public class OpMode extends CommandOpMode {
         telemetry.addData("Intake stack position", intake.lifter.getStackPosition());
         telemetry.addData("Pixel Count", intake.roller.getPixelCount());
         telemetry.addData("Switch State", intake.roller.currentSwitchState());
+        telemetry.addData("Switch Released", intake.roller.getIsSwitchReleased());
+        telemetry.addData("lastButtonStateOnPress", intake.roller.lastButtonStateOnPress);
         telemetry.addData("Is robot full", intake.roller.isRobotFull());
 
 //        elbow.setPosition(gamepad1.left_stick_x * 0.2 + 0.2);

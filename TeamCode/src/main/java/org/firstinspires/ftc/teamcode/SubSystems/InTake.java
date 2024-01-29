@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class InTake{
+public class InTake {
     private DcMotorEx inTakeMotor;
     private Servo inTakeAngle;
     private DigitalChannel limitSwitch;
@@ -21,7 +21,7 @@ public class InTake{
         roller = new Roller();
         lifter = new Lifter();
     }
-    public class Lifter extends SubsystemBase{
+    public class Lifter extends SubsystemBase {
         public final double[] STACK_POSITION = {0, 0.07, 0.13, 0.21, 0.77};
         /*
         0.77 - The default position (Highest)
@@ -61,35 +61,55 @@ public class InTake{
         }
 
     }
-    public class Roller extends SubsystemBase{
+
+    public class Roller extends SubsystemBase {
         private int pixelCount;
-        private boolean lastButtonState = false;
+        private boolean isSwitchReleased = false;
+        public boolean lastButtonStateOnPress = false;
+        private boolean lastButtonStateOnRelease = false;
         public final double COLLECT_POWER = 1;
         public final double EJECT_POWER = -0.9;
-        public void setPower(double power){
+        public void setPower(double power) {
             inTakeMotor.setPower(power);
         }
-        public void stop(){
+        public void stop() {
             setPower(0);
         }
-        public boolean currentSwitchState(){
+        public boolean currentSwitchState() {
             return limitSwitch.getState();
         }
-        private void updatePixelCount(){
-            if (!lastButtonState && currentSwitchState()){
-                pixelCount++;
+
+        //On Release
+        public void updateIsSwitchReleased() {
+            if(lastButtonStateOnRelease && !currentSwitchState()) {
+                isSwitchReleased = true;
+                lastButtonStateOnRelease = false;
             }
-            lastButtonState = currentSwitchState();
+            if(currentSwitchState()) lastButtonStateOnRelease = true;
         }
-        public int getPixelCount(){
+
+        //On Press
+        private void updatePixelCount() {
+            if (!lastButtonStateOnPress && currentSwitchState()) { //TODO: Sometimes this condition isn't met when the button is pressed. (I honestly don't know why)
+                pixelCount++;
+                isSwitchReleased = false;
+            }
+            lastButtonStateOnPress = currentSwitchState();
+        }
+
+        public boolean getIsSwitchReleased() {
+            return isSwitchReleased;
+        }
+        public int getPixelCount() {
             return pixelCount;
         }
-        public boolean isRobotFull(){
-            return getPixelCount() >= 2;
+        public boolean isRobotFull() {
+            return (getPixelCount() >= 2) && getIsSwitchReleased();
         }
         @Override
         public void periodic() {
             updatePixelCount();
-    }
+            updateIsSwitchReleased();
+        }
     }
 }

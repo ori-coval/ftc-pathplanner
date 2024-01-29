@@ -8,7 +8,7 @@ public class IntakeRotate extends CommandBase {
     private InTake.Roller inTakeRoller;
     private final double power;
 
-    public IntakeRotate(InTake.Roller inTakeRoller, double power){
+    public IntakeRotate(InTake.Roller inTakeRoller, double power) {
         this.inTakeRoller = inTakeRoller;
         this.power = power;
         this.addRequirements(inTakeRoller);
