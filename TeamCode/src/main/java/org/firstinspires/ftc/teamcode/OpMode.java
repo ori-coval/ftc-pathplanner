@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -168,5 +169,6 @@ public class OpMode extends CommandOpMode {
 
 //        ArmPositionSelector.telemetry(telemetry);
         telemetry.update();
+        FtcDashboard.getInstance().getTelemetry().update();
     }
 }
