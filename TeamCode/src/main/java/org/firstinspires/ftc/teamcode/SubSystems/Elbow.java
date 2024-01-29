@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.SubSystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -20,8 +21,9 @@ public class Elbow extends SubsystemBase {
         servoLeft.setDirection(Servo.Direction.REVERSE);
     }
     public void setPosition(double position){
+        if(position <= 0.04) position = 0.04; //can't go below 0.04
         servoLeft.setPosition(position);
-        servoRight.setPosition(position);
+        servoRight.setPosition(position - 0.04);
     }
     public double getEncoderPosition() {
         return (-1) * (encoder.getVoltage() / encoder.getMaxVoltage() - OFFSET) * ENCODER_RATIO;
