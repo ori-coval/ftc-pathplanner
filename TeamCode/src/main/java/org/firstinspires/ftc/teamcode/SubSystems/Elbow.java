@@ -26,7 +26,7 @@ public class Elbow extends SubsystemBase {
         servoRight.setPosition(position - 0.04);
     }
     public double getEncoderPosition() {
-        return (-1) * (encoder.getVoltage() / encoder.getMaxVoltage() - OFFSET) * ENCODER_RATIO;
+        return 1 - ((-1) * (encoder.getVoltage() / encoder.getMaxVoltage() - OFFSET) * ENCODER_RATIO);
         //The encoder gives negative values
     }
 
