@@ -18,7 +18,7 @@ public class Elevator extends SubsystemBase {
     private final double TEETH_PER_REV = 8;
     private final double CHAIN_LINK_DISTANCE = 0.8;
     private final double TICKS_PER_REV = 384.5;
-    public static double kP = 0.12; //0.057
+    public static double kP = 0.165; //0.165
     public static double kI = 0;
     public static double kD = 0;
     public static double kF = 0.132;
@@ -26,12 +26,13 @@ public class Elevator extends SubsystemBase {
 
 
     public Elevator(HardwareMap hardwareMap) {
-        elevatorMotors[0] = hardwareMap.dcMotor.get("elevatorDown");
+        elevatorMotors[0] = hardwareMap.dcMotor.get("elevatorLow");
         elevatorMotors[1] = hardwareMap.dcMotor.get("elevatorMid");
         elevatorMotors[2] = hardwareMap.dcMotor.get("elevatorUp");
         elevatorMotors[1].setDirection(DcMotorSimple.Direction.REVERSE);
         encoder = elevatorMotors[0];
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void setPower(double power) {
@@ -48,6 +49,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public void telemetry() {
+        FtcDashboard.getInstance().getTelemetry().addData("Elevator Calculated power", pidController.calculate(getHeight()) + getKF());
         FtcDashboard.getInstance().getTelemetry().addData("Elevator Position", getHeight());
         FtcDashboard.getInstance().getTelemetry().addData("Elevator Target Position", pidController.getSetPoint());
         FtcDashboard.getInstance().getTelemetry().update();

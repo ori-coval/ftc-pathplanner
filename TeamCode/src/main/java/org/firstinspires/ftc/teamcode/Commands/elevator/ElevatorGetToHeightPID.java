@@ -16,7 +16,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
         this.elevator = elevator;
         this.goalHeight = goalHeight;
         pidController = elevator.getPidController();
-        pidController.setTolerance(1.5);
+        pidController.setTolerance(0.5);
         addRequirements(elevator);
     }
     @Override
