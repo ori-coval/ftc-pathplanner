@@ -48,8 +48,8 @@ public enum ArmPosition {
     SCORE_BOTTOM_CLOSE(18, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
     INTAKE(0, Extender.Position.CLOSED, 0,0.06, 0, Cluster.intake),
     SAFE_PLACE(10, Extender.Position.CLOSED,0,0.4, 0, Cluster.intake),
-    SAFE_PLACE_RIGHT(10, Extender.Position.CLOSED, -90, 0.4, 0, Cluster.scoring),
-    SAFE_PLACE_LEFT(10, Extender.Position.CLOSED, 90, 0.4, 0, Cluster.scoring),
+    SCORING_RIGHT(10, Extender.Position.CLOSED, -90, 0.4, 0, Cluster.scoring),
+    SCORING_LEFT(10, Extender.Position.CLOSED, 90, 0.4, 0, Cluster.scoring),
     TEST_POSITION(10, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
     SECOND_TEST_POSITION(30, Extender.Position.OPEN, 90, 0.6, 0.4, Cluster.scoring);
 

@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
-import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
@@ -17,7 +16,7 @@ public class SetRobotSide extends SequentialCommandGroup {
     public SetRobotSide(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, Side side) {
         super(
                 new InstantCommand(() -> ArmPositionSelector.setRobotSide(side)),
-                new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPositionSelector.getIsLeftOfBoard() ? ArmPosition.SAFE_PLACE_LEFT : ArmPosition.SAFE_PLACE_RIGHT, ArmPositionSelector.getIsLeftOfBoard())
+                new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPositionSelector.getIsLeftOfBoard() ? ArmPosition.SCORING_LEFT : ArmPosition.SCORING_RIGHT, ArmPositionSelector.getIsLeftOfBoard())
         );
     }
 

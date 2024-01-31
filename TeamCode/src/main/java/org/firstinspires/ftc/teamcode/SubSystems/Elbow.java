@@ -27,14 +27,12 @@ public class Elbow extends SubsystemBase {
     }
     public double getEncoderPosition() {
         return 1 - ((-1) * (encoder.getVoltage() / encoder.getMaxVoltage() - OFFSET) * ENCODER_RATIO);
-        //The encoder gives negative values
+        //The encoder gives negative values. and is reversed?!
     }
 
     public double getServoPosition(){
         return servoLeft.getPosition();
     }
-
-
 
     public PIDController getPidController() {
         return pidController;
