@@ -8,21 +8,20 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 
 public class ElevatorGetToHeightPID extends CommandBase {
-    private Elevator elevator;
-    private double goalHeight;
-    private PIDController pidController;
+    private final Elevator elevator;
+    private final double goalHeight;
+    private final PIDController pidController;
 
     public ElevatorGetToHeightPID(Elevator elevator, double goalHeight){
         this.elevator = elevator;
         this.goalHeight = goalHeight;
         pidController = elevator.getPidController();
-        pidController.setTolerance(0.5);
+        pidController.setTolerance(1);
         addRequirements(elevator);
     }
     @Override
     public void initialize() {
         pidController.setSetPoint(goalHeight);
-
     }
 
     @Override

@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretGetToPosition;
@@ -16,13 +15,13 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
-public class UnsafeMoveArmSequential extends SequentialCommandGroup {
-    public UnsafeMoveArmSequential(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
+public class UnsafeMoveArm extends ParallelCommandGroup {
+    public UnsafeMoveArm(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
         addCommands(
-                new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
-                new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
-                new ElbowGetToPosition(elbow, position.getElbowPosition()),
-                new ExtenderSetPosition(extender, position.getExtenderPosition()),
+                new ElbowGetToPosition(elbow, position.getElbowPosition()).andThen(
+                    new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
+                    new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard))
+                ).andThen(new ExtenderSetPosition(extender, position.getExtenderPosition())),
                 new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
         );
     }
