@@ -16,7 +16,6 @@ import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToSelectedPosit
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSide;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
-import org.firstinspires.ftc.teamcode.SubSystems.Conveyor;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
@@ -38,7 +37,6 @@ public class OpMode extends CommandOpMode {
     Turret turret;
     AntiTurret antiTurret;
     Cartridge cartridge;
-    Conveyor conveyor;
     Elevator elevator;
     BNO055IMU imu;
     TeamPropDetector teamPropDetector;
@@ -132,11 +130,6 @@ public class OpMode extends CommandOpMode {
         });
 
         webcam.setPipeline(teamPropDetector);
-    }
-
-    public void initConveyor() {
-        conveyor = new Conveyor(0);
-
     }
 
     public void initElevator() {
