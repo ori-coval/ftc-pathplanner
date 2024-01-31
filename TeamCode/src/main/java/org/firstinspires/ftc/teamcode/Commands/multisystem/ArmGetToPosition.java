@@ -16,9 +16,9 @@ public class ArmGetToPosition extends ParallelCommandGroup {
     public ArmGetToPosition(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
         addCommands(
                 new ConditionalCommand(
-                        new UnsafeMoveArmParallel(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard),
-                        new UnsafeMoveArmParallel(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, isLeftOfBoard).andThen(
-                                new UnsafeMoveArmParallel(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard)
+                        new UnsafeMoveArmSequential(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard),
+                        new UnsafeMoveArmSequential(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, isLeftOfBoard).andThen(
+                                new UnsafeMoveArmSequential(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard)
                         ),
                         ()-> lastPosition.getCluster() == position.getCluster()
                 )
