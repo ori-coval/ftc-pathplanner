@@ -7,16 +7,16 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class InTake {
-    private DcMotorEx inTakeMotor;
-    private Servo inTakeAngle;
+public class Intake {
+    private DcMotorEx intakeMotor;
+    private Servo intakeAngle;
     private DigitalChannel limitSwitch;
-    public InTake.Roller roller;
-    public InTake.Lifter lifter;
-    public InTake(HardwareMap hardwareMap){
-        inTakeMotor = (DcMotorEx) hardwareMap.dcMotor.get("inTake");
-        inTakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        inTakeAngle = hardwareMap.servo.get("intakeServo");
+    public Intake.Roller roller;
+    public Intake.Lifter lifter;
+    public Intake(HardwareMap hardwareMap){
+        intakeMotor = (DcMotorEx) hardwareMap.dcMotor.get("inTake");
+        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeAngle = hardwareMap.servo.get("intakeServo");
         limitSwitch = hardwareMap.digitalChannel.get("switch");
         roller = new Roller();
         lifter = new Lifter();
@@ -44,7 +44,7 @@ public class InTake {
             return currentIntakePosition;
         }
         public void setPosition(double position){
-            inTakeAngle.setPosition(position);
+            intakeAngle.setPosition(position);
         }
 
         public void updatePosition() {
@@ -70,7 +70,7 @@ public class InTake {
         public final double COLLECT_POWER = 1;
         public final double EJECT_POWER = -0.9;
         public void setPower(double power) {
-            inTakeMotor.setPower(power);
+            intakeMotor.setPower(power);
         }
         public void stop() {
             setPower(0);

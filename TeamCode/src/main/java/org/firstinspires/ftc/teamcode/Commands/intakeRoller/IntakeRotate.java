@@ -2,13 +2,13 @@ package org.firstinspires.ftc.teamcode.Commands.intakeRoller;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.SubSystems.InTake;
+import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 
 public class IntakeRotate extends CommandBase {
-    private InTake.Roller inTakeRoller;
+    private Intake.Roller inTakeRoller;
     private final double power;
 
-    public IntakeRotate(InTake.Roller inTakeRoller, double power) {
+    public IntakeRotate(Intake.Roller inTakeRoller, double power) {
         this.inTakeRoller = inTakeRoller;
         this.power = power;
         this.addRequirements(inTakeRoller);

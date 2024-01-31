@@ -1,25 +1,20 @@
 package org.firstinspires.ftc.teamcode.Commands.intakeRoller;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelDeadlineGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
-import com.qualcomm.robotcore.robocol.Command;
 
-import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
-import org.firstinspires.ftc.teamcode.SubSystems.InTake;
+import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 public class IntakeUntilFull extends ParallelDeadlineGroup {
     private static final long waitTimeUntilStop = 2000;
-    public IntakeUntilFull(InTake.Roller intakeRoller) {
+    public IntakeUntilFull(Intake.Roller intakeRoller) {
         super(
-                new SequentialCommandGroup( //DOESN'T WORK AHHHHHHHHH WHY???
+                new SequentialCommandGroup(
                         new WaitUntilCommand(intakeRoller::isRobotFull),
-                        new InstantCommand(()-> FtcDashboard.getInstance().getTelemetry().addData("isF", "done0!")),
-                        new WaitCommand(waitTimeUntilStop),
-                        new InstantCommand(()-> FtcDashboard.getInstance().getTelemetry().addData("isF", "done1!"))
+                        new WaitCommand(waitTimeUntilStop)
                 ).asProxy(),
                 new IntakeRotate(intakeRoller, intakeRoller.COLLECT_POWER)
         );
