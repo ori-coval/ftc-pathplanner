@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
-public class SetRobotSide extends SequentialCommandGroup {
-    public SetRobotSide(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, Side side) {
+public class SetRobotSideRightLeft extends SequentialCommandGroup {
+    public SetRobotSideRightLeft(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, Side side) {
         super(
                 new InstantCommand(() -> ArmPositionSelector.setRobotSide(side)),
                 new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPositionSelector.getIsLeftOfBoard() ? ArmPosition.SCORING_LEFT : ArmPosition.SCORING_RIGHT, ArmPositionSelector.getIsLeftOfBoard())
