@@ -62,7 +62,7 @@ public class OpMode extends CommandOpMode {
 //        initCartridge();
         initGamepad();
 
-        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).withTimeout(1).schedule(); // timeout so it doesn't go up for some reason
+        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule(); // timeout so it doesn't go up for some reason
 
     }
 
@@ -170,7 +170,7 @@ public class OpMode extends CommandOpMode {
 //        telemetry.addData("elbow position", 1 - gamepad1.left_stick_x);
 //        telemetry.addData("elbow position", gamepad1.left_stick_x * 0.2 + 0.2);
 //        extender.setPos(gamepad1.left_stick_x);
-//        elbow.setPosition(gamepad1.left_stick_x);
+//        elbow.setPosition(1 - gamepad1.left_stick_x);
 //        antiTurret.setPos(gamepad1.left_stick_x);
 //        cartridge.setPosition(gamepad1.left_stick_x);
 //        telemetry.addData("Joystick value", gamepad1.left_stick_x);
