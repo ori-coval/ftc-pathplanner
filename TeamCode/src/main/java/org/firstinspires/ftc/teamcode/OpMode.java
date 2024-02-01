@@ -10,11 +10,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToSelectedPosition;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.SubSystems.DroneLauncher;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
@@ -35,6 +37,7 @@ public class OpMode extends CommandOpMode {
     Turret turret;
     AntiTurret antiTurret;
     Cartridge cartridge;
+    DroneLauncher droneLauncher;
     Elevator elevator;
     BNO055IMU imu;
     TeamPropDetector teamPropDetector;
@@ -49,15 +52,16 @@ public class OpMode extends CommandOpMode {
 
 //        initDriveTrain();
 //        initIntake();
-        initElevator();
-        initElbow();
-        initTurret();
+//        initElevator();
+//        initElbow();
+//        initTurret();
 //        initConveyor();
-        initExtender();
-        initAntiTurret();
+//        initExtender();
+//        initAntiTurret();
+        initDroneLauncher();
         initGamepad();
 
-        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule(); // timeout so it doesnt go up for some reason
+//        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule(); // timeout so it doesnt go up for some reason
 
     }
 
@@ -67,7 +71,7 @@ public class OpMode extends CommandOpMode {
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetPosition(extender, Extender.Position.MID_WAY));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetPosition(extender, Extender.Position.OPEN));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, true));
+     /*   gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, true));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.TEST_POSITION, true));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SECOND_TEST_POSITION, true));
@@ -78,9 +82,10 @@ public class OpMode extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.LEFT)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.CENTER)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.RIGHT)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.RIGHT)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret))); */
 
-
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.HOLD));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
 
     }
 
@@ -143,11 +148,16 @@ public class OpMode extends CommandOpMode {
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
     }
+    public void initDroneLauncher() {
+        droneLauncher = new DroneLauncher(hardwareMap);
+    }
 
     @Override
     public void run() {
         super.run();
 
+//        droneLauncher.setPosition(gamepad1.right_trigger);
+//        telemetry.addData("Drone position", droneLauncher.getPosition());
 
 //        elbow.setPosition(gamepad1.left_stick_x * 0.2 + 0.2);
 //        elbow.setPosition(1 - gamepad1.left_stick_x);
@@ -161,7 +171,9 @@ public class OpMode extends CommandOpMode {
 //        telemetry.addData("elevator height", elevator.getHeight());
 //        telemetry.addData("turret angle", turret.getAngle());
 
-        ArmPositionSelector.telemetry(telemetry);
+//        ArmPositionSelector.telemetry(telemetry);
+
+
         telemetry.update();
     }
 }
