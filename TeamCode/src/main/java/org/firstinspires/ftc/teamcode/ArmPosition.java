@@ -51,10 +51,8 @@ public enum ArmPosition {
     SCORING_RIGHT(10, Extender.Position.CLOSED, -90, 0.4, 0, Cluster.scoring),
     SCORING_LEFT(10, Extender.Position.CLOSED, 90, 0.4, 0, Cluster.scoring),
     TEST_POSITION(10, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
-    SECOND_TEST_POSITION(30, Extender.Position.OPEN, 90, 0.6, 0.4, Cluster.scoring);
-    THIRD_TEST_POSITION() /*TODO: Test everything except the turret 'cause some wires are disconnected. Make the new position in a different cluser.
-                             Make sure to use every system except the turret.
-                             */
+    SECOND_TEST_POSITION(30, Extender.Position.OPEN, 90, 0.6, 0.4, Cluster.scoring),
+    THIRD_TEST_POSITION(30, Extender.Position.OPEN, 0, 0.7, 0.4, Cluster.scoring);
     private final double elevatorHeight;
     private final Extender.Position extenderPosition;
     private final double turretAngle;

@@ -23,7 +23,7 @@ public class ArmGetToPosition extends ParallelCommandGroup {
                         ()-> lastPosition.getCluster() == position.getCluster()
                 )
         );
-        this.targetPosition = position;
+        this.targetPosition = position; //
     }
 
 

@@ -53,6 +53,7 @@ public class ElbowGetToPosition extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return (Calendar.getInstance().getTimeInMillis() - startTime) > 2000;
+//        return (Calendar.getInstance().getTimeInMillis() - startTime) > 2000;
+        return true;
     }
 }
