@@ -34,10 +34,4 @@ public class RotateTurretByPID extends CommandBase {
     public boolean isFinished() {
         return pidController.atSetPoint();
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        turret.stop();
-    }
-
 }

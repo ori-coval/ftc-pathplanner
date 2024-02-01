@@ -28,12 +28,6 @@ public class ElevatorGetToHeightPID extends CommandBase {
     public void execute() {
         elevator.setPower(pidController.calculate(elevator.getHeight()) + elevator.getKF());
         FtcDashboard.getInstance().getTelemetry().addData("elevator is finished", isFinished());
-
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        elevator.setPower(0);
     }
 
     @Override
