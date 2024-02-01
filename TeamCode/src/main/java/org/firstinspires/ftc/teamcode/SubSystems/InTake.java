@@ -64,11 +64,12 @@ public class InTake {
 
     public class Roller extends SubsystemBase {
         private int pixelCount;
-        private boolean isSwitchReleased = false;
-        public boolean lastButtonStateOnPress = false;
-        private boolean lastButtonStateOnRelease = false;
+        public boolean isOnRelease = false;
         public final double COLLECT_POWER = 1;
         public final double EJECT_POWER = -0.9;
+        public int getPixelCount() {
+            return pixelCount;
+        }
         public void setPower(double power) {
             inTakeMotor.setPower(power);
         }
@@ -79,37 +80,24 @@ public class InTake {
             return limitSwitch.getState();
         }
 
-        //On Release
-        public void updateIsSwitchReleased() {
-            if(lastButtonStateOnRelease && !currentSwitchState()) {
-                isSwitchReleased = true;
-                lastButtonStateOnRelease = false;
-            }
-            if(currentSwitchState()) lastButtonStateOnRelease = true;
-        }
-
         //On Press
         private void updatePixelCount() {
-            if (!lastButtonStateOnPress && currentSwitchState()) { //TODO: Sometimes this condition isn't met when the button is pressed. (I honestly don't know why)
-                pixelCount++;
-                isSwitchReleased = false;
+            if (!currentSwitchState()) { //TODO: Sometimes this condition isn't met when the button is pressed. (I honestly don't know why)
+                if (isOnRelease){
+                    pixelCount++;
+                    isOnRelease = false;
+                }
+            } else {
+                isOnRelease = true;
             }
-            lastButtonStateOnPress = currentSwitchState();
         }
 
-        public boolean getIsSwitchReleased() {
-            return isSwitchReleased;
-        }
-        public int getPixelCount() {
-            return pixelCount;
-        }
         public boolean isRobotFull() {
-            return (getPixelCount() >= 2) && getIsSwitchReleased();
+            return getPixelCount() >= 2;
         }
         @Override
         public void periodic() {
             updatePixelCount();
-            updateIsSwitchReleased();
         }
     }
 }
