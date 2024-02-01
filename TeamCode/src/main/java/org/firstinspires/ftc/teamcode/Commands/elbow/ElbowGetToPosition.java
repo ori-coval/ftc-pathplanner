@@ -10,13 +10,14 @@ import java.util.Calendar;
 public class ElbowGetToPosition extends CommandBase {
     private Elbow elbow;
     private double goalPos;
-    private final double TOLERANCE = 0.05;
-    //The arm moves using 2 axons, it can do short distances in no time. I'm only worried when the distance is large.
-
     private long startTime;
     private double startPos;
-    private int stepsTaken;
+    private int stepsTaken = 1;
+    private final long TIME_BETWEEN_STEPS = 50; //(In ms)
 
+    /*
+    Still need to be tested, if too fast, you can always add more time between steps."
+     */
 
     public ElbowGetToPosition(Elbow elbow, double goalPos) {
         this.elbow = elbow;
@@ -27,33 +28,32 @@ public class ElbowGetToPosition extends CommandBase {
     public void initialize() {
         startTime = Calendar.getInstance().getTimeInMillis();
         startPos = elbow.getServoPosition();
-        stepsTaken = 1;
     }
 
     @Override
     public void execute() {
         long timer = Calendar.getInstance().getTimeInMillis() - startTime;
         double stepSize = 0.05;
-        double isDirectionPositive = Math.signum(goalPos - elbow.getEncoderPosition());
-        updateServoPosition(timer, stepSize, isDirectionPositive);
+        double directionSign = Math.signum(goalPos - startPos);
+        updateServoPosition(timer, stepSize, directionSign);
 
         FtcDashboard.getInstance().getTelemetry().addData("elbow is finished", isFinished());
-        FtcDashboard.getInstance().getTelemetry().addData("elbow error ", Math.abs(elbow.getEncoderPosition() - goalPos));
 
     }
 
-    private void updateServoPosition(long timer, double stepSize, double isDirectionPositive) {
-        if (isDirectionPositive > 0) {
+    private void updateServoPosition(long timer, double stepSize, double directionSign) {
+        if (directionSign > 0) {
             elbow.setPosition(goalPos);
-        } else if (timer > (long) 50 * stepsTaken) {
-            elbow.setPosition(startPos + isDirectionPositive * stepSize * stepsTaken);
+        } else if (timer > TIME_BETWEEN_STEPS * stepsTaken) {
+            double newPos = startPos + directionSign * stepSize * stepsTaken; //if zero (though it should just call end (yeah directionSign can just be -1))
+            if(newPos < goalPos) newPos = goalPos;
+            elbow.setPosition(newPos);
             stepsTaken += 1;
         }
     }
 
     @Override
     public boolean isFinished() {
-//        return (Calendar.getInstance().getTimeInMillis() - startTime) > 2000;
-        return true;
+        return elbow.getServoPosition() == goalPos;
     }
 }

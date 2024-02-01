@@ -30,11 +30,12 @@ public class ElevatorGetToHeightPID extends CommandBase {
         FtcDashboard.getInstance().getTelemetry().addData("elevator is finished", isFinished());
 
     }
-
+    /* TODO: need to check if there are problems without the end method
     @Override
     public void end(boolean interrupted) {
         elevator.setPower(0);
     }
+     */
 
     @Override
     public boolean isFinished() {

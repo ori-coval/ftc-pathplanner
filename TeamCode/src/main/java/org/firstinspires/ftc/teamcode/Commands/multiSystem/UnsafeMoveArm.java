@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 public class UnsafeMoveArm extends ParallelCommandGroup {
     public UnsafeMoveArm(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
         addCommands(
-                new ElbowGetToPositionTest(elbow, position.getElbowPosition()),
+                new ElbowGetToPosition(elbow, position.getElbowPosition()),
                 new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
                 new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
                 new ExtenderSetPosition(extender, position.getExtenderPosition()),
