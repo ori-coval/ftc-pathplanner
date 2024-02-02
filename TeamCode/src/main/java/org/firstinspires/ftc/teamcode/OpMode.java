@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -10,18 +11,19 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorGetToHeightPID;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeCollectFromStack;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
-import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToSelectedPosition;
-import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSide;
+import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideCenter;
+import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideRightLeft;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
-import org.firstinspires.ftc.teamcode.SubSystems.Conveyor;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
-import org.firstinspires.ftc.teamcode.SubSystems.InTake;
+import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
@@ -33,12 +35,11 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class OpMode extends CommandOpMode {
 
     DriveTrain driveTrain;
-    InTake inTake;
+
     Elbow elbow;
     Turret turret;
     AntiTurret antiTurret;
     Cartridge cartridge;
-    Conveyor conveyor;
     Elevator elevator;
     BNO055IMU imu;
     TeamPropDetector teamPropDetector;
@@ -46,24 +47,22 @@ public class OpMode extends CommandOpMode {
     GamepadEx gamepadEx1;
     GamepadEx gamepadEx2;
     Extender extender;
+    Intake intake;
 
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-//        initDriveTrain();
-//        initIntake();
+        initDriveTrain();
+        initIntake();
         initElevator();
         initElbow();
         initTurret();
-//        initConveyor();
         initExtender();
         initAntiTurret();
-//        initCartridge();
         initGamepad();
 
         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).withTimeout(1).schedule(); // timeout so it doesn't go up for some reason
-
     }
 
     public void initGamepad() {
@@ -104,7 +103,7 @@ public class OpMode extends CommandOpMode {
     }
 
     public void initIntake() {
-        inTake = new InTake(hardwareMap);
+        intake = new Intake(hardwareMap);
     }
 
     public void initTurret() {
@@ -134,11 +133,6 @@ public class OpMode extends CommandOpMode {
         webcam.setPipeline(teamPropDetector);
     }
 
-    public void initConveyor() {
-        conveyor = new Conveyor(0);
-
-    }
-
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
     }
@@ -151,7 +145,7 @@ public class OpMode extends CommandOpMode {
         extender = new Extender(hardwareMap);
     }
     public void initCartridge() {
-        cartridge = new Cartridge(hardwareMap);
+        cartridge = new Cartridge(hardwareMap, gamepadEx1);
     }
 
     public void initIMU() {
