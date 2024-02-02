@@ -35,7 +35,6 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class OpMode extends CommandOpMode {
 
     DriveTrain driveTrain;
-
     Elbow elbow;
     Turret turret;
     AntiTurret antiTurret;
@@ -53,8 +52,8 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-        initDriveTrain();
-        initIntake();
+//        initDriveTrain();
+//        initIntake();
         initElevator();
         initElbow();
         initTurret();
@@ -68,6 +67,7 @@ public class OpMode extends CommandOpMode {
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
+
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetPosition(extender, Extender.Position.MID_WAY));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetPosition(extender, Extender.Position.OPEN));

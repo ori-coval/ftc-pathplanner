@@ -33,7 +33,7 @@ public class Elbow extends SubsystemBase {
     }
 
     public double getServoPosition(){
-        return servoLeft.getPosition();
+        return servoRight.getPosition();
     }
 
     public PIDController getPidController() {
