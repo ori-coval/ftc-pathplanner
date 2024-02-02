@@ -14,7 +14,7 @@ public class InTake {
     public InTake.Roller roller;
     public InTake.Lifter lifter;
     public InTake(HardwareMap hardwareMap){
-        inTakeMotor = (DcMotorEx) hardwareMap.dcMotor.get("inTake");
+        inTakeMotor = (DcMotorEx) hardwareMap.dcMotor.get("intake");
         inTakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         inTakeAngle = hardwareMap.servo.get("intakeServo");
         limitSwitch = hardwareMap.digitalChannel.get("switch");
@@ -73,9 +73,6 @@ public class InTake {
         public void setPower(double power) {
             inTakeMotor.setPower(power);
         }
-        public void stop() {
-            setPower(0);
-        }
         public boolean currentSwitchState() {
             return limitSwitch.getState();
         }
@@ -98,6 +95,10 @@ public class InTake {
         @Override
         public void periodic() {
             updatePixelCount();
+        }
+
+        public void stop() {
+            setPower(0);
         }
     }
 }

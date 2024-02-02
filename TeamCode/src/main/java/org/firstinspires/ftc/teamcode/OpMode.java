@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
@@ -79,6 +80,8 @@ public class OpMode extends CommandOpMode {
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.CENTER)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.RIGHT)).andThen(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret)));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeRotate(intake.roller, 0));
+
 
 
     }
@@ -146,13 +149,9 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        telemetry.addData("Intake position", intake.lifter.getStackPositionValue());
-        telemetry.addData("Intake stack position", intake.lifter.getStackPosition());
         telemetry.addData("Pixel Count", intake.roller.getPixelCount());
         telemetry.addData("Switch State", intake.roller.currentSwitchState());
-        telemetry.addData("Switch Released", intake.roller.getIsSwitchReleased());
-        telemetry.addData("lastButtonStateOnPress", intake.roller.isOnRelease);
-        telemetry.addData("Is robot full", intake.roller.isRobotFull());
+        telemetry.addData("isRobotFull", intake.roller.isRobotFull());
 
 //        elbow.setPosition(gamepad1.left_stick_x * 0.2 + 0.2);
 //        elbow.setPosition(1 - gamepad1.left_stick_x);
@@ -168,6 +167,5 @@ public class OpMode extends CommandOpMode {
 
 //        ArmPositionSelector.telemetry(telemetry);
         telemetry.update();
-        FtcDashboard.getInstance().getTelemetry().update();
     }
 }
