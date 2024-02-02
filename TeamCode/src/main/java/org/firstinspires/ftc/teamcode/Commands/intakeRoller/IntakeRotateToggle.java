@@ -8,8 +8,6 @@ import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 
 public class IntakeRotateToggle extends CommandBase {
     public static boolean rollerState;
-    private static int counterInit;
-    private static int counterEnd;
     public Intake.Roller intakeRoller;
     public IntakeRotateToggle(Intake.Roller intakeRoller) {
         this.intakeRoller = intakeRoller;
