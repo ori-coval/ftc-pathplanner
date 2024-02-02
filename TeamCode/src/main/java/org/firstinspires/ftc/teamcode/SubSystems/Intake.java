@@ -14,7 +14,7 @@ public class Intake {
     public Intake.Roller roller;
     public Intake.Lifter lifter;
     public Intake(HardwareMap hardwareMap){
-        intakeMotor = (DcMotorEx) hardwareMap.dcMotor.get("inTake");
+        intakeMotor = (DcMotorEx) hardwareMap.dcMotor.get("intake");
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeAngle = hardwareMap.servo.get("intakeServo");
         limitSwitch = hardwareMap.digitalChannel.get("switch");

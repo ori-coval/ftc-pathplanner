@@ -34,9 +34,8 @@ public class ElevatorGetToHeightPID extends CommandBase {
       //TODO: need to check if there are problems without the end method (doesn't work..)
     @Override
     public void end(boolean interrupted) {
-        elevator.setPower(pidController.calculate(elevator.getHeight()) + elevator.getKF());
+        elevator.setPower(0);
     }
-
 
     @Override
     public boolean isFinished() {

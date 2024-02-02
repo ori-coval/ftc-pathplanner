@@ -1,22 +1,28 @@
 package org.firstinspires.ftc.teamcode.Commands.intakeRoller;
 
-import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 
-public class IntakeRotateToggle extends ConditionalCommand {
-    private static boolean rollerState = false;
+public class IntakeRotateToggle extends CommandBase {
+    public static boolean rollerState;
+    private static int counterInit;
+    private static int counterEnd;
+    public Intake.Roller intakeRoller;
     public IntakeRotateToggle(Intake.Roller intakeRoller) {
-        super(
-                new IntakeRotate(intakeRoller, intakeRoller.EJECT_POWER),
-                new IntakeRotate(intakeRoller, intakeRoller.COLLECT_POWER),
-                () -> rollerState
-        );
+        this.intakeRoller = intakeRoller;
     }
 
     @Override
     public void initialize() {
-        super.initialize();
+        new IntakeRotate(intakeRoller, rollerState ? 0 : intakeRoller.COLLECT_POWER).schedule();
         rollerState = !rollerState;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }
