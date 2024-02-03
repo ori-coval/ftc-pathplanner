@@ -5,13 +5,18 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class InTake extends SubsystemBase {
     private DcMotorEx inTakeMotor;
     private Servo inTakeAngle;
-    private Gamepad gamepad;
+    private DigitalChannel limitSwitch;
+    private int pixelCount;
+    private boolean lastState = false;
     public final double COLLECT_POWER = 1;
     public final double EJECT_POWER = -0.9;
     public final double[] STACK_POSITION = {0, 0.07, 0.13, 0.21, 0.77};
@@ -24,28 +29,40 @@ public class InTake extends SubsystemBase {
     */
     private double currentStackPosition = STACK_POSITION[4];
 
-    public InTake(DcMotorEx inTakeMotor, Servo inTakeAngle, Gamepad gamepad){
-        this.inTakeMotor = inTakeMotor;
-        this.inTakeAngle = inTakeAngle;
-        this.gamepad = gamepad;
+    public InTake(HardwareMap hardwareMap){
+        inTakeMotor = (DcMotorEx) hardwareMap.dcMotor.get("inTake");
+        inTakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        inTakeAngle = hardwareMap.servo.get("intakeServo");
+        limitSwitch = hardwareMap.digitalChannel.get("switch");
     }
+
+    public boolean currentState(){
+        return limitSwitch.getState();
+    }
+    private void updatePixelCount(){
+        if (!lastState && currentState()){
+            pixelCount++;
+        }
+        lastState = currentState();
+    }
+    public int getPixelCount(){return pixelCount;}
+    public boolean isRobotFull(){
+        return getPixelCount() >= 2;
+    }
+
+
+
     public void setPower(double power){
         inTakeMotor.setPower(power);
     }
-
     public void stop(){
         setPower(0);
     }
 
-    public void setPosition(double position){
-        inTakeAngle.setPosition(position);
-    }
-    public double getPosition(){return inTakeAngle.getPosition();}
-
+    public void setPosition(double position){inTakeAngle.setPosition(position);}
     public void setStackPosition(int position) {
         currentStackPosition = STACK_POSITION[position];
     }
-
     public double getStackPosition() {
         return currentStackPosition;
     }
@@ -62,5 +79,6 @@ public class InTake extends SubsystemBase {
     @Override
     public void periodic() {
         updatePosition();
+        updatePixelCount();
     }
 }
