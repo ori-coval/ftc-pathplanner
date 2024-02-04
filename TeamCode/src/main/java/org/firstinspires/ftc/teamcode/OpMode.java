@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -12,12 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetPosition;
-import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeCollectFromStack;
-import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
-import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
-import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
-import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideCenter;
-import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideRightLeft;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
@@ -49,7 +41,10 @@ public class OpMode extends CommandOpMode {
     Extender extender;
     Intake intake;
 
-    private double sensitivity;
+    private double elbowSensitivity;
+    private double antiTurretSensitivity;
+    private double lastElbowPos = 0;
+    private double lastAntiTurretPos = 0;
 
     @Override
     public void initialize() {
@@ -167,19 +162,47 @@ public class OpMode extends CommandOpMode {
         super.run();
 
         if(gamepad1.dpad_up) {
-            sensitivity += 0.1;
-            
+            if(elbowSensitivity >= 1) elbowSensitivity = 1;
+            else {
+                lastElbowPos = elbow.getServoPosition();
+                elbowSensitivity += 0.1;
+            }
+        }
+        if(gamepad1.dpad_down) {
+            if(elbowSensitivity <= 0) elbowSensitivity = 0;
+            else {
+                lastElbowPos = elbow.getServoPosition();
+                elbowSensitivity -= 0.1;
+            }
         }
 
+        if(gamepad1.dpad_right) {
+            if(antiTurretSensitivity >= 1) antiTurretSensitivity = 1;
+            else {
+                lastAntiTurretPos = antiTurret.getPosition();
+                antiTurretSensitivity += 0.1;
+            }
+        }
+        if(gamepad1.dpad_left) {
+            if(antiTurretSensitivity <= 0) antiTurretSensitivity = 0;
+            else {
+                lastAntiTurretPos = antiTurret.getPosition();
+                antiTurretSensitivity -= 0.1;
+            }
+        }
+
+        telemetry.addData("Elbow's Sensitivity", elbowSensitivity);
+        telemetry.addData("Anti Turret's Sensitivity", antiTurretSensitivity);
+
 //        elbow.setPosition(gamepad1.left_stick_x * 0.2 + 0.2);
-        elbow.setPosition(gamepad1.left_stick_x * sensitivity);
-        telemetry.addData("elbow position", gamepad1.left_stick_x * sensitivity);
+        elbow.setPosition(lastElbowPos + gamepad1.left_stick_x * elbowSensitivity);
+        telemetry.addData("elbow position", lastElbowPos + gamepad1.left_stick_x * elbowSensitivity);
 //        telemetry.addData("elbow position", gamepad1.left_stick_x * 0.2 + 0.2);
 //        extender.setPos(gamepad1.left_stick_x);
 //        elbow.setPosition(1 - gamepad1.left_stick_x);
-        antiTurret.setPos(gamepad1.right_stick_x);
+        antiTurret.setPos(lastAntiTurretPos + gamepad1.right_stick_x * antiTurretSensitivity);
 //        cartridge.setPosition(gamepad1.left_stick_x);
-        telemetry.addData("antiTurret position", gamepad1.right_stick_x);
+        telemetry.addData("antiTurret position", lastAntiTurretPos + gamepad1.right_stick_x * antiTurretSensitivity);
 
 //        telemetry.addData("cartridge position", cartridge.getPosition());
 //        telemetry.addData("antiTurret pos", antiTurret.getPosition());
