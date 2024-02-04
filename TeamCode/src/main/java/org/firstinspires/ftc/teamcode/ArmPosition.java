@@ -37,9 +37,9 @@ public enum ArmPosition {
 
      */
 
-    SCORE_TOP_FAR(10, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SCORE_TOP_FAR(10, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring), //Can't physically reach this
     SCORE_TOP_FRONT(11, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
-    SCORE_TOP_CLOSE(12, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
+    SCORE_TOP_CLOSE(29.1, Extender.Position.OPEN, -35, 0.524, 0.8, Cluster.scoring),
     SCORE_MID_FAR(13, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
     SCORE_MID_FRONT(14, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
     SCORE_MID_CLOSE(15, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),

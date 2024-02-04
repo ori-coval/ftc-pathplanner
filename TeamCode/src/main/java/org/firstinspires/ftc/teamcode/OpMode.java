@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -72,6 +73,11 @@ public class OpMode extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetPosition(extender, Extender.Position.MID_WAY));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetPosition(extender, Extender.Position.OPEN));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(this::setElbowSensitivityUp));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(this::setElbowSensitivityDown));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(this::setAntiTurretSensitivityUp));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(this::setAntiTurretSensitivityDown));
+
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, true));
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.THIRD_TEST_POSITION, true));
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true));
@@ -157,39 +163,41 @@ public class OpMode extends CommandOpMode {
         imu.initialize(parameters);
     }
 
+    public void setElbowSensitivityUp() {
+        if(elbowSensitivity >= 1) elbowSensitivity = 1;
+        else {
+            lastElbowPos = elbow.getServoPosition();
+            elbowSensitivity += 0.1;
+        }
+    }
+
+    public void setElbowSensitivityDown() {
+        if(elbowSensitivity <= 0) elbowSensitivity = 0;
+        else {
+            lastElbowPos = elbow.getServoPosition();
+            elbowSensitivity -= 0.1;
+        }
+    }
+
+    public void setAntiTurretSensitivityUp() {
+        if(antiTurretSensitivity >= 1) antiTurretSensitivity = 1;
+        else {
+            lastAntiTurretPos = antiTurret.getPosition();
+            antiTurretSensitivity += 0.1;
+        }
+    }
+
+    public void setAntiTurretSensitivityDown() {
+        if(antiTurretSensitivity <= 0) antiTurretSensitivity = 0;
+        else {
+            lastAntiTurretPos = antiTurret.getPosition();
+            antiTurretSensitivity -= 0.1;
+        }
+    }
+
     @Override
     public void run() {
         super.run();
-
-        if(gamepad1.dpad_up) {
-            if(elbowSensitivity >= 1) elbowSensitivity = 1;
-            else {
-                lastElbowPos = elbow.getServoPosition();
-                elbowSensitivity += 0.1;
-            }
-        }
-        if(gamepad1.dpad_down) {
-            if(elbowSensitivity <= 0) elbowSensitivity = 0;
-            else {
-                lastElbowPos = elbow.getServoPosition();
-                elbowSensitivity -= 0.1;
-            }
-        }
-
-        if(gamepad1.dpad_right) {
-            if(antiTurretSensitivity >= 1) antiTurretSensitivity = 1;
-            else {
-                lastAntiTurretPos = antiTurret.getPosition();
-                antiTurretSensitivity += 0.1;
-            }
-        }
-        if(gamepad1.dpad_left) {
-            if(antiTurretSensitivity <= 0) antiTurretSensitivity = 0;
-            else {
-                lastAntiTurretPos = antiTurret.getPosition();
-                antiTurretSensitivity -= 0.1;
-            }
-        }
 
         telemetry.addData("Elbow's Sensitivity", elbowSensitivity);
         telemetry.addData("Anti Turret's Sensitivity", antiTurretSensitivity);
