@@ -22,6 +22,7 @@ public class Cartridge extends SubsystemBase {
 
     private GamepadEx gamepadEx1;
     private long time;
+    private boolean startTime = false;
 
     public Cartridge(HardwareMap hardwareMap, GamepadEx gamepadEx1){
         latch = hardwareMap.servo.get("cartridge");
@@ -54,8 +55,12 @@ public class Cartridge extends SubsystemBase {
         if(rightTriggerPressed) {
             setState(State.OPEN);
             time = Calendar.getInstance().getTimeInMillis();
-        } else if(Calendar.getInstance().getTimeInMillis() - time > 2000) {
+            startTime = true;
+        }
+
+        if(startTime && Calendar.getInstance().getTimeInMillis() - time > 500) {
             setState(State.CLOSED);
+            startTime = false;
         }
 
     }
