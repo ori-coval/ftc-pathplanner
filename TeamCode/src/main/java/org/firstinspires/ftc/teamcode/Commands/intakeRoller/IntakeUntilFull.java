@@ -12,14 +12,12 @@ import com.qualcomm.robotcore.robocol.Command;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
 import org.firstinspires.ftc.teamcode.SubSystems.InTake;
 public class IntakeUntilFull extends ParallelDeadlineGroup {
-    private static final long waitTimeUntilStop = 2000;
+    private static final long waitTimeUntilStop = 1000;
     public IntakeUntilFull(InTake.Roller intakeRoller) {
         super(
-                new SequentialCommandGroup( //DOESN'T WORK AHHHHHHHHH WHY???
+                new SequentialCommandGroup(
                         new WaitUntilCommand(intakeRoller::isRobotFull),
-                        new InstantCommand(()-> FtcDashboard.getInstance().getTelemetry().addData("isF", "done0!")),
-                        new WaitCommand(waitTimeUntilStop),
-                        new InstantCommand(()-> FtcDashboard.getInstance().getTelemetry().addData("isF", "done1!"))
+                        new WaitCommand(waitTimeUntilStop)
                 ).asProxy(),
                 new IntakeRotate(intakeRoller, intakeRoller.COLLECT_POWER)
         );

@@ -49,11 +49,6 @@ public class InTake {
 
         public void updatePosition() {
             setPosition(getStackPositionValue());
-        /*
-        I think that using 5 buttons for the intake is incredibly wasteful,
-        in my opinion it'll be better using some kind of steeper mechanism that whenever I press some kind of button
-        it goes between states of the intake. Like the more I press the higher it gets. That way we can use only one button.
-         */
         }
         @Override
         public void periodic() {
@@ -79,7 +74,7 @@ public class InTake {
 
         //On Press
         private void updatePixelCount() {
-            if (!currentSwitchState()) { //TODO: Sometimes this condition isn't met when the button is pressed. (I honestly don't know why)
+            if (!currentSwitchState()) {
                 if (isOnRelease){
                     pixelCount++;
                     isOnRelease = false;
