@@ -8,7 +8,7 @@ public class IntakeRotateToggle extends ConditionalCommand {
     private static boolean rollerState = false;
     public IntakeRotateToggle(Intake.Roller intakeRoller) {
         super(
-                new IntakeRotate(intakeRoller, intakeRoller.EJECT_POWER),
+                new IntakeRotate(intakeRoller, 0),
                 new IntakeRotate(intakeRoller, intakeRoller.COLLECT_POWER),
                 () -> rollerState
         );

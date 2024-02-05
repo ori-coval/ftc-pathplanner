@@ -31,11 +31,10 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@TeleOp(name = "DriveTrain")
+@TeleOp(name = "Meow")
 public class OpMode extends CommandOpMode {
 
     DriveTrain driveTrain;
-
     Elbow elbow;
     Turret turret;
     AntiTurret antiTurret;
@@ -53,36 +52,33 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-        initDriveTrain();
-        initIntake();
-        initElevator();
-        initElbow();
-        initTurret();
-        initExtender();
+//        initDriveTrain();
+//        initIntake();
+//        initElevator();
+//        initElbow();
+//        initTurret();
+//        initExtender();
         initAntiTurret();
-        initGamepad();
-
-        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).withTimeout(1).schedule(); // timeout so it doesn't go up for some reason
+        initCartridge(); //The triggers are defined in the cartridge periodic ('cause I have no idea how to bind a command to a trigger)
+//        initGamepad();
+//        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).withTimeout(1).schedule(); // timeout so it doesn't go up for some reason
     }
 
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
-        initCartridge(); //The triggers are defined in the cartridge periodic ('cause I have no idea how to bind a command to a trigger)
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideRightLeft(elevator, elbow, extender, turret, antiTurret, Side.LEFT));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideRightLeft(elevator, elbow, extender, turret, antiTurret, Side.RIGHT));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSideCenter(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeRotateToggle(intake.roller));
-
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
 
-
-
-
-
-
-
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new )
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
     }
 
 
@@ -91,19 +87,15 @@ public class OpMode extends CommandOpMode {
         driveTrain = new DriveTrain(hardwareMap, imu);
         driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
     }
-
     public void initIntake() {
         intake = new Intake(hardwareMap);
     }
-
     public void initTurret() {
         turret = new Turret(hardwareMap);
     }
-
     public void initAntiTurret() {
         antiTurret = new AntiTurret(hardwareMap);
     }
-
     public void VisionInit() {
         teamPropDetector = new TeamPropDetector(AllianceColor.BLUE);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -122,22 +114,18 @@ public class OpMode extends CommandOpMode {
 
         webcam.setPipeline(teamPropDetector);
     }
-
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
     }
-
     public void initElbow() {
         elbow = new Elbow(hardwareMap);
     }
-
     public void initExtender() {
         extender = new Extender(hardwareMap);
     }
     public void initCartridge() {
         cartridge = new Cartridge(hardwareMap, gamepadEx1);
     }
-
     public void initIMU() {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -148,5 +136,6 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
+
     }
 }
