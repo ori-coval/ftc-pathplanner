@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
@@ -18,14 +19,28 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class UnsafeMoveArm extends ParallelCommandGroup {
+
+    public static ArmPosition lastPosition = ArmPosition.INTAKE;
+    private ArmPosition targetPosition;
+
     public UnsafeMoveArm(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
         addCommands(
+                new ConditionalCommand(
+                        new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()).andThen(new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard))),
+                        new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)).andThen(new ElevatorGetToHeightPID(elevator, position.getElevatorHeight())),
+                        () -> (lastPosition.getElevatorHeight() < position.getElevatorHeight())
+                ),
                 new ElbowGetToPosition(elbow, position.getElbowPosition()),
-                new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
-                new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
                 new ExtenderSetPosition(extender, position.getExtenderPosition()),
                 new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
         );
+        targetPosition = position;
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        lastPosition = targetPosition;
     }
 
     @Override
