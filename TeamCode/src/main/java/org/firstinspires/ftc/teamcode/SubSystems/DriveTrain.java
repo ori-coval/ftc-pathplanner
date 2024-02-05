@@ -6,6 +6,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.RobotHardware;
@@ -19,13 +20,13 @@ public class DriveTrain extends SubsystemBase {
     private DcMotor motorBR;
     private BNO055IMU imu;
 
-    public DriveTrain(DcMotor motor_BL, DcMotor motor_BR, DcMotor motor_FL, DcMotor motor_FR, BNO055IMU imu) {
-        this.motorBL = motor_BL;
-        this.motorFL = motor_FL;
-        this.motorFR = motor_FR;
-        this.motorBR = motor_BR;
-        this.motorFL.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
+    public DriveTrain(HardwareMap hardwareMap, BNO055IMU imu) {
+        motorBL = hardwareMap.dcMotor.get("backLeft");
+        motorFL = hardwareMap.dcMotor.get("frontLeft");
+        motorFR = hardwareMap.dcMotor.get("frontRight");
+        motorBR = hardwareMap.dcMotor.get("backRight");
+        motorFL.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
         this.imu = imu;
     }
 

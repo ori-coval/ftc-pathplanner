@@ -1,28 +1,41 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Extender extends SubsystemBase {
+    private final Servo linearServo;
 
-    public enum Length {
-        CLOSED(0), MID_WAY(0.25), OPEN(0.5);
+    private Position curretPosition;
+
+    public enum Position {
+        CLOSED(0), MID_WAY(0.17), OPEN(0.34);
         private final double servoPosition;
-        Length(double length){
-            this.servoPosition = length;
+        Position(double position){
+            this.servoPosition = position;
         }
     }
-    private Servo linearServo;
-    private Length currentLength;
 
-    public Extender (Servo linearServo){
-        this.linearServo = linearServo;
+    public Extender (HardwareMap hardwareMap){
+        linearServo = hardwareMap.servo.get("extender");
+        linearServo.setDirection(Servo.Direction.REVERSE);
     }
-    public void setPosition(Length length){
-        linearServo.setPosition(length.servoPosition);
-        currentLength = length;
+
+    public double getPos() {
+        return linearServo.getPosition();
     }
-    public Length getPosition(){
-        return currentLength;
+
+    public void setPos(double pos) {
+        linearServo.setPosition(pos);
+    }
+
+    public void setPosition(Position position) {
+        linearServo.setPosition(position.servoPosition);
+        curretPosition = position;
+    }
+
+    public Position getCurretPosition() {
+        return curretPosition;
     }
 }
