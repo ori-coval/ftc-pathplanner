@@ -18,21 +18,16 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
-public class UnsafeMoveArm extends ParallelCommandGroup {
+public class UnsafeMoveArm extends ConditionalCommand {
 
     public static ArmPosition lastPosition = ArmPosition.INTAKE;
     private ArmPosition targetPosition;
 
     public UnsafeMoveArm(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
-        addCommands(
-                new ConditionalCommand(
-                        new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()).andThen(new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard))),
-                        new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)).andThen(new ElevatorGetToHeightPID(elevator, position.getElevatorHeight())),
-                        () -> (lastPosition.getElevatorHeight() < position.getElevatorHeight())
-                ),
-                new ElbowGetToPosition(elbow, position.getElbowPosition()),
-                new ExtenderSetPosition(extender, position.getExtenderPosition()),
-                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
+        super(
+                new UnsafeMoveArmUp(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard),
+                new UnsafeMoveArmDown(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard),
+                () -> (lastPosition.getElevatorHeight() < position.getElevatorHeight())
         );
         targetPosition = position;
     }
