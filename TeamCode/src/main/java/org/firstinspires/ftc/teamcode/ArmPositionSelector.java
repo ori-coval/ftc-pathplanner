@@ -29,13 +29,13 @@ public class ArmPositionSelector {
 
     public static void moveUp() {
         if (selectedScoreHeight != 0) {
-            selectedScoreHeight--;
+            selectedScoreHeight++;
         }
     }
 
     public static void moveDown() {
         if (selectedScoreHeight != 2) {
-            selectedScoreHeight++;
+            selectedScoreHeight--;
         }
     }
 
