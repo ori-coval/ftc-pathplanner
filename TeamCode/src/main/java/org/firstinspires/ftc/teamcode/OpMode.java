@@ -14,12 +14,14 @@ import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeCollectFromStack;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
+import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideCenter;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideRightLeft;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.SubSystems.DroneLauncher;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
@@ -39,6 +41,7 @@ public class OpMode extends CommandOpMode {
     Turret turret;
     AntiTurret antiTurret;
     Cartridge cartridge;
+    DroneLauncher droneLauncher;
     Elevator elevator;
     BNO055IMU imu;
     TeamPropDetector teamPropDetector;
@@ -52,29 +55,32 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-//        initDriveTrain();
-//        initIntake();
-//        initElevator();
-//        initElbow();
-//        initTurret();
-//        initExtender();
+        initDriveTrain();
+        initIntake();
+        initElevator();
+        initElbow();
+        initTurret();
+        initExtender();
         initAntiTurret();
         initCartridge(); //The triggers are defined in the cartridge periodic ('cause I have no idea how to bind a command to a trigger)
-//        initGamepad();
-//        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).withTimeout(1).schedule(); // timeout so it doesn't go up for some reason
+        initDroneLauncher();
+        initGamepad();
+
+        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).withTimeout(1).schedule(); // timeout so it doesn't go up for some reason
+
+
     }
 
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
-
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideRightLeft(elevator, elbow, extender, turret, antiTurret, Side.LEFT));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideRightLeft(elevator, elbow, extender, turret, antiTurret, Side.RIGHT));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSideCenter(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeRotateToggle(intake.roller));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
 
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new )
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
@@ -131,6 +137,9 @@ public class OpMode extends CommandOpMode {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
+    }
+    public void initDroneLauncher() {
+        droneLauncher = new DroneLauncher(hardwareMap);
     }
 
     @Override
