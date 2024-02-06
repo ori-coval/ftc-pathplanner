@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
-public class SetRobotSideCenter extends SequentialCommandGroup {
+public class SetRobotSideCenter extends SequentialCommandGroup { /*This works always, need to see why the others aren't working*/
     public SetRobotSideCenter(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret) {
         super(
                 new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.CENTER)),

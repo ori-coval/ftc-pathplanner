@@ -81,9 +81,9 @@ public class OpMode extends CommandOpMode {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.LEFT)));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.RIGHT)));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(() -> ArmPositionSelector.setRobotSide(Side.CENTER)));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideRightLeft(elevator, elbow, extender, turret, antiTurret, Side.LEFT));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideRightLeft(elevator, elbow, extender, turret, antiTurret, Side.RIGHT));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSideCenter(elevator, elbow, extender, turret, antiTurret));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ElevatorGetToHeightPID(elevator, 30));
@@ -183,6 +183,7 @@ public class OpMode extends CommandOpMode {
 
 
         ArmPositionSelector.telemetry(telemetry);
+        telemetry.addData("isLeftOfBoard", ArmPositionSelector.getIsLeftOfBoard()); //this might be the problem
         telemetry.addData("Current Position", ArmPositionSelector.getPosition());
         telemetry.update();
     }

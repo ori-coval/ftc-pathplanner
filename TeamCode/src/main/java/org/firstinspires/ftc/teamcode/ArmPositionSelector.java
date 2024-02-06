@@ -69,6 +69,7 @@ public class ArmPositionSelector {
     }
 
     public static boolean getIsLeftOfBoard() {
+//        return selectedRobotSide.equals(Side.LEFT); /*If the one below doesn't work, try this*/
         return selectedRobotSide == Side.LEFT;
     }
 }

@@ -20,7 +20,7 @@ public class SetRobotSideRightLeft extends CommandBase {
     private Turret turret;
     private AntiTurret antiTurret;
     private Side side;
-    private SequentialCommandGroup command;
+    private ArmGetToPosition command;
 
     public SetRobotSideRightLeft(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, Side side) {
         this.elevator = elevator;
@@ -33,10 +33,8 @@ public class SetRobotSideRightLeft extends CommandBase {
 
     @Override
     public void initialize() {
-        command = new SequentialCommandGroup(
-                new InstantCommand(() -> ArmPositionSelector.setRobotSide(side)),
-                new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORING, ArmPositionSelector.getIsLeftOfBoard())
-        );
+        ArmPositionSelector.setRobotSide(side);
+        command = new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORING, ArmPositionSelector.getIsLeftOfBoard());
         command.schedule();
     }
 

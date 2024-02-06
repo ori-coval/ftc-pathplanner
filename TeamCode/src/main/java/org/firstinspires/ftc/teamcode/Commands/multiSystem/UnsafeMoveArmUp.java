@@ -20,7 +20,7 @@ public class UnsafeMoveArmUp extends SequentialCommandGroup {
         super(
                 new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
                 new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
-                new ElbowGetToPosition(elbow, position.getElbowPosition()), /*These are instant commands so their isFinished are always true */
+                new ElbowGetToPosition(elbow, position.getElbowPosition()), /*These are instant commands so their isFinished always true */
                 new ExtenderSetPosition(extender, position.getExtenderPosition()),
                 new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
         );

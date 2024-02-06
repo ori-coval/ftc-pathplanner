@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 public class UnsafeMoveArm extends ConditionalCommand {
 
     public static ArmPosition lastPosition = ArmPosition.INTAKE;
-    private ArmPosition targetPosition;
+    private final ArmPosition targetPosition;
 
     public UnsafeMoveArm(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
         super(
