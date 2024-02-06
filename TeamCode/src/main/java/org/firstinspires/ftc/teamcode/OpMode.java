@@ -42,8 +42,10 @@ public class OpMode extends CommandOpMode {
     Extender extender;
     Intake intake;
 
+    private double extenderSensitivity;
     private double elbowSensitivity;
     private double antiTurretSensitivity;
+    private double lastExtenderPos = 0;
     private double lastElbowPos = 0;
     private double lastAntiTurretPos = 0;
 
@@ -53,11 +55,11 @@ public class OpMode extends CommandOpMode {
 
 //        initDriveTrain();
 //        initIntake();
-        initElevator();
-        initElbow();
-        initTurret();
+//        initElevator();
+//        initElbow();
+//        initTurret();
         initExtender();
-        initAntiTurret();
+//        initAntiTurret();
         initGamepad();
 
 //        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).withTimeout(1).schedule(); // timeout so it doesn't go up for some reason
@@ -66,17 +68,21 @@ public class OpMode extends CommandOpMode {
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
-        initCartridge();
+//        initCartridge();
 
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeRotateToggle(intake.roller));
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetPosition(extender, Extender.Position.MID_WAY));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetPosition(extender, Extender.Position.OPEN));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(this::setElbowSensitivityUp));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(this::setElbowSensitivityDown));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(this::setAntiTurretSensitivityUp));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(this::setAntiTurretSensitivityDown));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ExtenderSetPosition(extender, Extender.Position.MID_WAY));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ExtenderSetPosition(extender, Extender.Position.OPEN));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(this::setElbowSensitivityUp));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(this::setElbowSensitivityDown));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(this::setAntiTurretSensitivityUp));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(this::setAntiTurretSensitivityDown));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(this::setExtenderSensitivityUp));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(this::setExtenderSensitivityDown));
+
+
 
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, true));
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.THIRD_TEST_POSITION, true));
@@ -195,31 +201,50 @@ public class OpMode extends CommandOpMode {
         }
     }
 
+    public void setExtenderSensitivityUp() {
+        if(extenderSensitivity >= 1) extenderSensitivity = 1;
+        else {
+            lastExtenderPos = extender.getPos();
+            extenderSensitivity += 0.1;
+        }
+    }
+
+    public void setExtenderSensitivityDown() {
+        if(extenderSensitivity <= 0) extenderSensitivity = 0;
+        else {
+            lastExtenderPos = extender.getPos();
+            extenderSensitivity -= 0.1;
+        }
+    }
+
+
     @Override
     public void run() {
         super.run();
 
-        telemetry.addData("Elbow's Sensitivity", elbowSensitivity);
-        telemetry.addData("Anti Turret's Sensitivity", antiTurretSensitivity);
+//        telemetry.addData("Elbow's Sensitivity", elbowSensitivity);
+//        telemetry.addData("Anti Turret's Sensitivity", antiTurretSensitivity);
+        telemetry.addData("Extender's Sensitivity", extenderSensitivity);
 
 //        elbow.setPosition(gamepad1.left_stick_x * 0.2 + 0.2);
-        elbow.setPosition(lastElbowPos + gamepad1.left_stick_x * elbowSensitivity);
-        telemetry.addData("elbow position", lastElbowPos + gamepad1.left_stick_x * elbowSensitivity);
+//        elbow.setPosition(lastElbowPos + gamepad1.left_stick_x * elbowSensitivity);
+        extender.setPos(lastExtenderPos + gamepad1.left_stick_x * extenderSensitivity);
+        telemetry.addData("extender calculated position", lastExtenderPos + gamepad1.left_stick_x * extenderSensitivity);
 //        telemetry.addData("elbow position", gamepad1.left_stick_x * 0.2 + 0.2);
 //        extender.setPos(gamepad1.left_stick_x);
 //        elbow.setPosition(1 - gamepad1.left_stick_x);
-        antiTurret.setPos(lastAntiTurretPos + gamepad1.right_stick_x * antiTurretSensitivity);
+//        antiTurret.setPos(lastAntiTurretPos + gamepad1.right_stick_x * antiTurretSensitivity);
 //        cartridge.setPosition(gamepad1.left_stick_x);
-        telemetry.addData("antiTurret position", lastAntiTurretPos + gamepad1.right_stick_x * antiTurretSensitivity);
+//        telemetry.addData("antiTurret position", lastAntiTurretPos + gamepad1.right_stick_x * antiTurretSensitivity);
 
 //        telemetry.addData("cartridge position", cartridge.getPosition());
 //        telemetry.addData("antiTurret pos", antiTurret.getPosition());
 
-        telemetry.addData("cartridge pos", cartridge.getState());
-        telemetry.addData("extender pos", extender.getCurretPosition());
+//        telemetry.addData("cartridge pos", cartridge.getState());
+        telemetry.addData("extender commanded position", extender.getPos());
 //        telemetry.addData("elbow pos", elbow.getEncoderPosition());
-        telemetry.addData("elevator height", elevator.getHeight());
-        telemetry.addData("turret angle", turret.getAngle());
+//        telemetry.addData("elevator height", elevator.getHeight());
+//        telemetry.addData("turret angle", turret.getAngle());
 
 
 //        ArmPositionSelector.telemetry(telemetry);
