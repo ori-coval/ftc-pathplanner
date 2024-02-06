@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Side;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 
-public class GoCollectPixelFromSpikeMark extends SequentialCommandGroup {
-    public GoCollectPixelFromSpikeMark(SampleMecanumDrive driveTrain, Intake intake, Side side) {
+public class GoFromSpikeMarkToStackAndCollectPixel extends SequentialCommandGroup {
+    public GoFromSpikeMarkToStackAndCollectPixel(SampleMecanumDrive driveTrain, Intake intake, Side side) {
         super(
                 new IntakeSetStackPosition(intake.lifter,3),
                 new SideCommandSwitch(
