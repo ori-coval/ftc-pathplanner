@@ -51,7 +51,7 @@ public class OpMode extends CommandOpMode {
         CommandScheduler.getInstance().reset();
 
 //        initDriveTrain();
-//        initIntake();
+        initIntake();
         initElevator();
         initElbow();
         initTurret();
@@ -65,7 +65,7 @@ public class OpMode extends CommandOpMode {
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
-//        initCartridge();
+        initCartridge();
 
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeRotateToggle(intake.roller));
 
