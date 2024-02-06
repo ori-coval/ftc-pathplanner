@@ -80,7 +80,7 @@ public class OpMode extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORING, true));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeRotateToggle(intake.roller));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeRotateToggle(intake.roller));
 
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
