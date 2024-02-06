@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretGetToPosition;
@@ -19,8 +20,10 @@ public class UnsafeMoveArmDown extends SequentialCommandGroup {
     public UnsafeMoveArmDown(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
         super(
                 new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
+                new WaitCommand(500),
                 new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
-                new ElbowGetToPosition(elbow, position.getElbowPosition()),
+                new ElbowGetToPosition(elbow, position.getElbowPosition()), /*These are instant commands so their isFinished always true */
+                new WaitCommand(170), //Trying to avoid elbow's servos overload
                 new ExtenderSetPosition(extender, position.getExtenderPosition()),
                 new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
         );
