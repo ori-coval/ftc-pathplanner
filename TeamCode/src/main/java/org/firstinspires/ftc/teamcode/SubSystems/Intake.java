@@ -11,6 +11,7 @@ public class Intake {
     private DcMotorEx intakeMotor;
     private Servo intakeAngle;
     private DigitalChannel limitSwitch;
+
     public Intake.Roller roller;
     public Intake.Lifter lifter;
     public Intake(HardwareMap hardwareMap){
@@ -49,11 +50,6 @@ public class Intake {
 
         public void updatePosition() {
             setPosition(getStackPositionValue());
-        /*
-        I think that using 5 buttons for the intake is incredibly wasteful,
-        in my opinion it'll be better using some kind of steeper mechanism that whenever I press some kind of button
-        it goes between states of the intake. Like the more I press the higher it gets. That way we can use only one button.
-         */
         }
         @Override
         public void periodic() {
@@ -64,52 +60,41 @@ public class Intake {
 
     public class Roller extends SubsystemBase {
         private int pixelCount;
-        private boolean isSwitchReleased = false;
-        public boolean lastButtonStateOnPress = false;
-        private boolean lastButtonStateOnRelease = false;
+        public boolean isOnRelease = false;
         public final double COLLECT_POWER = 1;
         public final double EJECT_POWER = -0.9;
+        public int getPixelCount() {
+            return pixelCount;
+        }
         public void setPower(double power) {
             intakeMotor.setPower(power);
-        }
-        public void stop() {
-            setPower(0);
         }
         public boolean currentSwitchState() {
             return limitSwitch.getState();
         }
 
-        //On Release
-        public void updateIsSwitchReleased() {
-            if(lastButtonStateOnRelease && !currentSwitchState()) {
-                isSwitchReleased = true;
-                lastButtonStateOnRelease = false;
-            }
-            if(currentSwitchState()) lastButtonStateOnRelease = true;
-        }
-
         //On Press
         private void updatePixelCount() {
-            if (!lastButtonStateOnPress && currentSwitchState()) { //TODO: Sometimes this condition isn't met when the button is pressed. (I honestly don't know why)
-                pixelCount++;
-                isSwitchReleased = false;
+            if (!currentSwitchState()) {
+                if (isOnRelease){
+                    pixelCount++;
+                    isOnRelease = false;
+                }
+            } else {
+                isOnRelease = true;
             }
-            lastButtonStateOnPress = currentSwitchState();
         }
 
-        public boolean getIsSwitchReleased() {
-            return isSwitchReleased;
-        }
-        public int getPixelCount() {
-            return pixelCount;
-        }
         public boolean isRobotFull() {
-            return (getPixelCount() >= 2) && getIsSwitchReleased();
+            return getPixelCount() >= 2;
         }
         @Override
         public void periodic() {
             updatePixelCount();
-            updateIsSwitchReleased();
+        }
+
+        public void stop() {
+            setPower(0);
         }
     }
 }

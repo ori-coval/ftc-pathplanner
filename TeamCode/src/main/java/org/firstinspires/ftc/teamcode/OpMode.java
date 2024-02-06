@@ -11,10 +11,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetPosition;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToSelectedPosition;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideCenter;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideRightLeft;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
@@ -76,6 +79,8 @@ public class OpMode extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_TOP_CLOSE, true));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORING, true));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeRotateToggle(intake.roller));
 
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
@@ -161,30 +166,10 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
+        telemetry.addData("Pixel Count", intake.roller.getPixelCount());
+        telemetry.addData("Switch State", intake.roller.currentSwitchState());
+        telemetry.addData("isRobotFull", intake.roller.isRobotFull());
 
-//        elbow.setPosition(gamepad1.left_stick_x * 0.2 + 0.2);
-//        elbow.setPosition(lastElbowPos + gamepad1.left_stick_x * elbowSensitivity);
-//        telemetry.addData("elbow position", lastElbowPos + gamepad1.left_stick_x * elbowSensitivity);
-//        telemetry.addData("elbow position", gamepad1.left_stick_x * 0.2 + 0.2);
-//        extender.setPos(gamepad1.left_stick_x);
-//        elbow.setPosition(1 - gamepad1.left_stick_x);
-//        antiTurret.setPos(lastAntiTurretPos + gamepad1.right_stick_x * antiTurretSensitivity);
-//        cartridge.setPosition(gamepad1.left_stick_x);
-//        telemetry.addData("antiTurret position", lastAntiTurretPos + gamepad1.right_stick_x * antiTurretSensitivity);
-
-//        telemetry.addData("cartridge position", cartridge.getPosition());
-//        telemetry.addData("antiTurret pos", antiTurret.getPosition());
-
-//        telemetry.addData("cartridge pos", cartridge.getState());
-//        telemetry.addData("extender pos", extender.getCurretPosition());
-//        telemetry.addData("elbow pos", elbow.getEncoderPosition());
-//        telemetry.addData("elevator height", elevator.getHeight());
-//        telemetry.addData("turret angle", turret.getAngle());
-
-
-//        ArmPositionSelector.telemetry(telemetry);
-//        telemetry.addData("isLeftOfBoard", ArmPositionSelector.getIsLeftOfBoard()); //this might be the problem
-//        telemetry.addData("Current Position", ArmPositionSelector.getPosition());
-//        telemetry.update();
+        telemetry.update();
     }
 }
