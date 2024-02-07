@@ -31,10 +31,4 @@ public class UnsafeMoveArm extends ConditionalCommand {
         super.initialize();
         lastPosition = targetPosition;
     }
-
-    @Override
-    public void execute() {
-        super.execute();
-        FtcDashboard.getInstance().getTelemetry().update();
-    }
 }

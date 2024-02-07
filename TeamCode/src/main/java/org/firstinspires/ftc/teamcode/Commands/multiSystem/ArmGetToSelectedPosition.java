@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.PerpetualCommand;
 import com.arcrobotics.ftclib.command.ProxyScheduleCommand;
 import com.arcrobotics.ftclib.command.ScheduleCommand;
 
@@ -20,7 +23,7 @@ public class ArmGetToSelectedPosition extends CommandBase {
     Turret turret;
     AntiTurret antiTurret;
 
-    ArmGetToPosition command;
+    Command command;
 
     public ArmGetToSelectedPosition(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret){
         this.elevator = elevator;
@@ -31,14 +34,23 @@ public class ArmGetToSelectedPosition extends CommandBase {
     }
     @Override
     public void initialize() {
-        command = new ArmGetToPosition(elevator, elbow, extender,turret,antiTurret,ArmPositionSelector.getPosition(), ArmPositionSelector.getIsLeftOfBoard());
-        FtcDashboard.getInstance().getTelemetry().addData("POS",ArmPositionSelector.getPosition() + " " + ArmPositionSelector.getIsLeftOfBoard());
+        command = new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPositionSelector.getPosition(), ArmPositionSelector.getIsLeftOfBoard());
+        FtcDashboard.getInstance().getTelemetry().addData("POS",ArmPositionSelector.getPosition() + ", isLeftOfBoard " + ArmPositionSelector.getIsLeftOfBoard());
+        FtcDashboard.getInstance().getTelemetry().update();
         command.schedule();
+    }
+
+    @Override
+    public void execute() {
+
     }
 
     @Override
     public void end(boolean interrupted) {
         command.cancel();
+        command = new PerpetualCommand(new InstantCommand());
+        FtcDashboard.getInstance().getTelemetry().addData("ended", ArmPositionSelector.getPosition());
+        FtcDashboard.getInstance().getTelemetry().update();
     }
 
     @Override

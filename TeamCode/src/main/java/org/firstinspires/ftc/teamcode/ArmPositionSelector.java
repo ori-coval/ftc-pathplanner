@@ -28,14 +28,14 @@ public class ArmPositionSelector {
         isSelectedScoreSideLeft = true;}
 
     public static void moveUp() {
-        if (selectedScoreHeight != 0) {
-            selectedScoreHeight++;
+        if (selectedScoreHeight > 0) {
+            selectedScoreHeight--;
         }
     }
 
     public static void moveDown() {
-        if (selectedScoreHeight != 2) {
-            selectedScoreHeight--;
+        if (selectedScoreHeight < 2) {
+            selectedScoreHeight++;
         }
     }
 
@@ -48,16 +48,16 @@ public class ArmPositionSelector {
     }
 
     public static void telemetry(Telemetry telemetry) {
-        for (int yCounter = 0; yCounter < 3; yCounter++ ) {
-            String tempStr = "";
+        for (int yCounter = 0; yCounter < 3; yCounter++) {
+            StringBuilder tempStr = new StringBuilder();
             for (int xCounter = 0; xCounter < 2; xCounter++) {
                 if (xCounter == (isSelectedScoreSideLeft?0:1) && yCounter == selectedScoreHeight) {
-                    tempStr += "X";
+                    tempStr.append("X");
                 } else {
-                    tempStr += "O";
+                    tempStr.append("O");
                 }
             }
-            telemetry.addLine(tempStr);
+            telemetry.addLine(tempStr.toString());
         }
         if (selectedRobotSide.equals(Side.RIGHT)) {
             telemetry.addLine("__^");

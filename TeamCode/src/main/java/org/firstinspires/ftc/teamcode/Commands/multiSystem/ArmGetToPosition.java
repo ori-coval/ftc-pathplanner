@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 
@@ -21,7 +22,7 @@ public class ArmGetToPosition extends ConditionalCommand {
                 ),
                 () -> lastPosition.getCluster() == position.getCluster()
         );
-        targetPosition = position; //
+        targetPosition = position;
     }
 
 
@@ -29,5 +30,12 @@ public class ArmGetToPosition extends ConditionalCommand {
     public void initialize() {
         super.initialize();
         lastPosition = targetPosition;
+    }
+
+    @Override
+    public void execute() {
+        super.execute();
+        FtcDashboard.getInstance().getTelemetry().addData("isArmGetToPositionFinished", isFinished());
+        FtcDashboard.getInstance().getTelemetry().update();
     }
 }
