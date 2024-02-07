@@ -12,15 +12,26 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
-public class ArmGetToSelectedPositionTest extends SequentialCommandGroup {
+public class ArmGetToSelectedPositionTest extends ConditionalCommand {
     private static final ArmPosition[] armPositions = ArmPosition.values();
+
     public ArmGetToSelectedPositionTest(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret) {
-        for (ArmPosition armPosition : armPositions) {
-            addCommands(new ConditionalCommand(
-                    new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, armPosition, ArmPositionSelector.getIsLeftOfBoard()),
-                    new InstantCommand(),
-                    () -> armPosition == ArmPositionSelector.getPosition()
-            ));
-        }
+        super(
+                getGroup(true, elevator, elbow, extender, turret, antiTurret),
+                getGroup(false, elevator, elbow, extender, turret, antiTurret),
+                ArmPositionSelector::getIsLeftOfBoard);
+    }
+
+    private static SequentialCommandGroup getGroup(boolean b, Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret) {
+        return new SequentialCommandGroup() {{
+            for (
+                    ArmPosition armPosition : armPositions) {
+                addCommands(new ConditionalCommand(
+                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, armPosition, ArmPositionSelector.getIsLeftOfBoard()),
+                        new InstantCommand(),
+                        () -> armPosition == ArmPositionSelector.getPosition()
+                ));
+            }
+        }};
     }
 }
