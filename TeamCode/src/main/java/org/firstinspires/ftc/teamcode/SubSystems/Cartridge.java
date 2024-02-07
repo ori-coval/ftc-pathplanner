@@ -87,6 +87,6 @@ public class Cartridge extends SubsystemBase {
 
     @Override
     public void periodic() {
-//        updateLatchPosition();
+        updateLatchPosition();
     }
 }

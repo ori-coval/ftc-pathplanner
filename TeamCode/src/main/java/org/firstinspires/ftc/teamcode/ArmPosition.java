@@ -81,7 +81,7 @@ public enum ArmPosition {
     }
 
     public double getTurretAngle(boolean isLeftOfBoard) {
-        return turretAngle * (isLeftOfBoard ? -1 : 1);
+        return turretAngle * (isLeftOfBoard ? 1 : -1);
     }
 
     public double getElbowPosition() {
