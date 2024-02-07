@@ -32,7 +32,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@TeleOp(name = "DriveTrain")
+@TeleOp(name = "OpMode")
 public class OpMode extends CommandOpMode {
 
     DriveTrain driveTrain;
@@ -62,7 +62,7 @@ public class OpMode extends CommandOpMode {
         initAntiTurret();
         initGamepad();
 
-        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).withTimeout(1).schedule(); // timeout so it doesn't go up for some reason
+        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule();
     }
 
     public void initGamepad() {
@@ -169,6 +169,7 @@ public class OpMode extends CommandOpMode {
         telemetry.addData("Pixel Count", intake.roller.getPixelCount());
         telemetry.addData("Switch State", intake.roller.currentSwitchState());
         telemetry.addData("isRobotFull", intake.roller.isRobotFull());
+        
 
         telemetry.update();
     }
