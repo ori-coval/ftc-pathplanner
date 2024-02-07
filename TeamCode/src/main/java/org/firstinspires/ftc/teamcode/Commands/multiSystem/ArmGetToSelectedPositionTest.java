@@ -22,12 +22,12 @@ public class ArmGetToSelectedPositionTest extends ConditionalCommand {
                 ArmPositionSelector::getIsLeftOfBoard);
     }
 
-    private static SequentialCommandGroup getGroup(boolean b, Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret) {
+    private static SequentialCommandGroup getGroup(boolean isLeftOfBoard, Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret) {
         return new SequentialCommandGroup() {{
             for (
                     ArmPosition armPosition : armPositions) {
                 addCommands(new ConditionalCommand(
-                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, armPosition, ArmPositionSelector.getIsLeftOfBoard()),
+                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, armPosition, isLeftOfBoard),
                         new InstantCommand(),
                         () -> armPosition == ArmPositionSelector.getPosition()
                 ));
