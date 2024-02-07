@@ -42,13 +42,13 @@ public class ArmGetToSelectedPosition extends CommandBase {
 
     @Override
     public void execute() {
-
+        FtcDashboard.getInstance().getTelemetry().addData("command isFinished", command.isFinished());
+        FtcDashboard.getInstance().getTelemetry().update();
     }
 
     @Override
     public void end(boolean interrupted) {
         command.cancel();
-        command = new PerpetualCommand(new InstantCommand());
         FtcDashboard.getInstance().getTelemetry().addData("ended", ArmPositionSelector.getPosition());
         FtcDashboard.getInstance().getTelemetry().update();
     }
