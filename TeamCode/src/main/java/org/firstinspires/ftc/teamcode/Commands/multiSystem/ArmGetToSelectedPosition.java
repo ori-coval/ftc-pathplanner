@@ -19,13 +19,13 @@ public class ArmGetToSelectedPosition extends ConditionalCommand {
         super(
                 getGroup(true, elevator, elbow, extender, turret, antiTurret),
                 getGroup(false, elevator, elbow, extender, turret, antiTurret),
-                ArmPositionSelector::getIsLeftOfBoard);
+                ArmPositionSelector::getIsLeftOfBoard
+        );
     }
 
     private static SequentialCommandGroup getGroup(boolean isLeftOfBoard, Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret) {
         return new SequentialCommandGroup() {{
-            for (
-                    ArmPosition armPosition : armPositions) {
+            for(ArmPosition armPosition : armPositions) {
                 addCommands(new ConditionalCommand(
                         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, armPosition, isLeftOfBoard),
                         new InstantCommand(),
