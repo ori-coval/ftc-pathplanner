@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Utils.Side;
 
 public class ArmPositionSelector {
     public static ArmPosition[][] sideScorePositions = {

@@ -4,6 +4,8 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
+
 public class Cartridge extends SubsystemBase {
     public enum State{
         CLOSED(0.3), SEMI_OPEN(0.24), OPEN(0.0);
@@ -18,7 +20,7 @@ public class Cartridge extends SubsystemBase {
 
 
     public  Cartridge(HardwareMap hardwareMap){
-        latch = hardwareMap.servo.get("cartridge");
+        latch = hardwareMap.servo.get(Configuration.CARTRIDGE);
     }
 
     public void setPosition(double position){

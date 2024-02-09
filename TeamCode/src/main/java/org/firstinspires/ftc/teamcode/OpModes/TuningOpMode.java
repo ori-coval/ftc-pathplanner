@@ -6,8 +6,8 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Commands.utils.ServoTuningCommand;
-import org.firstinspires.ftc.teamcode.Commands.utils.Servos;
+import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
+import org.firstinspires.ftc.teamcode.Utils.Servos;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DroneLauncher;

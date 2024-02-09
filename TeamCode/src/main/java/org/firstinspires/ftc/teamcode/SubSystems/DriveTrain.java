@@ -1,80 +1,72 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.geometry.Vector2d;
-import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.RobotHardware;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
+import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
+
+import static org.firstinspires.ftc.teamcode.Utils.MathAccessories.*;
+
 
 public class DriveTrain extends SubsystemBase {
-    private DcMotor motorFR;
-    private DcMotor motorFL;
-    private DcMotor motorBL;
-    private DcMotor motorBR;
-    private BNO055IMU imu;
+    private final DcMotor motorFR, motorFL, motorBR, motorBL;
+    private final BNO055IMU imu;
+    private static final BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters() {{
+        imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+    }};
 
-    public DriveTrain(HardwareMap hardwareMap, BNO055IMU imu) {
-        motorBL = hardwareMap.dcMotor.get("backLeft");
-        motorFL = hardwareMap.dcMotor.get("frontLeft");
-        motorFR = hardwareMap.dcMotor.get("frontRight");
-        motorBR = hardwareMap.dcMotor.get("backRight");
+
+    public DriveTrain(HardwareMap hardwareMap, Gamepad gamepad1) {
+
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(imuParameters);
+
+        motorFR = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_FRONT_RIGHT);
+        motorFL = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_FRONT_LEFT);
+        motorBR = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_BACK_RIGHT);
+        motorBL = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_BACK_LEFT);
+
         motorFL.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.imu = imu;
+
+        // make the resting state of the drive train be teleop drive
+        this.setDefaultCommand(new TeleopDriveCommand(this, gamepad1));
+    }
+
+
+
+    public void drive(Vector2d direction, double turn){
+        setPower(
+                normalize(
+                        calculateMecanumPowerRatio(direction, turn)
+                )
+        );
+    }
+    private void setPower(double[] power){
+        motorFR.setPower(power[0]);
+        motorFL.setPower(power[1]);
+        motorBR.setPower(power[2]);
+        motorBL.setPower(power[3]);
+    }
+
+
+
+    private double[] calculateMecanumPowerRatio(Vector2d direction, double turn){
+        //                    { STRAIGHT }             { STRAFE }        { TURN }
+        double FR_Power =   -direction.getY()   -   direction.getX()   -   turn   ;
+        double FL_Power =   -direction.getY()   +   direction.getX()   +   turn   ;
+        double BR_Power =    direction.getY()   +   direction.getX()   -   turn   ;
+        double BL_Power =    direction.getY()   -   direction.getX()   +   turn   ;
+
+        return new double[] { FR_Power, FL_Power, BR_Power, BL_Power };
     }
 
     public double getYawInDegrees(){
         return imu.getAngularOrientation().firstAngle;
     }
-    public double getRollInDegrees(){
-        return imu.getAngularOrientation().secondAngle;
-    }
-    public double getPitchInDegrees(){
-        return imu.getAngularOrientation().thirdAngle;
-    }
-    public double[] calculationOfPowerRatio(double x, double y , double turn){
-        //                     {STRAIGHT}                 {STRAFE}                  {TURN}
-        double FR_Power =           -y           -            x           -          turn         ;
-        double FL_Power =           -y           +            x           +          turn         ;
-        double BR_Power =           y            +            x           -          turn         ;
-        double BL_Power =           y            -            x           +          turn         ;
-        double[] PowerRatio = {FR_Power,FL_Power,BR_Power,BL_Power};
-        return PowerRatio;
-    }
-    public static double[] normalize(double[] ratiopower){
-        double[] power = ratiopower;
-        double highestAbsulutNum = Math.max(
-                Math.max(Math.abs(ratiopower[2]),Math.abs(ratiopower[3])),
-                Math.max(Math.abs(ratiopower[0]),Math.abs(ratiopower[1])));
-        if (highestAbsulutNum < 1){return ratiopower;}
-        for (int i = 0; i < 4; i++) {
-            power[i] = ratiopower[i] / highestAbsulutNum;
-        }
-        return power;
-    }
-    private void setMotorPower(double[] normalize){
-        motorFR.setPower(normalize[0]);
-        motorFL.setPower(normalize[1]);
-        motorBR.setPower(normalize[2]);
-        motorBL.setPower(normalize[3]);
-    }
-    public void drive(double x,double y, double turn){
-        setMotorPower(normalize(calculationOfPowerRatio(x, y, turn)));
-    }
-
-    public void fieldOrientedDrive(double x, double y, double turn){
-        Vector2d joyStickDirection = new Vector2d(x,y);
-        Vector2d fieldOrientedVector = joyStickDirection.rotateBy(-getYawInDegrees());
-        drive(fieldOrientedVector.getX(),fieldOrientedVector.getY(),turn);
-    }
-
-
 }
-

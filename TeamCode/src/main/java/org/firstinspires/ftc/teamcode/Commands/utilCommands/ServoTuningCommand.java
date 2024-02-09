@@ -1,14 +1,13 @@
-package org.firstinspires.ftc.teamcode.Commands.utils;
+package org.firstinspires.ftc.teamcode.Commands.utilCommands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
-import java.util.concurrent.ExecutionException;
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
+import org.firstinspires.ftc.teamcode.Utils.Servos;
 
 public class ServoTuningCommand extends CommandBase {
     private Servo servo;
@@ -25,7 +24,7 @@ public class ServoTuningCommand extends CommandBase {
         this.telemetry = telemetry;
         this.gamepadEx1 = gamepadEx1;
         this.hardwareMap = hardwareMap;
-        elbowLeft = hardwareMap.servo.get("elbowLeft"); //elbow has 2 servos
+        elbowLeft = hardwareMap.servo.get(Configuration.ELBOW_LEFT); //elbow has 2 servos
     }
 
     @Override
@@ -40,17 +39,17 @@ public class ServoTuningCommand extends CommandBase {
 
     public void setServo(Servos servoToTune) {
         selectedServo = servoToTune;
-        servo = hardwareMap.servo.get(servoToTune.servoName);
+        servo = hardwareMap.servo.get(servoToTune.SERVO_NAME);
         isInitialized = true;
     }
 
     public String getServo() {
-        return selectedServo.servoName;
+        return selectedServo.SERVO_NAME;
     }
 
     @Override
     public void execute() {
-        if(servo == hardwareMap.servo.get(Servos.ELBOW.servoName)) {
+        if(servo == hardwareMap.servo.get(Servos.ELBOW.SERVO_NAME)) {
             elbowLeft.setPosition(lastPos + gamepadEx1.getLeftX() * (isOn ? 0.1 : 0));
         }
 
