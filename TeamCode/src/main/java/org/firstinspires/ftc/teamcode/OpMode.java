@@ -10,10 +10,18 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetPosition;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
+import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
+import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToSelectedPosition;
+import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideCenter;
+import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideLeft;
+import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideRight;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.SubSystems.DroneLauncher;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
@@ -25,7 +33,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@TeleOp(name = "DriveTrain")
+@TeleOp(name = "OpMode")
 public class OpMode extends CommandOpMode {
 
     DriveTrain driveTrain;
@@ -33,6 +41,7 @@ public class OpMode extends CommandOpMode {
     Turret turret;
     AntiTurret antiTurret;
     Cartridge cartridge;
+    DroneLauncher droneLauncher;
     Elevator elevator;
     BNO055IMU imu;
     TeamPropDetector teamPropDetector;
@@ -62,9 +71,12 @@ public class OpMode extends CommandOpMode {
 //        initTurret();
 //        initExtender();
 //        initAntiTurret();
+//        initDroneLauncher();
         initGamepad();
+        initCartridge(); //The triggers are defined in the cartridge periodic ('cause I have no idea how to bind a command to a trigger)
+        //TODO: initDebugGamepad
 
-//        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).withTimeout(1).schedule(); // timeout so it doesn't go up for some reason
+        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule();
     }
 
     public void initGamepad() {
@@ -108,8 +120,6 @@ public class OpMode extends CommandOpMode {
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> elevator.setPower(0)));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new InstantCommand(() -> elevator.setPower(-1)));
 
-
-
     }
 
 
@@ -118,19 +128,15 @@ public class OpMode extends CommandOpMode {
         driveTrain = new DriveTrain(hardwareMap, imu);
         driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
     }
-
     public void initIntake() {
         intake = new Intake(hardwareMap);
     }
-
     public void initTurret() {
         turret = new Turret(hardwareMap);
     }
-
     public void initAntiTurret() {
         antiTurret = new AntiTurret(hardwareMap);
     }
-
     public void VisionInit() {
         teamPropDetector = new TeamPropDetector(AllianceColor.BLUE);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -149,15 +155,12 @@ public class OpMode extends CommandOpMode {
 
         webcam.setPipeline(teamPropDetector);
     }
-
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
     }
-
     public void initElbow() {
         elbow = new Elbow(hardwareMap);
     }
-
     public void initExtender() {
         extender = new Extender(hardwareMap);
     }
@@ -165,12 +168,14 @@ public class OpMode extends CommandOpMode {
     public void initCartridge() {
         cartridge = new Cartridge(hardwareMap, gamepadEx1);
     }
-
     public void initIMU() {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
+    }
+    public void initDroneLauncher() {
+        droneLauncher = new DroneLauncher(hardwareMap);
     }
 
     public void setElbowSensitivityUp() {

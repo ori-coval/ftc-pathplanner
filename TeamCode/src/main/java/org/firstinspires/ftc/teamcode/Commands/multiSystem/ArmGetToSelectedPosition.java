@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.arcrobotics.ftclib.command.CommandBase;
-import com.arcrobotics.ftclib.command.ProxyScheduleCommand;
-import com.arcrobotics.ftclib.command.ScheduleCommand;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
+import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
@@ -12,38 +12,26 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
-public class ArmGetToSelectedPosition extends CommandBase {
+public class ArmGetToSelectedPosition extends ConditionalCommand {
+    private static final ArmPosition[] armPositions = ArmPosition.values();
 
-    Elevator elevator;
-    Elbow elbow;
-    Extender extender;
-    Turret turret;
-    AntiTurret antiTurret;
-
-    ArmGetToPosition command;
-
-    public ArmGetToSelectedPosition(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret){
-        this.elevator = elevator;
-        this.elbow = elbow;
-        this.extender = extender;
-        this.turret = turret;
-        this.antiTurret = antiTurret;
-    }
-    @Override
-    public void initialize() {
-        command = new ArmGetToPosition(elevator, elbow, extender,turret,antiTurret,ArmPositionSelector.getPosition(), ArmPositionSelector.getIsLeftOfBoard());
-        FtcDashboard.getInstance().getTelemetry().addData("POS",ArmPositionSelector.getPosition() + " " + ArmPositionSelector.getIsLeftOfBoard());
-        command.schedule();
+    public ArmGetToSelectedPosition(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret) {
+        super(
+                getGroup(true, elevator, elbow, extender, turret, antiTurret),
+                getGroup(false, elevator, elbow, extender, turret, antiTurret),
+                ArmPositionSelector::getIsLeftOfBoard
+        );
     }
 
-    @Override
-    public void end(boolean interrupted) {
-        command.cancel();
+    private static SequentialCommandGroup getGroup(boolean isLeftOfBoard, Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret) {
+        return new SequentialCommandGroup() {{
+            for(ArmPosition armPosition : armPositions) {
+                addCommands(new ConditionalCommand(
+                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, armPosition, isLeftOfBoard),
+                        new InstantCommand(),
+                        () -> armPosition == ArmPositionSelector.getPosition()
+                ));
+            }
+        }};
     }
-
-    @Override
-    public boolean isFinished() {
-        return command.isFinished();
-    }
-
 }
