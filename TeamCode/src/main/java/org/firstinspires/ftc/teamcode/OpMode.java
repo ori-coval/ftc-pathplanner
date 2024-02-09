@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.StartEndCommand;
+import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -34,6 +36,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
+
 @TeleOp(name = "OpMode")
 public class OpMode extends CommandOpMode {
 
@@ -52,6 +55,8 @@ public class OpMode extends CommandOpMode {
     Extender extender;
     Intake intake;
 
+    private final double TRIGGER_THRESHOLD = 0.5;
+
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
@@ -64,8 +69,8 @@ public class OpMode extends CommandOpMode {
         initExtender();
         initAntiTurret();
         initDroneLauncher();
+        initCartridge();
         initGamepad();
-        initCartridge(); //The triggers are defined in the cartridge periodic ('cause I have no idea how to bind a command to a trigger)
         //TODO: initDebugGamepad
 
         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule();
@@ -73,7 +78,17 @@ public class OpMode extends CommandOpMode {
 
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx2 = new GamepadEx(gamepad2);
+
+        boolean rightTriggerCondition = gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > TRIGGER_THRESHOLD;
+        boolean leftTriggerCondition = gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TRIGGER_THRESHOLD;
+        Trigger rightTrigger1 = new Trigger(() -> rightTriggerCondition);
+        Trigger leftTrigger1 = new Trigger(() -> leftTriggerCondition);
+
+
+        //Need to ask Itay how he wants the triggers to work.
+        rightTrigger1.whenActive(getStartEndCommand(Cartridge.State.OPEN, rightTriggerCondition));
+        leftTrigger1.whenActive(getStartEndCommand(Cartridge.State.SEMI_OPEN, leftTriggerCondition));
+
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideRight(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideLeft(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSideCenter(elevator, elbow, extender, turret, antiTurret));
@@ -81,11 +96,21 @@ public class OpMode extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
 
+        gamepadEx2 = new GamepadEx(gamepad2);
+
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
+    }
+
+    private Command getStartEndCommand(Cartridge.State newState, boolean triggerCondition) {
+        return new StartEndCommand(
+                () -> cartridge.setState(newState),
+                () -> cartridge.setState(Cartridge.State.CLOSED),
+                cartridge
+        ).interruptOn(() -> !triggerCondition);
     }
 
 
@@ -132,7 +157,7 @@ public class OpMode extends CommandOpMode {
     }
 
     public void initCartridge() {
-        cartridge = new Cartridge(hardwareMap, gamepadEx1);
+        cartridge = new Cartridge(hardwareMap);
     }
     public void initIMU() {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
