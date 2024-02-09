@@ -21,10 +21,9 @@ public class UnsafeMoveArmDown extends SequentialCommandGroup {
                 new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
                 new WaitCommand(UnsafeMoveArm.ELEVATOR_WAIT_TIME), //avoiding elevator's shaking while going down too fast.
                 new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
-                new ElbowGetToPosition(elbow, position.getElbowPosition()), /*These are instant commands so their isFinished always true */
-                new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME), //Trying to avoid elbow's servos overload
                 new ExtenderSetPosition(extender, position.getExtenderPosition()),
-                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
+                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition()),
+                new ElbowGetToPosition(elbow, position.getElbowPosition())
         );
     }
 }

@@ -23,7 +23,7 @@ public class Intake {
         lifter = new Lifter();
     }
     public class Lifter extends SubsystemBase {
-        public final double[] STACK_POSITION = {0, 0.10, 0.13, 0.21, 0.77};
+        public final double[] STACK_POSITION = {0, 0.10, 0.13, 0.21, 0.45};
         /*
         0.77 - The default position (Highest)
         0.21 - Before the 5th pixel
