@@ -15,6 +15,9 @@ public class Extender extends SubsystemBase {
         Position(double position){
             this.servoPosition = position;
         }
+        public double getServoPositionAsDouble() {
+            return servoPosition;
+        }
     }
 
     public Extender (HardwareMap hardwareMap){

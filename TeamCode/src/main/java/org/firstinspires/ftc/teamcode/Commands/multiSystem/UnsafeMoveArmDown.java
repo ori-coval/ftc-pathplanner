@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.multiSystem;
 
+import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
@@ -22,8 +23,10 @@ public class UnsafeMoveArmDown extends SequentialCommandGroup {
                 new WaitCommand(UnsafeMoveArm.ELEVATOR_WAIT_TIME), //avoiding elevator's shaking while going down too fast.
                 new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
                 new ExtenderSetPosition(extender, position.getExtenderPosition()),
-                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition()),
-                new ElbowGetToPosition(elbow, position.getElbowPosition())
+                new ElbowGetToPosition(elbow, position.getElbowPosition()),
+                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
         );
     }
 }
+
+//אם האקסטנדר נסגר אז קודם אקסטנדר ואז אלבוו, אם אקסטנדר נפתח אז קודם אלבוו ואז אקסטנדר
