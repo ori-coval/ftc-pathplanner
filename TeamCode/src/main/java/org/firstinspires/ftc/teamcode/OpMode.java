@@ -71,7 +71,7 @@ public class OpMode extends CommandOpMode {
         initDroneLauncher();
         initCartridge();
         initGamepad();
-        //TODO: initDebugGamepad
+        initDebugGamepad();
 
         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule();
     }
@@ -111,6 +111,10 @@ public class OpMode extends CommandOpMode {
                 () -> cartridge.setState(Cartridge.State.CLOSED),
                 cartridge
         ).interruptOn(() -> !triggerCondition);
+    }
+
+    public void initDebugGamepad() {
+        
     }
 
 
