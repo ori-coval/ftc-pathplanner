@@ -9,7 +9,7 @@ import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 public class IntakeUntilFull extends ParallelDeadlineGroup {
-    private static final long waitTimeUntilStop = 2000;
+    private static final long waitTimeUntilStop = 1000;
     public IntakeUntilFull(Intake.Roller intakeRoller) {
         super(
                 new SequentialCommandGroup(

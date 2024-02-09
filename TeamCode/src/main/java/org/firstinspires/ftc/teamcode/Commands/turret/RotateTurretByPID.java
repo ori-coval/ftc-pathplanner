@@ -34,4 +34,11 @@ public class RotateTurretByPID extends CommandBase {
     public boolean isFinished() {
         return pidController.atSetPoint();
     }
+
+    // TODO: need to check if there are problems without the end method.
+    @Override
+    public void end(boolean interrupted) {
+        turret.stop();
+    }
+
 }

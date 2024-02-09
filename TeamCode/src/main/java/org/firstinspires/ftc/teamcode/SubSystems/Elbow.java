@@ -18,12 +18,14 @@ public class Elbow extends SubsystemBase {
         servoLeft = hardwareMap.servo.get("elbowLeft");
         servoRight = hardwareMap.servo.get("elbowRight");
         encoder = hardwareMap.analogInput.get("elbowEncoder");
-        servoLeft.setDirection(Servo.Direction.REVERSE);
+        servoLeft.setDirection(Servo.Direction.REVERSE); //reverse = 1 - pos
+        servoRight.setDirection(Servo.Direction.REVERSE);
+
     }
-    public void setPosition(double position){
-        if(position <= 0.04) position = 0.04; //can't go below 0.04
-        servoLeft.setPosition(position);
-        servoRight.setPosition(position - 0.04);
+    public void setPosition(double position) {
+        if(position <= 0.04) position = 0.04;
+        servoLeft.setPosition(position - 0.04);
+        servoRight.setPosition(position);
     }
     public double getEncoderPosition() {
         return 1 - ((-1) * (encoder.getVoltage() / encoder.getMaxVoltage() - OFFSET) * ENCODER_RATIO);
@@ -31,7 +33,7 @@ public class Elbow extends SubsystemBase {
     }
 
     public double getServoPosition(){
-        return servoLeft.getPosition();
+        return servoRight.getPosition();
     }
 
     public PIDController getPidController() {

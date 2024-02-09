@@ -10,17 +10,21 @@ import java.util.Calendar;
 public class ElbowGetToPosition extends CommandBase {
     private Elbow elbow;
     private double goalPos;
-    private final double TOLERANCE = 0.05;
-    //The arm moves using 2 axons, it can do short distances in no time. I'm only worried when the distance is large.
-
     private long startTime;
     private double startPos;
-    private int stepsTaken;
+    private int stepsTaken = 1;
+    private final double STEP_SIZE = 0.05;
+    private final long TIME_BETWEEN_STEPS = 50; //(In ms)
+    private final double TOLERANCE = 0.05;
 
+    /*
+    Still need to be tested, if too fast, you can always add more time between steps."
+     */
 
     public ElbowGetToPosition(Elbow elbow, double goalPos) {
         this.elbow = elbow;
         this.goalPos = goalPos;
+        elbow.setPosition(0);
     }
 
     @Override
@@ -33,26 +37,30 @@ public class ElbowGetToPosition extends CommandBase {
     @Override
     public void execute() {
         long timer = Calendar.getInstance().getTimeInMillis() - startTime;
-        double stepSize = 0.05;
-        double isDirectionPositive = Math.signum(goalPos - elbow.getEncoderPosition());
-        updateServoPosition(timer, stepSize, isDirectionPositive);
+        double directionSign = Math.signum(goalPos - startPos);
+        updateServoPosition(timer, directionSign);
 
         FtcDashboard.getInstance().getTelemetry().addData("elbow is finished", isFinished());
-        FtcDashboard.getInstance().getTelemetry().addData("elbow error ", Math.abs(elbow.getEncoderPosition() - goalPos));
 
     }
 
-    private void updateServoPosition(long timer, double stepSize, double isDirectionPositive) {
-        if (isDirectionPositive > 0) {
-            elbow.setPosition(goalPos);
-        } else if (timer > (long) 50 * stepsTaken) {
-            elbow.setPosition(startPos + isDirectionPositive * stepSize * stepsTaken);
-            stepsTaken += 1;
-        }
+    private void updateServoPosition(long timer, double directionSign) {
+        FtcDashboard.getInstance().getTelemetry().addLine("in UpdateServoPosition" + stepsTaken);
+            if (directionSign > 0) {
+                elbow.setPosition(goalPos);
+            } else if (timer > TIME_BETWEEN_STEPS * stepsTaken) {
+                double newPos = startPos - STEP_SIZE * stepsTaken;
+                if(newPos < goalPos) newPos = goalPos;
+                elbow.setPosition(newPos);
+                FtcDashboard.getInstance().getTelemetry().addData("elbow's goalPos", goalPos);
+                FtcDashboard.getInstance().getTelemetry().addData("elbow's currentPos", elbow.getServoPosition());
+                FtcDashboard.getInstance().getTelemetry().addData("elbow's newPos", newPos);
+                stepsTaken += 1;
+            }
     }
 
     @Override
     public boolean isFinished() {
-        return (Calendar.getInstance().getTimeInMillis() - startTime) > 2000;
+        return Math.abs(elbow.getServoPosition() - goalPos) < TOLERANCE;
     }
 }

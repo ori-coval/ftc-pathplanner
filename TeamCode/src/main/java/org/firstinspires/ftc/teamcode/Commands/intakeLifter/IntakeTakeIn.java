@@ -14,16 +14,4 @@ public class IntakeTakeIn extends ConditionalCommand {
         );
     }
 
-//    private static CommandBase intakeCommand(InTake inTake) {
-//        SequentialCommandGroup group = new SequentialCommandGroup();
-//        for (int i = 2; i >= 0; i--) {
-//            int finalI = i;
-//            group.addCommands(
-//                    new WaitCommand(waitTime),
-//                    new InstantCommand(() -> inTake.setStackPosition(finalI))
-//            );
-//        }
-//        return group;
-//    }
-
 }
