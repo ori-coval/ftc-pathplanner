@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPositi
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeUntilFull;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.utils.SideCommandSwitch;
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Side;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -22,10 +23,10 @@ import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class ScoringPixels extends SequentialCommandGroup {
-            public ScoringPixels(DriveTrain driveTrain, Intake intake,  Elevator elevator, Extender extender, Elbow elbow, Turret turret, AntiTurret antiTurret, Cartridge cartridge, Side side) {
+            public ScoringPixels(SampleMecanumDrive driveTrain, Intake intake, Elevator elevator, Extender extender, Elbow elbow, Turret turret, AntiTurret antiTurret, Cartridge cartridge, Side side) {
                 super(
                         new ParallelCommandGroup(
-                                new TrajectoryFollowerCommand(Trajectories.get("Driving from board to collect from stack")),
+                                new TrajectoryFollowerCommand(Trajectories.get("Driving from board to collect from stack"), driveTrain),
                                 new IntakeSetStackPosition(intake.lifter, 3),
                                 new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true)
                         ),
