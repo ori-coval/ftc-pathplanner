@@ -24,10 +24,9 @@ public class ScoringFirstPixel extends SequentialCommandGroup {
                 new SideCommandSwitch(
                         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_CLOSE, true),
                         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_FAR, true),
-                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_TOP_FAR, true),
+                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_MID_FAR, true),
                         () -> side),
-                new CartridgeSetState(cartridge,Cartridge.State.OPEN),
-                new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true)
+                new CartridgeSetState(cartridge,Cartridge.State.OPEN)
 
         );
     }

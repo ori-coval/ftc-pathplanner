@@ -2,9 +2,13 @@ package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import android.app.Notification;
 
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeCollectFromStack;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeUntilFull;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.utils.SideCommandSwitch;
 import org.firstinspires.ftc.teamcode.Side;
@@ -14,18 +18,21 @@ import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
+import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class ScoringPixels extends SequentialCommandGroup {
-            public ScoringPixels(DriveTrain driveTrain, Elevator elevator, Extender extender, Elbow elbow, Turret turret, AntiTurret antiTurret, Cartridge cartridge, Side side) {
+            public ScoringPixels(DriveTrain driveTrain, Intake intake,  Elevator elevator, Extender extender, Elbow elbow, Turret turret, AntiTurret antiTurret, Cartridge cartridge, Side side) {
                 super(
-                        new SideCommandSwitch(
-                                new TrajectoryFollowerCommand(Trajectories.get("Driving to score from left while avoiding pixel on Left"), driveTrain),
-                                new TrajectoryFollowerCommand(Trajectories.get("Driving to score from left while avoiding pixel on Center"), driveTrain),
-                                new TrajectoryFollowerCommand(Trajectories.get("Driving to score from left while avoiding pixel on Right"), driveTrain),
-                                () -> side),
-                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_CLOSE, true),
-                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true)
+                        new ParallelCommandGroup(
+                                new TrajectoryFollowerCommand(Trajectories.get("Driving from board to collect from stack")),
+                                new IntakeSetStackPosition(intake.lifter, 3),
+                                new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true)
+                        ),
+                        new IntakeCollectFromStack(intake.lifter, intake.roller).withTimeout(0),
+                        new IntakeSetStackPosition(intake.lifter, 3),
+                        new TrajectoryFollowerCommand(Trajectories.get("Driving to score from pixel stack"), driveTrain),
+                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_CLOSE, true)
 
                         );
             }
