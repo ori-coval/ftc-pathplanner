@@ -23,7 +23,6 @@ import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToSelectedPosit
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideCenter;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideLeft;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideRight;
-import org.firstinspires.ftc.teamcode.Commands.utils.ServoTuningCommand;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
@@ -86,10 +85,8 @@ public class OpMode extends CommandOpMode {
         Trigger rightTrigger1 = new Trigger(() -> rightTriggerCondition);
         Trigger leftTrigger1 = new Trigger(() -> leftTriggerCondition);
 
-
-        //Need to ask Itay how he wants the triggers to work.
-        rightTrigger1.whenActive(getStartEndCommand(Cartridge.State.OPEN, rightTriggerCondition));
-        leftTrigger1.whenActive(getStartEndCommand(Cartridge.State.SEMI_OPEN, leftTriggerCondition));
+        rightTrigger1.whenActive(getCartridgeCommand(Cartridge.State.OPEN, rightTriggerCondition));
+        leftTrigger1.whenActive(getCartridgeCommand(Cartridge.State.SEMI_OPEN, leftTriggerCondition));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideRight(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideLeft(elevator, elbow, extender, turret, antiTurret));
@@ -101,16 +98,22 @@ public class OpMode extends CommandOpMode {
         gamepadEx2 = new GamepadEx(gamepad2);
 
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
     }
 
-    private Command getStartEndCommand(Cartridge.State newState, boolean triggerCondition) {
+    private Command getCartridgeCommand(Cartridge.State newState, boolean triggerCondition) {
         return new StartEndCommand(
                 () -> cartridge.setState(newState),
-                () -> cartridge.setState(Cartridge.State.CLOSED),
+                () -> {
+                    cartridge.setState(Cartridge.State.CLOSED);
+                    if(newState == Cartridge.State.OPEN) {
+                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORING, ArmPositionSelector.getIsLeftOfBoard() /*Not a BooleanSupplier, this might be a problem*/).schedule(/*Because this command is built inside a runnable, it might work to schedule here.*/);
+                    }
+                },
                 cartridge
         ).interruptOn(() -> !triggerCondition);
     }

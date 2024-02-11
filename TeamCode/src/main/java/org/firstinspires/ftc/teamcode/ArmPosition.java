@@ -48,7 +48,7 @@ public enum ArmPosition {
     SCORE_BOTTOM_CLOSE(18.33, Extender.Position.CLOSED, 50.61, 0.34, 0.9, Cluster.scoring),
     INTAKE(0, Extender.Position.CLOSED_INTAKE, 0,0.04, 0, Cluster.intake),
     SAFE_PLACE(10, Extender.Position.CLOSED,0,0.4, 0, Cluster.intake),
-    SCORING(10, Extender.Position.CLOSED, 90, 0.6, 0, Cluster.scoring),
+    SCORING(10, Extender.Position.CLOSED, 90, 0.4, 0, Cluster.scoring),
     TEST_POSITION(10, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
     SECOND_TEST_POSITION(30, Extender.Position.OPEN, 90, 0.6, 0.4, Cluster.scoring),
     THIRD_TEST_POSITION(30, Extender.Position.OPEN, 0, 0.7, 0.4, Cluster.scoring);
