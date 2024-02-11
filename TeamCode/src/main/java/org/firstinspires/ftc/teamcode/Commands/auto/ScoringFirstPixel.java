@@ -19,15 +19,12 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 public class ScoringFirstPixel extends SequentialCommandGroup {
     public ScoringFirstPixel(Cartridge cartridge,Elevator elevator, Extender extender, Elbow elbow, Turret turret, AntiTurret antiTurret, Side side, SampleMecanumDrive driveTrain){
         super(
-                new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(Trajectories.get("Driving to score from the stack to the back stage for side score"), driveTrain),
-                        new TrajectoryFollowerCommand(Trajectories.get("Driving to score from the stack to the back stage for side score"), driveTrain),
-                        new TrajectoryFollowerCommand(Trajectories.get("Driving to score from the stack to the back stage for front score"), driveTrain),
-                        () -> side),
+
+                new TrajectoryFollowerCommand(Trajectories.get("Driving to score from the stack to the back stage for side score"), driveTrain),
                 new SideCommandSwitch(
                         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_CLOSE, true),
                         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_FAR, true),
-                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_FRONT, false),
+                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_TOP_FAR, true),
                         () -> side),
                 new CartridgeSetState(cartridge,Cartridge.State.OPEN),
                 new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true)
