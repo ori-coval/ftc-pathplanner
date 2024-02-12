@@ -41,7 +41,7 @@ public class OpMode extends CommandOpMode {
         gamepadEx1 = new GamepadEx(gamepad1);
 
         //This command needs to be tested.
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ServoTuningCommand(hardwareMap, "", telemetry, gamepadEx1));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenActive(new ServoTuningCommand(hardwareMap, "", telemetry, gamepadEx1));
 
     }
 
