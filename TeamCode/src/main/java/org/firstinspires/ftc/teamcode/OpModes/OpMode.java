@@ -130,9 +130,7 @@ public class OpMode extends CommandOpMode {
     public void initAntiTurret() {
         antiTurret = new AntiTurret(hardwareMap);
     }
-    public void initVision() {
-        teamPropDetector = new TeamPropDetector(hardwareMap, AllianceColor.BLUE);
-    }
+    public void initVision() { teamPropDetector = new TeamPropDetector(hardwareMap, AllianceColor.BLUE); }
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
     }
