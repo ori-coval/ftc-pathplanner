@@ -27,6 +27,8 @@ public class DriveTrain extends SubsystemBase {
         motorBR = hardwareMap.dcMotor.get("backRight");
         motorFL.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorFR.setDirection(DcMotorSimple.Direction.FORWARD);
+        motorBR.setDirection(DcMotorSimple.Direction.FORWARD);
         this.imu = imu;
     }
 

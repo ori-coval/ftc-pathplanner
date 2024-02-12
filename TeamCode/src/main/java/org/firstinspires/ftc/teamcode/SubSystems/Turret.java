@@ -40,7 +40,7 @@ public class Turret extends SubsystemBase {
         turretServoB.setPower(power);
     }
     public double getAngle(){
-        return turretEncoder.getCurrentPosition()/TICKS_PER_REV * 360 * GEAR_RATIO;
+        return -turretEncoder.getCurrentPosition()/TICKS_PER_REV * 360 * GEAR_RATIO;
     }
 
     public void stop(){
