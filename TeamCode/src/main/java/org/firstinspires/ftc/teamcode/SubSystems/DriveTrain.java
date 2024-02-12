@@ -23,7 +23,7 @@ public class DriveTrain extends SubsystemBase {
 
     public DriveTrain(HardwareMap hardwareMap, Gamepad gamepad1) {
 
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = hardwareMap.get(BNO055IMU.class, Configuration.IMU);
         imu.initialize(imuParameters);
 
         motorFR = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_FRONT_RIGHT);
