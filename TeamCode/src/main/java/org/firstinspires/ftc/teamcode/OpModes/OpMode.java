@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
+import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
@@ -113,7 +114,8 @@ public class OpMode extends CommandOpMode {
 
 
     public void initDriveTrain() {
-        driveTrain = new DriveTrain(hardwareMap, gamepad1);
+        driveTrain = new DriveTrain(hardwareMap);
+        driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
     }
     public void initIntake() {
         intake = new Intake(hardwareMap);

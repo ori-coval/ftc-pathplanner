@@ -16,14 +16,13 @@ import static org.firstinspires.ftc.teamcode.Utils.MathAccessories.*;
 public class DriveTrain extends SubsystemBase {
     private final DcMotor motorFR, motorFL, motorBR, motorBL;
     private final BNO055IMU imu;
-    private static final BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters() {{
-        imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-    }};
 
 
-    public DriveTrain(HardwareMap hardwareMap, Gamepad gamepad1) {
+    public DriveTrain(HardwareMap hardwareMap) {
 
         imu = hardwareMap.get(BNO055IMU.class, Configuration.IMU);
+        BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
+        imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(imuParameters);
 
         motorFR = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_FRONT_RIGHT);
@@ -35,7 +34,6 @@ public class DriveTrain extends SubsystemBase {
         motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // make the resting state of the drive train be teleop drive
-        this.setDefaultCommand(new TeleopDriveCommand(this, gamepad1));
     }
 
 
