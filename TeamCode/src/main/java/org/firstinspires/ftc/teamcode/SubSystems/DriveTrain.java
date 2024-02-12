@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcontroller.external.samples.RobotHardware;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class DriveTrain extends SubsystemBase {
     private DcMotor motorFR;
@@ -20,32 +21,30 @@ public class DriveTrain extends SubsystemBase {
     private DcMotor motorBR;
     private BNO055IMU imu;
 
-    public DriveTrain(HardwareMap hardwareMap, BNO055IMU imu) {
-        motorBL = hardwareMap.dcMotor.get("backLeft");
-        motorFL = hardwareMap.dcMotor.get("frontLeft");
-        motorFR = hardwareMap.dcMotor.get("frontRight");
-        motorBR = hardwareMap.dcMotor.get("backRight");
+    public DriveTrain(HardwareMap hardwareMap) {
+        imu = hardwareMap.get(BNO055IMU.class, Configuration.IMU);
+        BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
+        imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        imu.initialize(imuParameters);
+
+        motorFR = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_FRONT_RIGHT);
+        motorFL = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_FRONT_LEFT);
+        motorBR = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_BACK_RIGHT);
+        motorBL = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_BACK_LEFT);
         motorFL.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.imu = imu;
     }
 
     public double getYawInDegrees(){
         return imu.getAngularOrientation().firstAngle;
     }
-    public double getRollInDegrees(){
-        return imu.getAngularOrientation().secondAngle;
-    }
-    public double getPitchInDegrees(){
-        return imu.getAngularOrientation().thirdAngle;
-    }
     public double[] calculationOfPowerRatio(double x, double y , double turn){
         //                     {STRAIGHT}                 {STRAFE}                  {TURN}
-        double FR_Power =           -y           -            x           -          turn         ;
-        double FL_Power =           -y           +            x           +          turn         ;
-        double BR_Power =           y            +            x           -          turn         ;
+        double FL_Power =           y           +            x           +          turn         ;
         double BL_Power =           y            -            x           +          turn         ;
-        double[] PowerRatio = {FR_Power,FL_Power,BR_Power,BL_Power};
+        double FR_Power =           y           -            x           -          turn         ;
+        double BR_Power =           y            +            x           -          turn         ;
+        double[] PowerRatio = {FL_Power,BL_Power,FR_Power,BR_Power};
         return PowerRatio;
     }
     public static double[] normalize(double[] ratiopower){
@@ -60,10 +59,10 @@ public class DriveTrain extends SubsystemBase {
         return power;
     }
     private void setMotorPower(double[] normalize){
-        motorFR.setPower(normalize[0]);
-        motorFL.setPower(normalize[1]);
-        motorBR.setPower(normalize[2]);
-        motorBL.setPower(normalize[3]);
+        motorFL.setPower(normalize[0]);
+        motorBL.setPower(normalize[1]);
+        motorFR.setPower(normalize[2]);
+        motorBR.setPower(normalize[3]);
     }
     public void drive(double x,double y, double turn){
         setMotorPower(normalize(calculationOfPowerRatio(x, y, turn)));

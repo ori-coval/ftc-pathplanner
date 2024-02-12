@@ -9,11 +9,12 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 @Config
 public class Elevator extends SubsystemBase {
-    private DcMotor[] elevatorMotors = new DcMotor[3];
-    private DcMotor encoder;
+    private final DcMotor[] elevatorMotors = new DcMotor[3];
+    private final DcMotor encoder;
     private final double LEVELS = 3;
     private final double TEETH_PER_REV = 8;
     private final double CHAIN_LINK_DISTANCE = 0.8;
@@ -22,13 +23,13 @@ public class Elevator extends SubsystemBase {
     public static double kI = 0;
     public static double kD = 0;
     public static double kF = 0.15;
-    private PIDController pidController = new PIDController(kP,kI,kD);
+    private final PIDController pidController = new PIDController(kP,kI,kD);
 
 
     public Elevator(HardwareMap hardwareMap) {
-        elevatorMotors[0] = hardwareMap.dcMotor.get("elevatorLow");
-        elevatorMotors[1] = hardwareMap.dcMotor.get("elevatorMid");
-        elevatorMotors[2] = hardwareMap.dcMotor.get("elevatorUp");
+        elevatorMotors[0] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_LOW);
+        elevatorMotors[1] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_MID);
+        elevatorMotors[2] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_UP);
         elevatorMotors[1].setDirection(DcMotorSimple.Direction.REVERSE);
         encoder = elevatorMotors[0];
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

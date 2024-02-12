@@ -4,6 +4,8 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
+
 public class DroneLauncher extends SubsystemBase {
     public enum State{
         HOLD(1.0), RELEASE(0.5);
@@ -13,11 +15,11 @@ public class DroneLauncher extends SubsystemBase {
         }
     }
 
-    private Servo drone;
+    private final Servo drone;
     private State lastState = State.HOLD;
 
     public DroneLauncher(HardwareMap hardwareMap){
-        drone = hardwareMap.servo.get("drone");
+        drone = hardwareMap.servo.get(Configuration.DRONE);
     }
 
     public void setPosition(double position) {
@@ -31,13 +33,6 @@ public class DroneLauncher extends SubsystemBase {
     public void setState(State state){
         setPosition(state.position);
         lastState = state;
-    }
-
-    public void holdDrone() {
-        setState(State.HOLD);
-    }
-    public void releaseDrone() {
-        setState(State.RELEASE);
     }
 
     public State getState(){

@@ -4,9 +4,10 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
+
 public class Extender extends SubsystemBase {
     private final Servo linearServo;
-
     private Position curretPosition;
 
     public enum Position {
@@ -21,16 +22,8 @@ public class Extender extends SubsystemBase {
     }
 
     public Extender (HardwareMap hardwareMap){
-        linearServo = hardwareMap.servo.get("extender");
+        linearServo = hardwareMap.servo.get(Configuration.EXTENDER);
         linearServo.setDirection(Servo.Direction.REVERSE);
-    }
-
-    public double getPos() {
-        return linearServo.getPosition();
-    }
-
-    public void setPos(double pos) {
-        linearServo.setPosition(pos);
     }
 
     public void setPosition(Position position) {
@@ -38,7 +31,7 @@ public class Extender extends SubsystemBase {
         curretPosition = position;
     }
 
-    public Position getCurretPosition() {
+    public Position getPosition() {
         return curretPosition;
     }
 }

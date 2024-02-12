@@ -9,10 +9,8 @@ import com.arcrobotics.ftclib.command.StartEndCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
@@ -35,9 +33,6 @@ import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
 
 
 @TeleOp(name = "OpMode")
@@ -50,9 +45,7 @@ public class OpMode extends CommandOpMode {
     Cartridge cartridge;
     DroneLauncher droneLauncher;
     Elevator elevator;
-    BNO055IMU imu;
     TeamPropDetector teamPropDetector;
-    OpenCvCamera webcam;
     GamepadEx gamepadEx1;
     GamepadEx gamepadEx2;
     Extender extender;
@@ -64,18 +57,12 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-//        initDriveTrain();
-        initIntake();
-        initElevator();
-        initElbow();
-        initTurret();
-        initExtender();
-        initAntiTurret();
-        initDroneLauncher();
-        initCartridge();
-        initGamepad();
+        initDriveTrain();
+//        initIntake();
+//        initDroneLauncher();
+//        initArm();
+//        initGamepad();
 
-        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule();
     }
 
     public void initGamepad() {
@@ -119,9 +106,19 @@ public class OpMode extends CommandOpMode {
         );
     }
 
+    public void initArm(){
+        initTurret();
+        initElevator();
+        initElbow();
+        initExtender();
+        initAntiTurret();
+        initCartridge();
+
+        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false).schedule();
+    }
+
     public void initDriveTrain() {
-        initIMU();
-        driveTrain = new DriveTrain(hardwareMap, imu);
+        driveTrain = new DriveTrain(hardwareMap);
         driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
     }
     public void initIntake() {
@@ -133,23 +130,8 @@ public class OpMode extends CommandOpMode {
     public void initAntiTurret() {
         antiTurret = new AntiTurret(hardwareMap);
     }
-    public void VisionInit() {
-        teamPropDetector = new TeamPropDetector(AllianceColor.BLUE);
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Weiss cam"), cameraMonitorViewId);
-
-        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                webcam.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
-            }
-
-            @Override
-            public void onError(int errorCode) {
-            }
-        });
-
-        webcam.setPipeline(teamPropDetector);
+    public void initVision() {
+        teamPropDetector = new TeamPropDetector(hardwareMap, AllianceColor.BLUE);
     }
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
@@ -160,15 +142,8 @@ public class OpMode extends CommandOpMode {
     public void initExtender() {
         extender = new Extender(hardwareMap);
     }
-
     public void initCartridge() {
         cartridge = new Cartridge(hardwareMap);
-    }
-    public void initIMU() {
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        imu.initialize(parameters);
     }
     public void initDroneLauncher() {
         droneLauncher = new DroneLauncher(hardwareMap);
