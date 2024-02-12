@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.CommandGroupBase;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -85,7 +86,7 @@ public class OpMode extends CommandOpMode {
         Trigger rightTrigger1 = new Trigger(() -> rightTriggerCondition);
         Trigger leftTrigger1 = new Trigger(() -> leftTriggerCondition);
 
-        rightTrigger1.whenActive(getCartridgeCommand(Cartridge.State.OPEN, rightTriggerCondition));
+        rightTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.OPEN, rightTriggerCondition));
         leftTrigger1.whenActive(getCartridgeCommand(Cartridge.State.SEMI_OPEN, leftTriggerCondition));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideRight(elevator, elbow, extender, turret, antiTurret));
@@ -115,9 +116,8 @@ public class OpMode extends CommandOpMode {
                     }
                 },
                 cartridge
-        ).interruptOn(() -> !triggerCondition);
+        );
     }
-
 
     public void initDriveTrain() {
         initIMU();
