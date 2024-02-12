@@ -56,19 +56,19 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-//        initDriveTrain();
-        initIntake();
-        initElevator();
-        initElbow();
-        initTurret();
-        initExtender();
-        initAntiTurret();
-        initDroneLauncher();
-        initGamepad();
-        initCartridge(); //The triggers are defined in the cartridge periodic ('cause I have no idea how to bind a command to a trigger)
+        initDriveTrain();
+//        initIntake();
+//        initElevator();
+//        initElbow();
+//        initTurret();
+//        initExtender();
+//        initAntiTurret();
+//        initDroneLauncher();
+//        initGamepad();
+//        initCartridge(); //The triggers are defined in the cartridge periodic ('cause I have no idea how to bind a command to a trigger)
         //TODO: initDebugGamepad
 
-        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule();
+//        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true).schedule();
     }
 
     public void initGamepad() {

@@ -41,11 +41,11 @@ public class DriveTrain extends SubsystemBase {
     }
     public double[] calculationOfPowerRatio(double x, double y , double turn){
         //                     {STRAIGHT}                 {STRAFE}                  {TURN}
-        double FR_Power =           -y           -            x           -          turn         ;
-        double FL_Power =           -y           +            x           +          turn         ;
-        double BR_Power =           y            +            x           -          turn         ;
+        double FL_Power =           y           +            x           +          turn         ;
         double BL_Power =           y            -            x           +          turn         ;
-        double[] PowerRatio = {FR_Power,FL_Power,BR_Power,BL_Power};
+        double FR_Power =           y           -            x           -          turn         ;
+        double BR_Power =           y            +            x           -          turn         ;
+        double[] PowerRatio = {FL_Power,BL_Power,FR_Power,BR_Power};
         return PowerRatio;
     }
     public static double[] normalize(double[] ratiopower){
@@ -60,10 +60,10 @@ public class DriveTrain extends SubsystemBase {
         return power;
     }
     private void setMotorPower(double[] normalize){
-        motorFR.setPower(normalize[0]);
-        motorFL.setPower(normalize[1]);
-        motorBR.setPower(normalize[2]);
-        motorBL.setPower(normalize[3]);
+        motorFL.setPower(normalize[0]);
+        motorBL.setPower(normalize[1]);
+        motorFR.setPower(normalize[2]);
+        motorBR.setPower(normalize[3]);
     }
     public void drive(double x,double y, double turn){
         setMotorPower(normalize(calculationOfPowerRatio(x, y, turn)));
