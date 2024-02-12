@@ -87,7 +87,7 @@ public class OpMode extends CommandOpMode {
         Trigger leftTrigger1 = new Trigger(() -> leftTriggerCondition);
 
         rightTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.OPEN, rightTriggerCondition));
-        leftTrigger1.whenActive(getCartridgeCommand(Cartridge.State.SEMI_OPEN, leftTriggerCondition));
+        leftTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.SEMI_OPEN, leftTriggerCondition));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideRight(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideLeft(elevator, elbow, extender, turret, antiTurret));
