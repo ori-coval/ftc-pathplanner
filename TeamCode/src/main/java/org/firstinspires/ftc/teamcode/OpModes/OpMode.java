@@ -56,11 +56,11 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-//        initDriveTrain();
-        initIntake();
-        initDroneLauncher();
-        initArm();
-        initGamepad();
+        initDriveTrain();
+//        initIntake();
+//        initDroneLauncher();
+//        initArm();
+//        initGamepad();
 
     }
 
