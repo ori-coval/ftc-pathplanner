@@ -99,7 +99,7 @@ public class OpMode extends CommandOpMode {
                 () -> {
                     cartridge.setState(Cartridge.State.CLOSED);
                     if(newState == Cartridge.State.OPEN) {
-                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORING, ArmPositionSelector.getIsLeftOfBoard() /*Not a BooleanSupplier, this might be a problem*/).schedule(/*Because this command is built inside a runnable, it might work to schedule here.*/);
+                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORING, ArmPositionSelector.getIsLeftOfBoard()).schedule();
                     }
                 },
                 cartridge
