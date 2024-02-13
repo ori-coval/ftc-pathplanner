@@ -76,8 +76,13 @@ public class OpMode extends CommandOpMode {
         rightTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.OPEN, rightTriggerCondition));
         leftTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.SEMI_OPEN, leftTriggerCondition));
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideRight(elevator, elbow, extender, turret, antiTurret));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideLeft(elevator, elbow, extender, turret, antiTurret));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideRight(elevator, elbow, extender, turret, antiTurret));
+        /** TODO: CHECK THIS BEFORE CHANGING
+         *         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, Side.LEFT));
+         *         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, Side.RIGHT));
+         *         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, Side.CENTER));
+         */
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideLeft(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSideCenter(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
