@@ -6,65 +6,43 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Utils.Configuration;
-import org.firstinspires.ftc.teamcode.Utils.Servos;
 
 public class ServoTuningCommand extends CommandBase {
-    private Servo servo;
-    private Servos selectedServo;
-    private final Servo elbowLeft;
+    public static final double SENSITIVITY = 0.1;
+    private double lastPos;
+    Servo[] servos;
     Telemetry telemetry;
     GamepadEx gamepadEx1;
-    HardwareMap hardwareMap;
-    private boolean isOn;
-    private double lastPos;
-    private boolean isInitialized;
-
-    public ServoTuningCommand(HardwareMap hardwareMap, Telemetry telemetry, GamepadEx gamepadEx1) {
+    public ServoTuningCommand(HardwareMap hardwareMap, Telemetry telemetry, GamepadEx gamepadEx1, String... servosName) {
+        servos = new Servo[servosName.length];
         this.telemetry = telemetry;
         this.gamepadEx1 = gamepadEx1;
-        this.hardwareMap = hardwareMap;
-        elbowLeft = hardwareMap.servo.get(Configuration.ELBOW_LEFT); //elbow has 2 servos
+        for (int i = 0; i < servosName.length; i++) {
+            this.servos[i] = hardwareMap.servo.get(servosName[i]);
+        }
     }
 
     @Override
     public void initialize() {
-        if(isInitialized) {
-            lastPos = servo.getPosition();
-            isOn = !isOn;
-        } else {
-            throw new RuntimeException("ServoTuningCommand hasn't been initialized yet. (using setServo)");
-        }
-    }
-
-    public void setServo(Servos servoToTune) {
-        selectedServo = servoToTune;
-        servo = hardwareMap.servo.get(servoToTune.SERVO_NAME);
-        isInitialized = true;
-    }
-
-    public String getServo() {
-        return selectedServo.SERVO_NAME;
+        lastPos = servos[0].getPosition();
     }
 
     @Override
     public void execute() {
-        if(servo == hardwareMap.servo.get(Servos.ELBOW.SERVO_NAME)) {
-            elbowLeft.setPosition(lastPos + gamepadEx1.getLeftX() * (isOn ? 0.1 : 0));
+        for (Servo servo : servos) {
+            servo.setPosition(lastPos + gamepadEx1.getLeftX() * SENSITIVITY);
         }
 
-        servo.setPosition(lastPos + gamepadEx1.getLeftX() * (isOn ? 0.1 : 0));
+        telemetry.addData("Servo Calculated Position", lastPos + gamepadEx1.getLeftX() * SENSITIVITY);
+        telemetry.addData("Servo position", servos[0].getPosition());
 
-        telemetry.addData("isOn", isOn);
-        telemetry.addData("Servo Calculated Position", lastPos + gamepadEx1.getLeftX() * (isOn ? 0.1 : 0));
-        telemetry.addData("Servo position", servo.getPosition());
-        telemetry.addLine("-------------------");
-        telemetry();
-        telemetry.update();
+        telemetry.addLine("----------------------");
+
+        telemetry(telemetry);
+
     }
 
-
-    public void telemetry() {
+    public static void telemetry(Telemetry telemetry) {
 
         telemetry.addLine("B - Anti Turret");
         telemetry.addLine("X - Cartridge");
@@ -74,4 +52,5 @@ public class ServoTuningCommand extends CommandBase {
         telemetry.addLine("D-Left - Extender");
 
     }
+
 }

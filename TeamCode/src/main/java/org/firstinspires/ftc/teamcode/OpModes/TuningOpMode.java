@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
 import org.firstinspires.ftc.teamcode.Utils.Servos;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -40,17 +41,14 @@ public class TuningOpMode extends CommandOpMode {
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
 
-        ServoTuningCommand servoTuning = new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(servoTuning);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(() -> servoTuning.setServo(Servos.ANTI_TURRET));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(() -> servoTuning.setServo(Servos.CARTRIDGE));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(() -> servoTuning.setServo(Servos.ELBOW));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(() -> servoTuning.setServo(Servos.DRONE));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(() -> servoTuning.setServo(Servos.INTAKE_LIFTER));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(() -> servoTuning.setServo(Servos.EXTENDER));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ANTI_TURRET));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.CARTRIDGE));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ELBOW_LEFT, Configuration.ELBOW_RIGHT));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.INTAKE_SERVO));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.EXTENDER));
 
-        servoTuning.telemetry();
-        telemetry.update();
+        ServoTuningCommand.telemetry(telemetry);
 
     }
     public void initAntiTurret() {
@@ -72,5 +70,6 @@ public class TuningOpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
+        telemetry.update();
     }
 }
