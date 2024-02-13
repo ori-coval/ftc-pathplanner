@@ -8,7 +8,7 @@ public class Configuration {
     public static final String IMU = "imu";
     public static final String TURRET_LEFT = "turretLeft";
     public static final String TURRET_RIGHT = "turretRight";
-    public static final String TURRET_ENCODER = DRIVE_TRAIN_BACK_LEFT;
+    public static final String TURRET_ENCODER = DRIVE_TRAIN_FRONT_RIGHT;
     public static final String INTAKE_SERVO = "intakeServo";
     public static final String INTAKE_MOTOR = "intake";
     public static final String INTAKE_SWITCH = "switch";
