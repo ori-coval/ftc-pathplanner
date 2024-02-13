@@ -12,9 +12,9 @@ public class Configuration {
     public static final String INTAKE_SERVO = "intakeServo";
     public static final String INTAKE_MOTOR = "intake";
     public static final String INTAKE_SWITCH = "switch";
-    public static final String ELEVATOR_UP = "elevatorUp";
-    public static final String ELEVATOR_MID = "elevatorMid";
-    public static final String ELEVATOR_LOW = "elevatorLow";
+    public static final String ELEVATOR_RIGHT = "elevatorRight";
+    public static final String ELEVATOR_LEFT = "elevatorLeft";
+    public static final String ELEVATOR_CLIMBER = "elevatorClimber";
     public static final String ELBOW_RIGHT = "elbowRight";
     public static final String ELBOW_LEFT = "elbowLeft";
     public static final String CARTRIDGE = "cartridge";

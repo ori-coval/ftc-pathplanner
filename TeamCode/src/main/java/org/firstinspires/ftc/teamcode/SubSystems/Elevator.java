@@ -8,12 +8,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 @Config
 public class Elevator extends SubsystemBase {
-    private final DcMotor[] elevatorMotors = new DcMotor[3];
+    private final DcMotor[] elevatorMotors = new DcMotor[2];
+    private final DcMotor climber;
     private final DcMotor encoder;
     private final double LEVELS = 3;
     private final double TEETH_PER_REV = 8;
@@ -27,10 +27,10 @@ public class Elevator extends SubsystemBase {
 
 
     public Elevator(HardwareMap hardwareMap) {
-        elevatorMotors[0] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_LOW);
-        elevatorMotors[1] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_MID);
-        elevatorMotors[2] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_UP);
+        elevatorMotors[0] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_CLIMBER);
+        elevatorMotors[1] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_LEFT);
         elevatorMotors[1].setDirection(DcMotorSimple.Direction.REVERSE);
+        climber = hardwareMap.dcMotor.get(Configuration.ELEVATOR_CLIMBER);
         encoder = elevatorMotors[0];
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -63,6 +63,10 @@ public class Elevator extends SubsystemBase {
 
     public double getKF() {
         return kF;
+    }
+
+    public void climberSetPower(double power){
+        climber.setPower(power);
     }
 
     public PIDController getPidController() {
