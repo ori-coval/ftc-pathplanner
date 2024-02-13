@@ -59,15 +59,11 @@ public class OpMode extends CommandOpMode {
         CommandScheduler.getInstance().reset();
 
         initTurret();
-//        initDriveTrain();
-//        initIntake();
-//        initDroneLauncher();
-//        initArm();
-//        initGamepad();
-        gamepadEx1 = new GamepadEx(gamepad1);
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new RotateTurretByPID(turret, 0));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new RotateTurretByPID(turret, 30));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new RotateTurretByPID(turret, -30));
+        initDriveTrain();
+        initIntake();
+        initDroneLauncher();
+        initArm();
+        initGamepad();
 
 
     }
