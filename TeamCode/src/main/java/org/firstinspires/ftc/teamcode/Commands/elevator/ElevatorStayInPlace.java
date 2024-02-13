@@ -9,4 +9,9 @@ public class ElevatorStayInPlace extends ElevatorGetToHeightPID {
     public ElevatorStayInPlace(Elevator elevator) {
         super(elevator, elevator.getHeight());
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
