@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 
 public class ElevatorClimbAndStayInPlace extends SequentialCommandGroup {
 
-    ElevatorClimbAndStayInPlace(Elevator elevator){
+    public ElevatorClimbAndStayInPlace(Elevator elevator){
         super(new ElevatorClimb(elevator),new ElevatorStayInPlace(elevator));
     }
 

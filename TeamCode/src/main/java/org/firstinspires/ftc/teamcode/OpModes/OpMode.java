@@ -101,6 +101,7 @@ public class OpMode extends CommandOpMode {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.PRE_CLIMB, false));
     }
 
+
     private Command getCartridgeCommand(Cartridge.State newState) {
         return new StartEndCommand(
                 () -> cartridge.setState(newState),
@@ -158,6 +159,7 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
+
         ArmPositionSelector.telemetry(telemetry);
 
         telemetry.addData("selectedPosition", ArmPositionSelector.getPosition());
