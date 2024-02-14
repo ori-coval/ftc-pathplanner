@@ -58,13 +58,11 @@ public class OpMode extends CommandOpMode {
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
-        initTurret();
         initDriveTrain();
         initIntake();
         initDroneLauncher();
         initArm();
         initGamepad();
-
 
     }
 
@@ -76,25 +74,26 @@ public class OpMode extends CommandOpMode {
         Trigger rightTrigger1 = new Trigger(() -> rightTriggerCondition);
         Trigger leftTrigger1 = new Trigger(() -> leftTriggerCondition);
 
-        rightTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.OPEN, rightTriggerCondition));
-        leftTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.SEMI_OPEN, leftTriggerCondition));
+        rightTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.OPEN));
+        leftTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.SEMI_OPEN));
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideRight(elevator, elbow, extender, turret, antiTurret));
         /** TODO: CHECK THIS BEFORE CHANGING
          *         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, Side.LEFT));
          *         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, Side.RIGHT));
          *         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, Side.CENTER));
          */
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideRight(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideLeft(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSideCenter(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false));
+
 
         gamepadEx2 = new GamepadEx(gamepad2);
 
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
@@ -102,7 +101,7 @@ public class OpMode extends CommandOpMode {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.PRE_CLIMB, false));
     }
 
-    private Command getCartridgeCommand(Cartridge.State newState, boolean triggerCondition) {
+    private Command getCartridgeCommand(Cartridge.State newState) {
         return new StartEndCommand(
                 () -> cartridge.setState(newState),
                 () -> {
