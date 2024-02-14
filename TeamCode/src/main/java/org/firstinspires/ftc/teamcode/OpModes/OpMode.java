@@ -14,6 +14,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorClimbAndStayInPlace;
+import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorGetToHeightPID;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
@@ -22,6 +24,7 @@ import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToSelectedPosit
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideCenter;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideLeft;
 import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSideRight;
+import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPID;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
@@ -56,42 +59,48 @@ public class OpMode extends CommandOpMode {
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
-
-        initDriveTrain();
+//        initElevator();
+//        initDriveTrain();
 //        initIntake();
 //        initDroneLauncher();
-//        initArm();
-//        initGamepad();
+        initArm();
+        initGamepad();
+
+
 
     }
 
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new RotateTurretByPID(turret, 30));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new RotateTurretByPID(turret, -30));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new RotateTurretByPID(turret, 0));
 
-        boolean rightTriggerCondition = gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > TRIGGER_THRESHOLD;
-        boolean leftTriggerCondition = gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TRIGGER_THRESHOLD;
-        Trigger rightTrigger1 = new Trigger(() -> rightTriggerCondition);
-        Trigger leftTrigger1 = new Trigger(() -> leftTriggerCondition);
 
-        rightTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.OPEN, rightTriggerCondition));
-        leftTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.SEMI_OPEN, leftTriggerCondition));
-
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideRight(elevator, elbow, extender, turret, antiTurret));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideLeft(elevator, elbow, extender, turret, antiTurret));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSideCenter(elevator, elbow, extender, turret, antiTurret));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
-
-        gamepadEx2 = new GamepadEx(gamepad2);
-
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.PRE_CLIMB, false));
+//        boolean rightTriggerCondition = gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > TRIGGER_THRESHOLD;
+//        boolean leftTriggerCondition = gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > TRIGGER_THRESHOLD;
+//        Trigger rightTrigger1 = new Trigger(() -> rightTriggerCondition);
+//        Trigger leftTrigger1 = new Trigger(() -> leftTriggerCondition);
+//
+//        rightTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.OPEN, rightTriggerCondition));
+//        leftTrigger1.whileActiveOnce(getCartridgeCommand(Cartridge.State.SEMI_OPEN, leftTriggerCondition));
+//
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSideRight(elevator, elbow, extender, turret, antiTurret));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSideLeft(elevator, elbow, extender, turret, antiTurret));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSideCenter(elevator, elbow, extender, turret, antiTurret));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
+//
+//        gamepadEx2 = new GamepadEx(gamepad2);
+//
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(ArmPositionSelector::moveUp));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.PRE_CLIMB, false));
     }
 
     private Command getCartridgeCommand(Cartridge.State newState, boolean triggerCondition) {
@@ -109,13 +118,13 @@ public class OpMode extends CommandOpMode {
 
     public void initArm(){
         initTurret();
-        initElevator();
-        initElbow();
-        initExtender();
-        initAntiTurret();
-        initCartridge();
+//        initElevator();
+//        initElbow();
+//        initExtender();
+//        initAntiTurret();
+//        initCartridge();
 
-        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false).schedule();
+//        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false).schedule();
     }
 
     public void initDriveTrain() {
@@ -151,10 +160,13 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        ArmPositionSelector.telemetry(telemetry);
 
-        telemetry.addData("selectedPosition", ArmPositionSelector.getPosition());
-        telemetry.addData("isLeftOfBoard", ArmPositionSelector.getIsLeftOfBoard());
-        telemetry.update();
+
+
+//        ArmPositionSelector.telemetry(telemetry);
+
+//        telemetry.addData("selectedPosition", ArmPositionSelector.getPosition());
+//        telemetry.addData("isLeftOfBoard", ArmPositionSelector.getIsLeftOfBoard());
+//        telemetry.update();
     }
 }
