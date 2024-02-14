@@ -8,8 +8,8 @@ public class IntakeTakeIn extends ConditionalCommand {
     public IntakeTakeIn(Intake.Lifter inTakeLifter, Intake.Roller inTakeRoller) {
         super(
                 new IntakeCollectFromStack(inTakeLifter, inTakeRoller),
-                new IntakeSetStackPosition(inTakeLifter, 3),
-                () -> inTakeLifter.getStackPosition() == 3
+                new IntakeSetStackPosition(inTakeLifter, Intake.LifterPosition.STANDBY),
+                () -> inTakeLifter.getPosition() == Intake.LifterPosition.STANDBY
 
         );
     }

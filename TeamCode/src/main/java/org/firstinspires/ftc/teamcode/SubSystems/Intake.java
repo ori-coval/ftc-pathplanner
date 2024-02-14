@@ -7,62 +7,51 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
+
 public class Intake {
-    private DcMotorEx intakeMotor;
-    private Servo intakeAngle;
-    private DigitalChannel limitSwitch;
+    private final DcMotorEx intakeMotor;
+    private final Servo intakeAngle;
+    private final DigitalChannel limitSwitch;
 
     public Intake.Roller roller;
     public Intake.Lifter lifter;
     public Intake(HardwareMap hardwareMap){
-        intakeMotor = (DcMotorEx) hardwareMap.dcMotor.get("intake");
+        intakeMotor = (DcMotorEx) hardwareMap.dcMotor.get(Configuration.INTAKE_MOTOR);
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        intakeAngle = hardwareMap.servo.get("intakeServo");
-        limitSwitch = hardwareMap.digitalChannel.get("switch");
+        intakeAngle = hardwareMap.servo.get(Configuration.INTAKE_SERVO);
+        limitSwitch = hardwareMap.digitalChannel.get(Configuration.INTAKE_SWITCH);
         roller = new Roller();
         lifter = new Lifter();
+        lifter.setPosition(LifterPosition.DEFAULT);
     }
+
+    public enum LifterPosition {
+        DEFAULT(0.45), STANDBY(0.21), FIRST_PIXEL(0.13), SECOND_PIXEL(0.10), BOTTOM(0);
+        final double servoPosition;
+        LifterPosition(double servoPosition) { this.servoPosition = servoPosition; }
+        public double getServoPositionAsDouble() {
+            return servoPosition;
+        }
+    }
+
     public class Lifter extends SubsystemBase {
-        public final double[] STACK_POSITION = {0, 0.10, 0.13, 0.21, 0.45};
-        /*
-        0.77 - The default position (Highest)
-        0.21 - Before the 5th pixel
-        0.13 - The first pixel
-        0.07 - Next pixels
-        0 - lowest position
-        */
-        private int currentStackPosition = 4;
-        private double currentIntakePosition = STACK_POSITION[currentStackPosition];
-
-        public void setStackPosition(int position) {
-            currentStackPosition = position;
-            currentIntakePosition = STACK_POSITION[currentStackPosition];
+        private LifterPosition currentPosition = LifterPosition.DEFAULT;
+        public void setPosition(LifterPosition position) {
+            currentPosition = position;
+            intakeAngle.setPosition(position.getServoPositionAsDouble());
         }
-        public int getStackPosition() {
-            return currentStackPosition;
+        public LifterPosition getPosition() {
+            return currentPosition;
         }
-        public double getStackPositionValue() {
-            return currentIntakePosition;
-        }
-        public void setPosition(double position){
-            intakeAngle.setPosition(position);
-        }
-
-        public void updatePosition() {
-            setPosition(getStackPositionValue());
-        }
-        @Override
-        public void periodic() {
-            updatePosition();
-        }
-
     }
 
     public class Roller extends SubsystemBase {
-        private int pixelCount;
-        public boolean isOnRelease = false;
         public final double COLLECT_POWER = 1;
         public final double EJECT_POWER = -0.9;
+
+        private int pixelCount;
+        public boolean isSwitchOnRelease = false;
         public int getPixelCount() {
             return pixelCount;
         }
@@ -76,12 +65,12 @@ public class Intake {
         //On Press
         private void updatePixelCount() {
             if (!currentSwitchState()) {
-                if (isOnRelease){
+                if (isSwitchOnRelease){
                     pixelCount++;
-                    isOnRelease = false;
+                    isSwitchOnRelease = false;
                 }
             } else {
-                isOnRelease = true;
+                isSwitchOnRelease = true;
             }
         }
 

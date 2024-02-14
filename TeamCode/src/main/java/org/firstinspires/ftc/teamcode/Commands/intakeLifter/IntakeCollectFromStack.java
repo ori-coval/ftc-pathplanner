@@ -13,11 +13,11 @@ public class IntakeCollectFromStack extends ParallelDeadlineGroup {
         super(
                 new IntakeUntilFull(inTakeRoller), //Deadline
                 new SequentialCommandGroup(
-                        new IntakeSetStackPosition(inTakeLifter, 2),
+                        new IntakeSetStackPosition(inTakeLifter, Intake.LifterPosition.FIRST_PIXEL),
                         new WaitCommand(waitTime),
-                        new IntakeSetStackPosition(inTakeLifter, 1),
+                        new IntakeSetStackPosition(inTakeLifter, Intake.LifterPosition.SECOND_PIXEL),
                         new WaitCommand(waitTime * 3),
-                        new IntakeSetStackPosition(inTakeLifter, 4)
+                        new IntakeSetStackPosition(inTakeLifter, Intake.LifterPosition.DEFAULT)
                 )
         );
     }

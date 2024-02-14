@@ -18,7 +18,7 @@ public class ElbowGetToPosition extends CommandBase {
     private final double TOLERANCE = 0.05;
 
     /*
-    Still need to be tested, if too fast, you can always add more time between steps."
+    If it's too fast, you can always add more time between steps.
      */
 
     public ElbowGetToPosition(Elbow elbow, double goalPos) {
