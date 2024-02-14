@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -27,9 +28,9 @@ public class Elevator extends SubsystemBase {
 
 
     public Elevator(HardwareMap hardwareMap) {
-        elevatorMotors[0] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_CLIMBER);
+        elevatorMotors[0] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_RIGHT);
         elevatorMotors[1] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_LEFT);
-        elevatorMotors[1].setDirection(DcMotorSimple.Direction.REVERSE);
+        elevatorMotors[0].setDirection(DcMotorSimple.Direction.REVERSE);
         climber = hardwareMap.dcMotor.get(Configuration.ELEVATOR_CLIMBER);
         encoder = elevatorMotors[0];
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -67,6 +68,10 @@ public class Elevator extends SubsystemBase {
 
     public void climberSetPower(double power){
         climber.setPower(power);
+    }
+
+    public double getClimberPosition(){
+        return climber.getCurrentPosition();
     }
 
     public PIDController getPidController() {
