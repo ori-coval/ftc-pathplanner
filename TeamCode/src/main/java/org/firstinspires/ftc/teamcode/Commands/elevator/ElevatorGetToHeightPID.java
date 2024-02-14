@@ -31,7 +31,6 @@ public class ElevatorGetToHeightPID extends CommandBase {
 
     }
 
-      //TODO: need to check if there are problems without the end method (doesn't work..)
     @Override
     public void end(boolean interrupted) {
         elevator.setPower(0);

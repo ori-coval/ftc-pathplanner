@@ -20,10 +20,10 @@ public class Elevator extends SubsystemBase {
     private final double TEETH_PER_REV = 8;
     private final double CHAIN_LINK_DISTANCE = 0.8;
     private final double TICKS_PER_REV = 751.8;
-    public static double kP = 0.16; //0.165
+    public static double kP = 0.225; //0.165
     public static double kI = 0;
     public static double kD = 0;
-    public static double kF = 0.15;
+    public static double kF = 0.13;
     private final PIDController pidController = new PIDController(kP,kI,kD);
 
 

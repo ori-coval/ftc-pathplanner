@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorGetToHeightPID;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
@@ -63,10 +64,15 @@ public class OpMode extends CommandOpMode {
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, false));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.TEST_POSITION, false));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SECOND_TEST_POSITION, false));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new RotateTurretByPID(turret, 0));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new RotateTurretByPID(turret, -90));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new RotateTurretByPID(turret, 90));
+
+
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, false));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.TEST_POSITION, false));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SECOND_TEST_POSITION, false));
 
         /** TODO: CHECK THIS BEFORE CHANGING
          *         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, Side.LEFT));
@@ -74,17 +80,18 @@ public class OpMode extends CommandOpMode {
          *         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, Side.CENTER));
          */
 
+
     }
 
     public void initArm(){
         initTurret();
-        initElevator();
+//        initElevator();
         initElbow();
-        initExtender();
-        initAntiTurret();
-        initCartridge();
+//        initExtender();
+//        initAntiTurret();
+//        initCartridge();
 
-        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false).schedule();
+//        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false).schedule();
     }
 
     public void initDriveTrain() {
