@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.extender;
+package org.firstinspires.ftc.teamcode.Commands.armCommands.extender;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 

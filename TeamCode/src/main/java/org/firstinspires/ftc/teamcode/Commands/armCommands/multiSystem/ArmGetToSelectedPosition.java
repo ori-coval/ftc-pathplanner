@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.multiSystem;
+package org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem;
 
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;

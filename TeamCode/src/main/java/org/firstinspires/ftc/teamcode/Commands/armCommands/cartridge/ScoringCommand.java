@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.cartridge;
+package org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge;
 
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
-import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;

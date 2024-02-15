@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
-import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.StartEndCommand;
-import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -14,15 +11,15 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
-import org.firstinspires.ftc.teamcode.Commands.cartridge.CartridgeSetState;
-import org.firstinspires.ftc.teamcode.Commands.cartridge.ScoringCommand;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringCommand;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
-import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
-import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToSelectedPosition;
-import org.firstinspires.ftc.teamcode.Commands.multiSystem.SetRobotSide;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToSelectedPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
@@ -105,20 +102,6 @@ public class OpMode extends CommandOpMode {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.PRE_CLIMB, false));
-    }
-
-
-    private Command getCartridgeCommand(Cartridge.State newState) {
-        return new StartEndCommand(
-                () -> cartridge.setState(newState),
-                () -> {
-                    cartridge.setState(Cartridge.State.CLOSED);
-                    if(newState == Cartridge.State.OPEN) {
-                        new WaitCommand(2000).andThen(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORING, ArmPositionSelector.getIsLeftOfBoard())).schedule();
-                    }
-                },
-                cartridge
-        );
     }
 
     public void initArm(){

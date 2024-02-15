@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.elbow;
+package org.firstinspires.ftc.teamcode.Commands.armCommands.elbow;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandBase;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.cartridge;
+package org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 

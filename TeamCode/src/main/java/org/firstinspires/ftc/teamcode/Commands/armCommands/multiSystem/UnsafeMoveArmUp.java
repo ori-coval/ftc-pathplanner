@@ -1,14 +1,14 @@
-package org.firstinspires.ftc.teamcode.Commands.multiSystem;
+package org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
-import org.firstinspires.ftc.teamcode.Commands.antiTurret.AntiTurretGetToPosition;
-import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToPosition;
-import org.firstinspires.ftc.teamcode.Commands.elevator.ElevatorGetToHeightPID;
-import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetPosition;
-import org.firstinspires.ftc.teamcode.Commands.turret.RotateTurretByPID;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGetToHeightPID;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.RotateTurretByPID;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
