@@ -34,6 +34,7 @@ import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySe
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequenceRunner;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.LynxModuleUtil;
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,10 +102,10 @@ public class SampleMecanumDrive extends MecanumDrive {
                 DriveConstants.LOGO_FACING_DIR, DriveConstants.USB_FACING_DIR));
         imu.initialize(parameters);
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "frontLeftLin");
-        leftRear = hardwareMap.get(DcMotorEx.class, "backLeftLin");
-        rightRear = hardwareMap.get(DcMotorEx.class, "backRightLin");
-        rightFront = hardwareMap.get(DcMotorEx.class, "frontRightLin");
+        leftFront = hardwareMap.get(DcMotorEx.class, Configuration.DRIVE_TRAIN_FRONT_LEFT);
+        leftRear = hardwareMap.get(DcMotorEx.class, Configuration.DRIVE_TRAIN_BACK_LEFT);
+        rightRear = hardwareMap.get(DcMotorEx.class, Configuration.DRIVE_TRAIN_BACK_RIGHT);
+        rightFront = hardwareMap.get(DcMotorEx.class, Configuration.DRIVE_TRAIN_FRONT_RIGHT);
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
