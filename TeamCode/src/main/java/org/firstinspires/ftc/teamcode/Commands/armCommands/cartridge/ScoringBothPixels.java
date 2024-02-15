@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 import java.util.function.BooleanSupplier;
 
-public class ScoringCommand extends SequentialCommandGroup {
-    public ScoringCommand(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, Cartridge cartridge, BooleanSupplier triggerCondition) {
+public class ScoringBothPixels extends SequentialCommandGroup {
+    public ScoringBothPixels(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, Cartridge cartridge, BooleanSupplier triggerCondition) {
         super(
                 new CartridgeSetState(cartridge, Cartridge.State.OPEN),
                 new WaitUntilCommand(() -> !triggerCondition.getAsBoolean()),

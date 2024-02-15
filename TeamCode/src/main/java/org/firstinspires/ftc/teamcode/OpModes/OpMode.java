@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.OpModes;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.WaitUntilCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -11,8 +10,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringCommand;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
@@ -75,23 +75,17 @@ public class OpMode extends CommandOpMode {
         Trigger rightTrigger1 = new Trigger(rightTriggerCondition);
         Trigger leftTrigger1 = new Trigger(leftTriggerCondition);
 
-        rightTrigger1.whenActive(new ScoringCommand(elevator, elbow, extender, turret, antiTurret, cartridge, rightTriggerCondition));
-        leftTrigger1.whenActive(
-                new CartridgeSetState(cartridge, Cartridge.State.SEMI_OPEN).andThen(
-                        new WaitUntilCommand(() -> !leftTriggerCondition.getAsBoolean()).andThen(
-                                new CartridgeSetState(cartridge, Cartridge.State.CLOSED)
-                        )
-                )
-        );
+        leftTrigger1.whenActive(new ScoringFirstPixel(cartridge, leftTriggerCondition));
+        rightTrigger1.whenActive(new ScoringBothPixels(elevator, elbow, extender, turret, antiTurret, cartridge, rightTriggerCondition));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, cartridge, Side.LEFT));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, cartridge, Side.RIGHT));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, cartridge, Side.CENTER));
-
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret));
+
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false).andThen(new CartridgeSetState(cartridge, Cartridge.State.OPEN)));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new BackToIntake(elevator, elbow, extender, turret, antiTurret, cartridge));
 
 
         gamepadEx2 = new GamepadEx(gamepad2);

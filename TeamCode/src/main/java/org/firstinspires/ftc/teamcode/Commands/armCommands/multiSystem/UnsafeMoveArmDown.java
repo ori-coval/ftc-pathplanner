@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem;
 
+import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
@@ -21,11 +22,20 @@ public class UnsafeMoveArmDown extends SequentialCommandGroup {
                 new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
                 new WaitCommand(UnsafeMoveArm.ELEVATOR_WAIT_TIME), //avoiding elevator's shaking while going down too fast.
                 new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
-                new ExtenderSetPosition(extender, position.getExtenderPosition()),
-                new ElbowGetToPosition(elbow, position.getElbowPosition()),
-                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
+                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition()),
+                new ConditionalCommand(
+                        new SequentialCommandGroup(
+                                new ElbowGetToPosition(elbow, position.getElbowPosition()),
+                                new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME),
+                                new ExtenderSetPosition(extender, position.getExtenderPosition())
+                        ),
+                        new SequentialCommandGroup(
+                                new ExtenderSetPosition(extender, position.getExtenderPosition()),
+                                new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME),
+                                new ElbowGetToPosition(elbow, position.getElbowPosition())
+                        ),
+                        () -> (ArmGetToPosition.lastPosition.getExtenderPosition().getServoPositionAsDouble() < position.getExtenderPosition().getServoPositionAsDouble())
+                )
         );
     }
 }
-
-//אם האקסטנדר נסגר אז קודם אקסטנדר ואז אלבוו, אם אקסטנדר נפתח אז קודם אלבוו ואז אקסטנדר

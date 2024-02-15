@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGetToHeightPID;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
@@ -17,18 +18,27 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class UnsafeMoveArm extends ConditionalCommand {
-
-    public static ArmPosition lastPosition = ArmPosition.INTAKE;
     public static final long EXTENDER_WAIT_TIME = 250;
     public static final long ELEVATOR_WAIT_TIME = 250;
-    private final ArmPosition targetPosition;
 
     public UnsafeMoveArm(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
         super(
-                new SequentialCommandGroup(
+                new UnsafeMoveArmUp(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard),
+                new UnsafeMoveArmDown(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard),
+                () -> (ArmGetToPosition.lastPosition.getElevatorHeight() < position.getElevatorHeight())
+        );
+    }
+}
+
+
+
+
+/* ConditionalCommand
+
+                 new SequentialCommandGroup(
                         new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
                         new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
-                        new ElbowGetToPosition(elbow, position.getElbowPosition()), /*These are instant commands so their isFinished always true */
+                        new ElbowGetToPosition(elbow, position.getElbowPosition()), //These are instant commands so their isFinished always true
                         new WaitCommand(EXTENDER_WAIT_TIME), //Trying to avoid elbow's servos overload
                         new ExtenderSetPosition(extender, position.getExtenderPosition()),
                         new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
@@ -40,28 +50,19 @@ public class UnsafeMoveArm extends ConditionalCommand {
                         new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition()),
                         new ConditionalCommand(
                                 new SequentialCommandGroup(
-                                        new ElbowGetToPosition(elbow, position.getElbowPosition()),
-                                        new WaitCommand(EXTENDER_WAIT_TIME),
-                                        new ExtenderSetPosition(extender, position.getExtenderPosition())
+                                new ElbowGetToPosition(elbow, position.getElbowPosition()),
+                                new WaitCommand(EXTENDER_WAIT_TIME),
+                                new ExtenderSetPosition(extender, position.getExtenderPosition())
                                 ),
                                 new SequentialCommandGroup(
-                                        new ExtenderSetPosition(extender, position.getExtenderPosition()),
-                                        new WaitCommand(EXTENDER_WAIT_TIME),
-                                        new ElbowGetToPosition(elbow, position.getElbowPosition())
+                                    new ExtenderSetPosition(extender, position.getExtenderPosition()),
+                                    new WaitCommand(EXTENDER_WAIT_TIME),
+                                    new ElbowGetToPosition(elbow, position.getElbowPosition())
                                 ),
                                 () -> (lastPosition.getExtenderPosition().getServoPositionAsDouble() < position.getExtenderPosition().getServoPositionAsDouble())
                         ),
-                        new ExtenderSetPosition(extender, position.getExtenderPosition()),
-                        new ElbowGetToPosition(elbow, position.getElbowPosition())
+                new ExtenderSetPosition(extender, position.getExtenderPosition()),
+                new ElbowGetToPosition(elbow, position.getElbowPosition())
                 ),
                 () -> (lastPosition.getElevatorHeight() < position.getElevatorHeight())
-        );
-        targetPosition = position;
-    }
-
-    @Override
-    public void initialize() {
-        super.initialize();
-        lastPosition = targetPosition;
-    }
-}
+ */
