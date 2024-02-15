@@ -21,8 +21,8 @@ import java.util.HashMap;
 public class SetRobotSide extends SequentialCommandGroup {
     public SetRobotSide(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, Cartridge cartridge, Side side) {
         super(
-                new InstantCommand(() -> ArmPositionSelector.setRobotSide(side)),
                 new CartridgeSetState(cartridge, Cartridge.State.CLOSED),
+                new InstantCommand(() -> ArmPositionSelector.setRobotSide(side)),
                 new SelectCommand(
                         new HashMap<Object, Command>() {{
                             put(Side.LEFT, new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORING, true));
