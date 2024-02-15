@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 public class AutoTest extends SequentialCommandGroup {
     public AutoTest(SampleMecanumDrive driveTrain) {
         super(
-                new TrajectoryFollowerCommand(Trajectories.get("zigzug testing"), driveTrain)
+                new TrajectoryFollowerCommand(Trajectories.get("go to spike mark"), driveTrain)
         );
 
 

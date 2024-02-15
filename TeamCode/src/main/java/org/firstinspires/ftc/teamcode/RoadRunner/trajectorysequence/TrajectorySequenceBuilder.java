@@ -121,7 +121,7 @@ public class TrajectorySequenceBuilder {
         );
     }
 
-    public TrajectorySequenceBuilder lineTo(Vector2d endPosition) {
+    public TrajectorySequenceBuilder lineTo(Vector2d endPosition, int i) {
         return addPath(() -> currentTrajectoryBuilder.lineTo(endPosition, currentVelConstraint, currentAccelConstraint));
     }
 

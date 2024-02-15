@@ -11,9 +11,11 @@ import java.util.HashMap;
 public class Trajectories {
     private static final HashMap<String , TrajectorySequence> trajectorySequenceHashMap = new HashMap<>();
     private static boolean isInitialized = false;
-    public static void init(SampleMecanumDrive driveTrain){
-        trajectorySequenceHashMap.put("zigzug testing", driveTrain.trajectorySequenceBuilder(new Pose2d(-63, 35))
-                .splineTo(new Vector2d(-44, 20), 0)
+    public static void init(SampleMecanumDrive driveTrain) {
+        Pose2d startPose = new Pose2d(-63, 35, 0);
+        driveTrain.setPoseEstimate(startPose);
+        trajectorySequenceHashMap.put("go to spike mark", driveTrain.trajectorySequenceBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(-40, 55, Math.toRadians(90)))
                 .build()
         );
         isInitialized = true;
