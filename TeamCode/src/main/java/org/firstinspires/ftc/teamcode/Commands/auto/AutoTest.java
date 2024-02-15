@@ -7,11 +7,12 @@ import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class AutoTest extends SequentialCommandGroup {
-    public AutoTest(SampleMecanumDrive driveTrain, Turret turret) {
+    public AutoTest(SampleMecanumDrive driveTrain) {
         super(
-                new TrajectoryFollowerCommand(Trajectories.get("3"), driveTrain),
-                new RotateTurretByPID(turret,3)
+                new TrajectoryFollowerCommand(Trajectories.get("zigzug testing"), driveTrain)
         );
+
+
     }
 
 }
