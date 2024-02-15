@@ -53,6 +53,7 @@ public class OpMode extends CommandOpMode {
     Intake intake;
 
     private final double TRIGGER_THRESHOLD = 0.5;
+    private boolean firstIteration = true;
 
     @Override
     public void initialize() {
@@ -143,6 +144,10 @@ public class OpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
+        if(firstIteration) {
+            intake.lifter.setPosition(Intake.LifterPosition.DEFAULT);
+            firstIteration = false;
+        }
 
         ArmPositionSelector.telemetry(telemetry);
 
