@@ -69,11 +69,6 @@ public class TuningOpMode extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        elbow.setPosition(gamepadEx1.getLeftX());
-
-        telemetry.addData("Joystick Pos", gamepadEx1.getLeftX());
-        telemetry.addData("Elbow Pos", elbow.getServoPosition());
-
         telemetry.update();
     }
 }
