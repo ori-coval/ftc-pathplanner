@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.localization.TwoTrackingWheelLocalizer;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.checkerframework.checker.units.UnitsTools;
@@ -68,10 +69,11 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
 
         this.drive = drive;
 
-        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, Configuration.DRIVE_TRAIN_BACK_RIGHT));
-        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, Configuration.DRIVE_TRAIN_FRONT_LEFT));
+        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, Configuration.DRIVE_TRAIN_FRONT_LEFT));
+        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, Configuration.DRIVE_TRAIN_BACK_RIGHT));
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
+        parallelEncoder.setDirection(Encoder.Direction.REVERSE);
     }
 
     public static double encoderTicksToInches(double ticks) {
