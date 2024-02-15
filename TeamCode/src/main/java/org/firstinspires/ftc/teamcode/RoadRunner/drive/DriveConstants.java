@@ -23,7 +23,7 @@ public class DriveConstants {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    public static final double TICKS_PER_REV = 300;
+    public static final double TICKS_PER_REV = 537.6;
     public static final double MAX_RPM = 312;
 
     /*
@@ -34,8 +34,10 @@ public class DriveConstants {
      * If using the built-in motor velocity PID, update MOTOR_VELO_PID with the tuned coefficients
      * from DriveVelocityPIDTuner.
      */
-    public static final boolean RUN_USING_ENCODER = true;
-    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0, 1.0292637217943168);
+    public static final boolean RUN_USING_ENCODER = false;
+    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
+            getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
+
 
     /*
      * These are physical constants that can be determined from your robot (including the track
@@ -46,18 +48,9 @@ public class DriveConstants {
      * convenience. Make sure to exclude any gear ratio included in MOTOR_CONFIG from GEAR_RATIO.
      */
     public static double WHEEL_RADIUS = 1.8898; // in
-    public static double GEAR_RATIO = 0.06329113924050632; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 9.133; // in
+    public static double GEAR_RATIO = 0.8333333333333334; // output (wheel) speed / input (motor) speed
+    public static double TRACK_WIDTH = 10.72; // in
 
-    /*
-     * These are the feedforward parameters used to model the drive motor behavior. If you are using
-     * the built-in velocity PID, *these values are fine as is*. However, if you do not have drive
-     * motor encoders or have elected not to use them for velocity control, these values should be
-     * empirically tuned.
-     */
-    public static double kV = 1.0 / rpmToVelocity(MAX_RPM);
-    public static double kA = 0;
-    public static double kStatic = 0;
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -87,10 +80,21 @@ public class DriveConstants {
      * You are free to raise this on your own if you would like. It is best determined through experimentation.
 
      */
-    public static double MAX_VEL = 55.665076407195116;
-    public static double MAX_ACCEL = 3.3217037394497004;
-    public static double MAX_ANG_VEL = Math.toRadians(20.838673498663212);
-    public static double MAX_ANG_ACCEL = Math.toRadians(20.838673498663212);
+    public static double MAX_VEL = 43.73576590275441;
+    public static double MAX_ACCEL = 43.73576590275441;
+    public static double MAX_ANG_VEL = Math.toRadians(133.35001241929302);
+    public static double MAX_ANG_ACCEL = Math.toRadians(256.2244171779142);
+
+    /*
+     * These are the feedforward parameters used to model the drive motor behavior. If you are using
+     * the built-in velocity PID, *these values are fine as is*. However, if you do not have drive
+     * motor encoders or have elected not to use them for velocity control, these values should be
+     * empirically tuned.
+     */
+    public static double kV = 0.016;
+    public static double kA = 0.004;
+    public static double kStatic = 0;
+
 
     /*
      * Adjust the orientations here to match your robot. See the FTC SDK documentation for details.
