@@ -2,12 +2,12 @@ package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
-import org.firstinspires.ftc.teamcode.Commands.elbow.ElbowGetToPosition;
-import org.firstinspires.ftc.teamcode.Commands.extender.ExtenderSetPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
 import org.firstinspires.ftc.teamcode.Commands.utils.SideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.Side;
+import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;

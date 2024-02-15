@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.antiTurret;
+package org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.InstantCommand;

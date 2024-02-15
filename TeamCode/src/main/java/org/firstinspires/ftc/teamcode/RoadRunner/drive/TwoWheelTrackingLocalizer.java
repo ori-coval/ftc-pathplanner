@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.checkerframework.checker.units.UnitsTools;
 import org.firstinspires.ftc.teamcode.RoadRunner.util.Encoder;
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,8 +68,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
 
         this.drive = drive;
 
-        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "backRightLin"));
-        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "frontRightLin"));
+        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, Configuration.DRIVE_TRAIN_BACK_RIGHT));
+        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, Configuration.DRIVE_TRAIN_FRONT_LEFT));
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
     }

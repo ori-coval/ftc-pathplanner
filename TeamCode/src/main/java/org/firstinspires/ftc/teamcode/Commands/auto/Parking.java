@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
-import org.firstinspires.ftc.teamcode.Commands.multiSystem.ArmGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;

@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.command.SelectCommand;
 
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.auto.TrajectoryFollowerCommand;
-import org.firstinspires.ftc.teamcode.Side;
+import org.firstinspires.ftc.teamcode.Utils.Side;
 
 import java.util.HashMap;
 import java.util.function.DoubleSupplier;

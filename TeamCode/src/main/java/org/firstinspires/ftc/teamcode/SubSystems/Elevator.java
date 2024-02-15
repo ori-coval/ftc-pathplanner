@@ -5,31 +5,33 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 @Config
 public class Elevator extends SubsystemBase {
-    private DcMotor[] elevatorMotors = new DcMotor[3];
-    private DcMotor encoder;
+    private final DcMotor[] elevatorMotors = new DcMotor[2];
+    private final DcMotor climber;
+    private final DcMotor encoder;
     private final double LEVELS = 3;
     private final double TEETH_PER_REV = 8;
     private final double CHAIN_LINK_DISTANCE = 0.8;
-    private final double TICKS_PER_REV = 384.5;
-    public static double kP = 0.165; //0.165
+    private final double TICKS_PER_REV = 751.8;
+    public static double kP = 0.225; //0.165
     public static double kI = 0;
     public static double kD = 0;
-    public static double kF = 0.132;
-    private PIDController pidController = new PIDController(kP,kI,kD);
+    public static double kF = 0.13;
+    private final PIDController pidController = new PIDController(kP,kI,kD);
 
 
     public Elevator(HardwareMap hardwareMap) {
-        elevatorMotors[0] = hardwareMap.dcMotor.get("elevatorLow");
-        elevatorMotors[1] = hardwareMap.dcMotor.get("elevatorMid");
-        elevatorMotors[2] = hardwareMap.dcMotor.get("elevatorUp");
-        elevatorMotors[1].setDirection(DcMotorSimple.Direction.REVERSE);
+        elevatorMotors[0] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_RIGHT);
+        elevatorMotors[1] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_LEFT);
+        elevatorMotors[0].setDirection(DcMotorSimple.Direction.REVERSE);
+        climber = hardwareMap.dcMotor.get(Configuration.ELEVATOR_CLIMBER);
         encoder = elevatorMotors[0];
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -62,6 +64,14 @@ public class Elevator extends SubsystemBase {
 
     public double getKF() {
         return kF;
+    }
+
+    public void climberSetPower(double power){
+        climber.setPower(power);
+    }
+
+    public double getClimberPosition(){
+        return climber.getCurrentPosition();
     }
 
     public PIDController getPidController() {

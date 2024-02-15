@@ -8,22 +8,10 @@ public class IntakeTakeIn extends ConditionalCommand {
     public IntakeTakeIn(Intake.Lifter inTakeLifter, Intake.Roller inTakeRoller) {
         super(
                 new IntakeCollectFromStack(inTakeLifter, inTakeRoller),
-                new IntakeSetStackPosition(inTakeLifter, 3),
-                () -> inTakeLifter.getStackPosition() == 3
+                new IntakeSetStackPosition(inTakeLifter, Intake.LifterPosition.STANDBY),
+                () -> inTakeLifter.getPosition() == Intake.LifterPosition.STANDBY
 
         );
     }
-
-//    private static CommandBase intakeCommand(InTake inTake) {
-//        SequentialCommandGroup group = new SequentialCommandGroup();
-//        for (int i = 2; i >= 0; i--) {
-//            int finalI = i;
-//            group.addCommands(
-//                    new WaitCommand(waitTime),
-//                    new InstantCommand(() -> inTake.setStackPosition(finalI))
-//            );
-//        }
-//        return group;
-//    }
 
 }
