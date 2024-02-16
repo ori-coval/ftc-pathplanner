@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
@@ -18,20 +19,19 @@ import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 
 public class ScoringPurplePixel extends SequentialCommandGroup {
 
-    private final long WAIT_UNTIL_STOP = 1000;
+    private final long WAIT_UNTIL_STOP = 2000;
 
     public ScoringPurplePixel(SampleMecanumDrive driveTrain, Intake intake, Side side, Elevator elevator, Extender extender, Elbow elbow, Turret turret, AntiTurret antiTurret) {
         addCommands(
-//                new SideCommandSwitch(
-//                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Left"), driveTrain),
-//                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center"), driveTrain),
-//                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right"), driveTrain),
-//                        () -> side),
-                new TrajectoryFollowerCommand(Trajectories.get("Go to middle before scoring purple pixel"), driveTrain),
-                new TrajectoryFollowerCommand(Trajectories.get("Score Purple Pixel Center"), driveTrain),
-                new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, false),
-                new IntakeRotate(intake.roller, intake.roller.COLLECT_POWER).withTimeout(WAIT_UNTIL_STOP),
-                new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false)
+                new ParallelCommandGroup( //need to check this
+                        new SideCommandSwitch(
+                                new TrajectoryFollowerCommand(Trajectories.get("Score Purple Left"), driveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center"), driveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right"), driveTrain),
+                                () -> side),
+                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SAFE_PLACE, false)
+                ),
+                new IntakeRotate(intake.roller, intake.roller.COLLECT_POWER).withTimeout(WAIT_UNTIL_STOP)
         );
     }
 }

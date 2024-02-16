@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.auto.AutoTest;
+import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollectPixel;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.auto.TrajectoryFollowerCommand;
@@ -27,7 +28,8 @@ public class AutonomousOpMode extends CommandOpMode {
         schedule(
                 new SequentialCommandGroup(
                         new WaitCommand(0), //for some reason it runs the first command on the init
-                        new ScoringPurplePixel(robot.autoDriveTrain, robot.intake, Side.CENTER, robot.elevator, robot.extender, robot.elbow, robot.turret, robot.antiTurret)
+                        new ScoringPurplePixel(robot.autoDriveTrain, robot.intake, Side.CENTER, robot.elevator, robot.extender, robot.elbow, robot.turret, robot.antiTurret),
+                        new GoFromSpikeMarkToStackAndCollectPixel(robot.autoDriveTrain, robot.intake, Side.CENTER, robot.elevator, robot.extender, robot.elbow, robot.turret, robot.antiTurret, robot.cartridge)
                 )
         );
     }
