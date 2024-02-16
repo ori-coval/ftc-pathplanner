@@ -23,7 +23,7 @@ public class AutonomousOpMode extends CommandOpMode {
 
         waitForStart();
 
-        new AutoTest(robot.autoDriveTrain).schedule(); //would this work without running the scheduler? no? right? I'm too tired to think, gn.
+        new AutoTest(robot.autoDriveTrain).schedule();
 
         reset();
     }

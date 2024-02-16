@@ -9,8 +9,10 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToSelectedPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
@@ -134,6 +136,8 @@ public class RobotControl extends Robot {
         initAntiTurret();
         initCartridge();
 
+        new ExtenderSetPosition(extender, ArmPosition.INTAKE.getExtenderPosition()).schedule();
+        new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition()).schedule();
         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false).schedule();
     }
 
