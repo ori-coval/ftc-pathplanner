@@ -6,7 +6,6 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
@@ -36,8 +35,8 @@ import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
 import java.util.function.BooleanSupplier;
 
 
-@TeleOp(name = "OpMode")
-public class OpMode extends CommandOpMode {
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "OpMode")
+public class TeleOp extends CommandOpMode {
 
     DriveTrain driveTrain;
     Elbow elbow;
