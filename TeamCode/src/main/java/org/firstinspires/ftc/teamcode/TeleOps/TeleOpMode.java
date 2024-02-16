@@ -14,7 +14,7 @@ public class TeleOpMode extends CommandOpMode {
 
     @Override
     public void initialize() {
-        robot = new RobotControl(RobotControl.OpModeType.TELEOP, hardwareMap, gamepad1, gamepad2);
+        robot = new RobotControl(RobotControl.OpModeType.TELEOP, hardwareMap, gamepad1, gamepad2, telemetry);
     }
 
     @Override

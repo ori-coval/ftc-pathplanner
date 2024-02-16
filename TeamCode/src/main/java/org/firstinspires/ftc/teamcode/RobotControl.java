@@ -9,6 +9,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
@@ -35,6 +36,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
+import org.openftc.easyopencv.OpenCvCamera;
 
 import java.util.function.BooleanSupplier;
 
@@ -42,32 +44,34 @@ public class RobotControl extends Robot {
     OpModeType opModeType;
 
     HardwareMap hardwareMap;
-    DriveTrain driveTrain;
+    public DriveTrain driveTrain;
     public SampleMecanumDrive autoDriveTrain;
-    Elbow elbow;
-    Turret turret;
-    AntiTurret antiTurret;
-    Cartridge cartridge;
-    DroneLauncher droneLauncher;
-    Elevator elevator;
+    public Elbow elbow;
+    public Turret turret;
+    public AntiTurret antiTurret;
+    public Cartridge cartridge;
+    public DroneLauncher droneLauncher;
+    public Elevator elevator;
     TeamPropDetector teamPropDetector;
     Gamepad gamepad1;
     Gamepad gamepad2;
     GamepadEx gamepadEx1;
     GamepadEx gamepadEx2;
-    Extender extender;
+    public Extender extender;
     public Intake intake;
+    Telemetry telemetry;
     private final double TRIGGER_THRESHOLD = 0.5;
 
     public enum OpModeType {
         TELEOP, AUTO
     }
 
-    public RobotControl(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2) {
+    public RobotControl(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         opModeType = type;
         this.hardwareMap = hardwareMap;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
+        this.telemetry = telemetry;
         reset(); //reset the scheduler
 
         initDriveTrain();
@@ -87,7 +91,7 @@ public class RobotControl extends Robot {
     }
 
     public void initAuto() {
-//        initVision();
+        initVision();
         Pose2d startPose = new Pose2d(-63, 35, 0);
         autoDriveTrain.setPoseEstimate(startPose);
         Trajectories.init(autoDriveTrain, startPose);
@@ -158,7 +162,9 @@ public class RobotControl extends Robot {
     public void initAntiTurret() {
         antiTurret = new AntiTurret(hardwareMap);
     }
-    public void initVision() { teamPropDetector = new TeamPropDetector(hardwareMap, AllianceColor.BLUE); }
+    public void initVision() {
+        teamPropDetector = new TeamPropDetector(hardwareMap, AllianceColor.RED, telemetry);
+    }
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
     }

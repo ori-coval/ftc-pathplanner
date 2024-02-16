@@ -12,8 +12,12 @@ public class Trajectories {
     private static final HashMap<String , TrajectorySequence> trajectorySequenceHashMap = new HashMap<>();
     private static boolean isInitialized = false;
     public static void init(SampleMecanumDrive driveTrain, Pose2d startPose) {
-        trajectorySequenceHashMap.put("go to spike mark", driveTrain.trajectorySequenceBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-18, 35, 0)) //-18
+        trajectorySequenceHashMap.put("Go to middle before scoring purple pixel", driveTrain.trajectorySequenceBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(-37, 35, Math.toRadians(45))) //-22
+                .build()
+        );
+        trajectorySequenceHashMap.put("Score Purple Pixel Center", driveTrain.trajectorySequenceBuilder(new Pose2d(-37, 35, Math.toRadians(45)))
+                .lineToLinearHeading(new Pose2d(-22, 35, Math.toRadians(45)))
                 .build()
         );
         isInitialized = true;
