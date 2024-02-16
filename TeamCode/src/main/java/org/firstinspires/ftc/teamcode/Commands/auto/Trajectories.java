@@ -13,7 +13,7 @@ public class Trajectories {
     private static boolean isInitialized = false;
     public static void init(SampleMecanumDrive driveTrain, Pose2d startPose) {
         trajectorySequenceHashMap.put("go to spike mark", driveTrain.trajectorySequenceBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-40, 55, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-18, 35, 0))
                 .build()
         );
         isInitialized = true;

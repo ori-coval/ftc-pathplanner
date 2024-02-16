@@ -85,7 +85,7 @@ public class RobotControl extends Robot {
     }
 
     public void initAuto() {
-        initVision();
+//        initVision();
         Pose2d startPose = new Pose2d(-63, 35, 0);
         autoDriveTrain.setPoseEstimate(startPose);
         Trajectories.init(autoDriveTrain, startPose);

@@ -23,15 +23,7 @@ public class AutonomousOpMode extends CommandOpMode {
 
         waitForStart();
 
-        /* Not sure whether I need to run the scheduler, or when I need to do this, 'cause I can't make a loop here. I think. maybe there should be a loop of this running in the background. 'cause I would be using commands, and I do need to schedule them. RIGHT??
-        while (!isStopRequested() && opModeIsActive()) {
-            run();
-        }
-         */
-
-        if(!isStopRequested() && opModeIsActive()) {
-            new AutoTest(robot.autoDriveTrain).schedule(); //would this work without running the scheduler? no? right? I'm too tired to think, gn.
-        }
+        new AutoTest(robot.autoDriveTrain).schedule(); //would this work without running the scheduler? no? right? I'm too tired to think, gn.
 
         reset();
     }
