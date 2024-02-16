@@ -1,24 +1,26 @@
-package org.firstinspires.ftc.teamcode.TeleOps;
+package org.firstinspires.ftc.teamcode;
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.ArmPosition;
-import org.firstinspires.ftc.teamcode.ArmPositionSelector;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
-import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
-import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
-import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToSelectedPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
+import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
+import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
@@ -34,11 +36,12 @@ import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
 
 import java.util.function.BooleanSupplier;
 
+public class RobotControl extends Robot {
+    OpModeType opModeType;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "OpMode")
-public class TeleOp extends CommandOpMode {
-
+    HardwareMap hardwareMap;
     DriveTrain driveTrain;
+    public SampleMecanumDrive autoDriveTrain;
     Elbow elbow;
     Turret turret;
     AntiTurret antiTurret;
@@ -46,27 +49,51 @@ public class TeleOp extends CommandOpMode {
     DroneLauncher droneLauncher;
     Elevator elevator;
     TeamPropDetector teamPropDetector;
+    Gamepad gamepad1;
+    Gamepad gamepad2;
     GamepadEx gamepadEx1;
     GamepadEx gamepadEx2;
     Extender extender;
-    Intake intake;
-
+    public Intake intake;
     private final double TRIGGER_THRESHOLD = 0.5;
-    private boolean firstIteration = true;
 
-    @Override
-    public void initialize() {
-        CommandScheduler.getInstance().reset();
+    public enum OpModeType {
+        TELEOP, AUTO
+    }
+
+    public RobotControl(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2) {
+        opModeType = type;
+        this.hardwareMap = hardwareMap;
+        this.gamepad1 = gamepad1;
+        this.gamepad2 = gamepad2;
+        reset(); //reset the scheduler
 
         initDriveTrain();
         initIntake();
-        initDroneLauncher();
         initArm();
-        initGamepad();
-        initCartridge(); //The triggers are defined in the cartridge periodic ('cause I have no idea how to bind a command to a trigger)
 
+        if(type == OpModeType.TELEOP) {
+            initTele();
+        } else {
+            initAuto();
+        }
     }
 
+    public void initTele() {
+        initDroneLauncher();
+        initGamepad();
+    }
+
+    public void initAuto() {
+        initVision();
+        Pose2d startPose = new Pose2d(-63, 35, 0);
+        autoDriveTrain.setPoseEstimate(startPose);
+        Trajectories.init(autoDriveTrain, startPose);
+    }
+
+
+    //This is the one and only time I'll ever use regions
+    //region SubSystemsInit
     public void initGamepad() {
         gamepadEx1 = new GamepadEx(gamepad1);
 
@@ -111,8 +138,12 @@ public class TeleOp extends CommandOpMode {
     }
 
     public void initDriveTrain() {
-        driveTrain = new DriveTrain(hardwareMap);
-        driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
+        if(opModeType == OpModeType.TELEOP) {
+            driveTrain = new DriveTrain(hardwareMap);
+            driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
+        } else {
+            autoDriveTrain = new SampleMecanumDrive(hardwareMap);
+        }
     }
     public void initIntake() {
         intake = new Intake(hardwareMap);
@@ -140,19 +171,6 @@ public class TeleOp extends CommandOpMode {
     public void initDroneLauncher() {
         droneLauncher = new DroneLauncher(hardwareMap);
     }
+    //endregion
 
-    @Override
-    public void run() {
-        super.run();
-        if(firstIteration) {
-            intake.lifter.setPosition(Intake.LifterPosition.DEFAULT);
-            firstIteration = false;
-        }
-
-        ArmPositionSelector.telemetry(telemetry);
-
-        telemetry.addData("selectedPosition", ArmPositionSelector.getPosition());
-        telemetry.addData("isLeftOfBoard", ArmPositionSelector.getIsLeftOfBoard());
-        telemetry.update();
-    }
 }

@@ -10,7 +10,7 @@ public class TeleopDriveCommand extends CommandBase {
 
     private Gamepad gamepad;
 
-    public TeleopDriveCommand(DriveTrain driveTrain,Gamepad gamepad){
+    public TeleopDriveCommand(DriveTrain driveTrain, Gamepad gamepad){
         this.driveTrain = driveTrain;
         this.gamepad = gamepad;
         this.addRequirements(driveTrain);
