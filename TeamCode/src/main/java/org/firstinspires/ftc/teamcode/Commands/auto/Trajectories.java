@@ -69,6 +69,18 @@ public class Trajectories {
                 .forward(8, new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.2, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.2))
                 .build()
         );
+
+        //Scoring First
+        trajectorySequenceHashMap.put("Go to backdrop", driveTrain.trajectorySequenceBuilder(get("Drive back from stack").end())
+                .splineToSplineHeading(new Pose2d(-12, -10, Math.toRadians(90)), Math.toRadians(-90))
+                .addDisplacementMarker(() -> {
+                    new ArmGetToPosition(robot.elevator, robot.elbow, robot.extender, robot.turret, robot.antiTurret, ArmPosition.SCORING, true);
+                })
+                .splineToLinearHeading(new Pose2d(-14, -63, Math.toRadians(90)), Math.toRadians(-90))
+                .build()
+        );
+
+
     }
 
     public static TrajectorySequence get(String trajectoryKey) {
