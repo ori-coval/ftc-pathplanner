@@ -6,8 +6,10 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
+import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -25,12 +27,14 @@ public class TuningOpMode extends CommandOpMode {
     GamepadEx gamepadEx1;
     Extender extender;
     Elevator elevator;
+    Turret turret;
 
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
 
         initElevator();
+        initTurret();
         initElbow();
         initExtender();
         initAntiTurret();
@@ -49,7 +53,10 @@ public class TuningOpMode extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ELBOW_RIGHT, Configuration.ELBOW_LEFT));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.INTAKE_SERVO));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.EXTENDER));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.EXTENDER));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new ExtenderSetPosition(extender, Extender.Position.OPEN));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ExtenderSetPosition(extender, Extender.Position.MID_WAY));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
         ServoTuningCommand.telemetry(telemetry);
 
     }
@@ -68,6 +75,9 @@ public class TuningOpMode extends CommandOpMode {
     public void initCartridge() {
         cartridge = new Cartridge(hardwareMap);
     }
+    public void initTurret() {
+        turret = new Turret(hardwareMap);
+    }
     public void initDroneLauncher() {
         droneLauncher = new DroneLauncher(hardwareMap);
     }
@@ -76,7 +86,15 @@ public class TuningOpMode extends CommandOpMode {
     public void run() {
         super.run();
 
-        elevator.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
+        ServoTuningCommand.telemetry(telemetry);
+
+        telemetry.addLine("----------------------------");
+
+        telemetry.addData("antiTurret pos", antiTurret.getPosition());
+        telemetry.addData("elbow", elbow.getServoPosition());
+        telemetry.addData("elevator height", elevator.getHeight());
+        telemetry.addData("turret angle", turret.getAngle());
+        telemetry.addData("Extender pos", extender.getPosition());
 
         telemetry.update();
     }
