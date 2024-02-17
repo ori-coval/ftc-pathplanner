@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 public class BackToIntake extends SequentialCommandGroup {
     public BackToIntake(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, Cartridge cartridge) {
         super(
-                new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false),
+                new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.AUTO_INTAKE, false),
                 new CartridgeSetState(cartridge, Cartridge.State.OPEN) //ready for next pixel
         );
     }

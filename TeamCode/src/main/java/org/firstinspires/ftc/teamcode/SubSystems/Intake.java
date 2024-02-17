@@ -41,6 +41,7 @@ public class Intake {
             currentPosition = position;
             intakeAngle.setPosition(position.getServoPositionAsDouble());
         }
+
         public LifterPosition getPosition() {
             return currentPosition;
         }
@@ -52,6 +53,11 @@ public class Intake {
 
         private int pixelCount;
         public boolean isSwitchOnRelease = false;
+
+        public void setPixelCount(int pixelCount) {
+            this.pixelCount = pixelCount; //set starting pixel count;
+        }
+
         public int getPixelCount() {
             return pixelCount;
         }

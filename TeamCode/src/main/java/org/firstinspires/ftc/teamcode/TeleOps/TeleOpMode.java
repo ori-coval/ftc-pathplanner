@@ -27,6 +27,8 @@ public class TeleOpMode extends CommandOpMode {
 
         ArmPositionSelector.telemetry(telemetry);
 
+        telemetry.addData("pixel Count", robot.intake.roller.getPixelCount());
+        telemetry.addData("isRobotFull", robot.intake.roller.isRobotFull());
         telemetry.addData("selectedPosition", ArmPositionSelector.getPosition());
         telemetry.addData("isLeftOfBoard", ArmPositionSelector.getIsLeftOfBoard());
         telemetry.update();

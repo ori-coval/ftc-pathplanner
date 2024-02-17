@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
@@ -92,6 +93,7 @@ public class RobotControl extends Robot {
 
     public void initAuto() {
         initVision();
+//        intake.roller.setPixelCount(1);
         Pose2d startPose = new Pose2d(-63, 35, 0);
         autoDriveTrain.setPoseEstimate(startPose);
         Trajectories.init(autoDriveTrain, startPose);
@@ -140,7 +142,7 @@ public class RobotControl extends Robot {
         initAntiTurret();
         initCartridge();
 
-        new ExtenderSetPosition(extender, ArmPosition.INTAKE.getExtenderPosition()).schedule();
+        new ExtenderSetPosition(extender, Extender.Position.CLOSED).schedule();
         new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition()).schedule();
         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false).schedule();
     }
@@ -176,7 +178,6 @@ public class RobotControl extends Robot {
     }
     public void initCartridge() {
         cartridge = new Cartridge(hardwareMap);
-        cartridge.setState(Cartridge.State.OPEN);
     }
     public void initDroneLauncher() {
         droneLauncher = new DroneLauncher(hardwareMap);
