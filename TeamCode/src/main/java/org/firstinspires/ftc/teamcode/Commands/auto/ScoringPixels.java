@@ -30,6 +30,6 @@ public class ScoringPixels extends SequentialCommandGroup {
                         new TrajectoryFollowerCommand(Trajectories.get("Driving to score from pixel stack"), driveTrain),
                         new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_CLOSE, true)
 
-                        );
+                );
             }
 }

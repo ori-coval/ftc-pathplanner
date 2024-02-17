@@ -20,18 +20,20 @@ public class TeamPropDetector extends OpenCvPipeline {
     Telemetry telemetry;
     OpenCvCamera webcam;
     private final AllianceColor allianceColor;
-    public Side teamPropSide;
+    private Side teamPropSide = null;
 
     private final Rect leftRectangle;
     private final Rect centerRectangle;
 
+    private double leftMean;
+    private double centerMean;
 
     private final Mat YCrCb = new Mat();
     private final Mat blurredImage = new Mat();
     private final Mat currentColorChannel = new Mat();
 
     public enum Tolerance {
-        RED_CENTER(127), RED_LEFT(127), BLUE_CENTER(0), BLUE_LEFT(0);
+        RED_CENTER(131), RED_LEFT(138), BLUE_CENTER(0), BLUE_LEFT(0);
 
         final double tolerance;
 
@@ -44,8 +46,8 @@ public class TeamPropDetector extends OpenCvPipeline {
         this.telemetry = telemetry;
         this.allianceColor = allianceColor;
 
-        centerRectangle = new Rect(0,  242,640,238);
-        leftRectangle = new Rect(0, 0, 640, 240);
+        centerRectangle = new Rect(310,  279,270,200);
+        leftRectangle = new Rect(0, 279, 160, 200);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, Configuration.WEB_CAM), cameraMonitorViewId);
@@ -87,8 +89,8 @@ public class TeamPropDetector extends OpenCvPipeline {
 
 
         // get the area specific means and offset them accordingly
-        double leftMean = Core.mean(leftMat).val[0];
-        double centerMean = Core.mean(centerMat).val[0];
+        leftMean = Core.mean(leftMat).val[0];
+        centerMean = Core.mean(centerMat).val[0];
 
 
         double centerTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_CENTER.tolerance : Tolerance.RED_CENTER.tolerance;
@@ -96,20 +98,12 @@ public class TeamPropDetector extends OpenCvPipeline {
 
         // choose the most prominent side
         if((centerMean > centerTolerance) || (leftMean > leftTolerance)) {
-            if(centerMean > leftMean) {
+            if(centerMean > centerTolerance) {
                 teamPropSide = Side.CENTER;
             } else teamPropSide = Side.LEFT;
         } else {
             teamPropSide = Side.RIGHT;
         }
-
-        /*
-        telemetry.addData("allianceColor", allianceColor);
-        telemetry.addData("leftMean", leftMean);
-        telemetry.addData("centerMean", centerMean);
-        telemetry.addData("teamPropSide", teamPropSide);
-        telemetry.update();
-        */
 
         // visual indicator
         Imgproc.rectangle(frame, leftRectangle, new Scalar(255, 0, 0), 5);
@@ -118,4 +112,17 @@ public class TeamPropDetector extends OpenCvPipeline {
         //Camera Stream output
         return frame;
     }
+
+    public Side getTeamPropSide() {
+        return Side.LEFT;
+    }
+
+    public void telemetry() {
+        telemetry.addData("allianceColor", allianceColor);
+        telemetry.addData("leftMean", leftMean);
+        telemetry.addData("centerMean", centerMean);
+        telemetry.addData("teamPropSide", teamPropSide);
+        telemetry.update();
+    }
+
 }

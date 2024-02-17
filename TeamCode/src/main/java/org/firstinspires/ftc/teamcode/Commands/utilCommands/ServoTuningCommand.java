@@ -45,6 +45,7 @@ public class ServoTuningCommand extends CommandBase {
     public static void telemetry(Telemetry telemetry) {
 
         telemetry.addLine("B - Anti Turret");
+        telemetry.addLine("Y - Drone");
         telemetry.addLine("X - Cartridge");
         telemetry.addLine("D-Up - Elbow");
         telemetry.addLine("D-Down - Drone");

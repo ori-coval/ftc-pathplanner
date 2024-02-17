@@ -17,9 +17,9 @@ public class SideCommandSwitch extends SelectCommand {
     public SideCommandSwitch(CommandBase left, CommandBase center, CommandBase right, Supplier<Object> sideSupplier) {
         super(new HashMap<Object, Command>() {
                   {
-                      put(Side.RIGHT, right);
-                      put(Side.CENTER, center);
                       put(Side.LEFT, left);
+                      put(Side.CENTER, center);
+                      put(Side.RIGHT, right);
                   }
               }, sideSupplier
         );

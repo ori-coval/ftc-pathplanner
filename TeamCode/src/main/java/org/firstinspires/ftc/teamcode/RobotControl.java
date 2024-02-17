@@ -53,7 +53,7 @@ public class RobotControl extends Robot {
     public Cartridge cartridge;
     public DroneLauncher droneLauncher;
     public Elevator elevator;
-    TeamPropDetector teamPropDetector;
+    public TeamPropDetector teamPropDetector;
     Gamepad gamepad1;
     Gamepad gamepad2;
     GamepadEx gamepadEx1;
@@ -121,7 +121,7 @@ public class RobotControl extends Robot {
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new BackToIntake(elevator, elbow, extender, turret, antiTurret, cartridge));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new BackToIntake(this));
 
 
         gamepadEx2 = new GamepadEx(gamepad2);

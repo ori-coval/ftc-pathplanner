@@ -39,11 +39,11 @@ public class Configuration {
                     3: backRight             (GoBilda 5202/3/4 series)            (dcMotor)
 
             SERVOS:
-                    0: drone                 (servo)                              (servo)
+                    0:
                     1: turretLeft            (Continues Rotation Servo)           (crservo)
                     2: turretRight           (Continues Rotation Servo)           (crservo)
                     3:
-                    4:
+                    4: drone                 (servo)                              (servo)
                     5: intakeServo           (servo)                              (servo)
 
             DIGITAL DEVICES:
