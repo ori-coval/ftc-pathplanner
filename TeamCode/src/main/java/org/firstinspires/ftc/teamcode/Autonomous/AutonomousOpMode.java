@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetP
 import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.RotateTurretByPID;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStack;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
+import org.firstinspires.ftc.teamcode.Commands.auto.TakingFirstPixelFromStack;
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.auto.TrajectoryFollowerCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
@@ -42,14 +43,7 @@ public class AutonomousOpMode extends CommandOpMode {
                         new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
                         new ScoringPurplePixel(robot.autoDriveTrain, robot.intake, Side.RIGHT, robot.elevator, robot.extender, robot.elbow, robot.turret, robot.antiTurret),
                         new GoFromSpikeMarkToStack(robot.autoDriveTrain, robot.intake, Side.RIGHT, robot.elevator, robot.extender, robot.elbow, robot.turret, robot.antiTurret, robot.cartridge),
-                        new ParallelDeadlineGroup(
-                                new SequentialCommandGroup(
-                                        new WaitUntilCommand(robot.intake.roller::isRobotFull),
-                                        new WaitCommand(1500)
-                                ).asProxy(),
-                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain)
-
-                        ),
+                        new TakingFirstPixelFromStack(robot),
                         new InstantCommand(() -> robot.intake.roller.stop())
                 )
         );

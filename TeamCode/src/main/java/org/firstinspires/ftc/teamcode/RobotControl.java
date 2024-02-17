@@ -96,7 +96,7 @@ public class RobotControl extends Robot {
 //        intake.roller.setPixelCount(1);
         Pose2d startPose = new Pose2d(-63, 35, 0);
         autoDriveTrain.setPoseEstimate(startPose);
-        Trajectories.init(autoDriveTrain, startPose);
+        Trajectories.init(autoDriveTrain, startPose, this);
     }
 
 

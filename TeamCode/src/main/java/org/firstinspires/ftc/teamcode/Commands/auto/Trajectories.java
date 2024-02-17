@@ -6,10 +6,15 @@ import com.acmerobotics.roadrunner.profile.VelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
+import com.qualcomm.robotcore.robot.Robot;
 
+import org.firstinspires.ftc.teamcode.ArmPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.opencv.core.Mat;
 
@@ -20,7 +25,7 @@ public class Trajectories {
     private static boolean isInitialized = false;
 
     public static TrajectoryVelocityConstraint trajectoryVelocityConstraint;
-    public static void init(SampleMecanumDrive driveTrain, Pose2d startPose) {
+    public static void init(SampleMecanumDrive driveTrain, Pose2d startPose, RobotControl robot) {
         isInitialized = true; //initialized here in order to use the endPose
 
         //Purple Pixel Trajectories
@@ -50,6 +55,9 @@ public class Trajectories {
         );
         trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Right", driveTrain.trajectorySequenceBuilder(get("Score Purple Right").end())
                 .setTangent(Math.toRadians(110))
+                .addDisplacementMarker(3, () -> {
+                    new BackToIntake(robot.elevator, robot.elbow, robot.extender, robot.turret, robot.antiTurret, robot.cartridge).schedule();
+                })
                 .splineToLinearHeading(new Pose2d(-12, 56, Math.toRadians(90)), Math.toRadians(90))
                 .build()
         );

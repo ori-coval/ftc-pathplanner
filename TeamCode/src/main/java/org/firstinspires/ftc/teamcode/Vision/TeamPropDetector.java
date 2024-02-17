@@ -103,11 +103,13 @@ public class TeamPropDetector extends OpenCvPipeline {
             teamPropSide = Side.RIGHT;
         }
 
+        /*
         telemetry.addData("allianceColor", allianceColor);
         telemetry.addData("leftMean", leftMean);
         telemetry.addData("centerMean", centerMean);
         telemetry.addData("teamPropSide", teamPropSide);
         telemetry.update();
+        */
 
         // visual indicator
         Imgproc.rectangle(frame, leftRectangle, new Scalar(255, 0, 0), 5);

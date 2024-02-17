@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.Commands.auto;
 
 
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.RotateTurretByPID;
@@ -32,8 +34,23 @@ public class GoFromSpikeMarkToStack extends SequentialCommandGroup {
                         new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Center"), driveTrain),
                         new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Right"), driveTrain),
                         () -> side
-                ),
-                new BackToIntake(elevator, elbow, extender, turret, antiTurret, cartridge)
+                )
+
+
+
+                /*,
+
+                new ParallelCommandGroup(
+                    new SideCommandSwitch(
+                            new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Left"), driveTrain),
+                            new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Center"), driveTrain),
+                            new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Right"), driveTrain),
+                            () -> side
+                    ),
+                    new WaitCommand(400).andThen(new BackToIntake(elevator, elbow, extender, turret, antiTurret, cartridge))
+                )
+                */
+
         );
     }
 }
