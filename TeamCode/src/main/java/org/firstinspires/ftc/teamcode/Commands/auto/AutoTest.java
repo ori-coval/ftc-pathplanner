@@ -11,8 +11,6 @@ public class AutoTest extends SequentialCommandGroup {
         super(
                 new TrajectoryFollowerCommand(Trajectories.get("go to spike mark"), driveTrain)
         );
-
-
     }
 
 }

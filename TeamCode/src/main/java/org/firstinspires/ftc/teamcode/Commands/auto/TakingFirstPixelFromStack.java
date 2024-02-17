@@ -25,7 +25,7 @@ public class TakingFirstPixelFromStack extends ParallelRaceGroup {
         );
     }
 
-    public SequentialCommandGroup getBackAndForthCommand() {
+    private SequentialCommandGroup getBackAndForthCommand() {
         return new SequentialCommandGroup(
                 new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
                 new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.autoDriveTrain)
