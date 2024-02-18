@@ -1,25 +1,12 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
-import com.arcrobotics.ftclib.command.ConditionalCommand;
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.qualcomm.robotcore.robot.Robot;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
-import org.firstinspires.ftc.teamcode.Commands.utils.SideCommandSwitch;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.opmode.TrackingWheelForwardOffsetTuner;
+import org.firstinspires.ftc.teamcode.Commands.utilCommands.SideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
-import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
-import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
-import org.firstinspires.ftc.teamcode.SubSystems.Turret;
-import org.firstinspires.ftc.teamcode.Utils.Side;
-import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
-import org.firstinspires.ftc.teamcode.SubSystems.Extender;
-import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 
 public class ScoringPurplePixel extends SequentialCommandGroup {
 

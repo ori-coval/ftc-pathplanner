@@ -5,9 +5,13 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
+import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
@@ -20,67 +24,14 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 
 @TeleOp(name = "TuningOpMode")
 public class TuningOpMode extends CommandOpMode {
-    Elbow elbow;
-    AntiTurret antiTurret;
-    Cartridge cartridge;
-    DroneLauncher droneLauncher;
-    GamepadEx gamepadEx1;
-    Extender extender;
-    Elevator elevator;
-    Turret turret;
+    RobotControl robot;
 
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
-
-        initElevator();
-        initTurret();
-        initElbow();
-        initExtender();
-        initAntiTurret();
-        initDroneLauncher();
-        initCartridge();
-        initGamepad();
-
+        robot = new RobotControl(RobotControl.OpModeType.DEBUG, hardwareMap, gamepad1 ,gamepad2, telemetry);
     }
 
-    public void initGamepad() {
-        gamepadEx1 = new GamepadEx(gamepad1);
-
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ANTI_TURRET));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.CARTRIDGE));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ELBOW_RIGHT, Configuration.ELBOW_LEFT));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.INTAKE_SERVO));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.EXTENDER));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new ExtenderSetPosition(extender, Extender.Position.OPEN));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ExtenderSetPosition(extender, Extender.Position.MID_WAY));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new ExtenderSetPosition(extender, Extender.Position.CLOSED));
-        ServoTuningCommand.telemetry(telemetry);
-
-    }
-    public void initElevator() {
-        elevator = new Elevator(hardwareMap);
-    }
-    public void initAntiTurret() {
-        antiTurret = new AntiTurret(hardwareMap);
-    }
-    public void initElbow() {
-        elbow = new Elbow(hardwareMap);
-    }
-    public void initExtender() {
-        extender = new Extender(hardwareMap);
-    }
-    public void initCartridge() {
-        cartridge = new Cartridge(hardwareMap);
-    }
-    public void initTurret() {
-        turret = new Turret(hardwareMap);
-    }
-    public void initDroneLauncher() {
-        droneLauncher = new DroneLauncher(hardwareMap);
-    }
 
     @Override
     public void run() {
@@ -90,11 +41,11 @@ public class TuningOpMode extends CommandOpMode {
 
         telemetry.addLine("----------------------------");
 
-        telemetry.addData("antiTurret pos", antiTurret.getPosition());
-        telemetry.addData("elbow", elbow.getServoPosition());
-        telemetry.addData("elevator height", elevator.getHeight());
-        telemetry.addData("turret angle", turret.getAngle());
-        telemetry.addData("Extender pos", extender.getPosition());
+        telemetry.addData("antiTurret pos", robot.antiTurret.getPosition());
+        telemetry.addData("elbow", robot.elbow.getServoPosition());
+        telemetry.addData("elevator height", robot.elevator.getHeight());
+        telemetry.addData("turret angle", robot.turret.getAngle());
+        telemetry.addData("Extender pos", robot.extender.getPosition());
 
         telemetry.update();
     }

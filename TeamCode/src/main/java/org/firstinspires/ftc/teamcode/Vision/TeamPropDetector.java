@@ -88,10 +88,9 @@ public class TeamPropDetector extends OpenCvPipeline {
         Mat centerMat = currentColorChannel.submat(centerRectangle);
 
 
-        // get the area specific means and offset them accordingly
+        // get the area specific means
         leftMean = Core.mean(leftMat).val[0];
         centerMean = Core.mean(centerMat).val[0];
-
 
         double centerTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_CENTER.tolerance : Tolerance.RED_CENTER.tolerance;
         double leftTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_LEFT.tolerance : Tolerance.RED_LEFT.tolerance;

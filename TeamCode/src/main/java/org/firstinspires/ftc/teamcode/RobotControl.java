@@ -14,6 +14,8 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurret
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGetToHeightPID;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.FindGravitationForce;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToSelectedPosition;
@@ -24,6 +26,7 @@ import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
+import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -34,10 +37,12 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
 import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvNativeViewViewport;
 
 import java.util.function.BooleanSupplier;
 
@@ -64,7 +69,7 @@ public class RobotControl extends Robot {
     private final double TRIGGER_THRESHOLD = 0.5;
 
     public enum OpModeType {
-        TELEOP, AUTO
+        TELEOP, AUTO, DEBUG
     }
 
     public RobotControl(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
@@ -75,28 +80,46 @@ public class RobotControl extends Robot {
         this.telemetry = telemetry;
         reset(); //reset the scheduler
 
-        initDriveTrain();
-        initIntake();
-        initArm();
-
         if(type == OpModeType.TELEOP) {
             initTele();
-        } else {
+        } else if (type == OpModeType.AUTO) {
             initAuto();
+        } else {
+            initDebug();
         }
     }
 
+
     public void initTele() {
+        initDriveTrain();
+        initArm();
+        initIntake();
         initDroneLauncher();
         initGamepad();
+
+        cartridge.setState(Cartridge.State.OPEN);
     }
 
     public void initAuto() {
+        initDriveTrain();
+        initArm();
+        initIntake();
         initVision();
 //        intake.roller.setPixelCount(1);
         Pose2d startPose = new Pose2d(-63, 35, 0);
         autoDriveTrain.setPoseEstimate(startPose);
-        Trajectories.init(autoDriveTrain, startPose, this);
+        Trajectories.init(this, startPose);
+    }
+
+    public void initDebug() {
+        initTurret();
+        initElevator();
+        initElbow();
+        initExtender();
+        initAntiTurret();
+        initCartridge();
+        initExtender();
+        initDebugGamepad();
     }
 
 
@@ -134,7 +157,26 @@ public class RobotControl extends Robot {
 //        gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.PRE_CLIMB, false));
     }
 
-    public void initArm(){
+    public void initDebugGamepad() {
+        GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
+
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ANTI_TURRET));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.CARTRIDGE));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ELBOW_RIGHT, Configuration.ELBOW_LEFT));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.INTAKE_SERVO));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.EXTENDER));
+
+        //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new ExtenderSetPosition(this.extender, Extender.Position.OPEN));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ExtenderSetPosition(this.extender, Extender.Position.MID_WAY));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new ExtenderSetPosition(this.extender, Extender.Position.CLOSED));
+        ServoTuningCommand.telemetry(telemetry);
+
+    }
+
+    public void initArm() {
         initTurret();
         initElevator();
         initElbow();

@@ -22,8 +22,8 @@ public class Elevator extends SubsystemBase {
     public static double kP = 0.225; //0.165
     public static double kI = 0;
     public static double kD = 0;
-    public static double kG = 0.13;
-    public static double kS = 0;
+    public static double kG = 0.01;
+    public static double kS = 0.02;
 
     private final PIDController pidController = new PIDController(kP,kI,kD);
 
@@ -36,6 +36,9 @@ public class Elevator extends SubsystemBase {
         encoder = elevatorMotors[0];
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        elevatorMotors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        elevatorMotors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void setPower(double power) {
