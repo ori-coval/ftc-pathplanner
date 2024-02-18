@@ -2,24 +2,12 @@ package org.firstinspires.ftc.teamcode.TeleOps;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
 import org.firstinspires.ftc.teamcode.RobotControl;
-import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
-import org.firstinspires.ftc.teamcode.SubSystems.Turret;
-import org.firstinspires.ftc.teamcode.Utils.Configuration;
-import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
-import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
-import org.firstinspires.ftc.teamcode.SubSystems.DroneLauncher;
-import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
-import org.firstinspires.ftc.teamcode.SubSystems.Extender;
+import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
+import org.firstinspires.ftc.teamcode.Utils.Side;
 
 
 @TeleOp(name = "TuningOpMode")
@@ -29,7 +17,7 @@ public class TuningOpMode extends CommandOpMode {
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
-        robot = new RobotControl(RobotControl.OpModeType.DEBUG, hardwareMap, gamepad1 ,gamepad2, telemetry);
+        robot = new RobotControl(RobotControl.OpModeType.DEBUG, AllianceColor.RED, Side.RIGHT, hardwareMap, gamepad1 ,gamepad2, telemetry);
     }
 
 

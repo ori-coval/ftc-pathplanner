@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 public class UnsafeMoveArmDown extends SequentialCommandGroup {
     public UnsafeMoveArmDown(RobotControl robot, ArmPosition position, boolean isLeftOfBoard) {
         super(
-                new RotateTurretByPID(robot.turret, position.getTurretAngle(isLeftOfBoard)),
+                new RotateTurretByPID(robot, position.getTurretAngle(isLeftOfBoard)),
                 new WaitCommand(UnsafeMoveArm.ELEVATOR_WAIT_TIME), //avoiding elevator's shaking while going down too fast.
                 new ElevatorGetToHeightPID(robot.elevator, position.getElevatorHeight()),
                 new AntiTurretGetToPosition(robot.antiTurret, position.getAntiTurretPosition()),

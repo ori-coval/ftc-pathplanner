@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge;
 
-import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.SelectCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
@@ -12,12 +10,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGetT
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.SideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
-import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
-import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
-import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
-import org.firstinspires.ftc.teamcode.SubSystems.Extender;
-import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 import java.util.function.BooleanSupplier;
 
@@ -27,7 +20,7 @@ public class ScoringBothPixels extends SequentialCommandGroup {
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
                 new WaitUntilCommand(() -> !triggerCondition.getAsBoolean()),
                 new ElevatorGetToHeightPID(robot.elevator, (ArmPositionSelector.getPosition().getElevatorHeight() + 10)),
-                new InstantCommand(() -> ArmGetToPosition.lastPosition = ArmPosition.THIRD_TEST_POSITION),
+                new InstantCommand(() -> ArmGetToPosition.lastPosition = ArmPosition.INIFINITE_HEIGHT),
                 new SideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORING, true),
                         new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, false),

@@ -1,37 +1,30 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.ArmPosition;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
-import org.firstinspires.ftc.teamcode.Commands.auto.ScoringFirstPixel;
+import org.firstinspires.ftc.teamcode.Commands.auto.ParkingAfterScoringYellow;
+import org.firstinspires.ftc.teamcode.Commands.auto.ScoringFirstPixelAuto;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
-import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
-import org.firstinspires.ftc.teamcode.Commands.auto.TrajectoryFollowerCommand;
-import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
 import org.firstinspires.ftc.teamcode.RobotControl;
-import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
-import org.firstinspires.ftc.teamcode.SubSystems.Intake;
+import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
+import org.firstinspires.ftc.teamcode.Utils.Side;
 
-
-@Autonomous(name = "Autonomous")
-public class AutonomousOpMode extends CommandOpMode {
-
+public class AutonomousLeft extends CommandOpMode {
     RobotControl robot;
+    AllianceColor allianceColor;
+    public AutonomousLeft(AllianceColor allianceColor) {
+        this.allianceColor = allianceColor;
+    }
 
     @Override
     public void initialize() {
-        robot = new RobotControl(RobotControl.OpModeType.AUTO, hardwareMap, gamepad1, gamepad2, telemetry);
+        robot = new RobotControl(RobotControl.OpModeType.AUTO, allianceColor, Side.LEFT, hardwareMap, gamepad1, gamepad2, telemetry);
 
-        while(!opModeIsActive()) {
-
+        while(opModeInInit()) {
             if(robot.teamPropDetector.getTeamPropSide() != null) {
                 schedule(
                         new SequentialCommandGroup(
@@ -39,16 +32,15 @@ public class AutonomousOpMode extends CommandOpMode {
                                 new AutoInit(robot),
                                 new ScoringPurplePixel(robot),
                                 new GoFromSpikeMarkToStackAndCollect(robot),
-                                new ScoringFirstPixel(robot)
+                                new ScoringFirstPixelAuto(robot),
+                                new ParkingAfterScoringYellow(robot)
                         )
                 );
             }
-
             robot.teamPropDetector.telemetry();
         }
 
     }
-
 
     @Override
     public void run() {

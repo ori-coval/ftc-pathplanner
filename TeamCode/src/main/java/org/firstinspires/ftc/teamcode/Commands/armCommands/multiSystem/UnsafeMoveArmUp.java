@@ -20,7 +20,7 @@ public class UnsafeMoveArmUp extends SequentialCommandGroup {
     public UnsafeMoveArmUp(RobotControl robot, ArmPosition position, boolean isLeftOfBoard) {
         super(
                 new ElevatorGetToHeightPID(robot.elevator, position.getElevatorHeight()),
-                new RotateTurretByPID(robot.turret, position.getTurretAngle(isLeftOfBoard)),
+                new RotateTurretByPID(robot, position.getTurretAngle(isLeftOfBoard)),
                 new ElbowGetToPosition(robot.elbow, position.getElbowPosition()), //These are instant commands so their isFinished always true
                 new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME), //Trying to avoid elbow's servos overload
                 new ExtenderSetPosition(robot.extender, position.getExtenderPosition()),

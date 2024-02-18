@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.opencv.core.Core;
@@ -33,7 +34,7 @@ public class TeamPropDetector extends OpenCvPipeline {
     private final Mat currentColorChannel = new Mat();
 
     public enum Tolerance {
-        RED_CENTER(131), RED_LEFT(138), BLUE_CENTER(0), BLUE_LEFT(0);
+        RED_CENTER(133), RED_LEFT(138), BLUE_CENTER(0), BLUE_LEFT(0);
 
         final double tolerance;
 

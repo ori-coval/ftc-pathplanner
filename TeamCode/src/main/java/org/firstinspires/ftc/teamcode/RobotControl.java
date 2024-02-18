@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.app.AliasActivity;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
@@ -11,16 +13,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToPosition;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGetToHeightPID;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.FindGravitationForce;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToSelectedPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.UnsafeMoveArm;
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
@@ -39,16 +39,15 @@ import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 import org.firstinspires.ftc.teamcode.Utils.Side;
-import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
+import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvNativeViewViewport;
 
 import java.util.function.BooleanSupplier;
 
 public class RobotControl extends Robot {
     OpModeType opModeType;
-
+    public AllianceColor allianceColor;
+    public Side robotSide;
     HardwareMap hardwareMap;
     public DriveTrain driveTrain;
     public SampleMecanumDrive autoDriveTrain;
@@ -72,8 +71,10 @@ public class RobotControl extends Robot {
         TELEOP, AUTO, DEBUG
     }
 
-    public RobotControl(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+    public RobotControl(OpModeType type, AllianceColor allianceColor, Side robotSide, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         opModeType = type;
+        this.allianceColor = allianceColor;
+        this.robotSide = robotSide;
         this.hardwareMap = hardwareMap;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
@@ -106,7 +107,20 @@ public class RobotControl extends Robot {
         initIntake();
         initVision();
 //        intake.roller.setPixelCount(1);
-        Pose2d startPose = new Pose2d(-63, 35, 0);
+        Pose2d startPose = new Pose2d();
+        if(allianceColor == AllianceColor.RED) {
+            if(robotSide == Side.LEFT) {
+                startPose = new Pose2d(-63, 35, 0);
+            } else if(robotSide == Side.RIGHT) {
+                startPose = new Pose2d(-63, -35 + 24, 0);
+            }
+        } else {
+            if(robotSide == Side.LEFT) {
+                startPose = new Pose2d(63, 35, 180);
+            } else if(robotSide == Side.RIGHT) {
+                startPose = new Pose2d(63, -11, 180);
+            }
+        }
         autoDriveTrain.setPoseEstimate(startPose);
         Trajectories.init(this, startPose);
     }
@@ -186,7 +200,7 @@ public class RobotControl extends Robot {
 
         new ExtenderSetPosition(extender, Extender.Position.CLOSED).schedule();
         new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition()).schedule();
-        new ArmGetToPosition(this, ArmPosition.INTAKE, false).schedule();
+        new UnsafeMoveArm(this, ArmPosition.INTAKE, false).schedule();
     }
 
     public void initDriveTrain() {

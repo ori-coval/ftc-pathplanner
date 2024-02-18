@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
@@ -22,6 +21,9 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                 new BackToIntake(robot),
                                 new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Left"), robot.autoDriveTrain)
                         ),
+                        new InstantCommand(),
+                        new InstantCommand(),
+                        /*
                         new SequentialCommandGroup(
                                 new TrajectoryFollowerCommand(Trajectories.get("loading intake center"), robot.autoDriveTrain),
                                 new BackToIntake(robot),
@@ -31,10 +33,15 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                 new TrajectoryFollowerCommand(Trajectories.get("loading intake right"), robot.autoDriveTrain),
                                 new BackToIntake(robot),
                                 new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Right"), robot.autoDriveTrain)
-                        ),
+                        ),*/
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
-                new WaitUntilCommand(robot.intake.roller::isRobotFull).withTimeout(2000),
+                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
+                new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL),
+                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
                 new InstantCommand(() -> robot.intake.roller.stop())
         );
     }
