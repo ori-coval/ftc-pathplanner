@@ -114,7 +114,7 @@ public class TeamPropDetector extends OpenCvPipeline {
     }
 
     public Side getTeamPropSide() {
-        return Side.LEFT;
+        return teamPropSide;
     }
 
     public void telemetry() {
