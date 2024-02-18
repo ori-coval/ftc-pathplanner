@@ -112,12 +112,12 @@ public class RobotControl extends Robot {
         Trigger leftTrigger1 = new Trigger(leftTriggerCondition);
 
         leftTrigger1.whenActive(new ScoringFirstPixel(cartridge, leftTriggerCondition));
-        rightTrigger1.whenActive(new ScoringBothPixels(elevator, elbow, extender, turret, antiTurret, cartridge, rightTriggerCondition));
+        rightTrigger1.whenActive(new ScoringBothPixels(this, rightTriggerCondition));
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, cartridge, Side.LEFT));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, cartridge, Side.RIGHT));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, cartridge, Side.CENTER));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(elevator, elbow, extender, turret, antiTurret));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.LEFT));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSide(this, Side.RIGHT));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(this, Side.CENTER));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
@@ -144,7 +144,7 @@ public class RobotControl extends Robot {
 
         new ExtenderSetPosition(extender, Extender.Position.CLOSED).schedule();
         new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition()).schedule();
-        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false).schedule();
+        new ArmGetToPosition(this, ArmPosition.INTAKE, false).schedule();
     }
 
     public void initDriveTrain() {

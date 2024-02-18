@@ -74,11 +74,13 @@ public class Trajectories {
         );
 
         //Scoring First
-        trajectorySequenceHashMap.put("Go to backdrop part 1", driveTrain.trajectorySequenceBuilder(get("Driving to stack while avoiding pixel on Left").end())
+        trajectorySequenceHashMap.put("Go to backdrop part 1", driveTrain.trajectorySequenceBuilder(Trajectories.get("Driving to stack while avoiding pixel on Left").end())
+                .setTangent(Math.toRadians(-90))
                 .splineToSplineHeading(new Pose2d(-12, -10, Math.toRadians(90)), Math.toRadians(-90))
                 .build()
         );
-        trajectorySequenceHashMap.put("Go to backdrop part 2", driveTrain.trajectorySequenceBuilder(get("Go to backdrop part 1").end())
+        trajectorySequenceHashMap.put("Go to backdrop part 2", driveTrain.trajectorySequenceBuilder(Trajectories.get("Go to backdrop part 1").end())
+                .setTangent(Math.toRadians(-90))
                 .splineToLinearHeading(new Pose2d(-14, -63, Math.toRadians(90)), Math.toRadians(-90))
                 .build()
         );

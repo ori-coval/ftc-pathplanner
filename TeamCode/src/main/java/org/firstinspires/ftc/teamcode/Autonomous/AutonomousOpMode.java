@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
+import org.firstinspires.ftc.teamcode.Commands.auto.ScoringFirstPixel;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.auto.TrajectoryFollowerCommand;
@@ -38,17 +39,7 @@ public class AutonomousOpMode extends CommandOpMode {
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
                                 new ScoringPurplePixel(robot),
                                 new GoFromSpikeMarkToStackAndCollect(robot),
-                                new TrajectoryFollowerCommand(robot.autoDriveTrain.trajectorySequenceBuilder(Trajectories.get("Driving to stack while avoiding pixel on Left").end())
-                                        .setTangent(Math.toRadians(-90))
-                                        .splineToSplineHeading(new Pose2d(-12, -10, Math.toRadians(90)), Math.toRadians(-90))
-                                        .build(), robot.autoDriveTrain
-                                ),
-                                new ArmGetToPosition(robot.elevator, robot.elbow, robot.extender, robot.turret, robot.antiTurret, ArmPosition.SCORING, true),
-                                new TrajectoryFollowerCommand(robot.autoDriveTrain.trajectorySequenceBuilder(Trajectories.get("Go to backdrop part 1").end())
-                                        .setTangent(Math.toRadians(-90))
-                                        .splineToLinearHeading(new Pose2d(-14, -63, Math.toRadians(90)), Math.toRadians(-90))
-                                        .build(), robot.autoDriveTrain
-                                )
+                                new ScoringFirstPixel(robot)
                         )
                 );
             }

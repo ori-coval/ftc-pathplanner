@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSe
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.utils.SideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -17,16 +18,17 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class ScoringFirstPixel extends SequentialCommandGroup {
-    public ScoringFirstPixel(Cartridge cartridge,Elevator elevator, Extender extender, Elbow elbow, Turret turret, AntiTurret antiTurret, Side side, SampleMecanumDrive driveTrain){
+    public ScoringFirstPixel(RobotControl robot){
         super(
-
-                new TrajectoryFollowerCommand(Trajectories.get("Driving to score from the stack to the back stage for side score"), driveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 1"), robot.autoDriveTrain),
+                new ArmGetToPosition(robot, ArmPosition.SCORING, true),
+                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 2"), robot.autoDriveTrain),
                 new SideCommandSwitch(
-                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_CLOSE, true),
-                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_FAR, true),
-                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_MID_FAR, true),
-                        () -> side),
-                new CartridgeSetState(cartridge,Cartridge.State.OPEN)
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE, true),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_FAR, true),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_MID_FAR, true),
+                        () -> robot.teamPropDetector.getTeamPropSide()),
+                new CartridgeSetState(robot.cartridge,Cartridge.State.OPEN)
 
         );
     }

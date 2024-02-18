@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeCollectFromSta
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -18,17 +19,17 @@ import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class ScoringPixels extends SequentialCommandGroup {
-            public ScoringPixels(SampleMecanumDrive driveTrain, Intake intake, Elevator elevator, Extender extender, Elbow elbow, Turret turret, AntiTurret antiTurret, Cartridge cartridge, Side side) {
+            public ScoringPixels(RobotControl robot, Side side) {
                 super(
                         new ParallelCommandGroup(
-                                new TrajectoryFollowerCommand(Trajectories.get("Driving from board to collect from stack"), driveTrain),
-                                new IntakeSetStackPosition(intake.lifter, Intake.LifterPosition.STANDBY),
-                                new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, true)
+                                new TrajectoryFollowerCommand(Trajectories.get("Driving from board to collect from stack"), robot.autoDriveTrain),
+                                new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.STANDBY),
+                                new ArmGetToPosition(robot, ArmPosition.INTAKE, true)
                         ),
-                        new IntakeCollectFromStack(intake.lifter, intake.roller).withTimeout(0),
-                        new IntakeSetStackPosition(intake.lifter, Intake.LifterPosition.STANDBY),
-                        new TrajectoryFollowerCommand(Trajectories.get("Driving to score from pixel stack"), driveTrain),
-                        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.SCORE_BOTTOM_CLOSE, true)
+                        new IntakeCollectFromStack(robot.intake.lifter, robot.intake.roller).withTimeout(0),
+                        new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.STANDBY),
+                        new TrajectoryFollowerCommand(Trajectories.get("Driving to score from pixel stack"), robot.autoDriveTrain),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE, true)
 
                 );
             }
