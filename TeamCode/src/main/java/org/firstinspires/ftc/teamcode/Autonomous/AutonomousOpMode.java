@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringFirstPixel;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
@@ -35,8 +36,7 @@ public class AutonomousOpMode extends CommandOpMode {
                 schedule(
                         new SequentialCommandGroup(
                                 new InstantCommand(), //for some reason it runs the first command on the init
-                                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
-                                new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
+                                new AutoInit(robot),
                                 new ScoringPurplePixel(robot),
                                 new GoFromSpikeMarkToStackAndCollect(robot),
                                 new ScoringFirstPixel(robot)
