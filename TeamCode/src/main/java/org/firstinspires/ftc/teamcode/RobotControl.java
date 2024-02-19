@@ -110,15 +110,15 @@ public class RobotControl extends Robot {
         Pose2d startPose = new Pose2d();
         if(allianceColor == AllianceColor.RED) {
             if(robotSide == Side.LEFT) {
-                startPose = new Pose2d(-63, 35, 0);
+                startPose = new Pose2d(-63, 38, 0);
             } else if(robotSide == Side.RIGHT) {
-                startPose = new Pose2d(-63, -35 + 24, 0);
+                startPose = new Pose2d(-63, -38 + 24, 0);
             }
         } else {
             if(robotSide == Side.LEFT) {
-                startPose = new Pose2d(63, 35, 180);
+                startPose = new Pose2d(63, 38, 180);
             } else if(robotSide == Side.RIGHT) {
-                startPose = new Pose2d(63, -11, 180);
+                startPose = new Pose2d(63, -38 + 24, 180);
             }
         }
         autoDriveTrain.setPoseEstimate(startPose);

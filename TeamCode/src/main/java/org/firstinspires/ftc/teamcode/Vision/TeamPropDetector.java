@@ -19,7 +19,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class TeamPropDetector extends OpenCvPipeline {
     Telemetry telemetry;
-    OpenCvCamera webcam;
+    public OpenCvCamera webcam;
     private final AllianceColor allianceColor;
     private Side teamPropSide = null;
 
@@ -52,6 +52,7 @@ public class TeamPropDetector extends OpenCvPipeline {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, Configuration.WEB_CAM), cameraMonitorViewId);
+
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {

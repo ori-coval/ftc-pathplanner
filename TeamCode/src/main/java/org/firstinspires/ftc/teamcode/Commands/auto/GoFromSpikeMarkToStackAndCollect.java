@@ -21,9 +21,6 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                 new BackToIntake(robot),
                                 new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Left"), robot.autoDriveTrain)
                         ),
-                        new InstantCommand(),
-                        new InstantCommand(),
-                        /*
                         new SequentialCommandGroup(
                                 new TrajectoryFollowerCommand(Trajectories.get("loading intake center"), robot.autoDriveTrain),
                                 new BackToIntake(robot),
@@ -33,7 +30,7 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                 new TrajectoryFollowerCommand(Trajectories.get("loading intake right"), robot.autoDriveTrain),
                                 new BackToIntake(robot),
                                 new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Right"), robot.autoDriveTrain)
-                        ),*/
+                        ),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),

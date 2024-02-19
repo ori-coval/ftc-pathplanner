@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
 import org.firstinspires.ftc.teamcode.RobotControl;
+import org.firstinspires.ftc.teamcode.SubSystems.DroneLauncher;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.Side;
@@ -31,6 +32,7 @@ public class TeleOpMode extends CommandOpMode {
         super.run();
         if(firstIteration) {
             robot.intake.lifter.setPosition(Intake.LifterPosition.DEFAULT);
+            robot.droneLauncher.setState(DroneLauncher.State.HOLD);
             firstIteration = false;
         }
 
