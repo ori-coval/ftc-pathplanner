@@ -37,21 +37,25 @@ public enum ArmPosition {
 
      */
 
-    SCORE_TOP_FAR(10, Extender.Position.CLOSED, 30, 0.4, 0, Cluster.scoring), //Can't physically reach this
+    SCORE_TOP_FAR(34.1, Extender.Position.MID_WAY, 41.443, 0.42, 0.9, Cluster.scoring), //Can't physically reach this
     SCORE_TOP_FRONT(29.361, Extender.Position.OPEN, 0, 0.47, 0.7, Cluster.scoring),
-    SCORE_TOP_CLOSE(29.1, Extender.Position.OPEN, 35, 0.524, 0.8, Cluster.scoring),
-    SCORE_MID_FAR(31.26, Extender.Position.OPEN, 55.245, 0.3633, 0.8616, Cluster.scoring),
+    SCORE_TOP_CLOSE(34.1, Extender.Position.MID_WAY, 41.443, 0.42, 0.9, Cluster.scoring),
+    SCORE_MID_FAR(22.346, Extender.Position.MID_WAY, 63.81, 0.336, 1, Cluster.scoring),
     SCORE_MID_FRONT(27.464, Extender.Position.OPEN, 0, 0.405, 0.7, Cluster.scoring),
-    SCORE_MID_CLOSE(31, Extender.Position.MID_WAY, 39.19, 0.395, 0.8616, Cluster.scoring),
-    SCORE_BOTTOM_FAR(18.276, Extender.Position.OPEN, 62.52, 0.34, 0.9, Cluster.scoring),
+    SCORE_MID_CLOSE(22.35, Extender.Position.CLOSED, 55.33, 0.336, 0.8, Cluster.scoring),
+    SCORE_BOTTOM_FAR(12.59, Extender.Position.MID_WAY, 74, 0.336, 0.9, Cluster.scoring),
     SCORE_BOTTOM_FRONT(15.48, Extender.Position.MID_WAY, 0, 0.34, 0.7, Cluster.scoring),
-    SCORE_BOTTOM_CLOSE(18.33, Extender.Position.CLOSED, 50.61, 0.34, 0.9, Cluster.scoring),
-    INTAKE(0, Extender.Position.CLOSED_INTAKE, 0,0.04, 0, Cluster.intake),
-    SAFE_PLACE(10, Extender.Position.CLOSED,0,0.4, 0, Cluster.intake),
-    SCORING(10, Extender.Position.CLOSED, 90, 0.4, 0, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_FAR(18.714, Extender.Position.OPEN, 74.72, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID(17.59, Extender.Position.MID_WAY, 74, 0.336, 1, Cluster.scoring),
+    SCORE_BOTTOM_CLOSE(12.34, Extender.Position.CLOSED, 64.5, 0.34, 0.9, Cluster.scoring),
+    INTAKE(-0.2, Extender.Position.CLOSED, 0,0.02, 0, Cluster.intake),
+    AUTO_INTAKE(-0.2, Extender.Position.CLOSED_INTAKE, 0,0, 0, Cluster.intake),
+    AUTONOMOUS_PURPLE_PIXEL_RIGHT(0, Extender.Position.CLOSED_INTAKE, 0, 0.17, 0, Cluster.intake),
+    SAFE_PLACE(13, Extender.Position.CLOSED,0,0.4, 0, Cluster.intake),
+    SCORING(13, Extender.Position.CLOSED, 90, 0.4, 0, Cluster.scoring),
     TEST_POSITION(10, Extender.Position.CLOSED, -30, 0.4, 0, Cluster.scoring),
     SECOND_TEST_POSITION(30, Extender.Position.OPEN, 90, 0.6, 0.4, Cluster.scoring),
-    THIRD_TEST_POSITION(30, Extender.Position.OPEN, 0, 0.7, 0.4, Cluster.scoring),
+    INIFINITE_HEIGHT(10000/*infinite_height*/, Extender.Position.OPEN, 0, 0.7, 0.4, Cluster.scoring),
     PRE_CLIMB(0, Extender.Position.CLOSED, 0, 0, 0, Cluster.scoring);// TODO: 2/13/2024 tuning:) 
     private final double elevatorHeight;
     private final Extender.Position extenderPosition;

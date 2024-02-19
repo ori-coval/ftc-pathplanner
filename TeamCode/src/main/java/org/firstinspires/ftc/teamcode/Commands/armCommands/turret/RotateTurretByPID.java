@@ -4,29 +4,36 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.SubSystems.Turret;
+import org.firstinspires.ftc.teamcode.RobotControl;
+
+import java.util.Calendar;
 
 public class RotateTurretByPID extends CommandBase {
     private double setPoint;
     private PIDController pidController;
-    private Turret turret;
-    public RotateTurretByPID(Turret turret, double setPoint){
+    private RobotControl robot;
+    private long startTime;
+    public RotateTurretByPID(RobotControl robot, double setPoint){
         this.setPoint = setPoint;
-        this.turret = turret;
-        pidController = turret.getPidController();
+        this.robot = robot;
+        pidController = robot.turret.getPidController();
         pidController.setTolerance(1.5);
-        addRequirements(turret);
+        addRequirements(robot.turret);
     }
 
     @Override
     public void initialize() {
         pidController.setSetPoint(setPoint);
+        startTime = Calendar.getInstance().getTimeInMillis();
     }
 
     @Override
     public void execute() {
-        turret.setPower(pidController.calculate(turret.getAngle()));
+        if(robot.elbow.getServoPosition() > 0.2) {
+            robot.turret.setPower(pidController.calculate(robot.turret.getAngle()));
+        } else if(Calendar.getInstance().getTimeInMillis() - startTime > 2000) {
+            pidController.setSetPoint(robot.turret.getAngle());
+        }
         FtcDashboard.getInstance().getTelemetry().addData("Turret is finished", isFinished());
     }
 
@@ -35,10 +42,9 @@ public class RotateTurretByPID extends CommandBase {
         return pidController.atSetPoint();
     }
 
-    // TODO: need to check if there are problems without the end method.
     @Override
     public void end(boolean interrupted) {
-        turret.stop();
+        robot.turret.stop();
     }
 
 }

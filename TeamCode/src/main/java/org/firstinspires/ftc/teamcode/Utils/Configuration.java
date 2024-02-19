@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.Utils;
 
 public class Configuration {
-    public static final String DRIVE_TRAIN_BACK_LEFT = "backLeft";
-    public static final String DRIVE_TRAIN_BACK_RIGHT = "backRight";
-    public static final String DRIVE_TRAIN_FRONT_LEFT = "frontLeft";
-    public static final String DRIVE_TRAIN_FRONT_RIGHT = "frontRight";
+    public static final String DRIVE_TRAIN_BACK_LEFT = "backLeft"; //0
+    public static final String DRIVE_TRAIN_BACK_RIGHT = "backRight"; //3
+    public static final String DRIVE_TRAIN_FRONT_LEFT = "frontLeft"; //1
+    public static final String DRIVE_TRAIN_FRONT_RIGHT = "frontRight"; //2
     public static final String IMU = "imu";
     public static final String TURRET_LEFT = "turretLeft";
     public static final String TURRET_RIGHT = "turretRight";
@@ -28,8 +28,7 @@ public class Configuration {
 }
 
 
-/* TODO: need to fix the ports
-
+/*
                       - NAME -                  - TYPE IN CONFIG -             - TYPE IN CODE -
 
   - CONTROL HUB -
@@ -40,11 +39,11 @@ public class Configuration {
                     3: backRight             (GoBilda 5202/3/4 series)            (dcMotor)
 
             SERVOS:
-                    0: drone                 (servo)                              (servo)
+                    0:
                     1: turretLeft            (Continues Rotation Servo)           (crservo)
                     2: turretRight           (Continues Rotation Servo)           (crservo)
                     3:
-                    4:
+                    4: drone                 (servo)                              (servo)
                     5: intakeServo           (servo)                              (servo)
 
             DIGITAL DEVICES:
@@ -57,15 +56,16 @@ public class Configuration {
 
   - EXPANSION HUB -
             MOTORS:
-                    0: elevatorUp            (GoBilda 5202/3/4 series)            (dcMotor)
-                    1: elevatorMid           (GoBilda 5202/3/4 series)            (dcMotor)
-                    2: elevatorDown          (GoBilda 5202/3/4 series)            (dcMotor)
+                    0: elevatorLeft            (GoBilda 5202/3/4 series)            (dcMotor)
+                    1: elevatorRight           (GoBilda 5202/3/4 series)            (dcMotor)
+                    2: elevatorClimber          (GoBilda 5202/3/4 series)            (dcMotor)
                     3: intake                (GoBilda 5202/3/4 series)            (dcMotor)
 
             SERVOS:
-                    0: antiTurret            (servo)                              (servo)
-                    1: cartridge             (servo)                              (servo)
-                    2: extender              (servo)                              (servo)
-                    3: elbowRight            (servo)                              (servo)
-                    4: elbowLeft             (servo)                              (servo)
+                    0: extender            (servo)                              (servo)
+                    1:              (servo)                              (servo)
+                    2: elbowRight              (servo)                              (servo)
+                    3: elbowLeft            (servo)                              (servo)
+                    4: antiTurret             (servo)                              (servo)
+                    5: cartridge (servo)
    */

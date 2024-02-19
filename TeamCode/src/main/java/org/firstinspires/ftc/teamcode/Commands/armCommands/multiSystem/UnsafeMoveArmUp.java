@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosit
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGetToHeightPID;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.RotateTurretByPID;
+import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
@@ -16,14 +17,14 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class UnsafeMoveArmUp extends SequentialCommandGroup {
-    public UnsafeMoveArmUp(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
+    public UnsafeMoveArmUp(RobotControl robot, ArmPosition position, boolean isLeftOfBoard) {
         super(
-                new ElevatorGetToHeightPID(elevator, position.getElevatorHeight()),
-                new RotateTurretByPID(turret, position.getTurretAngle(isLeftOfBoard)),
-                new ElbowGetToPosition(elbow, position.getElbowPosition()), //These are instant commands so their isFinished always true
+                new ElevatorGetToHeightPID(robot.elevator, position.getElevatorHeight()),
+                new RotateTurretByPID(robot, position.getTurretAngle(isLeftOfBoard)),
+                new ElbowGetToPosition(robot.elbow, position.getElbowPosition()), //These are instant commands so their isFinished always true
                 new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME), //Trying to avoid elbow's servos overload
-                new ExtenderSetPosition(extender, position.getExtenderPosition()),
-                new AntiTurretGetToPosition(antiTurret, position.getAntiTurretPosition())
+                new ExtenderSetPosition(robot.extender, position.getExtenderPosition()),
+                new AntiTurretGetToPosition(robot.antiTurret, position.getAntiTurretPosition())
         );
     }
 }

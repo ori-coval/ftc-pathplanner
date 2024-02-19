@@ -6,8 +6,10 @@ import org.firstinspires.ftc.teamcode.Utils.Side;
 public class ArmPositionSelector {
     public static ArmPosition[][] sideScorePositions = {
             {ArmPosition.SCORE_TOP_CLOSE, ArmPosition.SCORE_TOP_FAR},
-            {ArmPosition.SCORE_MID_CLOSE, ArmPosition.SCORE_MID_FAR},
-            {ArmPosition.SCORE_BOTTOM_CLOSE, ArmPosition.SCORE_BOTTOM_FAR}
+            {ArmPosition.SCORE_AUTO_BOTTOM_FAR, ArmPosition.SCORE_MID_FAR},
+            {ArmPosition.SCORE_BOTTOM_CLOSE, ArmPosition.SCORE_AUTO_BOTTOM_MID}
+            //TODO: SCORE_AUTO_BOTTOM_FAR -> SCORE_MID_CLOSE
+            //      SCORE_AUTO_BOTTOM_MID -> SCORE_BOTTOM_FAR
     };
     public static ArmPosition[] frontScorePositions = {ArmPosition.SCORE_TOP_FRONT, ArmPosition.SCORE_MID_FRONT, ArmPosition.SCORE_BOTTOM_FRONT};
     private static int selectedScoreHeight = 1;

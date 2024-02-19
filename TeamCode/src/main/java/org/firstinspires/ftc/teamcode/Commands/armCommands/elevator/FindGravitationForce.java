@@ -9,7 +9,7 @@ public class FindGravitationForce extends CommandBase {
     private double power = 0;
     private Elevator elevator;
     private Telemetry telemetry;
-    private final double THRESHOLD = 0.2;
+    private final double THRESHOLD = 1;
     public FindGravitationForce(Elevator elevator, Telemetry telemetry){
         this.elevator = elevator;
         this.telemetry = telemetry;
@@ -39,5 +39,6 @@ public class FindGravitationForce extends CommandBase {
         elevator.setPower(0);
         telemetry.addData("min power", power);
         telemetry.update();
+        power = 0;
     }
 }

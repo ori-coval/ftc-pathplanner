@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.Vision;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.opencv.core.Core;
@@ -16,24 +18,37 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 public class TeamPropDetector extends OpenCvPipeline {
-    OpenCvCamera webcam;
+    Telemetry telemetry;
+    public OpenCvCamera webcam;
     private final AllianceColor allianceColor;
-    public Side teamPropSide;
+    private Side teamPropSide = null;
 
-    private final Rect rightRectangle = new Rect(426, 0, 213, 480);
-    private final Rect leftRectangle = new Rect(0,  0,213,480);
-    private final Rect centerRectangle = new Rect(213, 0, 213, 480);
+    private final Rect leftRectangle;
+    private final Rect centerRectangle;
+
+    private double leftMean;
+    private double centerMean;
 
     private final Mat YCrCb = new Mat();
     private final Mat blurredImage = new Mat();
     private final Mat currentColorChannel = new Mat();
 
-    double leftOffset = 0;
-    double centerOffset = 0;
-    double rightOffset = 0;
+    public enum Tolerance {
+        RED_CENTER(133), RED_LEFT(138), BLUE_CENTER(0), BLUE_LEFT(0);
 
-    public TeamPropDetector(HardwareMap hardwareMap, AllianceColor allianceColor) {
+        final double tolerance;
+
+        Tolerance(double tolerance) {
+            this.tolerance = tolerance;
+        }
+    }
+
+    public TeamPropDetector(HardwareMap hardwareMap, AllianceColor allianceColor, Telemetry telemetry) {
+        this.telemetry = telemetry;
         this.allianceColor = allianceColor;
+
+        centerRectangle = new Rect(310,  279,270,200);
+        leftRectangle = new Rect(0, 279, 160, 200);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, Configuration.WEB_CAM), cameraMonitorViewId);
@@ -50,6 +65,7 @@ public class TeamPropDetector extends OpenCvPipeline {
         });
 
         webcam.setPipeline(this);
+
     }
 
     @Override
@@ -62,27 +78,52 @@ public class TeamPropDetector extends OpenCvPipeline {
 
         // choose wanted channel
         switch (allianceColor){
-            case RED: Core.extractChannel(YCrCb, currentColorChannel, 1);
+            case RED: {
+                Core.extractChannel(YCrCb, currentColorChannel, 1);
+                break;
+            }
             case BLUE: Core.extractChannel(YCrCb, currentColorChannel, 2);
         }
 
-        // get the area specific means and offset them accordingly
-        double leftMean   = Core.mean(currentColorChannel.submat(leftRectangle  )).val[0] - leftOffset  ;
-        double centerMean = Core.mean(currentColorChannel.submat(centerRectangle)).val[0] - centerOffset;
-        double rightMean  = Core.mean(currentColorChannel.submat(rightRectangle )).val[0] - rightOffset ;
+        // Submats from the current channel
+        Mat leftMat = currentColorChannel.submat(leftRectangle);
+        Mat centerMat = currentColorChannel.submat(centerRectangle);
+
+
+        // get the area specific means
+        leftMean = Core.mean(leftMat).val[0];
+        centerMean = Core.mean(centerMat).val[0];
+
+        double centerTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_CENTER.tolerance : Tolerance.RED_CENTER.tolerance;
+        double leftTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_LEFT.tolerance : Tolerance.RED_LEFT.tolerance;
 
         // choose the most prominent side
-        if (leftMean > centerMean && leftMean > rightMean) teamPropSide = Side.LEFT;
-        else if (centerMean > rightMean)                   teamPropSide = Side.CENTER;
-        else                                               teamPropSide = Side.RIGHT;
-
+        if((centerMean > centerTolerance) || (leftMean > leftTolerance)) {
+            if(centerMean > centerTolerance) {
+                teamPropSide = Side.CENTER;
+            } else teamPropSide = Side.LEFT;
+        } else {
+            teamPropSide = Side.RIGHT;
+        }
 
         // visual indicator
         Imgproc.rectangle(frame, leftRectangle, new Scalar(255, 0, 0), 5);
-        Imgproc.rectangle(frame, centerRectangle, new Scalar(0, 255, 0), 5);
-        Imgproc.rectangle(frame, rightRectangle, new Scalar(0, 0, 255), 5);
+        Imgproc.rectangle(frame, centerRectangle, new Scalar(0, 0, 255), 5);
 
         //Camera Stream output
         return frame;
     }
+
+    public Side getTeamPropSide() {
+        return teamPropSide;
+    }
+
+    public void telemetry() {
+        telemetry.addData("allianceColor", allianceColor);
+        telemetry.addData("leftMean", leftMean);
+        telemetry.addData("centerMean", centerMean);
+        telemetry.addData("teamPropSide", teamPropSide);
+        telemetry.update();
+    }
+
 }

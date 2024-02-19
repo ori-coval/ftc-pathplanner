@@ -45,11 +45,15 @@ public class ServoTuningCommand extends CommandBase {
     public static void telemetry(Telemetry telemetry) {
 
         telemetry.addLine("B - Anti Turret");
+        telemetry.addLine("Y - Drone");
         telemetry.addLine("X - Cartridge");
         telemetry.addLine("D-Up - Elbow");
         telemetry.addLine("D-Down - Drone");
         telemetry.addLine("D-Right - Intake Lifter");
         telemetry.addLine("D-Left - Extender");
+//        telemetry.addLine("D-Left - Extender OPEN");
+//        telemetry.addLine("L-Bumper - Extender SEMI-OPEN");
+//        telemetry.addLine("R-Bumper - Extender CLOSED");
 
     }
 

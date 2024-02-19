@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 
 public class ElevatorGetToHeightPID extends CommandBase {
@@ -16,7 +15,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
         this.elevator = elevator;
         this.goalHeight = goalHeight;
         pidController = elevator.getPidController();
-        pidController.setTolerance(1.5);
+        pidController.setTolerance(0.5);
         addRequirements(elevator);
     }
     @Override
@@ -26,7 +25,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
 
     @Override
     public void execute() {
-        elevator.setPower(pidController.calculate(elevator.getHeight()) + elevator.getKF());
+        elevator.setPower(pidController.calculate(elevator.getHeight()) + elevator.getKg() + Math.signum(pidController.getPositionError()) * elevator.getKs());
         FtcDashboard.getInstance().getTelemetry().addData("elevator is finished", isFinished());
 
     }

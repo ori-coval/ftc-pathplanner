@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class DroneLauncher extends SubsystemBase {
-    public enum State{
-        HOLD(1.0), RELEASE(0.5);
+    public enum State {
+        HOLD(0.4), RELEASE(0.8);
         final double position;
         State(double position){
             this.position = position;
@@ -18,7 +18,7 @@ public class DroneLauncher extends SubsystemBase {
     private final Servo drone;
     private State lastState = State.HOLD;
 
-    public DroneLauncher(HardwareMap hardwareMap){
+    public DroneLauncher(HardwareMap hardwareMap) {
         drone = hardwareMap.servo.get(Configuration.DRONE);
     }
 
@@ -30,7 +30,7 @@ public class DroneLauncher extends SubsystemBase {
         return drone.getPosition();
     }
 
-    public void setState(State state){
+    public void setState(State state) {
         setPosition(state.position);
         lastState = state;
     }

@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -23,7 +22,9 @@ public class Elevator extends SubsystemBase {
     public static double kP = 0.225; //0.165
     public static double kI = 0;
     public static double kD = 0;
-    public static double kF = 0.13;
+    public static double kG = 0.01;
+    public static double kS = 0.02;
+
     private final PIDController pidController = new PIDController(kP,kI,kD);
 
 
@@ -35,6 +36,9 @@ public class Elevator extends SubsystemBase {
         encoder = elevatorMotors[0];
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        elevatorMotors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        elevatorMotors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void setPower(double power) {
@@ -51,7 +55,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public void telemetry() {
-        FtcDashboard.getInstance().getTelemetry().addData("Elevator Calculated power", pidController.calculate(getHeight()) + getKF());
+        FtcDashboard.getInstance().getTelemetry().addData("Elevator Calculated power", pidController.calculate(getHeight()) + getKg());
         FtcDashboard.getInstance().getTelemetry().addData("Elevator Position", getHeight());
         FtcDashboard.getInstance().getTelemetry().addData("Elevator Target Position", pidController.getSetPoint());
         FtcDashboard.getInstance().getTelemetry().update();
@@ -62,8 +66,12 @@ public class Elevator extends SubsystemBase {
         telemetry();
     }
 
-    public double getKF() {
-        return kF;
+    public double getKg() {
+        return kG;
+    }
+
+    public double getKs(){
+        return kS;
     }
 
     public void climberSetPower(double power){

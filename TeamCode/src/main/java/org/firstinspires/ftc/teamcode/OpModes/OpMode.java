@@ -34,7 +34,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Utils.Side;
-import org.firstinspires.ftc.teamcode.Vision.AllianceColor;
+import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Vision.TeamPropDetector;
 
 import java.util.function.BooleanSupplier;
@@ -81,7 +81,7 @@ public class OpMode extends CommandOpMode {
         Trigger leftTrigger1 = new Trigger(leftTriggerCondition);
 
         leftTrigger1.whenActive(new ScoringFirstPixel(cartridge, leftTriggerCondition));
-        rightTrigger1.whenActive(new ScoringBothPixels(elevator, elbow, extender, turret, antiTurret, cartridge, rightTriggerCondition));
+        rightTrigger1.whenActive(new ScoringBothPixels(ro, rightTriggerCondition));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, cartridge, Side.LEFT));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(elevator, elbow, extender, turret, antiTurret, cartridge, Side.CENTER));
@@ -115,7 +115,7 @@ public class OpMode extends CommandOpMode {
 
         new ExtenderSetPosition(extender, Extender.Position.CLOSED_INTAKE).schedule();
         new AntiTurretGetToPosition(antiTurret, 0).schedule();
-        new ArmGetToPosition(elevator, elbow, extender, turret, antiTurret, ArmPosition.INTAKE, false).schedule();
+        new ArmGetToPosition(this, ArmPosition.INTAKE, false).schedule();
         //for some reason this doesnt activate the aforementioned subsystems untill start and the elbow work even if it isnt activated
     }
 

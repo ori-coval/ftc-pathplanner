@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosit
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGetToHeightPID;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.RotateTurretByPID;
+import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
@@ -21,10 +22,10 @@ public class UnsafeMoveArm extends ConditionalCommand {
     public static final long EXTENDER_WAIT_TIME = 250;
     public static final long ELEVATOR_WAIT_TIME = 250;
 
-    public UnsafeMoveArm(Elevator elevator, Elbow elbow, Extender extender, Turret turret, AntiTurret antiTurret, ArmPosition position, boolean isLeftOfBoard) {
+    public UnsafeMoveArm(RobotControl robot, ArmPosition position, boolean isLeftOfBoard) {
         super(
-                new UnsafeMoveArmUp(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard),
-                new UnsafeMoveArmDown(elevator, elbow, extender, turret, antiTurret, position, isLeftOfBoard),
+                new UnsafeMoveArmUp(robot, position, isLeftOfBoard),
+                new UnsafeMoveArmDown(robot, position, isLeftOfBoard),
                 () -> (ArmGetToPosition.lastPosition.getElevatorHeight() < position.getElevatorHeight())
         );
     }
