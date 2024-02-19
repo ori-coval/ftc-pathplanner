@@ -29,6 +29,7 @@ import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
@@ -110,7 +111,7 @@ public class RobotControl extends Robot {
         initArm();
         initIntake();
         initVision();
-//        intake.roller.setPixelCount(1);
+;//        intake.roller.setPixelCount(1);
         Pose2d startPose = new Pose2d();
         if(allianceColor == AllianceColor.RED) {
             if(robotSide == Side.LEFT) {
@@ -167,7 +168,7 @@ public class RobotControl extends Robot {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new BackToIntake(this));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new ElevatorGetToHeightPID(elevator, 41));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeEjectToggle(intake.roller)); //TODO
 
 
         gamepadEx2 = new GamepadEx(gamepad2);
@@ -177,7 +178,7 @@ public class RobotControl extends Robot {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new Climb(this));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ElevatorGetToHeightPID(elevator, 37));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(this, ArmPosition.PRE_CLIMB, false));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
 
 

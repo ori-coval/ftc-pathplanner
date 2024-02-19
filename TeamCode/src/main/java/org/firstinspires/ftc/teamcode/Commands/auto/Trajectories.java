@@ -50,6 +50,18 @@ public class Trajectories {
         boolean isSideLeft = robot.robotSide == Side.LEFT;
 
 
+        trajectorySequenceHashMap.put("Score Purple Center LeftBlue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+                .splineToSplineHeading(new Pose2d(40, 35, Math.toRadians(100)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(20, 35, Math.toRadians(180)), Math.toRadians(180))
+                .build()
+        );
+
+        trajectorySequenceHashMap.put("Score Purple Center RightBlue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+                .splineToSplineHeading(new Pose2d(40, -11, Math.toRadians(100)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(20, -11, Math.toRadians(180)), Math.toRadians(180))
+                .build()
+        );
+
 
         //Purple Pixel Trajectories
         trajectorySequenceHashMap.put("Score Purple Left", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)

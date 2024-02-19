@@ -40,61 +40,10 @@ public class AutonomousLeftBlue extends CommandOpMode {
                         new SequentialCommandGroup(
                                 new InstantCommand(), //for some reason it runs the first command on the init
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
-                                new InstantCommand(() -> robot.teamPropDetector.webcam.closeCameraDevice()),
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
-                                new SideCommandSwitch(
-                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Left"), robot.autoDriveTrain),
-                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center"), robot.autoDriveTrain),
-                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right"), robot.autoDriveTrain),
-                                        () -> robot.teamPropDetector.getTeamPropSide()
-                                ),
+                                new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center LeftBlue"), robot.autoDriveTrain),
                                 new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_RIGHT, false),
-                                new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(2000),
-                                new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL),
-                                new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)),
-                                new SideCommandSwitch(
-                                        new SequentialCommandGroup(
-                                                new TrajectoryFollowerCommand(Trajectories.get("loading intake left"), robot.autoDriveTrain),
-                                                new BackToIntake(robot),
-                                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Left"), robot.autoDriveTrain)
-                                        ),
-                                        new SequentialCommandGroup(
-                                                new TrajectoryFollowerCommand(Trajectories.get("loading intake center"), robot.autoDriveTrain),
-                                                new BackToIntake(robot),
-                                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Center"), robot.autoDriveTrain)
-                                        ),
-                                        new SequentialCommandGroup(
-                                                new TrajectoryFollowerCommand(Trajectories.get("loading intake right"), robot.autoDriveTrain),
-                                                new BackToIntake(robot),
-                                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Right"), robot.autoDriveTrain)
-                                        ),
-                                        () -> robot.teamPropDetector.getTeamPropSide()
-                                ),
-/*                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
-                                new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL),
-                                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),*/
-                                new WaitCommand(2000),
-                                new InstantCommand(() -> robot.intake.roller.stop()),
-                                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
-                                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 1"), robot.autoDriveTrain),
-                                new SideCommandSwitch(
-                                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE, true),
-                                        new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID, true),
-                                        new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR, true),
-                                        () -> robot.teamPropDetector.getTeamPropSide()
-                                ),
-                                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 2"), robot.autoDriveTrain),
-                                new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
-                                new WaitCommand(500),
-//                                new ElevatorGetToHeightPID(robot.elevator, 28),
-//                                new InstantCommand(() -> ArmGetToPosition.lastPosition = ArmPosition.SCORE_TOP_CLOSE),
-                                new ArmGetToPosition(robot, ArmPosition.SCORING, true),
-                                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
-                                new TrajectoryFollowerCommand(Trajectories.get("Go back after scoring yellow"), robot.autoDriveTrain), //to allow intake to get in
-                                new ArmGetToPosition(robot, ArmPosition.INTAKE, true)
+                                new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(3000)
                         )
                 );
             }
