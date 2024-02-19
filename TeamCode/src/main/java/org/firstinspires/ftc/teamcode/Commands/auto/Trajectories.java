@@ -109,6 +109,13 @@ public class Trajectories {
                 .build()
         );
 
+        trajectorySequenceHashMap.put("Score Purple Center Right Blue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+                        .splineToSplineHeading(new Pose2d(40, 35, Math.toRadians(120)), Math.toRadians(180))
+                        .splineToSplineHeading(new Pose2d(22, 35, Math.toRadians(135)), Math.toRadians(180))
+                .build()
+        );
+
+
         //between Trajectories
 
 

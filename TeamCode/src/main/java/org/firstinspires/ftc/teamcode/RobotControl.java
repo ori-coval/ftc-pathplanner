@@ -167,6 +167,7 @@ public class RobotControl extends Robot {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new BackToIntake(this));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new ElevatorGetToHeightPID(elevator, 41));
 
 
         gamepadEx2 = new GamepadEx(gamepad2);
