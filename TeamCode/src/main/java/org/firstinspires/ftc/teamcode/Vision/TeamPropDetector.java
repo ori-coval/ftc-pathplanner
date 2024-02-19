@@ -34,7 +34,7 @@ public class TeamPropDetector extends OpenCvPipeline {
     private final Mat currentColorChannel = new Mat();
 
     public enum Tolerance {
-        RED_CENTER(133), RED_LEFT(138), BLUE_CENTER(0), BLUE_LEFT(0);
+        RED_CENTER(131), RED_LEFT(134), BLUE_CENTER(0), BLUE_LEFT(0);
 
         final double tolerance;
 

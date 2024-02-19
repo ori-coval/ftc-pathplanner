@@ -9,10 +9,4 @@ public class ElevatorClimbAndStayInPlace extends SequentialCommandGroup {
     public ElevatorClimbAndStayInPlace(Elevator elevator){
         super(new ElevatorClimb(elevator),new ElevatorStayInPlace(elevator));
     }
-
-
-
-
-
-
 }

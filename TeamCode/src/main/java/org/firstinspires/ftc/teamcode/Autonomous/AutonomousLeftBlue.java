@@ -36,16 +36,16 @@ public class AutonomousLeftBlue extends CommandOpMode {
 
         while(opModeInInit()) {
             if(robot.teamPropDetector.getTeamPropSide() != null) {
-                robot.teamPropDetector.webcam.closeCameraDevice();
                 schedule(
                         new SequentialCommandGroup(
                                 new InstantCommand(), //for some reason it runs the first command on the init
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
+                                new InstantCommand(() -> robot.teamPropDetector.webcam.closeCameraDevice()),
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
                                 new SideCommandSwitch(
-                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Left (Blue)"), robot.autoDriveTrain),
-                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center (Blue)"), robot.autoDriveTrain),
-                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right (Blue)"), robot.autoDriveTrain),
+                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Left"), robot.autoDriveTrain),
+                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center"), robot.autoDriveTrain),
+                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right"), robot.autoDriveTrain),
                                         () -> robot.teamPropDetector.getTeamPropSide()
                                 ),
                                 new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_RIGHT, false),

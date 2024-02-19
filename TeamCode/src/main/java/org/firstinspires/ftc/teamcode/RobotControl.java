@@ -15,8 +15,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.Climb;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorClimb;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGetToHeightPID;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorStayInPlace;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToSelectedPosition;
@@ -173,9 +175,9 @@ public class RobotControl extends Robot {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
-//        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ElevatorGetToHeightPID(elevator,35));
-//        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ElevatorClimb(elevator));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new DroneLauncherSetState(droneLauncher,DroneLauncher.State.RELEASE));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new Climb(this));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ElevatorGetToHeightPID(elevator, 37));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
 
 
 

@@ -17,9 +17,9 @@ public class ElevatorClimb extends ElevatorGetToHeightPID {
     @Override
     public void execute() {
         super.execute();
-        lastPosition = elevator.getClimberPosition();
+        lastPosition = elevator.getHeight();
         // activate the pully
-        elevator.climberSetPower(-1);
+        elevator.setPower(-1);
     }
 
 

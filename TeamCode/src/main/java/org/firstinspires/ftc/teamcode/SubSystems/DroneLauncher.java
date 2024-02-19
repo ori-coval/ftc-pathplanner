@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class DroneLauncher extends SubsystemBase {
     public enum State {
-        HOLD(0.4), RELEASE(0.8);
+        HOLD(0.4), RELEASE(1);
         final double position;
         State(double position){
             this.position = position;
