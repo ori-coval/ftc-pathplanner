@@ -19,7 +19,7 @@ public class TeleOpModeBlue extends CommandOpMode {
 
     @Override
     public void initialize() {
-        robot = new RobotControl(RobotControl.OpModeType.TELEOP, AllianceColor.RED, Side.RIGHT, hardwareMap, gamepad1, gamepad2, telemetry);
+        robot = new RobotControl(RobotControl.OpModeType.TELEOP, AllianceColor.BLUE, Side.RIGHT, hardwareMap, gamepad1, gamepad2, telemetry);
 
         schedule(
                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.INIT)

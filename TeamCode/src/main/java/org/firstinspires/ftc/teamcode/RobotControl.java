@@ -154,7 +154,7 @@ public class RobotControl extends Robot {
         rightTrigger1.whenActive(new ScoringBothPixels(this, rightTriggerCondition));
 
         if(allianceColor == AllianceColor.RED) {
-            gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSide(this, Side.LEFT));
+            gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.LEFT));
         } else {
             gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.RIGHT));
         }
@@ -163,8 +163,8 @@ public class RobotControl extends Robot {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new BackToIntake(this));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new BackToIntake(this));
 
 
         gamepadEx2 = new GamepadEx(gamepad2);
@@ -173,8 +173,8 @@ public class RobotControl extends Robot {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ElevatorGetToHeightPID(elevator,35));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ElevatorClimb(elevator));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ElevatorGetToHeightPID(elevator,35));
+//        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ElevatorClimb(elevator));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new DroneLauncherSetState(droneLauncher,DroneLauncher.State.RELEASE));
 
 
