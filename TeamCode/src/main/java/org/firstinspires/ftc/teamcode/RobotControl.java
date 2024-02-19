@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.app.AliasActivity;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
@@ -16,11 +14,8 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurret
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.Climb;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorClimb;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGetToHeightPID;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorStayInPlace;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGoUp;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToSelectedPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
@@ -28,7 +23,6 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.UnsafeMov
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
-import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
@@ -121,9 +115,9 @@ public class RobotControl extends Robot {
             }
         } else {
             if(robotSide == Side.LEFT) {
-                startPose = new Pose2d(63, 38, 180);
+                startPose = new Pose2d(63, 38, Math.toRadians(180));
             } else if(robotSide == Side.RIGHT) {
-                startPose = new Pose2d(63, -38 + 24, 180);
+                startPose = new Pose2d(63, -38 + 24, Math.toRadians(180));
             }
         }
         autoDriveTrain.setPoseEstimate(startPose);
@@ -178,7 +172,7 @@ public class RobotControl extends Robot {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new Climb(this));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ArmGetToPosition(this, ArmPosition.PRE_CLIMB, false));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whileActiveOnce(new ElevatorGoUp(this));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
 
 
