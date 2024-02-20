@@ -44,6 +44,7 @@ public class AutonomousLeftBlue extends CommandOpMode {
                                 new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center LeftBlue"), robot.autoDriveTrain),
                                 new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_RIGHT, false),
                                 new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(3000)
+//                                new TrajectoryFollowerCommand(Trajectories.get("Park on LeftBlue"), robot.autoDriveTrain)
                         )
                 );
             }

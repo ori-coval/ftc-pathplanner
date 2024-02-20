@@ -115,9 +115,9 @@ public class RobotControl extends Robot {
             }
         } else {
             if(robotSide == Side.LEFT) {
-                startPose = new Pose2d(63, 38, Math.toRadians(180));
+                startPose = new Pose2d(63, -14, Math.toRadians(180));
             } else if(robotSide == Side.RIGHT) {
-                startPose = new Pose2d(63, -38 + 24, Math.toRadians(180));
+                startPose = new Pose2d(63, 38, Math.toRadians(180));
             }
         }
         autoDriveTrain.setPoseEstimate(startPose);
@@ -150,11 +150,11 @@ public class RobotControl extends Robot {
         leftTrigger1.whenActive(new ScoringFirstPixel(cartridge, leftTriggerCondition));
         rightTrigger1.whenActive(new ScoringBothPixels(this, rightTriggerCondition));
 
-        if(allianceColor == AllianceColor.RED) {
+/*        if(allianceColor == AllianceColor.RED) {
             gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.LEFT));
         } else {
             gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.RIGHT));
-        }
+        }*/
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(this, Side.CENTER));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
@@ -19,8 +20,9 @@ public class ScoringBothPixels extends SequentialCommandGroup {
         super(
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
                 new WaitUntilCommand(() -> !triggerCondition.getAsBoolean()),
-                new ElevatorGetToHeightPID(robot.elevator, (ArmPositionSelector.getPosition().getElevatorHeight() + 10)),
-                new InstantCommand(() -> ArmGetToPosition.lastPosition = ArmPosition.INIFINITE_HEIGHT),
+                new InstantCommand(() -> robot.elevator.setPower(0.5)),
+                new WaitCommand(500),
+                new InstantCommand(() -> robot.elevator.setPower(0)),
                 new SideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORING, true),
                         new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, false),

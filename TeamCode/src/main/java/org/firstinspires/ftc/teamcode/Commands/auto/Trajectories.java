@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationCon
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.robot.Robot;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
@@ -52,15 +53,25 @@ public class Trajectories {
 
         trajectorySequenceHashMap.put("Score Purple Center RightBlue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .setTangent(Math.toRadians(180))
-                .splineToSplineHeading(new Pose2d(40, 35, Math.toRadians(100)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(40, 35, Math.toRadians(-100)), Math.toRadians(180))
                 .splineToSplineHeading(new Pose2d(20, 35, Math.toRadians(180)), Math.toRadians(180))
                 .build()
         );
 
         trajectorySequenceHashMap.put("Score Purple Center LeftBlue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .setTangent(Math.toRadians(180))
-                .splineToSplineHeading(new Pose2d(40, -11, Math.toRadians(100)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(40, -11, Math.toRadians(-100)), Math.toRadians(180))
                 .splineToSplineHeading(new Pose2d(20, -11, Math.toRadians(180)), Math.toRadians(180))
+                .build()
+        );
+
+        trajectorySequenceHashMap.put("Park on LeftBlue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Center LeftBlue").end())
+                .setTangent(180)
+                .splineToConstantHeading(new Vector2d(10, -63), Math.toRadians(-90))
+                .build()
+        );
+
+        trajectorySequenceHashMap.put("Park on rightBlue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Center LeftBlue").end())
                 .build()
         );
 
