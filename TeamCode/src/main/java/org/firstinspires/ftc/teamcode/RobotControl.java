@@ -70,6 +70,24 @@ public class RobotControl extends Robot {
         TELEOP, AUTO, DEBUG
     }
 
+    public RobotControl(OpModeType type, AllianceColor allianceColor, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+        opModeType = type;
+        this.allianceColor = allianceColor;
+        this.hardwareMap = hardwareMap;
+        this.gamepad1 = gamepad1;
+        this.gamepad2 = gamepad2;
+        this.telemetry = telemetry;
+        reset(); //reset the scheduler
+
+        if(type == OpModeType.TELEOP) {
+            initTele();
+        } else if (type == OpModeType.AUTO) {
+            initAuto();
+        } else {
+            initDebug();
+        }
+    }
+
     public RobotControl(OpModeType type, AllianceColor allianceColor, Side robotSide, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         opModeType = type;
         this.allianceColor = allianceColor;
