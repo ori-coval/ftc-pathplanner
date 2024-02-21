@@ -1,31 +1,24 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.SubSystems.AutoDriveTrain;
 
-public class TrajectoryFollowerCommand extends CommandBase {
+public class TurnCommand extends CommandBase {
 
-    private AutoDriveTrain drive;
-    private Trajectory trajectory;
+    private final AutoDriveTrain drive;
+    private final double angle;
 
-    public TrajectoryFollowerCommand(TrajectorySequence trajectory, SampleMecanumDrive drive) {
-
-    }
-
-    public TrajectoryFollowerCommand(AutoDriveTrain drive, Trajectory trajectory) {
+    public TurnCommand(AutoDriveTrain drive, double angle) {
         this.drive = drive;
-        this.trajectory = trajectory;
+        this.angle = angle;
 
         addRequirements(drive);
     }
 
     @Override
     public void initialize() {
-        drive.followTrajectory(trajectory);
+        drive.turn(angle);
     }
 
     @Override

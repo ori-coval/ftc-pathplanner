@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
@@ -28,6 +29,7 @@ import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 
 @Autonomous(name = "AutonomousLeftRed")
+@Disabled
 public class AutonomousLeftRed extends CommandOpMode {
     RobotControl robot;
     @Override

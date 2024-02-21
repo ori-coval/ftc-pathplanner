@@ -4,7 +4,9 @@ import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
+import org.checkerframework.framework.qual.DefaultInUncheckedCodeFor;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
@@ -19,6 +21,7 @@ import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 
 @Autonomous(name = "AutonomousRightBlue")
+@Disabled
 public class AutonomousRightBlue extends CommandOpMode {
 
     RobotControl robot;

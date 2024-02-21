@@ -13,7 +13,7 @@ public class TeleopDriveCommand extends CommandBase {
     public TeleopDriveCommand(DriveTrain driveTrain, Gamepad gamepad){
         this.driveTrain = driveTrain;
         this.gamepad = gamepad;
-        this.addRequirements(driveTrain);
+        addRequirements(driveTrain);
     }
     @Override
     public void initialize() {
