@@ -17,7 +17,7 @@ public class TuningOpMode extends CommandOpMode {
     @Override
     public void initialize() {
         CommandScheduler.getInstance().reset();
-        robot = new RobotControl(RobotControl.OpModeType.DEBUG, AllianceColor.RED, Side.RIGHT, hardwareMap, gamepad1 ,gamepad2, telemetry);
+        robot = new RobotControl(RobotControl.OpModeType.DEBUG, hardwareMap, gamepad1 ,gamepad2, telemetry);
     }
 
 

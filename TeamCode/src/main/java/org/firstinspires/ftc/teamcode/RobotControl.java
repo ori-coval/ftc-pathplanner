@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.UnsafeMov
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
@@ -70,34 +71,37 @@ public class RobotControl extends Robot {
         TELEOP, AUTO, DEBUG
     }
 
+    public RobotControl(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+        opModeType = type;
+        initializeAttributes(type, hardwareMap, gamepad1, gamepad2, telemetry);
+        initializeSystems(type);
+    }
+
     public RobotControl(OpModeType type, AllianceColor allianceColor, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         opModeType = type;
         this.allianceColor = allianceColor;
-        this.hardwareMap = hardwareMap;
-        this.gamepad1 = gamepad1;
-        this.gamepad2 = gamepad2;
-        this.telemetry = telemetry;
-        reset(); //reset the scheduler
-
-        if(type == OpModeType.TELEOP) {
-            initTele();
-        } else if (type == OpModeType.AUTO) {
-            initAuto();
-        } else {
-            initDebug();
-        }
+        initializeAttributes(type, hardwareMap, gamepad1, gamepad2, telemetry);
+        initializeSystems(type);
     }
 
     public RobotControl(OpModeType type, AllianceColor allianceColor, Side robotSide, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         opModeType = type;
         this.allianceColor = allianceColor;
         this.robotSide = robotSide;
+        initializeAttributes(type, hardwareMap, gamepad1, gamepad2, telemetry);
+        initializeSystems(type);
+    }
+
+    private void initializeAttributes(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+        opModeType = type;
         this.hardwareMap = hardwareMap;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
         this.telemetry = telemetry;
         reset(); //reset the scheduler
+    }
 
+    private void initializeSystems(OpModeType type) {
         if(type == OpModeType.TELEOP) {
             initTele();
         } else if (type == OpModeType.AUTO) {
@@ -106,6 +110,7 @@ public class RobotControl extends Robot {
             initDebug();
         }
     }
+
 
 
     public void initTele() {
@@ -122,8 +127,12 @@ public class RobotControl extends Robot {
         initDriveTrain();
         initArm();
         initIntake();
+//        intake.roller.setPixelCount(1);
         initVision();
-;//        intake.roller.setPixelCount(1);
+        initTrajectories();
+    }
+
+    private void initTrajectories() {
         Pose2d startPose = new Pose2d();
         if(allianceColor == AllianceColor.RED) {
             if(robotSide == Side.LEFT) {
@@ -178,9 +187,9 @@ public class RobotControl extends Robot {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(intake.roller));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeTakeIn(intake.lifter, intake.roller));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new BackToIntake(this));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeEjectToggle(intake.roller)); //TODO
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeEjectToggle(intake.roller));
 
 
         gamepadEx2 = new GamepadEx(gamepad2);

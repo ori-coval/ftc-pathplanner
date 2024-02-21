@@ -20,9 +20,6 @@ public class ScoringBothPixels extends SequentialCommandGroup {
         super(
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
                 new WaitUntilCommand(() -> !triggerCondition.getAsBoolean()),
-                new InstantCommand(() -> robot.elevator.setPower(0.5)),
-                new WaitCommand(500),
-                new InstantCommand(() -> robot.elevator.setPower(0)),
                 new SideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORING, true),
                         new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, false),

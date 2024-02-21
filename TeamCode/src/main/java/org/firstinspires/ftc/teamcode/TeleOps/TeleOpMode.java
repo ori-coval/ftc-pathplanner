@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
@@ -9,7 +8,6 @@ import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.DroneLauncher;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
-import org.firstinspires.ftc.teamcode.Utils.Side;
 public class TeleOpMode extends CommandOpMode {
     RobotControl robot;
 
@@ -41,6 +39,9 @@ public class TeleOpMode extends CommandOpMode {
 
         ArmPositionSelector.telemetry(telemetry);
 
+
+        telemetry.addData("pixelCount", robot.intake.roller.getPixelCount());
+        telemetry.addData("isRobotFull", robot.intake.roller.isRobotFull());
         telemetry.addData("selectedPosition", ArmPositionSelector.getPosition());
         telemetry.addData("isLeftOfBoard", ArmPositionSelector.getIsLeftOfBoard());
         telemetry.update();
