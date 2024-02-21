@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToInt
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.UnsafeMoveArm;
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
-import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.drivetrain.DriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
@@ -50,7 +50,6 @@ public class RobotControl extends Robot {
     public Side robotSide;
     HardwareMap hardwareMap;
     public DriveTrain driveTrain;
-    public SampleMecanumDrive autoDriveTrain;
     public Elbow elbow;
     public Turret turret;
     public AntiTurret antiTurret;
@@ -147,7 +146,7 @@ public class RobotControl extends Robot {
                 startPose = new Pose2d(63, 38, Math.toRadians(180));
             }
         }
-        autoDriveTrain.setPoseEstimate(startPose);
+        driveTrain.setPoseEstimate(startPose);
         Trajectories.init(this, startPose);
     }
 
@@ -239,11 +238,12 @@ public class RobotControl extends Robot {
     }
 
     public void initDriveTrain() {
+        driveTrain = new DriveTrain(new SampleMecanumDrive(hardwareMap), true);
         if(opModeType == OpModeType.TELEOP) {
-            driveTrain = new DriveTrain(hardwareMap);
-            driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
-        } else {
-            autoDriveTrain = new SampleMecanumDrive(hardwareMap);
+            register(driveTrain);
+            driveTrain.setDefaultCommand(new DriveCommand(
+                    driveTrain, () -> (-gamepadEx1.getLeftY()), gamepadEx1::getLeftX, gamepadEx1::getRightX
+            ));
         }
     }
     public void initIntake() {

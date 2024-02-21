@@ -1,79 +1,115 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.localization.Localizer;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.geometry.Vector2d;
-import com.qualcomm.hardware.bosch.BHI260IMU;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.RobotHardware;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
-import org.firstinspires.ftc.teamcode.Utils.Configuration;
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 
+import java.util.List;
+
+/**
+ * A subsystem that uses the {@link SampleMecanumDrive} class.
+ * This periodically calls {@link SampleMecanumDrive#update()} which runs the internal
+ * state machine for the mecanum drive. All movement/following is async to fit the paradigm.
+ */
 public class DriveTrain extends SubsystemBase {
-    private DcMotor motorFR;
-    private DcMotor motorFL;
-    private DcMotor motorBL;
-    private DcMotor motorBR;
-    private BNO055IMU imu;
 
-    public DriveTrain(HardwareMap hardwareMap) {
-        imu = hardwareMap.get(BNO055IMU.class, Configuration.IMU);
-        BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
-        imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        imu.initialize(imuParameters);
+    private final SampleMecanumDrive drive;
+    private final boolean fieldCentric;
 
-        motorFR = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_FRONT_RIGHT);
-        motorFL = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_FRONT_LEFT);
-        motorBR = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_BACK_RIGHT);
-        motorBL = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_BACK_LEFT);
-        motorFL.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
+    public DriveTrain(SampleMecanumDrive drive, boolean isFieldCentric) {
+        this.drive = drive;
+        fieldCentric = isFieldCentric;
     }
 
-    public double getYawInDegrees(){
-        return imu.getAngularOrientation().firstAngle;
-    }
-    public double[] calculationOfPowerRatio(double x, double y , double turn){
-        //                     {STRAIGHT}                 {STRAFE}                  {TURN}
-        double FL_Power =           y           +            x           +          turn         ;
-        double BL_Power =           y            -            x           +          turn         ;
-        double FR_Power =           y           -            x           -          turn         ;
-        double BR_Power =           y            +            x           -          turn         ;
-        double[] PowerRatio = {FL_Power,BL_Power,FR_Power,BR_Power};
-        return PowerRatio;
-    }
-    public static double[] normalize(double[] ratiopower){
-        double[] power = ratiopower;
-        double highestAbsulutNum = Math.max(
-                Math.max(Math.abs(ratiopower[2]),Math.abs(ratiopower[3])),
-                Math.max(Math.abs(ratiopower[0]),Math.abs(ratiopower[1])));
-        if (highestAbsulutNum < 1){return ratiopower;}
-        for (int i = 0; i < 4; i++) {
-            power[i] = ratiopower[i] / highestAbsulutNum;
-        }
-        return power;
-    }
-    private void setMotorPower(double[] normalize){
-        motorFL.setPower(normalize[0]);
-        motorBL.setPower(normalize[1]);
-        motorFR.setPower(normalize[2]);
-        motorBR.setPower(normalize[3]);
-    }
-    public void drive(double x,double y, double turn){
-        setMotorPower(normalize(calculationOfPowerRatio(x, y, turn)));
+    public void setMode(DcMotor.RunMode mode) {
+        drive.setMode(mode);
     }
 
-    public void fieldOrientedDrive(double x, double y, double turn){
-        Vector2d joyStickDirection = new Vector2d(x,y);
-        Vector2d fieldOrientedVector = joyStickDirection.rotateBy(-getYawInDegrees());
-        drive(fieldOrientedVector.getX(),fieldOrientedVector.getY(),turn);
+    public void setPIDFCoefficients(DcMotor.RunMode mode, PIDFCoefficients coefficients) {
+        drive.setPIDFCoefficients(mode, coefficients);
     }
 
+    public void setPoseEstimate(Pose2d pose) {
+        drive.setPoseEstimate(pose);
+    }
+
+    public void update() {
+        drive.update();
+    }
+
+    public void updatePoseEstimate() {
+        drive.updatePoseEstimate();
+    }
+
+    public void drive(double leftY, double leftX, double rightX) {
+        Pose2d poseEstimate = getPoseEstimate();
+
+        Vector2d input = new Vector2d(-leftY, -leftX).rotated(
+                fieldCentric ? -poseEstimate.getHeading() : 0
+        );
+
+        drive.setWeightedDrivePower(
+                new Pose2d(
+                        input.getX(),
+                        input.getY(),
+                        -rightX
+                )
+        );
+    }
+
+    public void setDrivePower(Pose2d drivePower) {
+        drive.setDrivePower(drivePower);
+    }
+
+    public Pose2d getPoseEstimate() {
+        return drive.getPoseEstimate();
+    }
+
+    public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
+        return drive.trajectoryBuilder(startPose);
+    }
+
+    public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, boolean reversed) {
+        return drive.trajectoryBuilder(startPose, reversed);
+    }
+
+    public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, double startHeading) {
+        return drive.trajectoryBuilder(startPose, startHeading);
+    }
+
+    public void followTrajectory(Trajectory trajectory) {
+        drive.followTrajectoryAsync(trajectory);
+    }
+
+    public boolean isBusy() {
+        return drive.isBusy();
+    }
+
+    public void turn(double radians) {
+        drive.turnAsync(radians);
+    }
+
+    public List<Double> getWheelVelocities() {
+        return drive.getWheelVelocities();
+    }
+
+    public void stop() {
+        drive(0, 0, 0);
+    }
+
+    public Pose2d getPoseVelocity() {
+        return drive.getPoseVelocity();
+    }
+
+    public Localizer getLocalizer() {
+        return drive.getLocalizer();
+    }
 
 }
-
