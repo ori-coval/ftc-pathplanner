@@ -68,10 +68,10 @@ public class Intake {
             return limitSwitch.getState();
         }
 
-        //On Press
+        //On Release
         private void updatePixelCount() {
             if (!currentSwitchState()) {
-                if (isSwitchOnRelease){
+                if (isSwitchOnRelease) {
                     pixelCount++;
                     isSwitchOnRelease = false;
                 }

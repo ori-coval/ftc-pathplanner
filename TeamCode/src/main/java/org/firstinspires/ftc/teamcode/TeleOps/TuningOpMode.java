@@ -34,7 +34,6 @@ public class TuningOpMode extends CommandOpMode {
         telemetry.addData("elevator height", robot.elevator.getHeight());
         telemetry.addData("turret angle", robot.turret.getAngle());
         telemetry.addData("Extender pos", robot.extender.getPosition());
-
         telemetry.update();
     }
 }
