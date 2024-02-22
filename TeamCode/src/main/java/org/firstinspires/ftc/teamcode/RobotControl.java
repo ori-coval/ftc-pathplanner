@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -48,6 +49,7 @@ public class RobotControl extends Robot {
     OpModeType opModeType;
     public AllianceColor allianceColor;
     public Side robotSide;
+    public Pose2d startPose;
     HardwareMap hardwareMap;
     public DriveTrain driveTrain;
     public Elbow elbow;
@@ -132,7 +134,7 @@ public class RobotControl extends Robot {
     }
 
     private void initTrajectories() {
-        Pose2d startPose = new Pose2d();
+        startPose = new Pose2d();
         if(allianceColor == AllianceColor.RED) {
             if(robotSide == Side.LEFT) {
                 startPose = new Pose2d(-63, 38, 0);
@@ -244,6 +246,11 @@ public class RobotControl extends Robot {
             driveTrain.setDefaultCommand(new DriveCommand(
                     driveTrain, () -> (-gamepadEx1.getLeftY()), gamepadEx1::getLeftX, gamepadEx1::getRightX
             ));
+
+            schedule(new RunCommand(() ->
+                    driveTrain.update()
+            ));
+
         }
     }
     public void initIntake() {

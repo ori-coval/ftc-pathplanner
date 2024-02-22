@@ -45,9 +45,9 @@ public class AutonomousLeftRed extends CommandOpMode {
                                 new InstantCommand(() -> robot.teamPropDetector.webcam.closeCameraDevice()),
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
                                 new SideCommandSwitch(
-                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Left"), robot.autoDriveTrain),
-                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center"), robot.autoDriveTrain),
-                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right"), robot.autoDriveTrain),
+                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Left"), robot.driveTrain),
+                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center"), robot.driveTrain),
+                                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right"), robot.driveTrain),
                                         () -> robot.teamPropDetector.getTeamPropSide()
                                 ),
                                 new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_RIGHT, false),
@@ -56,46 +56,46 @@ public class AutonomousLeftRed extends CommandOpMode {
                                 new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)),
                                 new SideCommandSwitch(
                                         new SequentialCommandGroup(
-                                                new TrajectoryFollowerCommand(Trajectories.get("loading intake left"), robot.autoDriveTrain),
+                                                new TrajectoryFollowerCommand(Trajectories.get("loading intake left"), robot.driveTrain),
                                                 new BackToIntake(robot),
-                                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Left"), robot.autoDriveTrain)
+                                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Left"), robot.driveTrain)
                                         ),
                                         new SequentialCommandGroup(
-                                                new TrajectoryFollowerCommand(Trajectories.get("loading intake center"), robot.autoDriveTrain),
+                                                new TrajectoryFollowerCommand(Trajectories.get("loading intake center"), robot.driveTrain),
                                                 new BackToIntake(robot),
-                                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Center"), robot.autoDriveTrain)
+                                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Center"), robot.driveTrain)
                                         ),
                                         new SequentialCommandGroup(
-                                                new TrajectoryFollowerCommand(Trajectories.get("loading intake right"), robot.autoDriveTrain),
+                                                new TrajectoryFollowerCommand(Trajectories.get("loading intake right"), robot.driveTrain),
                                                 new BackToIntake(robot),
-                                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Right"), robot.autoDriveTrain)
+                                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Right"), robot.driveTrain)
                                         ),
                                         () -> robot.teamPropDetector.getTeamPropSide()
                                 ),
-/*                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
+/*                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.driveTrain),
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL),
-                                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),*/
+                                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.driveTrain),*/
                                 new WaitCommand(2000),
                                 new InstantCommand(() -> robot.intake.roller.stop()),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
-                                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 1"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 1"), robot.driveTrain),
                                 new SideCommandSwitch(
                                         new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE, true),
                                         new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID, true),
                                         new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR, true),
                                         () -> robot.teamPropDetector.getTeamPropSide()
                                 ),
-                                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 2"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 2"), robot.driveTrain),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
                                 new WaitCommand(500),
 //                                new ElevatorGetToHeightPID(robot.elevator, 28),
 //                                new InstantCommand(() -> ArmGetToPosition.lastPosition = ArmPosition.SCORE_TOP_CLOSE),
                                 new ArmGetToPosition(robot, ArmPosition.SCORING, true),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
-                                new TrajectoryFollowerCommand(Trajectories.get("Go back after scoring yellow"), robot.autoDriveTrain), //to allow intake to get in
+                                new TrajectoryFollowerCommand(Trajectories.get("Go back after scoring yellow"), robot.driveTrain), //to allow intake to get in
                                 new ArmGetToPosition(robot, ArmPosition.INTAKE, true)
                         )
                 );

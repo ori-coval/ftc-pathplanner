@@ -15,9 +15,9 @@ public class ScoringPurplePixel extends SequentialCommandGroup {
     public ScoringPurplePixel(RobotControl robot) {
         addCommands(
                 new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Left"), robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center"), robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Left"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right"), robot.driveTrain),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_RIGHT, false),

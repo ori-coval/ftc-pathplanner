@@ -51,90 +51,90 @@ public class Trajectories {
         boolean isSideLeft = robot.robotSide == Side.LEFT;
 
 
-        trajectorySequenceHashMap.put("Score Purple Center RightBlue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Score Purple Center RightBlue", robot.driveTrain.trajectorySequenceBuilder(startPose)
                 .setTangent(Math.toRadians(180))
                 .splineToSplineHeading(new Pose2d(40, 35, Math.toRadians(-100)), Math.toRadians(180))
                 .splineToSplineHeading(new Pose2d(20, 35, Math.toRadians(180)), Math.toRadians(180))
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Score Purple Center LeftBlue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Score Purple Center LeftBlue", robot.driveTrain.trajectorySequenceBuilder(startPose)
                 .setTangent(Math.toRadians(180))
                 .splineToSplineHeading(new Pose2d(40, -11, Math.toRadians(-100)), Math.toRadians(180))
                 .splineToSplineHeading(new Pose2d(20, -11, Math.toRadians(180)), Math.toRadians(180))
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Park on LeftBlue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Center LeftBlue").end())
+        trajectorySequenceHashMap.put("Park on LeftBlue", robot.driveTrain.trajectorySequenceBuilder(get("Score Purple Center LeftBlue").end())
                 .setTangent(180)
                 .splineToConstantHeading(new Vector2d(10, -63), Math.toRadians(-90))
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Park on rightBlue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Center LeftBlue").end())
+        trajectorySequenceHashMap.put("Park on rightBlue", robot.driveTrain.trajectorySequenceBuilder(get("Score Purple Center LeftBlue").end())
                 .build()
         );
 
 
         //Purple Pixel Trajectories
-        trajectorySequenceHashMap.put("Score Purple Left", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Score Purple Left", robot.driveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(new Pose2d(-35, 47, Math.toRadians(60)), Math.toRadians(0))
                 .splineToSplineHeading(new Pose2d(-23, 47, Math.toRadians(60)), Math.toRadians(0))
                 .build()
         );
-        trajectorySequenceHashMap.put("loading intake left", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Left").end())
+        trajectorySequenceHashMap.put("loading intake left", robot.driveTrain.trajectorySequenceBuilder(get("Score Purple Left").end())
                 .splineToSplineHeading(new Pose2d(-12, 47, Math.toRadians(90)), Math.toRadians(0))
                 .build()
         );
-        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Left", robot.autoDriveTrain.trajectorySequenceBuilder(get("loading intake left").end())
+        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Left", robot.driveTrain.trajectorySequenceBuilder(get("loading intake left").end())
                 .splineToConstantHeading(new Vector2d(-12, 55), Math.toRadians(90))
                 .build()
         );
-/*        trajectorySequenceHashMap.put("Score Purple Left (Blue)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+/*        trajectorySequenceHashMap.put("Score Purple Left (Blue)", robot.driveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(new Pose2d(35, 47, Math.toRadians(120)), Math.toRadians(180))
                 .splineToSplineHeading(new Pose2d(23, 47, Math.toRadians(120)), Math.toRadians(180))
                 .build()
         );
-        trajectorySequenceHashMap.put("loading intake left (Blue)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Left").end())
+        trajectorySequenceHashMap.put("loading intake left (Blue)", robot.driveTrain.trajectorySequenceBuilder(get("Score Purple Left").end())
                 .splineToSplineHeading(new Pose2d(12, 47, Math.toRadians(90)), Math.toRadians(180))
                 .build()
         );
-        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Left (Blue)", robot.autoDriveTrain.trajectorySequenceBuilder(get("loading intake left").end())
+        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Left (Blue)", robot.driveTrain.trajectorySequenceBuilder(get("loading intake left").end())
                 .splineToConstantHeading(new Vector2d(12, 55), Math.toRadians(90))
                 .build()
         );*/
-        trajectorySequenceHashMap.put("Score Purple Center", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Score Purple Center", robot.driveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(new Pose2d(-40, 35, Math.toRadians(60)), Math.toRadians(0))
                 .splineToSplineHeading(new Pose2d(-22, 35, Math.toRadians(45)), Math.toRadians(0))
                 .build()
         );
-        trajectorySequenceHashMap.put("loading intake center", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Center").end())
+        trajectorySequenceHashMap.put("loading intake center", robot.driveTrain.trajectorySequenceBuilder(get("Score Purple Center").end())
                 .setTangent(Math.toRadians(45))
                 .splineToSplineHeading(new Pose2d(-12, 47, Math.toRadians(90)), Math.toRadians(90))
                 .build()
         );
-        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Center", robot.autoDriveTrain.trajectorySequenceBuilder(get("loading intake center").end())
+        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Center", robot.driveTrain.trajectorySequenceBuilder(get("loading intake center").end())
                 .splineToSplineHeading(new Pose2d(-12, 55, Math.toRadians(90)), Math.toRadians(90))
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Score Purple Right", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Score Purple Right", robot.driveTrain.trajectorySequenceBuilder(startPose)
                 .splineToConstantHeading(new Vector2d(-50, 35), Math.toRadians(0))
                 .splineToSplineHeading(new Pose2d(-34, 26, Math.toRadians(45)), Math.toRadians(-45))
                 .build()
         );
-        trajectorySequenceHashMap.put("loading intake right", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Right").end())
+        trajectorySequenceHashMap.put("loading intake right", robot.driveTrain.trajectorySequenceBuilder(get("Score Purple Right").end())
                 .setTangent(Math.toRadians(45))
                 .splineToSplineHeading(new Pose2d(-22, 35, Math.toRadians(0)), Math.toRadians(0))
                 .splineToSplineHeading(new Pose2d(-12, 47, Math.toRadians(90)), Math.toRadians(90))
                 .build()
         );
-        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Right", robot.autoDriveTrain.trajectorySequenceBuilder(get("loading intake right").end())
+        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Right", robot.driveTrain.trajectorySequenceBuilder(get("loading intake right").end())
                 .splineToSplineHeading(new Pose2d(-13, 58, Math.toRadians(90)), Math.toRadians(90))
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Score Purple Center Right Blue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Score Purple Center Right Blue", robot.driveTrain.trajectorySequenceBuilder(startPose)
                         .splineToSplineHeading(new Pose2d(40, 35, Math.toRadians(120)), Math.toRadians(180))
                         .splineToSplineHeading(new Pose2d(22, 35, Math.toRadians(135)), Math.toRadians(180))
                 .build()
@@ -149,22 +149,22 @@ public class Trajectories {
 
 
 
-        trajectorySequenceHashMap.put("Drive back from stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack while avoiding pixel on Right").end())
+        trajectorySequenceHashMap.put("Drive back from stack", robot.driveTrain.trajectorySequenceBuilder(get("Driving to stack while avoiding pixel on Right").end())
                 .back(8, new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.2, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.2))
                 .build()
         );
-        trajectorySequenceHashMap.put("Drive back to stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Drive back from stack").end())
+        trajectorySequenceHashMap.put("Drive back to stack", robot.driveTrain.trajectorySequenceBuilder(get("Drive back from stack").end())
                 .forward(8, new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.2, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.2))
                 .build()
         );
 
         //Scoring First
-        trajectorySequenceHashMap.put("Go to backdrop part 1", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack while avoiding pixel on Left").end())
+        trajectorySequenceHashMap.put("Go to backdrop part 1", robot.driveTrain.trajectorySequenceBuilder(get("Driving to stack while avoiding pixel on Left").end())
                 .setTangent(Math.toRadians(-90))
                 .splineToSplineHeading(new Pose2d(-12, -10, Math.toRadians(90)), Math.toRadians(-90))
                 .build()
         );
-        trajectorySequenceHashMap.put("Go to backdrop part 2", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop part 1").end())
+        trajectorySequenceHashMap.put("Go to backdrop part 2", robot.driveTrain.trajectorySequenceBuilder(get("Go to backdrop part 1").end())
                 .setTangent(Math.toRadians(-90))
                 .splineToLinearHeading(new Pose2d(-7, -40, Math.toRadians(90)), Math.toRadians(-90))
                 .splineToLinearHeading(new Pose2d(-13.5, -63, Math.toRadians(90)), Math.toRadians(-180))
@@ -174,31 +174,31 @@ public class Trajectories {
 
         /*
         //Purple Pixel Trajectories
-        trajectorySequenceHashMap.put("Score Purple Right", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Score Purple Right", robot.driveTrain.trajectorySequenceBuilder(startPose)
                 .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 50, getY(isSideLeft, 35)), getAngle(robot, 0))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 32, getY(isSideLeft, 26), getAngle(robot, 45)), getAngle(robot, -45))
                 .build()
         );
-        trajectorySequenceHashMap.put("Score Purple Center", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Score Purple Center", robot.driveTrain.trajectorySequenceBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(trajectorySignAlliance * 22, getY(isSideLeft, 35), getAngle(robot, 45)))
                 .build()
         );
-        trajectorySequenceHashMap.put("Score Purple Left", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Score Purple Left", robot.driveTrain.trajectorySequenceBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(trajectorySignAlliance * 23, getY(isSideLeft, 47), getAngle(robot, 55)))
                 .build()
         );
 
         //between Trajectories
         Pose2d beforeStack = new Pose2d(trajectorySignAlliance * 12, 47, getAngle(robot, 90));
-        trajectorySequenceHashMap.put("loading intake right", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Right").end())
+        trajectorySequenceHashMap.put("loading intake right", robot.driveTrain.trajectorySequenceBuilder(get("Score Purple Right").end())
                 .lineToLinearHeading(beforeStack)
                 .build()
         );
-        trajectorySequenceHashMap.put("loading intake center", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Center").end())
+        trajectorySequenceHashMap.put("loading intake center", robot.driveTrain.trajectorySequenceBuilder(get("Score Purple Center").end())
                 .lineToLinearHeading(beforeStack)
                 .build()
         );
-        trajectorySequenceHashMap.put("loading intake left", robot.autoDriveTrain.trajectorySequenceBuilder(get("Score Purple Left").end())
+        trajectorySequenceHashMap.put("loading intake left", robot.driveTrain.trajectorySequenceBuilder(get("Score Purple Left").end())
                 .lineToLinearHeading(beforeStack)
                 .build()
         );
@@ -206,15 +206,15 @@ public class Trajectories {
 
         //Stack Trajectories
         Pose2d stackPose = new Pose2d(trajectorySignAlliance * 12, 55, getAngle(robot, 90));
-        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Right", robot.autoDriveTrain.trajectorySequenceBuilder(get("loading intake right").end())
+        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Right", robot.driveTrain.trajectorySequenceBuilder(get("loading intake right").end())
                 .splineToLinearHeading(stackPose, getAngle(robot, -90))
                 .build()
         );
-        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Center", robot.autoDriveTrain.trajectorySequenceBuilder(get("loading intake center").end())
+        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Center", robot.driveTrain.trajectorySequenceBuilder(get("loading intake center").end())
                 .splineToLinearHeading(stackPose, getAngle(robot, -90))
                 .build()
         );
-        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Left", robot.autoDriveTrain.trajectorySequenceBuilder(get("loading intake left").end())
+        trajectorySequenceHashMap.put("Driving to stack while avoiding pixel on Left", robot.driveTrain.trajectorySequenceBuilder(get("loading intake left").end())
                 .splineToLinearHeading(stackPose, getAngle(robot, -90))
                 .build()
         );
@@ -222,28 +222,28 @@ public class Trajectories {
 
         MecanumVelocityConstraint velocityDown = new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.3, DriveConstants.TRACK_WIDTH);
         ProfileAccelerationConstraint accelerationDown = new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.3);
-        trajectorySequenceHashMap.put("Drive back from stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack while avoiding pixel on Right").end())
+        trajectorySequenceHashMap.put("Drive back from stack", robot.driveTrain.trajectorySequenceBuilder(get("Driving to stack while avoiding pixel on Right").end())
                 .back(8, velocityDown, accelerationDown)
                 .build()
         );
-        trajectorySequenceHashMap.put("Drive back to stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Drive back from stack").end())
+        trajectorySequenceHashMap.put("Drive back to stack", robot.driveTrain.trajectorySequenceBuilder(get("Drive back from stack").end())
                 .forward(8, velocityDown, accelerationDown)
                 .build()
         );
 
         //Scoring First
-        trajectorySequenceHashMap.put("Go to backdrop part 1", robot.autoDriveTrain.trajectorySequenceBuilder(Trajectories.get("Driving to stack while avoiding pixel on Left").end())
+        trajectorySequenceHashMap.put("Go to backdrop part 1", robot.driveTrain.trajectorySequenceBuilder(Trajectories.get("Driving to stack while avoiding pixel on Left").end())
                 .setTangent(getAngle(robot, -90))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, -10, getAngle(robot, 90)), getAngle(robot, -90))
                 .build()
         );
-        trajectorySequenceHashMap.put("Go to backdrop part 2", robot.autoDriveTrain.trajectorySequenceBuilder(Trajectories.get("Go to backdrop part 1").end())
+        trajectorySequenceHashMap.put("Go to backdrop part 2", robot.driveTrain.trajectorySequenceBuilder(Trajectories.get("Go to backdrop part 1").end())
                 .setTangent(getAngle(robot, -90))
                 .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 13, -63, getAngle(robot, 90)), getAngle(robot, -90))
                 .build()
         );*/
 
-        trajectorySequenceHashMap.put("Go back after scoring yellow", robot.autoDriveTrain.trajectorySequenceBuilder(Trajectories.get("Go to backdrop part 2").end())
+        trajectorySequenceHashMap.put("Go back after scoring yellow", robot.driveTrain.trajectorySequenceBuilder(Trajectories.get("Go to backdrop part 2").end())
                 .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(-13, -51), Math.toRadians(90))
                 .build()
@@ -252,17 +252,17 @@ public class Trajectories {
 
         //Parking Right
         Pose2d parkingPose = new Pose2d(trajectorySignAlliance * 60, -63, getAngle(robot, -90));
-        trajectorySequenceHashMap.put("Parking right (left)", robot.autoDriveTrain.trajectorySequenceBuilder(Trajectories.get("Score Purple Left").end())
+        trajectorySequenceHashMap.put("Parking right (left)", robot.driveTrain.trajectorySequenceBuilder(Trajectories.get("Score Purple Left").end())
                 .splineToSplineHeading(parkingPose, getAngle(robot, -90))
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Parking right (center)", robot.autoDriveTrain.trajectorySequenceBuilder(Trajectories.get("Score Purple Center").end())
+        trajectorySequenceHashMap.put("Parking right (center)", robot.driveTrain.trajectorySequenceBuilder(Trajectories.get("Score Purple Center").end())
                 .splineToSplineHeading(parkingPose, getAngle(robot, -90))
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Parking right (right)", robot.autoDriveTrain.trajectorySequenceBuilder(Trajectories.get("Score Purple Right").end())
+        trajectorySequenceHashMap.put("Parking right (right)", robot.driveTrain.trajectorySequenceBuilder(Trajectories.get("Score Purple Right").end())
                 .splineToSplineHeading(parkingPose, getAngle(robot, -90))
                 .build()
         );

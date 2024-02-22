@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequenceBuilder;
 
 import java.util.List;
 
@@ -72,6 +74,10 @@ public class DriveTrain extends SubsystemBase {
         return drive.getPoseEstimate();
     }
 
+    public TrajectorySequenceBuilder trajectorySequenceBuilder(Pose2d startPose) {
+        return drive.trajectorySequenceBuilder(startPose);
+    }
+
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
         return drive.trajectoryBuilder(startPose);
     }
@@ -82,6 +88,10 @@ public class DriveTrain extends SubsystemBase {
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, double startHeading) {
         return drive.trajectoryBuilder(startPose, startHeading);
+    }
+
+    public void followTrajectorySequence(TrajectorySequence trajectorySequence) {
+        drive.followTrajectorySequence(trajectorySequence);
     }
 
     public void followTrajectory(Trajectory trajectory) {

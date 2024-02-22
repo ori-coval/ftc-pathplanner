@@ -17,14 +17,14 @@ public class ScoringFirstPixelAuto extends SequentialCommandGroup {
 
     public ScoringFirstPixelAuto(RobotControl robot){
         addCommands(
-                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 1"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 1"), robot.driveTrain),
                 new SideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE, true),
                         new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID, true),
                         new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR, true),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
-                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 2"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Go to backdrop part 2"), robot.driveTrain),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
                 new ElevatorGetToHeightPID(robot.elevator, RELEASE_PIXEL_HEIGHT),
                 new InstantCommand(() -> ArmGetToPosition.lastPosition = ArmPosition.INIFINITE_HEIGHT),

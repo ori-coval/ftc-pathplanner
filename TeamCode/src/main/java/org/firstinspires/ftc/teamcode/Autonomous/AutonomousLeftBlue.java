@@ -43,10 +43,10 @@ public class AutonomousLeftBlue extends CommandOpMode {
                                 new InstantCommand(), //for some reason it runs the first command on the init
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
-                                new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center LeftBlue"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center LeftBlue"), robot.driveTrain),
                                 new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_RIGHT, false),
                                 new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(3000)
-//                                new TrajectoryFollowerCommand(Trajectories.get("Park on LeftBlue"), robot.autoDriveTrain)
+//                                new TrajectoryFollowerCommand(Trajectories.get("Park on LeftBlue"), robot.driveTrain)
                         )
                 );
             }

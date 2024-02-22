@@ -17,28 +17,28 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                 new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)),
                 new SideCommandSwitch(
                         new SequentialCommandGroup(
-                                new TrajectoryFollowerCommand(Trajectories.get("loading intake left"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("loading intake left"), robot.driveTrain),
                                 new BackToIntake(robot),
-                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Left"), robot.autoDriveTrain)
+                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Left"), robot.driveTrain)
                         ),
                         new SequentialCommandGroup(
-                                new TrajectoryFollowerCommand(Trajectories.get("loading intake center"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("loading intake center"), robot.driveTrain),
                                 new BackToIntake(robot),
-                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Center"), robot.autoDriveTrain)
+                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Center"), robot.driveTrain)
                         ),
                         new SequentialCommandGroup(
-                                new TrajectoryFollowerCommand(Trajectories.get("loading intake right"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("loading intake right"), robot.driveTrain),
                                 new BackToIntake(robot),
-                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Right"), robot.autoDriveTrain)
+                                new TrajectoryFollowerCommand(Trajectories.get("Driving to stack while avoiding pixel on Right"), robot.driveTrain)
                         ),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
-                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
-                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.autoDriveTrain),
-                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.driveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.driveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.driveTrain),
                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL),
-                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.autoDriveTrain),
-                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.driveTrain),
+                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.driveTrain),
                 new InstantCommand(() -> robot.intake.roller.stop())
         );
     }
