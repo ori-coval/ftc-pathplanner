@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
@@ -24,18 +25,20 @@ public class AutonomousLeft extends CommandOpMode {
     public void initialize() {
         robot = new RobotControl(RobotControl.OpModeType.AUTO, allianceColor, Side.LEFT, hardwareMap, gamepad1, gamepad2, telemetry);
 
-        while(opModeInInit()) {
+        while(opModeInInit() && !isStopRequested()) {
             if(robot.teamPropDetector.getTeamPropSide() != null) {
-                schedule(
-                        new SequentialCommandGroup(
-                                new InstantCommand(), //for some reason it runs the first command on the init
-                                new AutoInit(robot),
-                                new ScoringPurplePixel(robot),
-                                new GoFromSpikeMarkToStackAndCollect(robot),
-                                new ScoringFirstPixelAuto(robot),
-                                new ParkingAfterScoringYellow(robot)
-                        )
+
+                SequentialCommandGroup commandsToRun = new SequentialCommandGroup(
+                        new WaitUntilCommand(this::isStarted),
+                        new AutoInit(robot),
+                        new ScoringPurplePixel(robot),
+                        new GoFromSpikeMarkToStackAndCollect(robot)
+//                        new ScoringFirstPixelAuto(robot),
+//                        new ParkingAfterScoringYellow(robot)
+
                 );
+
+                schedule(commandsToRun);
             }
             robot.teamPropDetector.telemetry();
         }

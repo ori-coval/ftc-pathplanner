@@ -23,7 +23,6 @@ public class Intake {
         limitSwitch = hardwareMap.digitalChannel.get(Configuration.INTAKE_SWITCH);
         roller = new Roller();
         lifter = new Lifter();
-        lifter.setPosition(LifterPosition.INIT);
     }
 
     public enum LifterPosition {

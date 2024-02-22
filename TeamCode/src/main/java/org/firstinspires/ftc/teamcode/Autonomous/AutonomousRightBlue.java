@@ -6,7 +6,6 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.checkerframework.framework.qual.DefaultInUncheckedCodeFor;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
@@ -38,7 +37,7 @@ public class AutonomousRightBlue extends CommandOpMode {
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
                                 new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center RightBlue"), robot.driveTrain),
-                                new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_RIGHT, false),
+                                new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, false),
                                 new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(3000)
                         )
                 );

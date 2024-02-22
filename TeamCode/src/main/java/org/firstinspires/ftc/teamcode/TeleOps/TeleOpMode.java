@@ -23,6 +23,8 @@ public class TeleOpMode extends CommandOpMode {
     public void initialize() {
         robot = new RobotControl(RobotControl.OpModeType.TELEOP, allianceColor, hardwareMap, gamepad1, gamepad2, telemetry);
 
+
+
         schedule(
                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.INIT)
         );

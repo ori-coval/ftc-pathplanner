@@ -91,7 +91,7 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void followTrajectorySequence(TrajectorySequence trajectorySequence) {
-        drive.followTrajectorySequence(trajectorySequence);
+        drive.followTrajectorySequenceAsync(trajectorySequence);
     }
 
     public void followTrajectory(Trajectory trajectory) {

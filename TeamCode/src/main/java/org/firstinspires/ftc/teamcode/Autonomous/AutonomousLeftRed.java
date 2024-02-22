@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
@@ -9,14 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGetToHeightPID;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
-import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
-import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
-import org.firstinspires.ftc.teamcode.Commands.auto.ParkingAfterScoringYellow;
-import org.firstinspires.ftc.teamcode.Commands.auto.ScoringFirstPixelAuto;
-import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.auto.TrajectoryFollowerCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
@@ -50,7 +45,7 @@ public class AutonomousLeftRed extends CommandOpMode {
                                         new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right"), robot.driveTrain),
                                         () -> robot.teamPropDetector.getTeamPropSide()
                                 ),
-                                new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_RIGHT, false),
+                                new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, false),
                                 new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(3000),
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL),
                                 new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)),
@@ -72,12 +67,14 @@ public class AutonomousLeftRed extends CommandOpMode {
                                         ),
                                         () -> robot.teamPropDetector.getTeamPropSide()
                                 ),
+*/
 /*                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.driveTrain),
                                 new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.driveTrain),
                                 new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.driveTrain),
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL),
                                 new TrajectoryFollowerCommand(Trajectories.get("Drive back to stack"), robot.driveTrain),
-                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.driveTrain),*/
+                                new TrajectoryFollowerCommand(Trajectories.get("Drive back from stack"), robot.driveTrain),*//*
+
                                 new WaitCommand(2000),
                                 new InstantCommand(() -> robot.intake.roller.stop()),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
@@ -111,3 +108,4 @@ public class AutonomousLeftRed extends CommandOpMode {
         telemetry.update();
     }
 }
+*/

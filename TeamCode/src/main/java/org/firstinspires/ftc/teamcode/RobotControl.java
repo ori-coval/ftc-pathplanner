@@ -244,7 +244,7 @@ public class RobotControl extends Robot {
         if(opModeType == OpModeType.TELEOP) {
             register(driveTrain);
             driveTrain.setDefaultCommand(new DriveCommand(
-                    driveTrain, () -> (-gamepadEx1.getLeftY()), gamepadEx1::getLeftX, gamepadEx1::getRightX
+                    driveTrain, () -> (-gamepad1.left_stick_y), () -> gamepad1.left_stick_x, () -> gamepad1.right_stick_x
             ));
 
             schedule(new RunCommand(() ->
@@ -255,6 +255,7 @@ public class RobotControl extends Robot {
     }
     public void initIntake() {
         intake = new Intake(hardwareMap);
+        register(intake.roller);
     }
     public void initTurret() {
         turret = new Turret(hardwareMap);
