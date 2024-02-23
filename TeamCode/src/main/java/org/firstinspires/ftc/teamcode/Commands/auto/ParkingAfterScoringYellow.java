@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.RobotControl;
 public class ParkingAfterScoringYellow extends SequentialCommandGroup {
     public ParkingAfterScoringYellow(RobotControl robot) {
         super(
-                new TrajectoryFollowerCommand(Trajectories.get("Go back after scoring yellow"), robot.driveTrain), //to allow intake to get in
+                new TrajectoryFollowerCommand(robot.trajectories.get("Go back after scoring yellow"), robot.driveTrain), //to allow intake to get in
                 new InstantCommand(() -> {
                     robot.telemetry.addLine("Arm Returned to Intake");
                     robot.telemetry.update();

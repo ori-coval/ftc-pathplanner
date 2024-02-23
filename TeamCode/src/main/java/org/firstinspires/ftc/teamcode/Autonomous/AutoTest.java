@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Elbow;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
+import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 
 
@@ -31,7 +32,7 @@ public class AutoTest extends CommandOpMode {
     @Override
     public void initialize() {
 
-        robot = new RobotControl(RobotControl.OpModeType.AUTO, AllianceColor.RED, Side.LEFT, hardwareMap, gamepad1, gamepad2, telemetry);
+        robot = new RobotControl(RobotControl.OpModeType.AUTO, AllianceColor.RED, AllianceSide.FAR, hardwareMap, gamepad1, gamepad2, telemetry);
 
         SequentialCommandGroup command = new SequentialCommandGroup(
                 new InitializeCommand(robot),

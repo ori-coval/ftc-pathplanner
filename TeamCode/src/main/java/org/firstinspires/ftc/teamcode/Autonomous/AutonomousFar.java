@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
-import org.firstinspires.ftc.teamcode.Utils.Side;
 
 public class AutonomousFar extends CommandOpMode {
     RobotControl robot;
@@ -31,8 +30,8 @@ public class AutonomousFar extends CommandOpMode {
                 SequentialCommandGroup commandsToRun = new SequentialCommandGroup(
                         new WaitUntilCommand(this::isStarted),
                         new AutoInit(robot),
-                        new ScoringPurplePixel(robot),
-                        new GoFromSpikeMarkToStackAndCollect(robot),
+                        new ScoringPurplePixel(robot, allianceColor),
+                        new GoFromSpikeMarkToStackAndCollect(robot, allianceColor),
                         new ScoringFirstPixelAuto(robot),
                         new ParkingAfterScoringYellow(robot)
                 );

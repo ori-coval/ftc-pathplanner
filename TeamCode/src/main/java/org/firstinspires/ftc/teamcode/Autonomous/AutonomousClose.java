@@ -33,7 +33,7 @@ public class AutonomousClose extends CommandOpMode {
                         new SequentialCommandGroup(
                                 new InstantCommand(),
                                 new AutoInit(robot),
-                                new ScoringPurplePixel(robot),
+                                new ScoringPurplePixel(robot, allianceColor),
                                 new ParkingRight(robot)
                         )
                 );

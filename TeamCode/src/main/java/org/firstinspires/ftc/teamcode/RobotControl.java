@@ -50,6 +50,7 @@ public class RobotControl extends Robot {
     OpModeType opModeType;
     public AllianceColor allianceColor;
     public AllianceSide robotSide;
+    public Trajectories trajectories;
     public Pose2d startPose;
     HardwareMap hardwareMap;
     public DriveTrain driveTrain;
@@ -136,21 +137,21 @@ public class RobotControl extends Robot {
 
     private void initTrajectories() {
         startPose = new Pose2d();
-        if(allianceColor == AllianceColor.RED) {
-            if(robotSide == AllianceSide.FAR) {
+        if(robotSide == AllianceSide.FAR) {
+            if(allianceColor == AllianceColor.RED) {
                 startPose = new Pose2d(-63, 38, 0);
-            } else {
-                startPose = new Pose2d(-63, -38 + 24, 0);
-            }
-        } else {
-            if(robotSide == AllianceSide.FAR) {
-                startPose = new Pose2d(63, -14, Math.toRadians(180));
             } else {
                 startPose = new Pose2d(63, 38, Math.toRadians(180));
             }
+        } else {
+            if(allianceColor == AllianceColor.RED) {
+                startPose = new Pose2d(63, 38, Math.toRadians(180)); //TODO
+            } else {
+                startPose = new Pose2d(63, 38, Math.toRadians(180)); //TODO
+            }
         }
         driveTrain.setPoseEstimate(startPose);
-        Trajectories.init(this, startPose);
+        trajectories = new Trajectories(this, startPose);
     }
 
     public void initDebug() {
@@ -265,7 +266,7 @@ public class RobotControl extends Robot {
         antiTurret = new AntiTurret(hardwareMap);
     }
     public void initVision() {
-        teamPropDetector = new TeamPropDetector(hardwareMap, AllianceColor.RED, telemetry);
+        teamPropDetector = new TeamPropDetector(hardwareMap, allianceColor, telemetry);
     }
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
