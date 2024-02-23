@@ -34,7 +34,7 @@ public class TeamPropDetector extends OpenCvPipeline {
     private final Mat currentColorChannel = new Mat();
 
     public enum Tolerance {
-        RED_CENTER(131), RED_LEFT(134), BLUE_CENTER(0), BLUE_RIGHT(0);
+        RED_CENTER(131), RED_LEFT(134), BLUE_CENTER(129), BLUE_RIGHT(132);
 
         final double tolerance;
 
@@ -51,8 +51,8 @@ public class TeamPropDetector extends OpenCvPipeline {
             centerRectangle = new Rect(310,  279,270,200);
             sideRectangle = new Rect(0, 279, 160, 200); //LEFT (RED)
         } else {
-            centerRectangle = new Rect(160,  279,270,200);
-            sideRectangle = new Rect(445, 279, 160, 180); //RIGHT (BLUE)
+            centerRectangle = new Rect(0,  279,300,200);
+            sideRectangle = new Rect(445, 279, 160, 200); //RIGHT (BLUE)
         }
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -131,7 +131,7 @@ public class TeamPropDetector extends OpenCvPipeline {
     public void telemetry() {
         telemetry.addData("teamPropSide", teamPropSide);
         telemetry.addData("allianceColor", allianceColor);
-        telemetry.addData("leftMean", sideMean);
+        telemetry.addData("sideMean", sideMean);
         telemetry.addData("centerMean", centerMean);
         telemetry.update();
     }
