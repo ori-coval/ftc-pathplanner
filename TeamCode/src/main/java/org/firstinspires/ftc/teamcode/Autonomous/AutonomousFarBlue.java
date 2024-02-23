@@ -17,33 +17,33 @@ import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
-import org.firstinspires.ftc.teamcode.Utils.Side;
+import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 
-@Autonomous(name = "AutonomousRightBlue")
+@Autonomous(name = "AutonomousFarBlue")
 @Disabled
-public class AutonomousRightBlue extends CommandOpMode {
-
+public class AutonomousFarBlue extends CommandOpMode {
     RobotControl robot;
-
     @Override
     public void initialize() {
-        robot = new RobotControl(RobotControl.OpModeType.AUTO, AllianceColor.BLUE, Side.RIGHT, hardwareMap, gamepad1, gamepad2, telemetry);
+        robot = new RobotControl(RobotControl.OpModeType.AUTO, AllianceColor.BLUE, AllianceSide.FAR, hardwareMap, gamepad1, gamepad2, telemetry);
 
-        while (opModeInInit()) {
-            if (robot.teamPropDetector.getTeamPropSide() != null) {
+        while(opModeInInit()) {
+            if(robot.teamPropDetector.getTeamPropSide() != null) {
                 schedule(
                         new SequentialCommandGroup(
                                 new InstantCommand(), //for some reason it runs the first command on the init
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
-                                new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center RightBlue"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center LeftBlue"), robot.driveTrain),
                                 new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, false),
                                 new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(3000)
+//                                new TrajectoryFollowerCommand(Trajectories.get("Park on LeftBlue"), robot.driveTrain)
                         )
                 );
             }
             robot.teamPropDetector.telemetry();
         }
+
     }
 
     @Override

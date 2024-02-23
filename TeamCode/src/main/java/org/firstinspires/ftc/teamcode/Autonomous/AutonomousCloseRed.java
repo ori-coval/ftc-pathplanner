@@ -6,16 +6,17 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
+import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 
-@Autonomous(name = "AutonomousRightRed")
+@Autonomous(name = "AutonomousCloseRed")
 @Disabled
-public class AutonomousRightRed extends CommandOpMode {
+public class AutonomousCloseRed extends CommandOpMode {
 
     RobotControl robot;
     @Override
     public void initialize() {
-        robot = new RobotControl(RobotControl.OpModeType.AUTO, AllianceColor.RED, Side.RIGHT, hardwareMap ,gamepad1,gamepad2,telemetry);
+        robot = new RobotControl(RobotControl.OpModeType.AUTO, AllianceColor.RED, AllianceSide.CLOSE, hardwareMap ,gamepad1,gamepad2,telemetry);
     }
 
     @Override

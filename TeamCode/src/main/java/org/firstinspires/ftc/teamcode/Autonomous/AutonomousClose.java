@@ -9,22 +9,23 @@ import org.firstinspires.ftc.teamcode.Commands.auto.ParkingRight;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
+import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 
-public class AutonomousRight extends CommandOpMode {
+public class AutonomousClose extends CommandOpMode {
 
     RobotControl robot;
 
     public AllianceColor allianceColor;
 
-    public AutonomousRight(AllianceColor allianceColor) {
+    public AutonomousClose(AllianceColor allianceColor) {
         this.allianceColor = allianceColor;
     }
 
     @Override
     public void initialize() {
 
-        robot = new RobotControl(RobotControl.OpModeType.AUTO, allianceColor, Side.RIGHT, hardwareMap, gamepad1, gamepad2, telemetry);
+        robot = new RobotControl(RobotControl.OpModeType.AUTO, allianceColor, AllianceSide.CLOSE, hardwareMap, gamepad1, gamepad2, telemetry);
 
         while (opModeInInit()) {
             if(robot.teamPropDetector != null) {

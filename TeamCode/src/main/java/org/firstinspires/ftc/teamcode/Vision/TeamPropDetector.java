@@ -119,10 +119,10 @@ public class TeamPropDetector extends OpenCvPipeline {
     }
 
     public void telemetry() {
-        telemetry.addData("leftMean", leftMean);
-        telemetry.addData("centerMean", centerMean);
         telemetry.addData("teamPropSide", teamPropSide);
         telemetry.addData("allianceColor", allianceColor);
+        telemetry.addData("leftMean", leftMean);
+        telemetry.addData("centerMean", centerMean);
         telemetry.update();
     }
 

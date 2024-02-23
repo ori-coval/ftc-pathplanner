@@ -38,6 +38,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
+import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
@@ -48,7 +49,7 @@ import java.util.function.BooleanSupplier;
 public class RobotControl extends Robot {
     OpModeType opModeType;
     public AllianceColor allianceColor;
-    public Side robotSide;
+    public AllianceSide robotSide;
     public Pose2d startPose;
     HardwareMap hardwareMap;
     public DriveTrain driveTrain;
@@ -65,7 +66,7 @@ public class RobotControl extends Robot {
     GamepadEx gamepadEx2;
     public Extender extender;
     public Intake intake;
-    Telemetry telemetry;
+    public Telemetry telemetry;
     private final double TRIGGER_THRESHOLD = 0.5;
 
     public enum OpModeType {
@@ -85,7 +86,7 @@ public class RobotControl extends Robot {
         initializeSystems(type);
     }
 
-    public RobotControl(OpModeType type, AllianceColor allianceColor, Side robotSide, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+    public RobotControl(OpModeType type, AllianceColor allianceColor, AllianceSide robotSide, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         opModeType = type;
         this.allianceColor = allianceColor;
         this.robotSide = robotSide;
@@ -136,15 +137,15 @@ public class RobotControl extends Robot {
     private void initTrajectories() {
         startPose = new Pose2d();
         if(allianceColor == AllianceColor.RED) {
-            if(robotSide == Side.LEFT) {
+            if(robotSide == AllianceSide.FAR) {
                 startPose = new Pose2d(-63, 38, 0);
-            } else if(robotSide == Side.RIGHT) {
+            } else {
                 startPose = new Pose2d(-63, -38 + 24, 0);
             }
         } else {
-            if(robotSide == Side.LEFT) {
+            if(robotSide == AllianceSide.FAR) {
                 startPose = new Pose2d(63, -14, Math.toRadians(180));
-            } else if(robotSide == Side.RIGHT) {
+            } else {
                 startPose = new Pose2d(63, 38, Math.toRadians(180));
             }
         }
@@ -244,7 +245,7 @@ public class RobotControl extends Robot {
         if(opModeType == OpModeType.TELEOP) {
             register(driveTrain);
             driveTrain.setDefaultCommand(new DriveCommand(
-                    driveTrain, () -> (-gamepad1.left_stick_y), () -> gamepad1.left_stick_x, () -> gamepad1.right_stick_x
+                    driveTrain, () -> gamepad1.left_stick_y, () -> gamepad1.left_stick_x, () -> gamepad1.right_stick_x
             ));
 
             schedule(new RunCommand(() ->

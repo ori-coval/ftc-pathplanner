@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
@@ -10,7 +11,11 @@ public class ParkingAfterScoringYellow extends SequentialCommandGroup {
     public ParkingAfterScoringYellow(RobotControl robot) {
         super(
                 new TrajectoryFollowerCommand(Trajectories.get("Go back after scoring yellow"), robot.driveTrain), //to allow intake to get in
-                new ArmGetToPosition(robot, ArmPosition.INTAKE, true)
+                new InstantCommand(() -> {
+                    robot.telemetry.addLine("Arm Returned to Intake");
+                    robot.telemetry.update();
+                })
+                /*new ArmGetToPosition(robot, ArmPosition.INTAKE, true)*/
         );
     }
 }
