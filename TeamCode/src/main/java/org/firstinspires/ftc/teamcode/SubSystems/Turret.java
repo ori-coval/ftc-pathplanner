@@ -24,6 +24,7 @@ public class Turret extends SubsystemBase {
     public static double kD = 0;
 
     private final PIDController pidController = new PIDController(kP, kI, kD);
+    public boolean isListeningToElbowSensor = true;
 
     public Turret(HardwareMap hardwareMap) {
         turretServoA = hardwareMap.crservo.get(Configuration.TURRET_RIGHT);

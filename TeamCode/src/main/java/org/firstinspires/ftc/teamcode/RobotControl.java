@@ -64,7 +64,7 @@ public class RobotControl extends Robot {
     GamepadEx gamepadEx2;
     public Extender extender;
     public Intake intake;
-    Telemetry telemetry;
+    public Telemetry telemetry;
     private final double TRIGGER_THRESHOLD = 0.5;
 
     public enum OpModeType {
@@ -177,11 +177,11 @@ public class RobotControl extends Robot {
         leftTrigger1.whenActive(new ScoringFirstPixel(cartridge, leftTriggerCondition));
         rightTrigger1.whenActive(new ScoringBothPixels(this, rightTriggerCondition));
 
-/*        if(allianceColor == AllianceColor.RED) {
+        if(allianceColor == AllianceColor.RED) {
             gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.LEFT));
         } else {
             gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.RIGHT));
-        }*/
+        }
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(this, Side.CENTER));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));
@@ -201,6 +201,7 @@ public class RobotControl extends Robot {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new Climb(this));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whileActiveOnce(new ElevatorGoUp(this));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> turret.isListeningToElbowSensor = !turret.isListeningToElbowSensor));
 
 
 

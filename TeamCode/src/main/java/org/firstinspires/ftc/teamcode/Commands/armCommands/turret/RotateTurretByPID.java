@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.controller.PIDController;
 
 import org.firstinspires.ftc.teamcode.RobotControl;
 
+import java.net.HttpURLConnection;
 import java.util.Calendar;
 
 public class RotateTurretByPID extends CommandBase {
@@ -13,6 +14,7 @@ public class RotateTurretByPID extends CommandBase {
     private PIDController pidController;
     private RobotControl robot;
     private long startTime;
+    private final long TIME_WAITING_FOR_ELBOW = 4000;
 
     public RotateTurretByPID(RobotControl robot, double setPoint){
         this.setPoint = setPoint;
@@ -30,10 +32,10 @@ public class RotateTurretByPID extends CommandBase {
 
     @Override
     public void execute() {
-        if(robot.elbow.getServoPosition() > 0.2) {
+        if(robot.elbow.isInSafePlace() || !robot.turret.isListeningToElbowSensor) {
             robot.turret.setPower(pidController.calculate(robot.turret.getAngle()));
-        } else if(Calendar.getInstance().getTimeInMillis() - startTime > 2000) {
-            pidController.setSetPoint(robot.turret.getAngle());
+        } else if(Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_ELBOW) {
+            setPoint = robot.turret.getAngle();
         }
         FtcDashboard.getInstance().getTelemetry().addData("Turret is finished", isFinished());
     }

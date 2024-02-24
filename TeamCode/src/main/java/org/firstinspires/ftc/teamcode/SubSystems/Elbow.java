@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.PIDController;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -31,15 +28,22 @@ public class Elbow extends SubsystemBase {
     public double getServoPosition(){
         return servoRight.getPosition();
     }
-    public void updateSwitch(){
-        if (sensor.getState() & !lastState){
+    public boolean getSwitchState() {
+        return sensor.getState();
+    }
+    public void updateSafeState() {
+        if (getSwitchState() & !lastState) {
             inSafePlace = !inSafePlace;
         }
+        lastState = getSwitchState();
+    }
+
+    public boolean isInSafePlace() {
+        return inSafePlace;
     }
 
     @Override
     public void periodic() {
-        updateSwitch();
-        lastState = sensor.getState();
+        updateSafeState();
     }
 }
