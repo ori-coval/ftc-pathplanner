@@ -19,15 +19,15 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
         addCommands(
                 new ConditionalCommand(
                         new SideCommandSwitch(
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Score Purple Left"), robot.driveTrain),
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Score Purple Center"), robot.driveTrain),
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Score Purple Right"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Left"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Center"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Right"), robot.driveTrain),
                                 () -> robot.teamPropDetector.getTeamPropSide()
                         ),
                         new SideCommandSwitch(
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Score Purple Right"), robot.driveTrain),
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Score Purple Center"), robot.driveTrain),
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Score Purple Left"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Right"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Center"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Left"), robot.driveTrain),
                                 () -> robot.teamPropDetector.getTeamPropSide()
                         ),
                         () -> allianceColor == AllianceColor.RED
