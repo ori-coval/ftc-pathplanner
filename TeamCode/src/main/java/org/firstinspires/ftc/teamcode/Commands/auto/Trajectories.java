@@ -143,7 +143,7 @@ public class Trajectories {
 
         trajectorySequenceHashMap.put("Close Yellow Right", robot.driveTrain.trajectorySequenceBuilder(get("Close Purple Right").end())
                 .setTangent(getAngle(180))
-                .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 60, -60, getAngle(-90)), getAngle(-90))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 60, -60, getAngle(-90)), getAngle(-90))
                 .build()
         );
 
@@ -153,7 +153,11 @@ public class Trajectories {
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Close Yellow Left", robot.driveTrain)
+        trajectorySequenceHashMap.put("Close Yellow Left", robot.driveTrain.trajectorySequenceBuilder(get("Close Purple Left").end())
+                .setTangent(getAngle(-90))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 10, -60, getAngle(-90)), getAngle(-90))
+                .build()
+        );
 
 
         //Parking

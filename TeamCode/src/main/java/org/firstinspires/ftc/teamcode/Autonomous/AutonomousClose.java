@@ -3,9 +3,13 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
+import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
+import org.firstinspires.ftc.teamcode.Commands.auto.ParkingAfterScoringYellow;
 import org.firstinspires.ftc.teamcode.Commands.auto.ParkingRight;
+import org.firstinspires.ftc.teamcode.Commands.auto.ScoringFirstPixelAuto;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
@@ -24,22 +28,25 @@ public class AutonomousClose extends CommandOpMode {
 
     @Override
     public void initialize() {
-
         robot = new RobotControl(RobotControl.OpModeType.AUTO, allianceColor, AllianceSide.CLOSE, hardwareMap, gamepad1, gamepad2, telemetry);
 
-        while (opModeInInit()) {
-            if(robot.teamPropDetector != null) {
-                schedule(
-                        new SequentialCommandGroup(
-                                new InstantCommand(),
-                                new AutoInit(robot),
-                                new ScoringPurplePixel(robot, allianceColor),
-                                new ParkingRight(robot)
-                        )
+        while(opModeInInit() && !isStopRequested()) {
+            if(robot.teamPropDetector.getTeamPropSide() != null) {
+
+                SequentialCommandGroup commandsToRun = new SequentialCommandGroup(
+                        new WaitUntilCommand(this::isStarted),
+                        new AutoInit(robot),
+                        new ScoringPurplePixel(robot, allianceColor),
+                        new GoFromSpikeMarkToStackAndCollect(robot, allianceColor),
+                        new ScoringFirstPixelAuto(robot),
+                        new ParkingAfterScoringYellow(robot)
                 );
+
+                schedule(commandsToRun);
             }
+            robot.teamPropDetector.telemetry();
         }
-        robot.teamPropDetector.telemetry();
+
     }
 
     @Override
