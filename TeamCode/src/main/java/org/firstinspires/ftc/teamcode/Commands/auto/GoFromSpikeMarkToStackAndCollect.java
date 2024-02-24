@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 
 public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
-    public GoFromSpikeMarkToStackAndCollect(RobotControl robot, AllianceColor allianceColor) {
+    public GoFromSpikeMarkToStackAndCollect(RobotControl robot) {
         super(
                 new ParallelCommandGroup(
                         new ConditionalCommand(
@@ -31,7 +31,7 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                         new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack left"), robot.driveTrain),
                                         () -> robot.teamPropDetector.getTeamPropSide()
                                 ),
-                                () -> allianceColor == AllianceColor.RED
+                                () -> robot.allianceColor == AllianceColor.RED
                         ),
                         new WaitCommand(500).andThen(new BackToIntake(robot).alongWith(new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)))),
                         new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL)

@@ -15,11 +15,6 @@ import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySe
 
 import java.util.List;
 
-/**
- * A subsystem that uses the {@link SampleMecanumDrive} class.
- * This periodically calls {@link SampleMecanumDrive#update()} which runs the internal
- * state machine for the mecanum drive. All movement/following is async to fit the paradigm.
- */
 public class DriveTrain extends SubsystemBase {
 
     private final SampleMecanumDrive drive;
@@ -54,7 +49,7 @@ public class DriveTrain extends SubsystemBase {
         Pose2d poseEstimate = getPoseEstimate();
 
         Vector2d input = new Vector2d(-leftY, -leftX).rotated(
-                fieldCentric ? -poseEstimate.getHeading() : 0
+                fieldCentric ? -poseEstimate.getHeading() : 0 //TODO
         );
 
         drive.setWeightedDrivePower(

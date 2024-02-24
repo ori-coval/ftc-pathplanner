@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
 import org.firstinspires.ftc.teamcode.Commands.auto.ParkingAfterScoringYellow;
 import org.firstinspires.ftc.teamcode.Commands.auto.ParkingRight;
+import org.firstinspires.ftc.teamcode.Commands.auto.ScoreYellowClose;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringFirstPixelAuto;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
 import org.firstinspires.ftc.teamcode.RobotControl;
@@ -32,13 +33,11 @@ public class AutonomousClose extends CommandOpMode {
 
         while(opModeInInit() && !isStopRequested()) {
             if(robot.teamPropDetector.getTeamPropSide() != null) {
-
                 SequentialCommandGroup commandsToRun = new SequentialCommandGroup(
                         new WaitUntilCommand(this::isStarted),
                         new AutoInit(robot),
-                        new ScoringPurplePixel(robot, allianceColor),
-                        new GoFromSpikeMarkToStackAndCollect(robot, allianceColor),
-                        new ScoringFirstPixelAuto(robot),
+                        new ScoringPurplePixel(robot),
+                        new ScoreYellowClose(robot),
                         new ParkingAfterScoringYellow(robot)
                 );
 
@@ -46,6 +45,7 @@ public class AutonomousClose extends CommandOpMode {
             }
             robot.teamPropDetector.telemetry();
         }
+        robot.teamPropDetector.webcam.closeCameraDevice();
 
     }
 

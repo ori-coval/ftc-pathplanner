@@ -26,12 +26,12 @@ public class AutonomousFar extends CommandOpMode {
 
         while(opModeInInit() && !isStopRequested()) {
             if(robot.teamPropDetector.getTeamPropSide() != null) {
-
+                robot.teamPropDetector.webcam.closeCameraDevice();
                 SequentialCommandGroup commandsToRun = new SequentialCommandGroup(
                         new WaitUntilCommand(this::isStarted),
                         new AutoInit(robot),
-                        new ScoringPurplePixel(robot, allianceColor),
-                        new GoFromSpikeMarkToStackAndCollect(robot, allianceColor),
+                        new ScoringPurplePixel(robot),
+                        new GoFromSpikeMarkToStackAndCollect(robot),
                         new ScoringFirstPixelAuto(robot),
                         new ParkingAfterScoringYellow(robot)
                 );
