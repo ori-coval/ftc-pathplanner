@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
@@ -13,21 +13,21 @@ import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 
-public class AutonomousFar extends CommandOpMode {
+public class AutonomousFar extends LinearOpMode {
     RobotControl robot;
     AllianceColor allianceColor;
     public AutonomousFar(AllianceColor allianceColor) {
         this.allianceColor = allianceColor;
     }
 
-    @Override
     public void initialize() {
         robot = new RobotControl(RobotControl.OpModeType.AUTO, allianceColor, AllianceSide.FAR, hardwareMap, gamepad1, gamepad2, telemetry);
+        SequentialCommandGroup commandsToRun = null;
 
         while(opModeInInit() && !isStopRequested()) {
             if(robot.teamPropDetector.getTeamPropSide() != null) {
                 robot.teamPropDetector.webcam.closeCameraDevice();
-                SequentialCommandGroup commandsToRun = new SequentialCommandGroup(
+                commandsToRun = new SequentialCommandGroup(
                         new WaitUntilCommand(this::isStarted),
                         new AutoInit(robot),
                         new ScoringPurplePixel(robot),
@@ -36,16 +36,24 @@ public class AutonomousFar extends CommandOpMode {
                         new ParkingAfterScoringYellow(robot)
                 );
 
-                schedule(commandsToRun);
             }
             robot.teamPropDetector.telemetry();
         }
+        robot.schedule(commandsToRun);
 
     }
 
     @Override
-    public void run() {
-        super.run();
-        telemetry.update();
+    public void runOpMode() {
+        initialize();
+
+        waitForStart();
+
+        // run the scheduler
+        while (!isStopRequested() && opModeIsActive()) {
+            robot.run();
+            telemetry.update();
+        }
+        robot.reset();
     }
 }

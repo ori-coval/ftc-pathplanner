@@ -49,7 +49,7 @@ public class DriveTrain extends SubsystemBase {
         Pose2d poseEstimate = getPoseEstimate();
 
         Vector2d input = new Vector2d(-leftY, -leftX).rotated(
-                fieldCentric ? -poseEstimate.getHeading() : 0 //TODO
+                fieldCentric ?  -poseEstimate.getHeading() : 0 //TODO
         );
 
         drive.setWeightedDrivePower(

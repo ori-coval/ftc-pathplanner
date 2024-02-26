@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotS
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.UnsafeMoveArm;
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.drivetrain.DriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.drivetrain.ResetFieldOriented;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
@@ -68,6 +69,7 @@ public class RobotControl extends Robot {
     public Extender extender;
     public Intake intake;
     public Telemetry telemetry;
+    public static Pose2d lastFieldOrientedPos;
     private final double TRIGGER_THRESHOLD = 0.5;
 
     public enum OpModeType {
@@ -186,7 +188,7 @@ public class RobotControl extends Robot {
             gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.RIGHT));
         }
 
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(driveTrain.)
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ResetFieldOriented(this));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(this, Side.CENTER));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));
 

@@ -312,6 +312,10 @@ public class SampleMecanumDrive extends MecanumDrive {
         ));
     }
 
+    public IMU getImu() {
+        return imu;
+    }
+
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
     }

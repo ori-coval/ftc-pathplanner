@@ -27,6 +27,7 @@ import org.opencv.core.Mat;
 import java.util.HashMap;
 
 public class Trajectories {
+
     private final HashMap<String , TrajectorySequence> trajectorySequenceHashMap = new HashMap<>();
     private final RobotControl robot;
     double trajectorySignAlliance;
