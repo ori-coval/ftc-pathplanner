@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 public class AutoTest extends SequentialCommandGroup {
     public AutoTest(RobotControl robot) {
         super(
-                new TrajectoryFollowerCommand(robot.trajectories.get("go to spike mark"), robot.driveTrain)
+                new TrajectoryFollowerCommand(robot.trajectories.get("go to spike mark"), robot.autoDriveTrain)
         );
     }
 }

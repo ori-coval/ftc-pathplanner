@@ -23,7 +23,7 @@ public class ScoringFirstPixelAuto extends SequentialCommandGroup {
     public ScoringFirstPixelAuto(RobotControl robot){
         addCommands(
                 new ParallelCommandGroup(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop"), robot.autoDriveTrain),
                         new WaitCommand(1500).andThen(new SideCommandSwitch(
                                 new InstantCommand(() -> robot.telemetry.addLine("Left")),
                                 new InstantCommand(() -> robot.telemetry.addLine("Center")),

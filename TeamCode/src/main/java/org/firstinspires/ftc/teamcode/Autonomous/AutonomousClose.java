@@ -51,11 +51,10 @@ public class AutonomousClose extends LinearOpMode {
         // run the scheduler
         while (!isStopRequested() && opModeIsActive()) {
             robot.run();
-            telemetry.addLine(robot.driveTrain.getPoseEstimate() + "");
             telemetry.update();
         }
 
-        RobotControl.lastFieldOrientedPos = robot.driveTrain.getPoseEstimate();
+        RobotControl.lastHeading = robot.driveTrain.getYawInDegrees();
 
         robot.reset();
     }

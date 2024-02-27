@@ -1,28 +1,37 @@
 package org.firstinspires.ftc.teamcode.Commands.drivetrain;
 
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 
-import java.util.function.DoubleSupplier;
-
 public class DriveCommand extends CommandBase {
+    private DriveTrain driveTrain;
 
-    private final DriveTrain drive;
-    private final DoubleSupplier leftY, leftX, rightX;
+    private Gamepad gamepad;
 
-    public DriveCommand(DriveTrain drive, DoubleSupplier leftY, DoubleSupplier leftX, DoubleSupplier rightX) {
-        this.drive = drive;
-        this.leftX = leftX;
-        this.leftY = leftY;
-        this.rightX = rightX;
-
-        addRequirements(drive);
+    public DriveCommand(DriveTrain driveTrain, Gamepad gamepad){
+        this.driveTrain = driveTrain;
+        this.gamepad = gamepad;
+        this.addRequirements(driveTrain);
+    }
+    @Override
+    public void initialize() {
+        super.initialize();
     }
 
     @Override
     public void execute() {
-        drive.drive(leftY.getAsDouble(), leftX.getAsDouble(), rightX.getAsDouble());
+        driveTrain.fieldOrientedDrive(gamepad.left_stick_x, -gamepad.left_stick_y, gamepad.right_stick_x);
     }
 
+    @Override
+    public void end(boolean interrupted) {
+        driveTrain.drive(0,0,0);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return super.isFinished();
+    }
 }

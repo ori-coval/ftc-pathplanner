@@ -22,13 +22,13 @@ public class ScoringPixels extends SequentialCommandGroup {
             public ScoringPixels(RobotControl robot, Side side) {
                 super(
                         new ParallelCommandGroup(
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Driving from board to collect from stack"), robot.driveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Driving from board to collect from stack"), robot.autoDriveTrain),
                                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.STANDBY),
                                 new ArmGetToPosition(robot, ArmPosition.INTAKE, true)
                         ),
                         new IntakeCollectFromStack(robot.intake.lifter, robot.intake.roller).withTimeout(0),
                         new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.STANDBY),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to score from pixel stack"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to score from pixel stack"), robot.autoDriveTrain),
                         new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE, true)
 
                 );

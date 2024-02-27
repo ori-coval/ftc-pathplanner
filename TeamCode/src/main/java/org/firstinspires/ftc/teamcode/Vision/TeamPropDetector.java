@@ -23,10 +23,10 @@ public class TeamPropDetector extends OpenCvPipeline {
     private final AllianceColor allianceColor;
     private Side teamPropSide = null;
 
-    private final Rect sideRectangle;
+    private final Rect farRectangle;
     private final Rect centerRectangle;
 
-    private double sideMean;
+    private double farMean;
     private double centerMean;
 
     private final Mat YCrCb = new Mat();
@@ -34,7 +34,7 @@ public class TeamPropDetector extends OpenCvPipeline {
     private final Mat currentColorChannel = new Mat();
 
     public enum Tolerance {
-        RED_CENTER(131), RED_LEFT(134), BLUE_CENTER(129), BLUE_RIGHT(132);
+        RED_CENTER(131), RED_FAR(134), BLUE_CENTER(129), BLUE_FAR(132);
 
         final double tolerance;
 
@@ -49,10 +49,10 @@ public class TeamPropDetector extends OpenCvPipeline {
 
         if(allianceColor == AllianceColor.RED) {
             centerRectangle = new Rect(310,  279,270,200);
-            sideRectangle = new Rect(0, 279, 160, 200); //LEFT (RED)
+            farRectangle = new Rect(0, 279, 160, 200); //LEFT (RED)
         } else {
             centerRectangle = new Rect(0,  279,300,200);
-            sideRectangle = new Rect(445, 279, 160, 200); //RIGHT (BLUE)
+            farRectangle = new Rect(445, 279, 160, 200); //RIGHT (BLUE)
         }
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -91,16 +91,16 @@ public class TeamPropDetector extends OpenCvPipeline {
         }
 
         // Submats from the current channel
-        Mat sideMat = currentColorChannel.submat(sideRectangle);
+        Mat farMat = currentColorChannel.submat(farRectangle);
         Mat centerMat = currentColorChannel.submat(centerRectangle);
 
 
         // get the area specific means
-        sideMean = Core.mean(sideMat).val[0];
+        farMean = Core.mean(farMat).val[0];
         centerMean = Core.mean(centerMat).val[0];
 
         double centerTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_CENTER.tolerance : Tolerance.RED_CENTER.tolerance;
-        double sideTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_RIGHT.tolerance : Tolerance.RED_LEFT.tolerance;
+        double farTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_FAR.tolerance : Tolerance.RED_FAR.tolerance;
 
         // choose the most prominent side
         Side tempResult;
@@ -109,7 +109,7 @@ public class TeamPropDetector extends OpenCvPipeline {
 
         if(centerMean > centerTolerance) {
             tempResult = Side.CENTER;
-        } else if(sideMean > sideTolerance) {
+        } else if(farMean > farTolerance) {
             if (allianceColor == AllianceColor.RED) tempResult = Side.LEFT;
             else tempResult = Side.RIGHT;
         }
@@ -117,7 +117,7 @@ public class TeamPropDetector extends OpenCvPipeline {
         teamPropSide = tempResult;
 
         // visual indicator
-        Imgproc.rectangle(frame, sideRectangle, new Scalar(255, 0, 0), 5);
+        Imgproc.rectangle(frame, farRectangle, new Scalar(255, 0, 0), 5);
         Imgproc.rectangle(frame, centerRectangle, new Scalar(0, 0, 255), 5);
 
         //Camera Stream output
@@ -131,7 +131,7 @@ public class TeamPropDetector extends OpenCvPipeline {
     public void telemetry() {
         telemetry.addData("teamPropSide", teamPropSide);
         telemetry.addData("allianceColor", allianceColor);
-        telemetry.addData("sideMean", sideMean);
+        telemetry.addData("sideMean", farMean);
         telemetry.addData("centerMean", centerMean);
         telemetry.update();
     }

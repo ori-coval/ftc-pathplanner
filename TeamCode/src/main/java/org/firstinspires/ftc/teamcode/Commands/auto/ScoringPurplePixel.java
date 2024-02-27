@@ -32,15 +32,15 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
     private Command farCommand(RobotControl robot) {
         return new ConditionalCommand(
                 new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Left"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Center"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Right"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Left"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Center"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Right"), robot.autoDriveTrain),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Right"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Center"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Left"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Right"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Center"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple Left"), robot.autoDriveTrain),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 () -> robot.allianceColor == AllianceColor.RED
@@ -50,15 +50,15 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
     private Command closeCommand(RobotControl robot) {
         return new ConditionalCommand(
                 new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Left"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Center"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Right"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Left"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Center"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Right"), robot.autoDriveTrain),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Right"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Center"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Left"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Right"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Center"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple Left"), robot.autoDriveTrain),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 () -> robot.allianceColor == AllianceColor.RED

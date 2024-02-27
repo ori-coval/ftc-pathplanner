@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
-import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -31,6 +30,7 @@ import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
+import org.firstinspires.ftc.teamcode.SubSystems.AutoDriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.DroneLauncher;
@@ -55,6 +55,7 @@ public class RobotControl extends Robot {
     public Pose2d startPose;
     HardwareMap hardwareMap;
     public DriveTrain driveTrain;
+    public AutoDriveTrain autoDriveTrain;
     public Elbow elbow;
     public Turret turret;
     public AntiTurret antiTurret;
@@ -69,7 +70,7 @@ public class RobotControl extends Robot {
     public Extender extender;
     public Intake intake;
     public Telemetry telemetry;
-    public static Pose2d lastFieldOrientedPos;
+    public static double lastHeading = 0;
     private final double TRIGGER_THRESHOLD = 0.5;
 
     public enum OpModeType {
@@ -152,7 +153,7 @@ public class RobotControl extends Robot {
                 startPose = new Pose2d(63, -10, Math.toRadians(180));
             }
         }
-        driveTrain.setPoseEstimate(startPose);
+        autoDriveTrain.setPoseEstimate(startPose);
         trajectories = new Trajectories(this, startPose);
     }
 
@@ -245,17 +246,11 @@ public class RobotControl extends Robot {
     }
 
     public void initDriveTrain() {
-        driveTrain = new DriveTrain(new SampleMecanumDrive(hardwareMap), true);
+        driveTrain = new DriveTrain(hardwareMap, lastHeading);
+        autoDriveTrain = new AutoDriveTrain(new SampleMecanumDrive(hardwareMap));
         if(opModeType == OpModeType.TELEOP) {
             register(driveTrain);
-            driveTrain.setDefaultCommand(new DriveCommand(
-                    driveTrain, () -> gamepad1.left_stick_y, () -> gamepad1.left_stick_x, () -> gamepad1.right_stick_x
-            ));
-
-            schedule(new RunCommand(() ->
-                    driveTrain.update()
-            ));
-
+            driveTrain.setDefaultCommand(new DriveCommand(driveTrain, gamepad1));
         }
     }
     public void initIntake() {

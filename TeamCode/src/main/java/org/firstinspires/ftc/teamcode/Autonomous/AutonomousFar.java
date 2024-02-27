@@ -54,6 +54,9 @@ public class AutonomousFar extends LinearOpMode {
             robot.run();
             telemetry.update();
         }
+
+        RobotControl.lastHeading = robot.driveTrain.getYawInDegrees();
+
         robot.reset();
     }
 }

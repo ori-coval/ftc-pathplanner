@@ -20,15 +20,15 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                         new ConditionalCommand(
                                 new SideCommandSwitch(
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack left"), robot.driveTrain),
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack center"), robot.driveTrain),
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack right"), robot.driveTrain),
+                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack left"), robot.autoDriveTrain),
+                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack center"), robot.autoDriveTrain),
+                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack right"), robot.autoDriveTrain),
                                         () -> robot.teamPropDetector.getTeamPropSide()
                                 ),
                                 new SideCommandSwitch(
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack right"), robot.driveTrain),
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack center"), robot.driveTrain),
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack left"), robot.driveTrain),
+                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack right"), robot.autoDriveTrain),
+                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack center"), robot.autoDriveTrain),
+                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack left"), robot.autoDriveTrain),
                                         () -> robot.teamPropDetector.getTeamPropSide()
                                 ),
                                 () -> robot.allianceColor == AllianceColor.RED

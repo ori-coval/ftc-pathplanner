@@ -35,9 +35,9 @@ public class AutoTest extends CommandOpMode {
                 new InitializeCommand(robot),
                 new WaitUntilCommand(this::isStarted),
                 new ParallelCommandGroup(
-                        new TrajectoryFollowerCommand(robot.driveTrain.trajectorySequenceBuilder(new Pose2d())
+                        new TrajectoryFollowerCommand(robot.autoDriveTrain.trajectorySequenceBuilder(new Pose2d())
                                 .forward(60)
-                                .build(), robot.driveTrain
+                                .build(), robot.autoDriveTrain
                         ),
                         new WaitCommand(1000).andThen(new ElbowGetToPosition(new Elbow(hardwareMap), 0.4))
                 )

@@ -16,7 +16,7 @@ public class ParkingAfterScoringYellow extends SequentialCommandGroup {
     public ParkingAfterScoringYellow(RobotControl robot) {
         addCommands(
                 new ConditionalCommand(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Backdrop Intake Far"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Backdrop Intake Far"), robot.autoDriveTrain),
                         getCloseTrajectory(robot),
                         () -> robot.robotSide == AllianceSide.FAR
                 ), //to allow intake to get in
@@ -30,8 +30,8 @@ public class ParkingAfterScoringYellow extends SequentialCommandGroup {
 
     private Command getCloseTrajectory(RobotControl robot) {
         return new ConditionalCommand(
-                new TrajectoryFollowerCommand(robot.trajectories.get("Backdrop Intake Close Problematic"), robot.driveTrain),
-                new TrajectoryFollowerCommand(robot.trajectories.get("Backdrop Intake Close"), robot.driveTrain),
+                new TrajectoryFollowerCommand(robot.trajectories.get("Backdrop Intake Close Problematic"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(robot.trajectories.get("Backdrop Intake Close"), robot.autoDriveTrain),
                 () -> (robot.allianceColor == AllianceColor.RED && robot.teamPropDetector.getTeamPropSide() == Side.LEFT)
                 ||    (robot.allianceColor == AllianceColor.BLUE && robot.teamPropDetector.getTeamPropSide() == Side.RIGHT)
         );

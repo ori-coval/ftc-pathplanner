@@ -32,15 +32,15 @@ public class ScoreYellowClose extends SequentialCommandGroup {
     private Command scoreYellowTrajectory(RobotControl robot) {
         return new ConditionalCommand(
                 new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Left"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Center"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Right"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Left"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Center"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Right"), robot.autoDriveTrain),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Right"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Center"), robot.driveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Left"), robot.driveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Right"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Center"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Left"), robot.autoDriveTrain),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 () -> robot.allianceColor == AllianceColor.RED
