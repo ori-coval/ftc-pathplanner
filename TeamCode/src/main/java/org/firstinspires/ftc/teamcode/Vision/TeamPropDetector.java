@@ -5,6 +5,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
+import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -21,7 +22,7 @@ public class TeamPropDetector extends OpenCvPipeline {
     Telemetry telemetry;
     public OpenCvCamera webcam;
     private final AllianceColor allianceColor;
-    private Side teamPropSide = null;
+    private DetectionSide teamPropSide = null;
 
     private final Rect farRectangle;
     private final Rect centerRectangle;
@@ -103,15 +104,12 @@ public class TeamPropDetector extends OpenCvPipeline {
         double farTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_FAR.tolerance : Tolerance.RED_FAR.tolerance;
 
         // choose the most prominent side
-        Side tempResult;
-        if(allianceColor == AllianceColor.RED) tempResult = Side.RIGHT;
-        else tempResult = Side.LEFT;
+        DetectionSide tempResult = DetectionSide.CLOSE;
 
         if(centerMean > centerTolerance) {
-            tempResult = Side.CENTER;
+            tempResult = DetectionSide.CENTER;
         } else if(farMean > farTolerance) {
-            if (allianceColor == AllianceColor.RED) tempResult = Side.LEFT;
-            else tempResult = Side.RIGHT;
+            tempResult = DetectionSide.FAR;
         }
 
         teamPropSide = tempResult;
@@ -124,14 +122,14 @@ public class TeamPropDetector extends OpenCvPipeline {
         return frame;
     }
 
-    public Side getTeamPropSide() {
+    public DetectionSide getTeamPropSide() {
         return teamPropSide;
     }
 
     public void telemetry() {
         telemetry.addData("teamPropSide", teamPropSide);
         telemetry.addData("allianceColor", allianceColor);
-        telemetry.addData("sideMean", farMean);
+        telemetry.addData("farMean", farMean);
         telemetry.addData("centerMean", centerMean);
         telemetry.update();
     }
