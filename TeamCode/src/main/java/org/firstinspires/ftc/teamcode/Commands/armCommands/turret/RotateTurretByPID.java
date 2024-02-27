@@ -35,7 +35,7 @@ public class RotateTurretByPID extends CommandBase {
         if(robot.elbow.isInSafePlace() || !robot.turret.isListeningToElbowSensor) {
             robot.turret.setPower(pidController.calculate(robot.turret.getAngle()));
         } else if(Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_ELBOW) {
-            setPoint = robot.turret.getAngle();
+            pidController.setSetPoint(robot.turret.getAngle());
         }
         FtcDashboard.getInstance().getTelemetry().addData("Turret is finished", isFinished());
     }
