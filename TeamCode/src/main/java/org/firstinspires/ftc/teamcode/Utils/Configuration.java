@@ -40,8 +40,8 @@ public class Configuration {
 
             SERVOS:
                     0:
-                    1: turretLeft            (Continues Rotation Servo)           (crservo)
-                    2: turretRight           (Continues Rotation Servo)           (crservo)
+                    1:
+                    2:
                     3:
                     4: drone                 (servo)                              (servo)
                     5: intakeServo           (servo)                              (servo)
@@ -58,7 +58,7 @@ public class Configuration {
             MOTORS:
                     0: elevatorLeft            (GoBilda 5202/3/4 series)            (dcMotor)
                     1: elevatorRight           (GoBilda 5202/3/4 series)            (dcMotor)
-                    2: elevatorClimber          (GoBilda 5202/3/4 series)            (dcMotor)
+                    2: turret          (GoBilda 5202/3/4 series)            (dcMotor)
                     3: intake                (GoBilda 5202/3/4 series)            (dcMotor)
 
             SERVOS:
