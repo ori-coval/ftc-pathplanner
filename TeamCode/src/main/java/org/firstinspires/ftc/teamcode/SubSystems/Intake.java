@@ -20,7 +20,7 @@ public class Intake {
         intakeMotor = (DcMotorEx) hardwareMap.dcMotor.get(Configuration.INTAKE_MOTOR);
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeAngle = hardwareMap.servo.get(Configuration.INTAKE_SERVO);
-        limitSwitch = hardwareMap.digitalChannel.get(Configuration.INTAKE_SWITCH);
+        limitSwitch = hardwareMap.digitalChannel.get(Configuration.CONVEYOR_SWITCH);
         roller = new Roller();
         lifter = new Lifter();
         lifter.setPosition(LifterPosition.INIT);

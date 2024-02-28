@@ -10,7 +10,9 @@ public class Configuration {
     public static final String TURRET_ENCODER = DRIVE_TRAIN_FRONT_RIGHT;
     public static final String INTAKE_SERVO = "intakeServo";
     public static final String INTAKE_MOTOR = "intake";
-    public static final String INTAKE_SWITCH = "conveyorSwitch";
+    public static final String CONVEYOR_SWITCH = "conveyorSwitch";
+    public static final String SAFE_PLACE_SWITCH = "safePlaceSwitch";
+    public static final String ELEVATOR_SWITCH = "elevatorSwitch";
     public static final String ELEVATOR_RIGHT = "elevatorRight";
     public static final String ELEVATOR_LEFT = "elevatorLeft";
     public static final String ELBOW_RIGHT = "elbowRight";
@@ -19,7 +21,6 @@ public class Configuration {
     public static final String ANTI_TURRET = "antiTurret";
     public static final String EXTENDER = "extender";
     public static final String DRONE = "drone";
-
 
     public static final String WEB_CAM = "Weiss cam";
 

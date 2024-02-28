@@ -16,6 +16,7 @@ public class Elbow extends SubsystemBase {
     public Elbow (HardwareMap hardwareMap){
         servoLeft = hardwareMap.servo.get(Configuration.ELBOW_LEFT);
         servoRight = hardwareMap.servo.get(Configuration.ELBOW_RIGHT);
+        sensor = hardwareMap.digitalChannel.get(Configuration.SAFE_PLACE_SWITCH);
         servoLeft.setDirection(Servo.Direction.REVERSE); //reverse = 1 - pos
         servoRight.setDirection(Servo.Direction.REVERSE);
     }
