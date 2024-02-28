@@ -20,6 +20,7 @@ public class DriveTrain extends SubsystemBase {
     private DcMotor motorBL;
     private DcMotor motorBR;
     private BNO055IMU imu;
+    private double yawOffset = 0;
 
     public DriveTrain(HardwareMap hardwareMap) {
         imu = hardwareMap.get(BNO055IMU.class, Configuration.IMU);
@@ -35,8 +36,21 @@ public class DriveTrain extends SubsystemBase {
         motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    public double getYawInDegrees(){
-        return imu.getAngularOrientation().firstAngle;
+    public DriveTrain(HardwareMap hardwareMap, double lastAngle){
+        this(hardwareMap);
+        setYaw(lastAngle);
+    }
+
+    public double getYawInDegrees() {
+        return imu.getAngularOrientation().firstAngle + yawOffset;
+    }
+
+    public void setYaw(double newYaw){
+        yawOffset = newYaw - getYawInDegrees();
+    }
+
+    public void resetYaw(){
+        setYaw(0);
     }
     public double[] calculationOfPowerRatio(double x, double y , double turn){
         //                     {STRAIGHT}                 {STRAFE}                  {TURN}
@@ -76,4 +90,3 @@ public class DriveTrain extends SubsystemBase {
 
 
 }
-

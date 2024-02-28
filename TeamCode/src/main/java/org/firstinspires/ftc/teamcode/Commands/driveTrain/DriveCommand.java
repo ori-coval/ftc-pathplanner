@@ -1,16 +1,16 @@
-package org.firstinspires.ftc.teamcode.Commands.drivetrain;
+package org.firstinspires.ftc.teamcode.Commands.driveTrain;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 
-public class TeleopDriveCommand extends CommandBase {
+public class DriveCommand extends CommandBase {
     private DriveTrain driveTrain;
 
     private Gamepad gamepad;
 
-    public TeleopDriveCommand(DriveTrain driveTrain, Gamepad gamepad){
+    public DriveCommand(DriveTrain driveTrain, Gamepad gamepad){
         this.driveTrain = driveTrain;
         this.gamepad = gamepad;
         this.addRequirements(driveTrain);

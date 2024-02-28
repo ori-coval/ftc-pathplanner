@@ -14,11 +14,10 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 @Config
 public class Turret extends SubsystemBase {
-    private final CRServo turretServoA;
-    private final CRServo turretServoB;
+    private final DcMotor turretMotor;
     private final DcMotor turretEncoder;
     private final double TICKS_PER_REV = 8192;
-    private final double GEAR_RATIO = (21./95) * (60./48);
+    private final double GEAR_RATIO = (21./95);
     public static double kP = 0.045;
     public static double kI = 0;
     public static double kD = 0;
@@ -27,10 +26,7 @@ public class Turret extends SubsystemBase {
     public boolean isListeningToElbowSensor = true;
 
     public Turret(HardwareMap hardwareMap) {
-        turretServoA = hardwareMap.crservo.get(Configuration.TURRET_RIGHT);
-        turretServoB = hardwareMap.crservo.get(Configuration.TURRET_LEFT);
-        turretServoA.setDirection(DcMotorSimple.Direction.REVERSE);
-        turretServoB.setDirection(DcMotorSimple.Direction.REVERSE);
+        turretMotor = hardwareMap.dcMotor.get(Configuration.TURRET);
         turretEncoder = hardwareMap.dcMotor.get(Configuration.TURRET_ENCODER);
         turretEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); //resets encoder to 0
         turretEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //makes it use power from -1 to 1
@@ -39,8 +35,7 @@ public class Turret extends SubsystemBase {
     public void setPower (double power) {
         power = Math.min(power,1);
         power = Math.max(power,-1);
-        turretServoA.setPower(power);
-        turretServoB.setPower(power);
+        turretMotor.setPower(power);
     }
     public double getAngle(){
         return turretEncoder.getCurrentPosition()/TICKS_PER_REV * 360 * GEAR_RATIO;

@@ -4,24 +4,35 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.SubSystems.AutoDriveTrain;
+import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 
 public class TrajectoryFollowerCommand extends CommandBase {
 
-    TrajectorySequence trajectorySequence;
-    SampleMecanumDrive driveTrain;
+    private final AutoDriveTrain drive;
+    private final TrajectorySequence trajectorySequence;
 
-    public TrajectoryFollowerCommand(TrajectorySequence trajectorySequence, SampleMecanumDrive driveTrain) {
+    public TrajectoryFollowerCommand(TrajectorySequence trajectorySequence, AutoDriveTrain drive) {
+        this.drive = drive;
         this.trajectorySequence = trajectorySequence;
-        this.driveTrain = driveTrain;
+
+        addRequirements(drive);
     }
 
     @Override
     public void initialize() {
-        driveTrain.followTrajectorySequence(trajectorySequence);
+        drive.followTrajectorySequence(trajectorySequence);
     }
 
     @Override
-    public boolean isFinished() {
-        return !driveTrain.isBusy();
+    public void execute() {
+        drive.update();
     }
+
+
+    @Override
+    public boolean isFinished() {
+        return Thread.currentThread().isInterrupted() || !drive.isBusy();
+    }
+
 }

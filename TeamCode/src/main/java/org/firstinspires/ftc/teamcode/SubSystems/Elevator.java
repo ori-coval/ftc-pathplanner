@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 @Config
 public class Elevator extends SubsystemBase {
     private final DcMotor[] elevatorMotors = new DcMotor[2];
-    private final DcMotor climber;
     private final DcMotor encoder;
     private final double LEVELS = 3;
     private final double TEETH_PER_REV = 8;
@@ -32,7 +31,6 @@ public class Elevator extends SubsystemBase {
         elevatorMotors[0] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_RIGHT);
         elevatorMotors[1] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_LEFT);
         elevatorMotors[0].setDirection(DcMotorSimple.Direction.REVERSE);
-        climber = hardwareMap.dcMotor.get(Configuration.ELEVATOR_CLIMBER);
         encoder = elevatorMotors[0];
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -72,14 +70,6 @@ public class Elevator extends SubsystemBase {
 
     public double getKs(){
         return kS;
-    }
-
-    public void climberSetPower(double power){
-        climber.setPower(power);
-    }
-
-    public double getClimberPosition(){
-        return climber.getCurrentPosition();
     }
 
     public PIDController getPidController() {

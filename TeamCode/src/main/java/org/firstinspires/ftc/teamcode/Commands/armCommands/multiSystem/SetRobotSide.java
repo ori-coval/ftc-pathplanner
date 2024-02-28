@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
+import org.firstinspires.ftc.teamcode.Commands.utilCommands.SideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -24,12 +25,11 @@ public class SetRobotSide extends SequentialCommandGroup {
         super(
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
                 new InstantCommand(() -> ArmPositionSelector.setRobotSide(side)),
-                new SelectCommand(
-                        new HashMap<Object, Command>() {{
-                            put(Side.LEFT, new ArmGetToPosition(robot, ArmPosition.SCORING, true));
-                            put(Side.CENTER, new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, false));
-                            put(Side.RIGHT, new ArmGetToPosition(robot, ArmPosition.SCORING, false));
-                        }}, () -> side
+                new SideCommandSwitch(
+                        new ArmGetToPosition(robot, ArmPosition.SCORING, true),
+                        new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, false),
+                        new ArmGetToPosition(robot, ArmPosition.SCORING, false),
+                        () -> side
                 )
         );
     }
