@@ -6,8 +6,7 @@ public class Configuration {
     public static final String DRIVE_TRAIN_FRONT_LEFT = "frontLeft"; //1
     public static final String DRIVE_TRAIN_FRONT_RIGHT = "frontRight"; //2
     public static final String IMU = "imu";
-    public static final String TURRET_LEFT = "turretLeft";
-    public static final String TURRET_RIGHT = "turretRight";
+    public static final String TURRET = "turret";
     public static final String TURRET_ENCODER = DRIVE_TRAIN_FRONT_RIGHT;
     public static final String INTAKE_SERVO = "intakeServo";
     public static final String INTAKE_MOTOR = "intake";
@@ -47,7 +46,7 @@ public class Configuration {
                     5: intakeServo           (servo)                              (servo)
 
             DIGITAL DEVICES:
-                    0: conveyorSwitch TODO                (Digital Device)                     (digitalChannel)
+                    0: conveyorSwitch       (Digital Device)                     (digitalChannel)
 
             I2C Bus 0:
                     imu                      (REV internal IMU (BNO055))          (BNO055IMU)
@@ -58,8 +57,8 @@ public class Configuration {
             MOTORS:
                     0: elevatorLeft            (GoBilda 5202/3/4 series)            (dcMotor)
                     1: elevatorRight           (GoBilda 5202/3/4 series)            (dcMotor)
-                    2: turret          (GoBilda 5202/3/4 series)            (dcMotor)
-                    3: intake                (GoBilda 5202/3/4 series)            (dcMotor)
+                    2: turret                  (GoBilda 5202/3/4 series)            (dcMotor)
+                    3: intake                  (GoBilda 5202/3/4 series)            (dcMotor)
 
             SERVOS:
                     0: elbowRight            (servo)                              (servo)
@@ -70,6 +69,6 @@ public class Configuration {
                     5: antiTurret            (servo)                              (servo)
 
             Digital Devices:
-                    0: safePlaceSwitch TODO
-                    2: elevatorSwitch  TODO
+                    0: safePlaceSwitch
+                    2: elevatorSwitch
    */
