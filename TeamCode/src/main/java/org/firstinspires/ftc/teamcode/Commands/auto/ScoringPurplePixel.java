@@ -1,27 +1,39 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.SideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
+import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 
-public class ScoringPurplePixel extends SequentialCommandGroup {
-
-    private final long WAIT_UNTIL_EJECT_BACK = 2000;
+public class ScoringPurplePixel extends ParallelCommandGroup {
 
     public ScoringPurplePixel(RobotControl robot) {
-        addCommands(
-                new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Left"), robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Center"), robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(Trajectories.get("Score Purple Right"), robot.autoDriveTrain),
-                        () -> robot.teamPropDetector.getTeamPropSide()
+        super(
+                new ConditionalCommand(
+                        new SideCommandSwitch(
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Far Detected)"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Center Detected)"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Close Detected)"), robot.autoDriveTrain),
+                                () -> robot.teamPropDetector.getTeamPropSide()
+                        ),
+                        new SideCommandSwitch(
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Far Detected"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Center Detected"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Close Detected"), robot.autoDriveTrain),
+                                () -> robot.teamPropDetector.getTeamPropSide()
+                        ),
+                        () -> robot.robotSide == AllianceSide.FAR
                 ),
-                new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_RIGHT, false),
-                new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(WAIT_UNTIL_EJECT_BACK)
+                new WaitCommand(300).andThen(new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, false)),
+                new WaitCommand(1000).andThen(
+                        new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(2000)
+                )
         );
     }
 }

@@ -21,7 +21,8 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToInt
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.UnsafeMoveArm;
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
-import org.firstinspires.ftc.teamcode.Commands.drivetrain.TeleopDriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.driveTrain.DriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.driveTrain.ResetFieldOriented;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
@@ -29,6 +30,7 @@ import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSystems.AntiTurret;
+import org.firstinspires.ftc.teamcode.SubSystems.AutoDriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.DroneLauncher;
@@ -37,6 +39,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
+import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
@@ -47,10 +50,12 @@ import java.util.function.BooleanSupplier;
 public class RobotControl extends Robot {
     OpModeType opModeType;
     public AllianceColor allianceColor;
-    public Side robotSide;
+    public AllianceSide robotSide;
+    public Trajectories trajectories;
+    public Pose2d startPose;
     HardwareMap hardwareMap;
     public DriveTrain driveTrain;
-    public SampleMecanumDrive autoDriveTrain;
+    public AutoDriveTrain autoDriveTrain;
     public Elbow elbow;
     public Turret turret;
     public AntiTurret antiTurret;
@@ -64,7 +69,8 @@ public class RobotControl extends Robot {
     GamepadEx gamepadEx2;
     public Extender extender;
     public Intake intake;
-    Telemetry telemetry;
+    public Telemetry telemetry;
+    public static double lastHeading = 0;
     private final double TRIGGER_THRESHOLD = 0.5;
 
     public enum OpModeType {
@@ -84,7 +90,7 @@ public class RobotControl extends Robot {
         initializeSystems(type);
     }
 
-    public RobotControl(OpModeType type, AllianceColor allianceColor, Side robotSide, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+    public RobotControl(OpModeType type, AllianceColor allianceColor, AllianceSide robotSide, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         opModeType = type;
         this.allianceColor = allianceColor;
         this.robotSide = robotSide;
@@ -133,22 +139,22 @@ public class RobotControl extends Robot {
     }
 
     private void initTrajectories() {
-        Pose2d startPose = new Pose2d();
-        if(allianceColor == AllianceColor.RED) {
-            if(robotSide == Side.LEFT) {
-                startPose = new Pose2d(-63, 38, 0);
-            } else if(robotSide == Side.RIGHT) {
-                startPose = new Pose2d(-63, -38 + 24, 0);
+        startPose = new Pose2d();
+        if(robotSide == AllianceSide.FAR) {
+            if(allianceColor == AllianceColor.RED) {
+                startPose = new Pose2d(-63, 38, Math.toRadians(0));
+            } else {
+                startPose = new Pose2d(63, 38, Math.toRadians(180));
             }
         } else {
-            if(robotSide == Side.LEFT) {
-                startPose = new Pose2d(63, -14, Math.toRadians(180));
-            } else if(robotSide == Side.RIGHT) {
-                startPose = new Pose2d(63, 38, Math.toRadians(180));
+            if(allianceColor == AllianceColor.RED) {
+                startPose = new Pose2d(-63, -10, Math.toRadians(0));
+            } else {
+                startPose = new Pose2d(63, -10, Math.toRadians(180));
             }
         }
         autoDriveTrain.setPoseEstimate(startPose);
-        Trajectories.init(this, startPose);
+        trajectories = new Trajectories(this, startPose);
     }
 
     public void initDebug() {
@@ -177,12 +183,13 @@ public class RobotControl extends Robot {
         leftTrigger1.whenActive(new ScoringFirstPixel(cartridge, leftTriggerCondition));
         rightTrigger1.whenActive(new ScoringBothPixels(this, rightTriggerCondition));
 
-/*        if(allianceColor == AllianceColor.RED) {
+        if(allianceColor == AllianceColor.RED) {
             gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.LEFT));
         } else {
             gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.RIGHT));
-        }*/
+        }
 
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ResetFieldOriented(this));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(this, Side.CENTER));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));
 
@@ -239,15 +246,16 @@ public class RobotControl extends Robot {
     }
 
     public void initDriveTrain() {
+        driveTrain = new DriveTrain(hardwareMap, lastHeading);
+        autoDriveTrain = new AutoDriveTrain(new SampleMecanumDrive(hardwareMap));
         if(opModeType == OpModeType.TELEOP) {
-            driveTrain = new DriveTrain(hardwareMap);
-            driveTrain.setDefaultCommand(new TeleopDriveCommand(driveTrain, gamepad1));
-        } else {
-            autoDriveTrain = new SampleMecanumDrive(hardwareMap);
+            register(driveTrain);
+            driveTrain.setDefaultCommand(new DriveCommand(driveTrain, gamepad1));
         }
     }
     public void initIntake() {
         intake = new Intake(hardwareMap);
+        register(intake.roller);
     }
     public void initTurret() {
         turret = new Turret(hardwareMap);
@@ -256,7 +264,7 @@ public class RobotControl extends Robot {
         antiTurret = new AntiTurret(hardwareMap);
     }
     public void initVision() {
-        teamPropDetector = new TeamPropDetector(hardwareMap, AllianceColor.RED, telemetry);
+        teamPropDetector = new TeamPropDetector(hardwareMap, allianceColor, telemetry);
     }
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
