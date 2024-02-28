@@ -47,7 +47,7 @@ public class Configuration {
                     5: intakeServo           (servo)                              (servo)
 
             DIGITAL DEVICES:
-                    0: switch                (Digital Device)                     (digitalChannel)
+                    0: conveyorSwitch TODO                (Digital Device)                     (digitalChannel)
 
             I2C Bus 0:
                     imu                      (REV internal IMU (BNO055))          (BNO055IMU)
@@ -62,10 +62,14 @@ public class Configuration {
                     3: intake                (GoBilda 5202/3/4 series)            (dcMotor)
 
             SERVOS:
-                    0: extender            (servo)                              (servo)
-                    1:              (servo)                              (servo)
-                    2: elbowRight              (servo)                              (servo)
-                    3: elbowLeft            (servo)                              (servo)
-                    4: antiTurret             (servo)                              (servo)
-                    5: cartridge (servo)
+                    0: elbowRight            (servo)                              (servo)
+                    1: extender              (servo)                              (servo)
+                    2: elbowLeft             (servo)                              (servo)
+                    3:                       (servo)                              (servo)
+                    4: cartridge             (servo)                              (servo)
+                    5: antiTurret            (servo)                              (servo)
+
+            Digital Devices:
+                    0: safePlaceSwitch TODO
+                    2: elevatorSwitch  TODO
    */
