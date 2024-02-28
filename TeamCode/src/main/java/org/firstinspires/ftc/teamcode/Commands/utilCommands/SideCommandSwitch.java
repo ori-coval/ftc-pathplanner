@@ -14,12 +14,12 @@ import java.util.function.Supplier;
 
 public class SideCommandSwitch extends SelectCommand {
 
-    public SideCommandSwitch(CommandBase left, CommandBase center, CommandBase right, Supplier<Object> sideSupplier) {
+    public SideCommandSwitch(CommandBase far, CommandBase center, CommandBase close, Supplier<Object> sideSupplier) {
         super(new HashMap<Object, Command>() {
                   {
-                      put(Side.LEFT, left);
+                      put(Side.LEFT, far);
                       put(Side.CENTER, center);
-                      put(Side.RIGHT, right);
+                      put(Side.RIGHT, close);
                   }
               }, sideSupplier
         );

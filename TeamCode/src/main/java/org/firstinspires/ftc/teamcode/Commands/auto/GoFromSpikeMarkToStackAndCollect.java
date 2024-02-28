@@ -18,20 +18,11 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
     public GoFromSpikeMarkToStackAndCollect(RobotControl robot) {
         super(
                 new ParallelCommandGroup(
-                        new ConditionalCommand(
-                                new SideCommandSwitch(
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack left"), robot.autoDriveTrain),
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack center"), robot.autoDriveTrain),
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack right"), robot.autoDriveTrain),
-                                        () -> robot.teamPropDetector.getTeamPropSide()
-                                ),
-                                new SideCommandSwitch(
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack right"), robot.autoDriveTrain),
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack center"), robot.autoDriveTrain),
-                                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack left"), robot.autoDriveTrain),
-                                        () -> robot.teamPropDetector.getTeamPropSide()
-                                ),
-                                () -> robot.allianceColor == AllianceColor.RED
+                        new SideCommandSwitch(
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Far Detected)"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Center Detected)"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Close Detected)"), robot.autoDriveTrain),
+                                () -> robot.teamPropDetector.getTeamPropSide()
                         ),
                         new WaitCommand(500).andThen(new BackToIntake(robot).alongWith(new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)))),
                         new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL)

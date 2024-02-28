@@ -53,8 +53,8 @@ public class Trajectories {
         trajectorySignAlliance = ((robot.allianceColor == AllianceColor.BLUE) ? 1 : (-1));
 
         //Purple Pixel Trajectories
-        //Robot Far Side
-        //Far Detected
+        //Robot Far From Backdrop
+        //Far From Truss Detected
         trajectorySequenceHashMap.put("Far Purple (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 35, getY(47), getAngle(60)), getAngle(0))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 23, getY(47), getAngle(60)), getAngle(0))
@@ -79,38 +79,57 @@ public class Trajectories {
                 .build()
         );
 
-        //Close Detected
+        //Close To Truss Detected
         trajectorySequenceHashMap.put("Far Purple (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 50, getY(38), getAngle(45)), getAngle(0))
                 .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 34, getY(26)), getAngle(-45))
                 .build()
         );
-        trajectorySequenceHashMap.put("Driving to stack (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple Right").end())
+        trajectorySequenceHashMap.put("Driving to stack (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Close Detected)").end())
                 .setTangent(getAngle(90))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, 47, getAngle(90)), getAngle(45))
                 .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 12, 55, getAngle(90)), getAngle(90))
                 .build()
         );
 
-        //Robot Close Side
-        //Left
-        trajectorySequenceHashMap.put("Close Purple Left", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        //Robot Close To Backdrop Side
+        //Close to truss
+        trajectorySequenceHashMap.put("Close Purple (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 40, -15, getAngle(-60)), getAngle(0))
                 .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 30, -5, getAngle(-60)), getAngle(90))
                 .build()
         );
 
+        trajectorySequenceHashMap.put("Close Yellow (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple (Close Detected)").end())
+                .setTangent(getAngle(-45))
+                .splineToSplineHeading(new Pose2d(-7, -40, getAngle(-90)), getAngle(-90))
+                .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 15, -64), getAngle(180))
+                .build()
+        );
+
         //Center
-        trajectorySequenceHashMap.put("Close Purple Center", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Close Purple (Center Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 40, -13, getAngle(-60)), getAngle(0))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 22, -13, getAngle(-45)), getAngle(0))
                 .build()
         );
 
-        //Right
-        trajectorySequenceHashMap.put("Close Purple Right", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Close Yellow (Center Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple (Center Detected)").end())
+                .setTangent(getAngle(180))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 60, -64, getAngle(90)), getAngle(-90))
+                .build()
+        );
+
+        //Far from truss
+        trajectorySequenceHashMap.put("Close Purple (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 50, -10, getAngle(-45)), getAngle(0))
                 .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 34, -22), getAngle(-45))
+                .build()
+        );
+        
+        trajectorySequenceHashMap.put("Close Yellow (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple (Far Detected)").end())
+                .setTangent(getAngle(180))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 60, -64, getAngle(90)), getAngle(-90))
                 .build()
         );
 
@@ -133,8 +152,8 @@ public class Trajectories {
                 .build()
         );
 
-        //Scoring First
-        trajectorySequenceHashMap.put("Go to backdrop", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack right").end())
+        //Scoring Far
+        trajectorySequenceHashMap.put("Go to backdrop", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected)").end())
                 .setTangent(getAngle(-90))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, -10, getAngle(90)), getAngle(-90))
                 .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 7, -40, getAngle(90)), getAngle(-90))
@@ -142,34 +161,15 @@ public class Trajectories {
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Close Yellow Right", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple Right").end())
-                .setTangent(getAngle(180))
-                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 60, -64, getAngle(90)), getAngle(-90))
-                .build()
-        );
-
-        trajectorySequenceHashMap.put("Close Yellow Center", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple Center").end())
-                .setTangent(getAngle(180))
-                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 60, -64, getAngle(90)), getAngle(-90))
-                .build()
-        );
-
-        trajectorySequenceHashMap.put("Close Yellow Left", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple Left").end())
-                .setTangent(getAngle(-45))
-                .splineToSplineHeading(new Pose2d(-7, -40, getAngle(-90)), getAngle(-90))
-                .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 15, -64), getAngle(180))
-                .build()
-        );
-
 
         //Parking
-        trajectorySequenceHashMap.put("Backdrop Intake Far", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop").end())
+        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop").end())
                 .setTangent(getAngle(90))
                 .splineToConstantHeading(new Vector2d(-13, -51), getAngle(90))
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Backdrop Intake Close Problematic", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Yellow Left").end())
+        trajectorySequenceHashMap.put("Backdrop Intake Close (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Yellow (Close Detected)").end())
                 .setTangent(getAngle(90))
                 .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 15, -53), getAngle(90))
                 .build()

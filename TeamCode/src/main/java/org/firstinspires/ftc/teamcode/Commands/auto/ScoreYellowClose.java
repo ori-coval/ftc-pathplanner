@@ -7,15 +7,15 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.SideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
-import org.firstinspires.ftc.teamcode.Utils.Side;
+import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 
 public class ScoreYellowClose extends SequentialCommandGroup {
     public ScoreYellowClose(RobotControl robot) {
         addCommands(
-//                new ArmGetToPosition(robot, ArmPosition.SCORING, robotSide(robot)),
+//                new ArmGetToPosition(robot, ArmPosition.SCORING, isRobotLeft(robot)),
                 scoreYellowTrajectory(robot),
                 new InstantCommand(() -> {
-                    robot.telemetry.addData("RobotSide", robotSide(robot));
+                    robot.telemetry.addData("isRobotLeft", isRobotLeft(robot));
                     robot.telemetry.addLine(String.valueOf(robot.teamPropDetector.getTeamPropSide()));
                     robot.telemetry.update();
                 })
@@ -23,27 +23,16 @@ public class ScoreYellowClose extends SequentialCommandGroup {
         );
     }
 
-    private boolean robotSide(RobotControl robot) {
-        return (robot.allianceColor == AllianceColor.RED) ?
-                robot.teamPropDetector.getTeamPropSide() == Side.LEFT :
-                robot.teamPropDetector.getTeamPropSide() != Side.RIGHT;
+    private boolean isRobotLeft(RobotControl robot) {
+        return (robot.allianceColor == AllianceColor.RED) == (robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE);
     }
 
     private Command scoreYellowTrajectory(RobotControl robot) {
-        return new ConditionalCommand(
-                new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Left"), robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Center"), robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Right"), robot.autoDriveTrain),
-                        () -> robot.teamPropDetector.getTeamPropSide()
-                ),
-                new SideCommandSwitch(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Right"), robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Center"), robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow Left"), robot.autoDriveTrain),
-                        () -> robot.teamPropDetector.getTeamPropSide()
-                ),
-                () -> robot.allianceColor == AllianceColor.RED
+        return new SideCommandSwitch(
+                new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow (Far Detected)"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow (Center Detected)"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow (Close Detected)"), robot.autoDriveTrain),
+                () -> robot.teamPropDetector.getTeamPropSide()
         );
     }
 }
