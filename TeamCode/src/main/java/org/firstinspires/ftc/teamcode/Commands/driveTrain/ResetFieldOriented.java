@@ -6,6 +6,10 @@ import org.firstinspires.ftc.teamcode.RobotControl;
 
 public class ResetFieldOriented extends InstantCommand {
     public ResetFieldOriented(RobotControl robot) {
-        new InstantCommand(() -> robot.driveTrain.setYaw(0));
+        super(() -> {
+            robot.driveTrain.resetYaw(); //works first time and then doesn't
+            robot.telemetry.addLine("done");
+            robot.telemetry.update();
+        });
     }
 }

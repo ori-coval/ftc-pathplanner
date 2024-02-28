@@ -246,11 +246,12 @@ public class RobotControl extends Robot {
     }
 
     public void initDriveTrain() {
-        driveTrain = new DriveTrain(hardwareMap, lastHeading);
-        autoDriveTrain = new AutoDriveTrain(new SampleMecanumDrive(hardwareMap));
         if(opModeType == OpModeType.TELEOP) {
+            driveTrain = new DriveTrain(hardwareMap, lastHeading);
             register(driveTrain);
             driveTrain.setDefaultCommand(new DriveCommand(driveTrain, gamepad1));
+        } else if(opModeType == OpModeType.AUTO) {
+            autoDriveTrain = new AutoDriveTrain(new SampleMecanumDrive(hardwareMap));
         }
     }
     public void initIntake() {

@@ -37,13 +37,13 @@ public class TeleOpMode extends CommandOpMode {
             firstIteration = false;
         }
 
-        ArmPositionSelector.telemetry(telemetry);
+/*        ArmPositionSelector.telemetry(telemetry);
 
 
         telemetry.addData("pixelCount", robot.intake.roller.getPixelCount());
         telemetry.addData("isRobotFull", robot.intake.roller.isRobotFull());
         telemetry.addData("selectedPosition", ArmPositionSelector.getPosition());
         telemetry.addData("isLeftOfBoard", ArmPositionSelector.getIsLeftOfBoard());
-        telemetry.update();
+        telemetry.update();*/
     }
 }
