@@ -21,8 +21,8 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToInt
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.UnsafeMoveArm;
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
-import org.firstinspires.ftc.teamcode.Commands.drivetrain.DriveCommand;
-import org.firstinspires.ftc.teamcode.Commands.drivetrain.ResetFieldOriented;
+import org.firstinspires.ftc.teamcode.Commands.driveTrain.DriveCommand;
+import org.firstinspires.ftc.teamcode.Commands.driveTrain.ResetFieldOriented;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;

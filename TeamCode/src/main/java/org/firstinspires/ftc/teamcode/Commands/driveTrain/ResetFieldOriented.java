@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Commands.drivetrain;
+package org.firstinspires.ftc.teamcode.Commands.driveTrain;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 
