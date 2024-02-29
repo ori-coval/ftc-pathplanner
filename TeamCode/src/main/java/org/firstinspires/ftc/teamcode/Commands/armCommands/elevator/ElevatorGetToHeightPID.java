@@ -62,6 +62,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
         elevator.setPower(0);
         if(switchWasPressed) elevator.resetEncoder();
         FtcDashboard.getInstance().getTelemetry().addLine(String.valueOf(elevator.getHeight()));
+        FtcDashboard.getInstance().getTelemetry().addLine(String.valueOf(elevator.getHeight()));
         FtcDashboard.getInstance().getTelemetry().update();
 
     }
