@@ -31,6 +31,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
     @Override
     public void initialize() {
         pidController.setSetPoint(goalHeight);
+        isListeningToPID = true;
     }
 
     @Override
