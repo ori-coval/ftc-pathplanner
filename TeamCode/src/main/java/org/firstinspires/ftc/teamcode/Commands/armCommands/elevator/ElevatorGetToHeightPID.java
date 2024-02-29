@@ -12,12 +12,10 @@ public class ElevatorGetToHeightPID extends CommandBase {
     private final Elevator elevator;
     private final double goalHeight;
     private final PIDController pidController;
-    private long startTime;
     private long startTime0;
     private boolean isListeningToPID = true;
     private boolean switchWasPressed = false;
-    private final long TIME_WAITING_FOR_ELEVATOR_PID = 500; //todo need to tune this
-    private final long TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN = 500; //todo need to tune this
+    private final long TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN = 100; //todo need to tune this
     private final double RESTING_POWER = -0.8; //todo need to tune this
 
 

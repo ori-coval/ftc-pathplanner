@@ -14,13 +14,13 @@ public class RotateTurretByPID extends CommandBase {
     private final PIDController pidController;
     private RobotControl robot;
     private long startTime;
-    private final long TIME_WAITING_FOR_TURRET_PID = 1000; // todo need to tune this
-    private final long TIME_WAITING_FOR_ELBOW = 4000;
+    private final long TIME_WAITING_FOR_TURRET_PID = 100; // todo need to tune this
+    private final long TIME_WAITING_FOR_ELBOW = 2000;
     public RotateTurretByPID(RobotControl robot, double setPoint){
         this.setPoint = setPoint;
         this.robot = robot;
         pidController = robot.turret.getPidController();
-        pidController.setTolerance(1);
+        pidController.setTolerance(2);
         addRequirements(robot.turret);
     }
 
