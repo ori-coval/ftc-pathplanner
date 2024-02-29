@@ -40,9 +40,11 @@ public class TeleOpMode extends CommandOpMode {
         ArmPositionSelector.telemetry(telemetry);
 
 
+
         telemetry.addData("Elevator Height", robot.elevator.getHeight());
         telemetry.addData("elevator Switch", robot.elevator.getSwitchState());
         telemetry.addData("safe Place Switch", robot.elbow.getSwitchState());
+        telemetry.addData("isInSafePlace", robot.elbow.isInSafePlace());
         telemetry.addData("pixelCount", robot.intake.roller.getPixelCount());
         telemetry.addData("isRobotFull", robot.intake.roller.isRobotFull());
         telemetry.addData("selectedPosition", ArmPositionSelector.getPosition());

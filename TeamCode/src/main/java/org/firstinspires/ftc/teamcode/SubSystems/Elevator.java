@@ -20,8 +20,8 @@ public class Elevator extends SubsystemBase {
     private final double TEETH_PER_REV = 8;
     private final double CHAIN_LINK_DISTANCE = 0.8;
     private final double TICKS_PER_REV = 751.8;
-    public static double kP = 0.225; //0.165
-    public static double kI = 1.5;
+    public static double kP = 0.18; //0.18
+    public static double kI = 0;
     public static double kD = 0;
     public static double kG = 0.01;
     public static double kS = 0.02;
@@ -58,6 +58,8 @@ public class Elevator extends SubsystemBase {
     public void resetEncoder() {
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         encoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //If doesn't work use RUN_USING_ENCODER
+        FtcDashboard.getInstance().getTelemetry().addData("Encoder reset", encoder.getCurrentPosition());
+        FtcDashboard.getInstance().getTelemetry().update();
     }
 
     public boolean getSwitchState() {

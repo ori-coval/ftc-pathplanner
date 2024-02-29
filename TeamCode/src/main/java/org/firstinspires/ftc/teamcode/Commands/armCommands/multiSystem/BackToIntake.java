@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 public class BackToIntake extends ParallelCommandGroup {
     public BackToIntake(RobotControl robot) {
         super(
-                new ArmGetToPosition(robot, ArmPosition.AUTO_INTAKE, false),
+                new ArmGetToPosition(robot, ArmPosition.INTAKE, false),
                 new WaitCommand(500).andThen(new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN)) //ready for next pixel
         );
     }

@@ -14,13 +14,13 @@ public class RotateTurretByPID extends CommandBase {
     private final PIDController pidController;
     private RobotControl robot;
     private long startTime;
-    private final long TIME_WAITING_FOR_TURRET_PID = 500; // todo need to tune this
+    private final long TIME_WAITING_FOR_TURRET_PID = 200; // todo need to tune this
     private final long TIME_WAITING_FOR_ELBOW = 4000;
     public RotateTurretByPID(RobotControl robot, double setPoint){
         this.setPoint = setPoint;
         this.robot = robot;
         pidController = robot.turret.getPidController();
-        pidController.setTolerance(0.5);
+        pidController.setTolerance(1);
         addRequirements(robot.turret);
     }
 
@@ -42,12 +42,13 @@ public class RotateTurretByPID extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if(pidController.atSetPoint()) {
+        return pidController.atSetPoint();
+        /*        if(pidController.atSetPoint()) {
             return Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_TURRET_PID;
         } else {
             startTime = Calendar.getInstance().getTimeInMillis();
         }
-        return false;
+        return false;*/
     }
 
     @Override

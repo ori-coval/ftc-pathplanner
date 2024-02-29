@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 public class UnsafeMoveArmUp extends SequentialCommandGroup {
     public UnsafeMoveArmUp(RobotControl robot, ArmPosition position, boolean isLeftOfBoard) {
         super(
-                new ElevatorGetToHeightPID(robot.elevator, position.getElevatorHeight()),
                 new ElbowGetToPosition(robot.elbow, position.getElbowPosition()),
+                new ElevatorGetToHeightPID(robot.elevator, position.getElevatorHeight()),
                 new RotateTurretByPID(robot, position.getTurretAngle(isLeftOfBoard)),
                 new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME), //Trying to avoid elbow's servos overload
                 new ExtenderSetPosition(robot.extender, position.getExtenderPosition()),

@@ -15,30 +15,31 @@ public class ElevatorGetToHeightPID extends CommandBase {
     private long startTime;
     private long startTime0;
     private boolean isListeningToPID = true;
+    private boolean switchWasPressed = false;
     private final long TIME_WAITING_FOR_ELEVATOR_PID = 500; //todo need to tune this
-    private final long TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN = 1000; //todo need to tune this
-    private final double RESTING_POWER = -1; //todo need to tune this
+    private final long TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN = 500; //todo need to tune this
+    private final double RESTING_POWER = -0.8; //todo need to tune this
 
 
-
-    public ElevatorGetToHeightPID(Elevator elevator, double goalHeight){
+    public ElevatorGetToHeightPID(Elevator elevator, double goalHeight) {
         this.elevator = elevator;
         this.goalHeight = goalHeight;
         pidController = elevator.getPidController();
         pidController.setTolerance(0.5);
         addRequirements(elevator);
     }
+
     @Override
     public void initialize() {
         pidController.setSetPoint(goalHeight);
         isListeningToPID = true;
+        switchWasPressed = false;
     }
 
     @Override
     public void execute() {
-        if(goalHeight <= 0) {
-            pidController.setSetPoint(1);
-            if(!isListeningToPID || pidController.atSetPoint()) {
+        if (goalHeight <= 0) {
+            if (!isListeningToPID || pidController.atSetPoint()) {
                 isListeningToPID = false;
                 elevator.setPower(RESTING_POWER);
             } else {
@@ -59,20 +60,21 @@ public class ElevatorGetToHeightPID extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         elevator.setPower(0);
+        if(switchWasPressed) elevator.resetEncoder();
+        FtcDashboard.getInstance().getTelemetry().addLine(String.valueOf(elevator.getHeight()));
+        FtcDashboard.getInstance().getTelemetry().update();
+
     }
 
     @Override
     public boolean isFinished() {
-        if(goalHeight <= 0) {
-            if(elevator.getSwitchState() || (Calendar.getInstance().getTimeInMillis() - startTime0 > TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN)) {
-                if(elevator.getSwitchState()) elevator.resetEncoder();
+        if (goalHeight <= 0) {
+            if (elevator.getSwitchState()) {
+                switchWasPressed = true;
                 return true;
-            }
-        } else if(pidController.atSetPoint()) {
-            return Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_ELEVATOR_PID;
+            } else return Calendar.getInstance().getTimeInMillis() - startTime0 > TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN;
         } else {
-            startTime = Calendar.getInstance().getTimeInMillis();
+            return pidController.atSetPoint();
         }
-        return false;
     }
 }

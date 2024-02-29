@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -7,10 +8,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
+import java.util.Calendar;
+
 public class Elbow extends SubsystemBase {
     private Servo servoRight;
     private Servo servoLeft;
     private DigitalChannel sensor;
+    public boolean updateSafePlace = false;
     private boolean inSafePlace = false;
     private boolean lastState = false;
     public Elbow (HardwareMap hardwareMap){
@@ -33,8 +37,9 @@ public class Elbow extends SubsystemBase {
         return !sensor.getState();
     }
     public void updateSafeState() {
-        if (getSwitchState() & !lastState) {
+        if (getSwitchState() && !lastState) {
             inSafePlace = !inSafePlace;
+            updateSafePlace = false;
         }
         lastState = getSwitchState();
     }
@@ -45,6 +50,10 @@ public class Elbow extends SubsystemBase {
 
     @Override
     public void periodic() {
-        updateSafeState();
+        if(updateSafePlace) {
+            updateSafeState();
+            FtcDashboard.getInstance().getTelemetry().addData("updateSafePlace", Calendar.getInstance().getTimeInMillis());
+            FtcDashboard.getInstance().getTelemetry().update();
+        }
     }
 }
