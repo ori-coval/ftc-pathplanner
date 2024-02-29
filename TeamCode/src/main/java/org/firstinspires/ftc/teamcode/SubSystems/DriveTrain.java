@@ -15,11 +15,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class DriveTrain extends SubsystemBase {
-    private DcMotor motorFR;
-    private DcMotor motorFL;
-    private DcMotor motorBL;
-    private DcMotor motorBR;
-    private BNO055IMU imu;
+    private final DcMotor motorFR;
+    private final DcMotor motorFL;
+    private final DcMotor motorBL;
+    private final DcMotor motorBR;
+    private final BNO055IMU imu;
     private double yawOffset = 0;
 
     public DriveTrain(HardwareMap hardwareMap) {
@@ -45,23 +45,22 @@ public class DriveTrain extends SubsystemBase {
         return imu.getAngularOrientation().firstAngle + yawOffset;
     }
 
-    public void setYaw(double newYaw){
-        yawOffset = newYaw - getYawInDegrees();
+    public void setYaw(double newYaw) {
+        yawOffset = newYaw - imu.getAngularOrientation().firstAngle; //TODO need to be checked
     }
 
-    public void resetYaw(){
+    public void resetYaw() {
         setYaw(0);
     }
-    public double[] calculationOfPowerRatio(double x, double y , double turn){
+    public double[] calculationOfPowerRatio(double x, double y , double turn) {
         //                     {STRAIGHT}                 {STRAFE}                  {TURN}
         double FL_Power =           y           +            x           +          turn         ;
         double BL_Power =           y            -            x           +          turn         ;
         double FR_Power =           y           -            x           -          turn         ;
         double BR_Power =           y            +            x           -          turn         ;
-        double[] PowerRatio = {FL_Power,BL_Power,FR_Power,BR_Power};
-        return PowerRatio;
+        return new double[]{FL_Power,BL_Power,FR_Power,BR_Power};
     }
-    public static double[] normalize(double[] ratiopower){
+    public static double[] normalize(double[] ratiopower) {
         double[] power = ratiopower;
         double highestAbsulutNum = Math.max(
                 Math.max(Math.abs(ratiopower[2]),Math.abs(ratiopower[3])),
@@ -72,17 +71,17 @@ public class DriveTrain extends SubsystemBase {
         }
         return power;
     }
-    private void setMotorPower(double[] normalize){
+    private void setMotorPower(double[] normalize) {
         motorFL.setPower(normalize[0]);
         motorBL.setPower(normalize[1]);
         motorFR.setPower(normalize[2]);
         motorBR.setPower(normalize[3]);
     }
-    public void drive(double x,double y, double turn){
+    public void drive(double x,double y, double turn) {
         setMotorPower(normalize(calculationOfPowerRatio(x, y, turn)));
     }
 
-    public void fieldOrientedDrive(double x, double y, double turn){
+    public void fieldOrientedDrive(double x, double y, double turn) {
         Vector2d joyStickDirection = new Vector2d(x,y);
         Vector2d fieldOrientedVector = joyStickDirection.rotateBy(-getYawInDegrees());
         drive(fieldOrientedVector.getX(),fieldOrientedVector.getY(),turn);
