@@ -259,6 +259,10 @@ public class RobotControl extends Robot {
         intake = new Intake(hardwareMap);
         register(intake.roller);
     }
+    public void initElbow() {
+        elbow = new Elbow(hardwareMap);
+        register(elbow);
+    }
     public void initTurret() {
         turret = new Turret(hardwareMap);
     }
@@ -270,10 +274,6 @@ public class RobotControl extends Robot {
     }
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
-    }
-    public void initElbow() {
-        elbow = new Elbow(hardwareMap);
-        register(elbow);
     }
     public void initExtender() {
         extender = new Extender(hardwareMap);

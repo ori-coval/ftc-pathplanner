@@ -69,6 +69,6 @@ public class Configuration {
                     5: antiTurret            (servo)                              (servo)
 
             Digital Devices:
-                    0: safePlaceSwitch
-                    2: elevatorSwitch
+                    0: elevatorSwitch
+                    2: safePlaceSwitch
    */

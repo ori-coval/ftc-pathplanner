@@ -30,7 +30,7 @@ public class Elbow extends SubsystemBase {
         return servoRight.getPosition();
     }
     public boolean getSwitchState() {
-        return sensor.getState();
+        return !sensor.getState();
     }
     public void updateSafeState() {
         if (getSwitchState() & !lastState) {

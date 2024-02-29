@@ -17,7 +17,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
     private boolean isListeningToPID = true;
     private final long TIME_WAITING_FOR_ELEVATOR_PID = 500; //todo need to tune this
     private final long TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN = 1000; //todo need to tune this
-    private final double RESTING_POWER = -0.5; //todo need to tune this
+    private final double RESTING_POWER = -1; //todo need to tune this
 
 
 
@@ -64,7 +64,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
     @Override
     public boolean isFinished() {
         if(goalHeight <= 0) {
-            if(elevator.getSwitchState() || Calendar.getInstance().getTimeInMillis() - startTime0 > TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN) {
+            if(elevator.getSwitchState() || (Calendar.getInstance().getTimeInMillis() - startTime0 > TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN)) {
                 if(elevator.getSwitchState()) elevator.resetEncoder();
                 return true;
             }

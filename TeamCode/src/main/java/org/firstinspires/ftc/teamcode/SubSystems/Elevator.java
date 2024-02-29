@@ -61,7 +61,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public boolean getSwitchState() {
-        return elevatorSwitch.getState();
+        return !elevatorSwitch.getState();
     }
 
     public void telemetry() {

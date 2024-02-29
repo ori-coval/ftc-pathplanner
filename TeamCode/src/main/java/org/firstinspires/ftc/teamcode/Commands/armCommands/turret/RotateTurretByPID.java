@@ -13,16 +13,15 @@ public class RotateTurretByPID extends CommandBase {
     private final double setPoint;
     private final PIDController pidController;
     private RobotControl robot;
-    Turret turret;
     private long startTime;
     private final long TIME_WAITING_FOR_TURRET_PID = 500; // todo need to tune this
     private final long TIME_WAITING_FOR_ELBOW = 4000;
-    public RotateTurretByPID(Turret turret, double setPoint){
+    public RotateTurretByPID(RobotControl robot, double setPoint){
         this.setPoint = setPoint;
-        this.turret = turret;
-        pidController = turret.getPidController();
+        this.robot = robot;
+        pidController = robot.turret.getPidController();
         pidController.setTolerance(0.5);
-        addRequirements(turret);
+        addRequirements(robot.turret);
     }
 
     @Override
@@ -33,10 +32,10 @@ public class RotateTurretByPID extends CommandBase {
 
     @Override
     public void execute() {
-        if(robot.elbow.isInSafePlace() || !turret.isListeningToElbowSensor) {
-            turret.setPower(pidController.calculate(turret.getAngle()));
+        if(robot.elbow.isInSafePlace() || !robot.turret.isListeningToElbowSensor) {
+            robot.turret.setPower(pidController.calculate(robot.turret.getAngle()));
         } else if(Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_ELBOW) {
-            pidController.setSetPoint(turret.getAngle());
+            pidController.setSetPoint(robot.turret.getAngle());
         }
         FtcDashboard.getInstance().getTelemetry().addData("Turret is finished", isFinished());
     }
@@ -53,7 +52,7 @@ public class RotateTurretByPID extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        turret.stop();
+        robot.turret.stop();
     }
 
 }
