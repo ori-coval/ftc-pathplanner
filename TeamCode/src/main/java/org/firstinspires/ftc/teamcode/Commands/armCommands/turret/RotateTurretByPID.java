@@ -7,7 +7,6 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
-import java.net.HttpURLConnection;
 import java.util.Calendar;
 
 public class RotateTurretByPID extends CommandBase {
@@ -16,6 +15,7 @@ public class RotateTurretByPID extends CommandBase {
     private RobotControl robot;
     Turret turret;
     private long startTime;
+    private final long TIME_WAITING_FOR_TURRET_PID = 500; // todo need to tune this
     private final long TIME_WAITING_FOR_ELBOW = 4000;
     public RotateTurretByPID(Turret turret, double setPoint){
         this.setPoint = setPoint;
@@ -44,7 +44,7 @@ public class RotateTurretByPID extends CommandBase {
     @Override
     public boolean isFinished() {
         if(pidController.atSetPoint()) {
-            return Calendar.getInstance().getTimeInMillis() - startTime > 2000;
+            return Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_TURRET_PID;
         } else {
             startTime = Calendar.getInstance().getTimeInMillis();
         }

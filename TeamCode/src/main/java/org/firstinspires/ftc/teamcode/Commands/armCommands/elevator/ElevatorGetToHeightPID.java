@@ -6,10 +6,15 @@ import com.arcrobotics.ftclib.controller.PIDController;
 
 import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 
+import java.util.Calendar;
+
 public class ElevatorGetToHeightPID extends CommandBase {
     private final Elevator elevator;
     private final double goalHeight;
     private final PIDController pidController;
+    private long startTime;
+    private final long TIME_WAITING_FOR_ELEVATOR_PID = 500; //todo need to tune this
+
 
     public ElevatorGetToHeightPID(Elevator elevator, double goalHeight){
         this.elevator = elevator;
@@ -37,6 +42,11 @@ public class ElevatorGetToHeightPID extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return pidController.atSetPoint();
+        if(pidController.atSetPoint()) {
+            return Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_ELEVATOR_PID;
+        } else {
+            startTime = Calendar.getInstance().getTimeInMillis();
+        }
+        return false;
     }
 }
