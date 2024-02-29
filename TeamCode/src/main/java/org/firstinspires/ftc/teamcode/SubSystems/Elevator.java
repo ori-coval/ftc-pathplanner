@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
@@ -14,12 +15,13 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 public class Elevator extends SubsystemBase {
     private final DcMotor[] elevatorMotors = new DcMotor[2];
     private final DcMotor encoder;
+    private final DigitalChannel elevatorSwitch;
     private final double LEVELS = 3;
     private final double TEETH_PER_REV = 8;
     private final double CHAIN_LINK_DISTANCE = 0.8;
     private final double TICKS_PER_REV = 751.8;
     public static double kP = 0.225; //0.165
-    public static double kI = 0;
+    public static double kI = 1.5;
     public static double kD = 0;
     public static double kG = 0.01;
     public static double kS = 0.02;
@@ -33,7 +35,8 @@ public class Elevator extends SubsystemBase {
         elevatorMotors[0].setDirection(DcMotorSimple.Direction.REVERSE);
         encoder = elevatorMotors[0];
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        encoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //If doesn't work use RUN_USING_ENCODER
+        elevatorSwitch = hardwareMap.digitalChannel.get(Configuration.ELEVATOR_SWITCH);
 
         elevatorMotors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         elevatorMotors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -45,11 +48,20 @@ public class Elevator extends SubsystemBase {
         }
     }
 
-    public double getHeight(){
+    public double getHeight() {
         double motorRevs = encoder.getCurrentPosition() / TICKS_PER_REV;
         double lengthPerRev = CHAIN_LINK_DISTANCE * TEETH_PER_REV;
         double pulledLength = lengthPerRev * motorRevs;
         return LEVELS * pulledLength;
+    }
+
+    public void resetEncoder() {
+        encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        encoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //If doesn't work use RUN_USING_ENCODER
+    }
+
+    public boolean getSwitchState() {
+        return elevatorSwitch.getState();
     }
 
     public void telemetry() {

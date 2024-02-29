@@ -273,6 +273,7 @@ public class RobotControl extends Robot {
     }
     public void initElbow() {
         elbow = new Elbow(hardwareMap);
+        register(elbow);
     }
     public void initExtender() {
         extender = new Extender(hardwareMap);
