@@ -28,11 +28,12 @@ public class UnsafeMoveArmDown extends SequentialCommandGroup {
                         new SequentialCommandGroup(
                                 new ElbowGetToPosition(robot.elbow, position.getElbowPosition()),
                                 new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME),
+                                /*Todo this might not be needed due to the fact that the elbow has a isFinished method, so it is waiting anyway.*/
                                 new ExtenderSetPosition(robot.extender, position.getExtenderPosition())
                         ),
                         new SequentialCommandGroup(
                                 new ExtenderSetPosition(robot.extender, position.getExtenderPosition()),
-                                new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME),
+                                new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME), //TODO this also might be a problem, because we are talking about 3 different pos, which means 2 calls for this command, which means a whole 1/2 second which is being waited here. try to reduce and check.
                                 new ElbowGetToPosition(robot.elbow, position.getElbowPosition())
                         ),
                         () -> (ArmGetToPosition.lastPosition.getExtenderPosition().getServoPositionAsDouble() < position.getExtenderPosition().getServoPositionAsDouble())

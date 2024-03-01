@@ -23,7 +23,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
         this.robot = robot;
         this.goalHeight = goalHeight;
         pidController = robot.elevator.getPidController();
-        pidController.setTolerance(0.5);
+        pidController.setTolerance(1);
         addRequirements(robot.elevator);
     }
 
@@ -56,14 +56,6 @@ public class ElevatorGetToHeightPID extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        robot.elevator.setPower(0);
-        if(switchWasPressed) robot.elevator.resetEncoder();
-        FtcDashboard.getInstance().getTelemetry().addLine(String.valueOf(robot.elevator.getHeight()));
-        FtcDashboard.getInstance().getTelemetry().update();
-    }
-
-    @Override
     public boolean isFinished() {
         if (goalHeight <= 0) {
             if (robot.elevator.getSwitchState()) {
@@ -73,5 +65,13 @@ public class ElevatorGetToHeightPID extends CommandBase {
         } else {
             return pidController.atSetPoint();
         }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        robot.elevator.setPower(0);
+        if(switchWasPressed) robot.elevator.resetEncoder();
+        FtcDashboard.getInstance().getTelemetry().addLine(String.valueOf(robot.elevator.getHeight()));
+        FtcDashboard.getInstance().getTelemetry().update();
     }
 }

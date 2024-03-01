@@ -42,11 +42,11 @@ public class RotateTurretByPID extends CommandBase {
     @Override
     public boolean isFinished() {
         if(pidController.atSetPoint()) {
-            return Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_TURRET_PID;
+            return Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_TURRET_PID; //todo I can try to remove this and see if it goes faster. or that there's no difference, which means the problem is elsewhere.
         } else {
             startTime = Calendar.getInstance().getTimeInMillis();
+            return false;
         }
-        return false;
     }
 
     @Override
