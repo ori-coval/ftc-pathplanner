@@ -19,7 +19,7 @@ public class BackToIntake extends ParallelCommandGroup {
     public BackToIntake(RobotControl robot) {
         super(
                 new ArmGetToPosition(robot, ArmPosition.INTAKE, false),
-                new WaitCommand(500).andThen(new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN)) //ready for next pixel
+                new WaitCommand(50).andThen(new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN)) //ready for next pixel
         );
     }
 }
