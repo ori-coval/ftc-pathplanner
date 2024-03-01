@@ -5,14 +5,13 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
 import org.firstinspires.ftc.teamcode.RobotControl;
-import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 import java.util.Calendar;
 
 public class RotateTurretByPID extends CommandBase {
     private final double setPoint;
     private final PIDController pidController;
-    private RobotControl robot;
+    private final RobotControl robot;
     private long startTime;
     private final long TIME_WAITING_FOR_TURRET_PID = 100; // todo need to tune this
     private final long TIME_WAITING_FOR_ELBOW = 2000;

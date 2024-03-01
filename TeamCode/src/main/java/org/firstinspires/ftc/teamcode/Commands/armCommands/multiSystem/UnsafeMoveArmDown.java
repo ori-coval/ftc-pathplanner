@@ -22,7 +22,7 @@ public class UnsafeMoveArmDown extends SequentialCommandGroup {
         super(
                 new RotateTurretByPID(robot, position.getTurretAngle(isLeftOfBoard)),
 //                new WaitCommand(UnsafeMoveArm.ELEVATOR_WAIT_TIME), //avoiding elevator's shaking while going down too fast.
-                new ElevatorGetToHeightPID(robot.elevator, position.getElevatorHeight()),
+                new ElevatorGetToHeightPID(robot, position.getElevatorHeight()),
                 new AntiTurretGetToPosition(robot.antiTurret, position.getAntiTurretPosition()),
                 new ConditionalCommand(
                         new SequentialCommandGroup(

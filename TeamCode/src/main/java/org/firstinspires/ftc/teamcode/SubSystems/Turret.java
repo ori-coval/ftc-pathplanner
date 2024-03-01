@@ -18,9 +18,9 @@ public class Turret extends SubsystemBase {
     private final DcMotor turretEncoder;
     private final double TICKS_PER_REV = 8192;
     private final double GEAR_RATIO = (21./95);
-    public static double kP = 0.045;
+    public static double kP = 0.06;
     public static double kI = 0;
-    public static double kD = 0;
+    public static double kD = 0.005;
 
     private final PIDController pidController = new PIDController(kP, kI, kD);
     public boolean isListeningToElbowSensor = true;

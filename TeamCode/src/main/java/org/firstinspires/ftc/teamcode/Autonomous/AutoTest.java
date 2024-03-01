@@ -41,7 +41,7 @@ public class AutoTest extends CommandOpMode {
                                 .forward(60)
                                 .build(), robot.autoDriveTrain
                         ),
-                        new WaitCommand(1000).andThen(new ElbowGetToPosition(new Elbow(hardwareMap), 0.4))
+                        new WaitCommand(1000).andThen(new ElbowGetToPosition(new Elbow(hardwareMap, robot), 0.4))
                 )
         );
 

@@ -261,7 +261,7 @@ public class RobotControl extends Robot {
         register(intake.roller);
     }
     public void initElbow() {
-        elbow = new Elbow(hardwareMap);
+        elbow = new Elbow(hardwareMap, this);
         register(elbow);
     }
     public void initTurret() {
