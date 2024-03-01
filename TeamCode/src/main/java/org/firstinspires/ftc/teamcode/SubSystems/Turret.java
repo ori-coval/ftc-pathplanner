@@ -20,7 +20,7 @@ public class Turret extends SubsystemBase {
     private final double GEAR_RATIO = (21./95);
     public static double kP = 0.06;
     public static double kI = 0;
-    public static double kD = 0.005;
+    public static double kD = 0.0045;
 
     private final PIDController pidController = new PIDController(kP, kI, kD);
     public boolean isListeningToElbowSensor = true;

@@ -19,8 +19,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class UnsafeMoveArm extends ConditionalCommand {
-    public static final long EXTENDER_WAIT_TIME = 250;
-    public static final long ELEVATOR_WAIT_TIME = 250;
+    public static final long EXTENDER_WAIT_TIME = 50;
     private final RobotControl robot;
     private final ArmPosition position;
 
