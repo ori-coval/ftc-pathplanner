@@ -27,6 +27,21 @@ public class AutonomousOpMode extends LinearOpMode {
         this.allianceSide = allianceSide;
     }
 
+    public void initialize() {
+        robot = new RobotControl(RobotControl.OpModeType.AUTO, allianceColor, allianceSide, hardwareMap, gamepad1, gamepad2, telemetry);
+        SequentialCommandGroup commandsToRun = null;
+
+        while(opModeInInit() && !isStopRequested()) {
+            if(robot.teamPropDetector.getTeamPropSide() != null) {
+                commandsToRun = getCommandsToRun();
+            }
+            robot.teamPropDetector.telemetry();
+        }
+        robot.schedule(commandsToRun);
+        robot.teamPropDetector.webcam.closeCameraDevice();
+
+    }
+
     private SequentialCommandGroup getCommandsToRun() {
         SequentialCommandGroup result = new SequentialCommandGroup(
                 new WaitUntilCommand(this::isStarted),
@@ -45,21 +60,6 @@ public class AutonomousOpMode extends LinearOpMode {
         }
         result.addCommands(new Parking(robot));
         return result;
-
-    }
-
-    public void initialize() {
-        robot = new RobotControl(RobotControl.OpModeType.AUTO, allianceColor, allianceSide, hardwareMap, gamepad1, gamepad2, telemetry);
-        SequentialCommandGroup commandsToRun = null;
-
-        while(opModeInInit() && !isStopRequested()) {
-            if(robot.teamPropDetector.getTeamPropSide() != null) {
-                commandsToRun = getCommandsToRun();
-            }
-            robot.teamPropDetector.telemetry();
-        }
-        robot.schedule(commandsToRun);
-        robot.teamPropDetector.webcam.closeCameraDevice();
 
     }
 

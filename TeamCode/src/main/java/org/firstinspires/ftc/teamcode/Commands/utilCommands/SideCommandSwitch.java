@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.command.SelectCommand;
 
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.auto.TrajectoryFollowerCommand;
+import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 import org.firstinspires.ftc.teamcode.Utils.Side;
 
 import java.util.HashMap;
@@ -17,9 +18,9 @@ public class SideCommandSwitch extends SelectCommand {
     public SideCommandSwitch(CommandBase far, CommandBase center, CommandBase close, Supplier<Object> sideSupplier) {
         super(new HashMap<Object, Command>() {
                   {
-                      put(Side.LEFT, far);
-                      put(Side.CENTER, center);
-                      put(Side.RIGHT, close);
+                      put(DetectionSide.FAR, far);
+                      put(DetectionSide.CENTER, center);
+                      put(DetectionSide.CLOSE, close);
                   }
               }, sideSupplier
         );

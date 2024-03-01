@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
@@ -23,9 +24,9 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                                 () -> robot.teamPropDetector.getTeamPropSide()
                         ),
                         new SideCommandSwitch(
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Far Detected"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Center Detected"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Close Detected"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Far Detected)"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Center Detected)"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Close Detected)"), robot.autoDriveTrain),
                                 () -> robot.teamPropDetector.getTeamPropSide()
                         ),
                         () -> robot.robotSide == AllianceSide.FAR

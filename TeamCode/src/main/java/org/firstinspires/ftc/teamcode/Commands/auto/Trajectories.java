@@ -135,7 +135,7 @@ public class Trajectories {
 
 
         //Bits
-        trajectorySequenceHashMap.put("Drive back from stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack while avoiding pixel on Right").end())
+        trajectorySequenceHashMap.put("Drive back from stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected)").end())
                 .back(8, new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.2, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.2))
                 .build()
         );
@@ -167,7 +167,7 @@ public class Trajectories {
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Backdrop Intake Close", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Yellow Right").end())
+        trajectorySequenceHashMap.put("Backdrop Intake Close", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Yellow (Far Detected)").end())
                 .setTangent(getAngle(90))
                 .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 60, -53), getAngle(90))
                 .build()
