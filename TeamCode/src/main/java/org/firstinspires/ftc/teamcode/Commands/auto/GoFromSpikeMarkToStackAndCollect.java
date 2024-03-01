@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
 
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.ParallelDeadlineGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
+import org.firstinspires.ftc.teamcode.ArmPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
@@ -24,14 +27,18 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                 new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Close Detected)"), robot.autoDriveTrain),
                                 () -> robot.teamPropDetector.getTeamPropSide()
                         ),
-                        new WaitCommand(200).andThen(new BackToIntake(robot)),
+                        new WaitCommand(200).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, false), new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL))
+                ),
+                new ParallelCommandGroup(
                         new SequentialCommandGroup(
-                                new ParallelDeadlineGroup(
-                                        new WaitUntilCommand(robot.intake.roller::isRobotFull).andThen(new WaitCommand(100)),
-                                        new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER),
-                                        new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL)
-                                ).asProxy(),
-                                new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(500)
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Drive back from stack"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Drive back to stack"), robot.autoDriveTrain)
+                        ),
+                        new SequentialCommandGroup(
+                                new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)),
+                                new WaitUntilCommand(robot.intake.roller::isRobotFull),
+                                new WaitCommand(800),
+                                new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(500) //todo while driving to backdrop
                         )
                 )
         );

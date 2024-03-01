@@ -134,7 +134,7 @@ public class RobotControl extends Robot {
         initDriveTrain();
         initArm();
         initIntake();
-//        intake.roller.setPixelCount(1);
+        intake.roller.setPixelCount(1);
         initVision();
         initTrajectories();
     }

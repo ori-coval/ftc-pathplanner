@@ -5,6 +5,8 @@ import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
+import org.firstinspires.ftc.teamcode.ArmPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
@@ -17,11 +19,7 @@ public class Parking extends SequentialCommandGroup {
                         getCloseTrajectory(robot),
                         () -> robot.robotSide == AllianceSide.FAR
                 ), //to allow intake to get in
-                new InstantCommand(() -> {
-                    robot.telemetry.addLine(String.valueOf(robot.robotSide));
-                    robot.telemetry.update();
-                })/*,
-                new ArmGetToPosition(robot, ArmPosition.INTAKE, false)*/
+                new ArmGetToPosition(robot, ArmPosition.INTAKE, false)
         );
     }
 

@@ -52,6 +52,8 @@ public class Trajectories {
 
         trajectorySignAlliance = ((robot.allianceColor == AllianceColor.BLUE) ? 1 : (-1));
 
+        Pose2d stackPos = new Pose2d(trajectorySignAlliance * 11.5, 57, getAngle(90));
+
         //Purple Pixel Trajectories
         //Robot Far From Backdrop
         //Far From Truss Detected
@@ -62,7 +64,7 @@ public class Trajectories {
         );
         trajectorySequenceHashMap.put("Driving to stack (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Far Detected)").end())
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, 47, getAngle(90)), getAngle(0))
-                .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 12, 55), getAngle(90))
+                .splineToConstantHeading(new Vector2d(stackPos.getX(), stackPos.getY()), getAngle(90))
                 .build()
         );
 
@@ -75,7 +77,7 @@ public class Trajectories {
         trajectorySequenceHashMap.put("Driving to stack (Center Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Center Detected)").end())
                 .setTangent(getAngle(45))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, 47, getAngle(90)), getAngle(90))
-                .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, 55, getAngle(90)), getAngle(90))
+                .splineToSplineHeading(stackPos, getAngle(90))
                 .build()
         );
 
@@ -86,9 +88,8 @@ public class Trajectories {
                 .build()
         );
         trajectorySequenceHashMap.put("Driving to stack (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Close Detected)").end())
-                .setTangent(getAngle(90))
-                .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, 47, getAngle(90)), getAngle(45))
-                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 12, 55, getAngle(90)), getAngle(90))
+                .setTangent(getAngle(45))
+                .splineToLinearHeading(stackPos, getAngle(45))
                 .build()
         );
 

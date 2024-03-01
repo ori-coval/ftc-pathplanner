@@ -72,6 +72,7 @@ public class AutonomousOpMode extends LinearOpMode {
         // run the scheduler
         while (!isStopRequested() && opModeIsActive()) {
             robot.run();
+            telemetry.addData("pixelCount", robot.intake.roller.getPixelCount());
             telemetry.update();
         }
 

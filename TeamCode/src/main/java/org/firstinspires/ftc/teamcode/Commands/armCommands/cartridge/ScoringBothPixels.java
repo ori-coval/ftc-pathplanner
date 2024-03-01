@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
+import org.firstinspires.ftc.teamcode.Commands.utilCommands.SideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 
@@ -17,7 +18,7 @@ public class ScoringBothPixels extends SequentialCommandGroup {
         super(
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
                 new WaitUntilCommand(() -> !triggerCondition.getAsBoolean()),
-                new DetectionSideCommandSwitch(
+                new SideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORING, true),
                         new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, false),
                         new ArmGetToPosition(robot, ArmPosition.SCORING, false),

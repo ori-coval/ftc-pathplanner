@@ -19,7 +19,7 @@ public class RotateTurretByPID extends CommandBase {
         this.setPoint = setPoint;
         this.robot = robot;
         pidController = robot.turret.getPidController();
-        pidController.setTolerance(2);
+        pidController.setTolerance(5);
         addRequirements(robot.turret);
     }
 

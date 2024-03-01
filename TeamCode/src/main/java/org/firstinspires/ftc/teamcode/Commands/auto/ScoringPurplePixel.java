@@ -29,11 +29,8 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                                 () -> robot.teamPropDetector.getTeamPropSide()
                         ),
                         () -> robot.robotSide == AllianceSide.FAR
-                ),
-                new WaitCommand(300).andThen(new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, false)),
-                new WaitCommand(1500).andThen(
-                        new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(2000)
-                )
+                ).andThen(new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(2000)),
+                new WaitCommand(300).andThen(new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, false))
         );
     }
 }

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
@@ -14,14 +15,16 @@ import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 public class ScoreYellowClose extends SequentialCommandGroup {
     public ScoreYellowClose(RobotControl robot) {
         addCommands(
-                new ArmGetToPosition(robot, ArmPosition.SCORING, isRobotLeft(robot)),
-                scoreYellowTrajectory(robot),
-                new InstantCommand(() -> {
-                    robot.telemetry.addData("isRobotLeft", isRobotLeft(robot));
-                    robot.telemetry.addLine(String.valueOf(robot.teamPropDetector.getTeamPropSide()));
-                    robot.telemetry.update();
-                })
-
+                new ParallelCommandGroup(
+                        new ArmGetToPosition(robot, ArmPosition.SCORING, isRobotLeft(robot)),
+                        scoreYellowTrajectory(robot)
+                ),
+                new DetectionSideCommandSwitch(
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE, robot.allianceColor == AllianceColor.RED),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID, robot.allianceColor == AllianceColor.RED),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR, robot.allianceColor == AllianceColor.RED),
+                        () -> robot.teamPropDetector.getTeamPropSide()
+                )
         );
     }
 
