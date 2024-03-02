@@ -41,9 +41,9 @@ public class Configuration {
                     0:
                     1:
                     2:
-                    3:
+                    3: intakeServo           (servo)                              (servo)
                     4: drone                 (servo)                              (servo)
-                    5: intakeServo           (servo)                              (servo)
+                    5:
 
             DIGITAL DEVICES:
                     0: conveyorSwitch       (Digital Device)                     (digitalChannel)

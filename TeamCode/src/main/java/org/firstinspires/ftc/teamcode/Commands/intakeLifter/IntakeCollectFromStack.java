@@ -14,10 +14,6 @@ public class IntakeCollectFromStack extends ParallelDeadlineGroup {
                 new IntakeUntilFull(inTakeRoller), //Deadline
                 new SequentialCommandGroup(
                         new IntakeSetStackPosition(inTakeLifter, Intake.LifterPosition.FIRST_PIXEL)
-/*                        new WaitCommand(waitTime),
-                        new IntakeSetStackPosition(inTakeLifter, Intake.LifterPosition.SECOND_PIXEL),
-                        new WaitCommand(waitTime * 3),
-                        new IntakeSetStackPosition(inTakeLifter, Intake.LifterPosition.DEFAULT)*/
                 )
         );
     }

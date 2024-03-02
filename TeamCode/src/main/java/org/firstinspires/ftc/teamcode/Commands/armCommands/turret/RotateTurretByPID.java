@@ -19,7 +19,7 @@ public class RotateTurretByPID extends CommandBase {
         this.setPoint = setPoint;
         this.robot = robot;
         pidController = robot.turret.getPidController();
-        pidController.setTolerance(5);
+        pidController.setTolerance(2);
         addRequirements(robot.turret);
     }
 
@@ -31,11 +31,7 @@ public class RotateTurretByPID extends CommandBase {
 
     @Override
     public void execute() {
-        if(robot.elbow.isInSafePlace() || !robot.turret.isListeningToElbowSensor) {
-            robot.turret.setPower(pidController.calculate(robot.turret.getAngle()));
-        } else if(Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_ELBOW) {
-            pidController.setSetPoint(robot.turret.getAngle());
-        }
+        robot.turret.setPower(pidController.calculate(robot.turret.getAngle()));
         FtcDashboard.getInstance().getTelemetry().addData("Turret is finished", isFinished());
     }
 

@@ -20,8 +20,6 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class UnsafeMoveArm extends ConditionalCommand {
     public static final long EXTENDER_WAIT_TIME = 50;
-    private final RobotControl robot;
-    private final ArmPosition position;
 
     public UnsafeMoveArm(RobotControl robot, ArmPosition position, boolean isLeftOfBoard) {
         super(
@@ -29,15 +27,5 @@ public class UnsafeMoveArm extends ConditionalCommand {
                 new UnsafeMoveArmDown(robot, position, isLeftOfBoard),
                 () -> (ArmGetToPosition.lastPosition.getElevatorHeight() < position.getElevatorHeight())
         );
-        this.robot = robot;
-        this.position = position;
-    }
-
-    @Override
-    public void initialize() {
-        super.initialize();
-        if(position == ArmPosition.SAFE_PLACE || position == ArmPosition.AUTO_INTAKE || position == ArmPosition.INTAKE) {
-            robot.elbow.updateSafePlace = true;
-        }
     }
 }

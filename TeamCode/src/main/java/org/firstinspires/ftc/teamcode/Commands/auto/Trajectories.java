@@ -150,7 +150,7 @@ public class Trajectories {
                 .setTangent(getAngle(-90))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, -10, getAngle(90)), getAngle(-90))
                 .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 7, -40, getAngle(90)), getAngle(-90))
-                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 17, -64, getAngle(90)), getAngle(-180))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 14, -62, getAngle(90)), getAngle(-180))
                 .build()
         );
 
@@ -158,7 +158,7 @@ public class Trajectories {
         //Parking
         trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop").end())
                 .setTangent(getAngle(90))
-                .splineToConstantHeading(new Vector2d(-13, -51), getAngle(90))
+                .splineToConstantHeading(new Vector2d(-14, -51), getAngle(90))
                 .build()
         );
 

@@ -15,7 +15,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
     private long startTime0;
     private boolean isListeningToPID = true;
     private boolean switchWasPressed = false;
-    private final long TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN = 100; //todo need to tune this
+    private final long TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN = 500; //todo need to tune this
     private final double RESTING_POWER = -0.8; //todo need to tune this
 
 
@@ -71,7 +71,5 @@ public class ElevatorGetToHeightPID extends CommandBase {
     public void end(boolean interrupted) {
         robot.elevator.setPower(0);
         if(switchWasPressed) robot.elevator.resetEncoder();
-        FtcDashboard.getInstance().getTelemetry().addLine(String.valueOf(robot.elevator.getHeight()));
-        FtcDashboard.getInstance().getTelemetry().update();
     }
 }

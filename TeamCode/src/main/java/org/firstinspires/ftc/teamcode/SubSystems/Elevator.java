@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 public class Elevator extends SubsystemBase {
     private final DcMotor[] elevatorMotors = new DcMotor[2];
     private final DcMotor encoder;
+    private int encoderOffset;
     private final DigitalChannel elevatorSwitch;
     private final double LEVELS = 3;
     private final double TEETH_PER_REV = 8;
@@ -48,18 +49,19 @@ public class Elevator extends SubsystemBase {
         }
     }
 
-    public double getHeight() {
-        double motorRevs = encoder.getCurrentPosition() / TICKS_PER_REV;
-        double lengthPerRev = CHAIN_LINK_DISTANCE * TEETH_PER_REV;
-        double pulledLength = lengthPerRev * motorRevs;
-        return LEVELS * pulledLength;
+    public int getEncoderValue() {
+        return encoder.getCurrentPosition() - encoderOffset;
     }
 
     public void resetEncoder() {
-        encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        encoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //If doesn't work use RUN_USING_ENCODER
-        FtcDashboard.getInstance().getTelemetry().addData("Encoder reset", encoder.getCurrentPosition());
-        FtcDashboard.getInstance().getTelemetry().update();
+        encoderOffset = encoder.getCurrentPosition();
+    }
+
+    public double getHeight() {
+        double motorRevs = getEncoderValue() / TICKS_PER_REV;
+        double lengthPerRev = CHAIN_LINK_DISTANCE * TEETH_PER_REV;
+        double pulledLength = lengthPerRev * motorRevs;
+        return LEVELS * pulledLength;
     }
 
     public boolean getSwitchState() {

@@ -16,9 +16,6 @@ public class Elbow extends SubsystemBase {
     private final Servo servoLeft;
     private final DigitalChannel sensor;
     private final RobotControl robot;
-    public boolean updateSafePlace = false;
-    private boolean inSafePlace = false;
-    private boolean lastState = false;
     public Elbow (HardwareMap hardwareMap, RobotControl robot) {
         this.robot = robot;
         servoLeft = hardwareMap.servo.get(Configuration.ELBOW_LEFT);
@@ -27,6 +24,7 @@ public class Elbow extends SubsystemBase {
         servoLeft.setDirection(Servo.Direction.REVERSE); //reverse = 1 - pos
         servoRight.setDirection(Servo.Direction.REVERSE);
     }
+    
     public void setPosition(double position) {
         position = Math.max(position, 0.05);
         servoLeft.setPosition(position - 0.05);
@@ -35,30 +33,5 @@ public class Elbow extends SubsystemBase {
 
     public double getServoPosition(){
         return servoRight.getPosition();
-    }
-    public boolean getSwitchState() {
-        return !sensor.getState();
-    }
-    public void updateSafeState() {
-        if (getSwitchState() && !lastState) {
-            if(robot.elevator.getHeight() < 0.1) {
-                inSafePlace = false;
-            } else {
-                inSafePlace = !inSafePlace;
-            }
-            updateSafePlace = false;
-        }
-        lastState = getSwitchState();
-    }
-
-    public boolean isInSafePlace() {
-        return inSafePlace;
-    }
-    
-    @Override
-    public void periodic() {
-        if(updateSafePlace) {
-            updateSafeState();
-        }
     }
 }
