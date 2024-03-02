@@ -29,7 +29,7 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                 new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Close Detected)"), robot.autoDriveTrain),
                                 () -> robot.teamPropDetector.getTeamPropSide()
                         ),
-                        new WaitCommand(200).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, false)),
+                        new WaitCommand(200).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, false).andThen(new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN))),
                         new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)),
                         new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL)
                 ),
@@ -39,7 +39,6 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                 new TrajectoryFollowerCommand(robot.trajectories.get("Drive back to stack"), robot.autoDriveTrain)
                         ),
                         new SequentialCommandGroup(
-                                new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
                                 new WaitUntilCommand(robot.intake.roller::isRobotFull).withTimeout(2500),
                                 new WaitCommand(1000),
                                 new InstantCommand(() -> robot.intake.roller.stop()),

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -8,6 +9,7 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -18,6 +20,7 @@ public class ScoringFirstPixelAuto extends SequentialCommandGroup {
         addCommands(
                 new ParallelCommandGroup(
                         new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side)"), robot.autoDriveTrain),
+                        new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
                         new WaitCommand(1700).andThen(getScoringCommand(robot))
                 ),
                 new WaitCommand(300),
