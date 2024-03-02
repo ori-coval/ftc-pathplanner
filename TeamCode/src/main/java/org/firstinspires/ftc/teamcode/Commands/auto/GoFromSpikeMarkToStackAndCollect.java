@@ -29,7 +29,9 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                 new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Close Detected)"), robot.autoDriveTrain),
                                 () -> robot.teamPropDetector.getTeamPropSide()
                         ),
-                        new WaitCommand(200).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, false), new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL))
+                        new WaitCommand(200).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, false)),
+                        new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)),
+                        new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL)
                 ),
                 new ParallelCommandGroup(
                         new SequentialCommandGroup(
@@ -38,10 +40,9 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                         ),
                         new SequentialCommandGroup(
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
-                                new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)),
-                                new WaitUntilCommand(robot.intake.roller::isRobotFull),
-                                new WaitCommand(800),
-                                new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(500), //todo while driving to backdrop
+                                new WaitUntilCommand(robot.intake.roller::isRobotFull).withTimeout(2500),
+                                new WaitCommand(1000),
+                                new InstantCommand(() -> robot.intake.roller.stop()),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED)
                         )
                 )

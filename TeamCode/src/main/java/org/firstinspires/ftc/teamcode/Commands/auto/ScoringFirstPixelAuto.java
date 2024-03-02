@@ -17,11 +17,12 @@ public class ScoringFirstPixelAuto extends SequentialCommandGroup {
     public ScoringFirstPixelAuto(RobotControl robot) {
         addCommands(
                 new ParallelCommandGroup(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side)"), robot.autoDriveTrain),
                         new WaitCommand(1700).andThen(getScoringCommand(robot))
                 ),
+                new WaitCommand(300),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
-                new WaitCommand(700),
+                new WaitCommand(1000),
                 new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED)
         );

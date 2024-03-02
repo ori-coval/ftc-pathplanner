@@ -89,7 +89,8 @@ public class Trajectories {
         );
         trajectorySequenceHashMap.put("Driving to stack (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Close Detected)").end())
                 .setTangent(getAngle(45))
-                .splineToLinearHeading(stackPos, getAngle(45))
+                .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 22, 40), getAngle(75), new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.4, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.4))
+                .splineToSplineHeading(stackPos, getAngle(45))
                 .build()
         );
 
@@ -137,28 +138,28 @@ public class Trajectories {
 
         //Bits
         trajectorySequenceHashMap.put("Drive back from stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected)").end())
-                .back(8, new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.2, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.2))
+                .back(8, new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.5, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.5))
                 .build()
         );
         trajectorySequenceHashMap.put("Drive back to stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Drive back from stack").end())
-                .forward(8, new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.2, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.2))
+                .forward(8, new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.5, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.5))
                 .build()
         );
 
         //Scoring Far
-        trajectorySequenceHashMap.put("Go to backdrop", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected)").end())
+        trajectorySequenceHashMap.put("Go to backdrop (Far Side)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected)").end())
                 .setTangent(getAngle(-90))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, -10, getAngle(90)), getAngle(-90))
                 .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 7, -40, getAngle(90)), getAngle(-90))
-                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 14, -62, getAngle(90)), getAngle(-180))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 14, -60, getAngle(90)), getAngle(-180))
                 .build()
         );
 
 
         //Parking
-        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop").end())
+        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side)").end())
                 .setTangent(getAngle(90))
-                .splineToConstantHeading(new Vector2d(-14, -51), getAngle(90))
+                .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 15, -51), getAngle(90))
                 .build()
         );
 

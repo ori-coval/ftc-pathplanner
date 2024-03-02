@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirs
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.Climb;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGoUp;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToSelectedPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
@@ -117,8 +118,6 @@ public class RobotControl extends Robot {
             initDebug();
         }
     }
-
-
 
     public void initTele() {
         initDriveTrain();

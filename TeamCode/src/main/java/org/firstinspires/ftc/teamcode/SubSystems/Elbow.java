@@ -24,7 +24,7 @@ public class Elbow extends SubsystemBase {
         servoLeft.setDirection(Servo.Direction.REVERSE); //reverse = 1 - pos
         servoRight.setDirection(Servo.Direction.REVERSE);
     }
-    
+
     public void setPosition(double position) {
         position = Math.max(position, 0.05);
         servoLeft.setPosition(position - 0.05);

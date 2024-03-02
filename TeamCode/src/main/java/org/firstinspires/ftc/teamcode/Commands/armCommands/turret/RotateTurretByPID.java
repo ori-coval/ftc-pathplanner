@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
 import org.firstinspires.ftc.teamcode.RobotControl;
+import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 import java.util.Calendar;
 
@@ -19,7 +20,7 @@ public class RotateTurretByPID extends CommandBase {
         this.setPoint = setPoint;
         this.robot = robot;
         pidController = robot.turret.getPidController();
-        pidController.setTolerance(2);
+        pidController.setTolerance(Turret.tolerance);
         addRequirements(robot.turret);
     }
 
