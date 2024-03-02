@@ -41,7 +41,7 @@ public class Elbow extends SubsystemBase {
     }
     public void updateSafeState() {
         if (getSwitchState() && !lastState) {
-            if(robot.elevator.getHeight() < 1) {
+            if(robot.elevator.getHeight() < 0.1) {
                 inSafePlace = false;
             } else {
                 inSafePlace = !inSafePlace;
@@ -54,13 +54,11 @@ public class Elbow extends SubsystemBase {
     public boolean isInSafePlace() {
         return inSafePlace;
     }
-
+    
     @Override
     public void periodic() {
         if(updateSafePlace) {
             updateSafeState();
-            FtcDashboard.getInstance().getTelemetry().addData("updateSafePlace", Calendar.getInstance().getTimeInMillis());
-            FtcDashboard.getInstance().getTelemetry().update();
         }
     }
 }

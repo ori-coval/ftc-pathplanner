@@ -36,7 +36,7 @@ public class UnsafeMoveArm extends ConditionalCommand {
     @Override
     public void initialize() {
         super.initialize();
-        if(position == ArmPosition.INTAKE || position == ArmPosition.SAFE_PLACE || position == ArmPosition.AUTO_INTAKE) {
+        if(position == ArmPosition.SAFE_PLACE || position == ArmPosition.AUTO_INTAKE || position == ArmPosition.INTAKE) {
             robot.elbow.updateSafePlace = true;
         }
     }

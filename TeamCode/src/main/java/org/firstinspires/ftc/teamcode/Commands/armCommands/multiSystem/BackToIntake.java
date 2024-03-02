@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
-public class BackToIntake extends ParallelCommandGroup {
+public class BackToIntake extends SequentialCommandGroup {
     public BackToIntake(RobotControl robot) {
         super(
                 new ArmGetToPosition(robot, ArmPosition.INTAKE, false),

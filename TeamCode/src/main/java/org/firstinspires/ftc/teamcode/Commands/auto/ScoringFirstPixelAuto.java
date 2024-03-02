@@ -18,9 +18,10 @@ public class ScoringFirstPixelAuto extends SequentialCommandGroup {
         addCommands(
                 new ParallelCommandGroup(
                         new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop"), robot.autoDriveTrain),
-                        new WaitCommand(1500).andThen(getScoringCommand(robot))
+                        new WaitCommand(1700).andThen(getScoringCommand(robot))
                 ),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
+                new WaitCommand(700),
                 new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED)
         );

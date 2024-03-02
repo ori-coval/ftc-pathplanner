@@ -9,12 +9,14 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
+import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 
 public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
@@ -35,10 +37,12 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                 new TrajectoryFollowerCommand(robot.trajectories.get("Drive back to stack"), robot.autoDriveTrain)
                         ),
                         new SequentialCommandGroup(
+                                new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
                                 new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)),
                                 new WaitUntilCommand(robot.intake.roller::isRobotFull),
                                 new WaitCommand(800),
-                                new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(500) //todo while driving to backdrop
+                                new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(500), //todo while driving to backdrop
+                                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED)
                         )
                 )
         );
