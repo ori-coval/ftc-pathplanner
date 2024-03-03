@@ -25,12 +25,21 @@ public class ScoringFirstPixelAuto extends SequentialCommandGroup {
                 ),
                 new WaitCommand(300),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
+                new WaitCommand(100),
+                getSecondScoringCommand(robot),
                 new WaitCommand(1000),
                 new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED)
         );
     }
-
+    private Command getSecondScoringCommand(RobotControl robot) {
+        return new DetectionSideCommandSwitch(
+                new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_2, robot.allianceColor == AllianceColor.RED),
+                new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID_2, robot.allianceColor == AllianceColor.RED),
+                new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR_2, robot.allianceColor == AllianceColor.RED),
+                () -> robot.teamPropDetector.getTeamPropSide()
+        );
+    }
     private Command getScoringCommand(RobotControl robot) {
         return new DetectionSideCommandSwitch(
                 new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE, robot.allianceColor == AllianceColor.RED),
