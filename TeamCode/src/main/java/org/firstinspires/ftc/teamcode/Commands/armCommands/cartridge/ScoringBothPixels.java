@@ -6,7 +6,6 @@ import com.arcrobotics.ftclib.command.WaitUntilCommand;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
-import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.SideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -24,7 +23,7 @@ public class ScoringBothPixels extends SequentialCommandGroup {
                         new ArmGetToPosition(robot, ArmPosition.SCORING, false),
                         ArmPositionSelector::getSelectedRobotSide
                 ),
-                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED)
+                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
         );
     }
 }

@@ -12,7 +12,7 @@ public class ScoringFirstPixel extends SequentialCommandGroup {
         super(
                 new CartridgeSetState(cartridge, Cartridge.State.SEMI_OPEN),
                 new WaitUntilCommand(() -> !triggerCondition.getAsBoolean()),
-                new CartridgeSetState(cartridge, Cartridge.State.CLOSED)
+                new CartridgeSetState(cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
         );
     }
 }

@@ -13,7 +13,9 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSe
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.InstantIntakeRotate;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeStop;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -29,22 +31,11 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                                 new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Close Detected)"), robot.autoDriveTrain),
                                 () -> robot.teamPropDetector.getTeamPropSide()
                         ),
-                        new WaitCommand(200).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, false), new WaitCommand(300), new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN)),
-                        new InstantCommand(() -> robot.intake.roller.setPower(robot.intake.roller.COLLECT_POWER)),
+                        new WaitCommand(200).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, false), new WaitCommand(300), new CartridgeSetState(robot.cartridge, Cartridge.State.INTAKE_OPEN)),
+                        new InstantIntakeRotate(robot, robot.intake.roller.COLLECT_POWER),
                         new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL)
                 ),
-                new ParallelCommandGroup(
-                        new SequentialCommandGroup(
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Drive back from stack"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Drive back to stack"), robot.autoDriveTrain)
-                        ),
-                        new SequentialCommandGroup(
-                                new WaitUntilCommand(robot.intake.roller::isRobotFull).withTimeout(2500),
-                                new WaitCommand(1000),
-                                new InstantCommand(() -> robot.intake.roller.stop()),
-                                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED)
-                        )
-                )
+                new CollectFromStack(robot)
         );
     }
 }

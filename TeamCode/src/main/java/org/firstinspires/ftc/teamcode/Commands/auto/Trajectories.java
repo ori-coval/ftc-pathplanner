@@ -60,19 +60,19 @@ public class Trajectories {
 
         trajectorySignAlliance = ((robot.allianceColor == AllianceColor.BLUE) ? 1 : (-1));
 
-        Pose2d stackPos = new Pose2d(trajectorySignAlliance * 11.5, 57, getAngle(90));
+        Pose2d stackPos = new Pose2d(trajectorySignAlliance * 12, 57, getAngle(90));
 
         //Purple Pixel Trajectories
         //Robot Far From Backdrop
         //Far From Truss Detected
         trajectorySequenceHashMap.put("Far Purple (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 35, getY(47), getAngle(60)), getAngle(0))
-                .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 23, getY(47), getAngle(60)), getAngle(0))
+                .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 25, getY(47), getAngle(60)), getAngle(0))
                 .build()
         );
         trajectorySequenceHashMap.put("Driving to stack (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Far Detected)").end())
                 .setTangent(45)
-                .splineToLinearHeading(stackPos, getAngle(45), reduceVelocity(0.3), reduceAcceleration(0.3))
+                .splineToLinearHeading(stackPos, getAngle(45), reduceVelocity(0.4), reduceAcceleration(0.4))
                 .build()
         );
 
@@ -84,8 +84,8 @@ public class Trajectories {
         );
         trajectorySequenceHashMap.put("Driving to stack (Center Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Center Detected)").end())
                 .setTangent(getAngle(40))
-                .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, 47, getAngle(90)), getAngle(90), reduceVelocity(0.3), reduceAcceleration(0.3))
-                .splineToSplineHeading(stackPos, getAngle(90), reduceVelocity(0.3), reduceAcceleration(0.3))
+                .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, 47, getAngle(90)), getAngle(90), reduceVelocity(0.6), reduceAcceleration(0.6))
+                .splineToSplineHeading(stackPos, getAngle(90), reduceVelocity(0.4), reduceAcceleration(0.4))
                 .build()
         );
 
@@ -159,15 +159,26 @@ public class Trajectories {
                 .setTangent(getAngle(-90))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, -10, getAngle(90)), getAngle(-90))
                 .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 7, -40, getAngle(90)), getAngle(-90))
-                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 16, -63, getAngle(90)), getAngle(-180))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 15, -64, getAngle(90)), getAngle(-180))
+                .build()
+        );
+
+        //Second Cycle
+        trajectorySequenceHashMap.put("Back to stack (Second Cycle)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side)").end())
+                .setTangent(getAngle(0))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 7, -40, getAngle(90)), getAngle(90))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 12, -10, getAngle(90)), getAngle(90))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 12, 35, getAngle(90)), getAngle(90))
+                .splineToLinearHeading(startPose, getAngle(90), reduceVelocity(0.3), reduceAcceleration(0.3))
                 .build()
         );
 
 
         //Parking
         trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side)").end())
-                .setTangent(getAngle(90))
-                .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 15, -51), getAngle(90))
+                .setTangent(getAngle(0))
+                .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 5, -60), getAngle(30))
+                .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 9, -51), getAngle(180))
                 .build()
         );
 

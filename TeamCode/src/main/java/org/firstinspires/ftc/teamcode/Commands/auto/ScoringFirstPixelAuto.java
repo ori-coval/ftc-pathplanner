@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.ResetPixelCount;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -18,20 +19,7 @@ import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 public class ScoringFirstPixelAuto extends SequentialCommandGroup {
     public ScoringFirstPixelAuto(RobotControl robot) {
         addCommands(
-                new ParallelCommandGroup(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side)"), robot.autoDriveTrain),
-                        new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
-                        new WaitCommand(1700).andThen(new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED))
-                ),
-                new WaitCommand(300),
-                getScoringCommand(robot),
-                new WaitCommand(1000),
-                new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
-                new WaitCommand(100),
-                getSecondScoringCommand(robot),
-                new WaitCommand(1000),
-                new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
-                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED)
+                new ScoringCommand(robot, getScoringCommand(robot), getSecondScoringCommand(robot))
         );
     }
     private Command getSecondScoringCommand(RobotControl robot) {

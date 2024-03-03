@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class Cartridge extends SubsystemBase {
     public enum State {
-        CLOSED(0.93), SEMI_OPEN(0.75), OPEN(0.2); //TODO: NEW CARTRIDGE POS
+        CLOSED_ONE_PIXEL(1), CLOSED_TWO_PIXELS(0.93), SEMI_OPEN(0.85), OPEN(0.77), INTAKE_OPEN(0.5); //TODO: NEW CARTRIDGE POS
         final double position;
         State(double position){
             this.position = position;
@@ -16,7 +16,7 @@ public class Cartridge extends SubsystemBase {
     }
 
     private final Servo latch;
-    private State lastState = State.CLOSED;
+    private State lastState = State.CLOSED_TWO_PIXELS;
 
 
     public  Cartridge(HardwareMap hardwareMap) {

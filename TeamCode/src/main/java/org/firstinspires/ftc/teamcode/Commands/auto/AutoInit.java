@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 public class AutoInit extends SequentialCommandGroup {
     public AutoInit(RobotControl robot) {
         super(
-                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED),
+                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_ONE_PIXEL),
                 new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT)
         );
     }

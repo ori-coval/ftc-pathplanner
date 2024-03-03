@@ -17,12 +17,10 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirs
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.Climb;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGoUp;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToSelectedPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.UnsafeMoveArm;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.RotateTurretByPID;
 import org.firstinspires.ftc.teamcode.Commands.auto.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.DriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.ResetFieldOriented;
@@ -127,7 +125,7 @@ public class RobotControl extends Robot {
         initDroneLauncher();
         initGamepad();
 
-        cartridge.setState(Cartridge.State.OPEN);
+        cartridge.setState(Cartridge.State.INTAKE_OPEN);
     }
 
     public void initAuto() {
@@ -218,9 +216,13 @@ public class RobotControl extends Robot {
     public void initDebugGamepad() {
         GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
 
+        initCartridge();
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ANTI_TURRET));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
+
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ANTI_TURRET));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new CartridgeSetState(cartridge, Cartridge.State.OPEN));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new CartridgeSetState(cartridge, Cartridge.State.CLOSED_TWO_PIXELS));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.CARTRIDGE));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ELBOW_RIGHT, Configuration.ELBOW_LEFT));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
@@ -242,7 +244,7 @@ public class RobotControl extends Robot {
         initAntiTurret();
         initCartridge();
 
-        new CartridgeSetState(cartridge, Cartridge.State.CLOSED).schedule();
+        new CartridgeSetState(cartridge, Cartridge.State.CLOSED_TWO_PIXELS).schedule();
         new ExtenderSetPosition(extender, Extender.Position.CLOSED).schedule();
         new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition()).schedule();
         new UnsafeMoveArm(this, ArmPosition.INTAKE, false).schedule();
