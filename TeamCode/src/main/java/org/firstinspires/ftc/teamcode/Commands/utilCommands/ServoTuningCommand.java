@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class ServoTuningCommand extends CommandBase {
-    public static final double SENSITIVITY = 0.1;
+    public static final double SENSITIVITY = 1;
     private double lastPos;
     Servo[] servos;
     Telemetry telemetry;

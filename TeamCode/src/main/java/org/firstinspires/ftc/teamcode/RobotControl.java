@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.Climb;
@@ -241,6 +242,7 @@ public class RobotControl extends Robot {
         initAntiTurret();
         initCartridge();
 
+        new CartridgeSetState(cartridge, Cartridge.State.CLOSED).schedule();
         new ExtenderSetPosition(extender, Extender.Position.CLOSED).schedule();
         new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition()).schedule();
         new UnsafeMoveArm(this, ArmPosition.INTAKE, false).schedule();

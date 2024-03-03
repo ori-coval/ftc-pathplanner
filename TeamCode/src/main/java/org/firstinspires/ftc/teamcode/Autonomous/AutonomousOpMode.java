@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Commands.auto.Parking;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoreYellowClose;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringFirstPixelAuto;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
+import org.firstinspires.ftc.teamcode.Commands.auto.SecondCycle;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
@@ -51,7 +52,8 @@ public class AutonomousOpMode extends LinearOpMode {
         if(allianceSide == AllianceSide.FAR) {
             result.addCommands(
                     new GoFromSpikeMarkToStackAndCollect(robot),
-                    new ScoringFirstPixelAuto(robot)
+                    new ScoringFirstPixelAuto(robot)/*,
+                    new SecondCycle(robot)*/
             );
         } else {
             result.addCommands(

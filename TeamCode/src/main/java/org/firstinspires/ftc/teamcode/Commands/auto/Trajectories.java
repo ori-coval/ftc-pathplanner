@@ -47,6 +47,14 @@ public class Trajectories {
         return robot.robotSide == AllianceSide.FAR ? y : y - 48;
     }
 
+    private MecanumVelocityConstraint reduceVelocity(double newVelocity) {
+        return new MecanumVelocityConstraint(DriveConstants.MAX_VEL * newVelocity, DriveConstants.TRACK_WIDTH);
+    }
+
+    private ProfileAccelerationConstraint reduceAcceleration(double newAcceleration) {
+        return new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * newAcceleration);
+    }
+
     public Trajectories(RobotControl robot, Pose2d startPose) {
         this.robot = robot;
 
@@ -63,8 +71,8 @@ public class Trajectories {
                 .build()
         );
         trajectorySequenceHashMap.put("Driving to stack (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Far Detected)").end())
-                .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, 47, getAngle(90)), getAngle(0))
-                .splineToConstantHeading(new Vector2d(stackPos.getX(), stackPos.getY()), getAngle(90))
+                .setTangent(45)
+                .splineToLinearHeading(stackPos, getAngle(45), reduceVelocity(0.3), reduceAcceleration(0.3))
                 .build()
         );
 
@@ -75,9 +83,9 @@ public class Trajectories {
                 .build()
         );
         trajectorySequenceHashMap.put("Driving to stack (Center Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Center Detected)").end())
-                .setTangent(getAngle(45))
-                .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, 47, getAngle(90)), getAngle(90))
-                .splineToSplineHeading(stackPos, getAngle(90))
+                .setTangent(getAngle(40))
+                .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, 47, getAngle(90)), getAngle(90), reduceVelocity(0.3), reduceAcceleration(0.3))
+                .splineToSplineHeading(stackPos, getAngle(90), reduceVelocity(0.3), reduceAcceleration(0.3))
                 .build()
         );
 
@@ -89,8 +97,8 @@ public class Trajectories {
         );
         trajectorySequenceHashMap.put("Driving to stack (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Close Detected)").end())
                 .setTangent(getAngle(45))
-                .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 22, 40), getAngle(75), new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.4, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.4))
-                .splineToSplineHeading(stackPos, getAngle(45))
+                .splineToConstantHeading(new Vector2d(trajectorySignAlliance * 22, 40), getAngle(75))
+                .splineToSplineHeading(stackPos, getAngle(45), reduceVelocity(0.4), reduceAcceleration(0.4))
                 .build()
         );
 
@@ -138,11 +146,11 @@ public class Trajectories {
 
         //Bits
         trajectorySequenceHashMap.put("Drive back from stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected)").end())
-                .back(8, new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.5, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.5))
+                .back(8, reduceVelocity(0.6), reduceAcceleration(0.6))
                 .build()
         );
         trajectorySequenceHashMap.put("Drive back to stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Drive back from stack").end())
-                .forward(8, new MecanumVelocityConstraint(DriveConstants.MAX_VEL * 0.5, DriveConstants.TRACK_WIDTH), new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * 0.5))
+                .forward(8, reduceVelocity(0.6), reduceAcceleration(0.6))
                 .build()
         );
 
@@ -151,7 +159,7 @@ public class Trajectories {
                 .setTangent(getAngle(-90))
                 .splineToSplineHeading(new Pose2d(trajectorySignAlliance * 12, -10, getAngle(90)), getAngle(-90))
                 .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 7, -40, getAngle(90)), getAngle(-90))
-                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 14, -60, getAngle(90)), getAngle(-180))
+                .splineToLinearHeading(new Pose2d(trajectorySignAlliance * 16, -63, getAngle(90)), getAngle(-180))
                 .build()
         );
 
