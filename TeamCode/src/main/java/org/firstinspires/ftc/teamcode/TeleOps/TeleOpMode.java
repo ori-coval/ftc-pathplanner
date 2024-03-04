@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.TeleOps;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 
 import org.firstinspires.ftc.teamcode.ArmPositionSelector;
-import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetStackPosition;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetLifterPosition;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.DroneLauncher;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
@@ -24,7 +24,7 @@ public class TeleOpMode extends CommandOpMode {
         robot = new RobotControl(RobotControl.OpModeType.TELEOP, allianceColor, hardwareMap, gamepad1, gamepad2, telemetry);
 
         schedule(
-                new IntakeSetStackPosition(robot.intake.lifter, Intake.LifterPosition.INIT)
+                new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.INIT)
         );
     }
 

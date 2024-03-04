@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Commands.intakeLifter;
 
 import com.arcrobotics.ftclib.command.ParallelDeadlineGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeUntilFull;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
@@ -13,7 +12,7 @@ public class IntakeCollectFromStack extends ParallelDeadlineGroup {
         super(
                 new IntakeUntilFull(inTakeRoller), //Deadline
                 new SequentialCommandGroup(
-                        new IntakeSetStackPosition(inTakeLifter, Intake.LifterPosition.FIRST_PIXEL)
+                        new IntakeSetLifterPosition(inTakeLifter, Intake.LifterPosition.FIRST_PIXEL)
                 )
         );
     }

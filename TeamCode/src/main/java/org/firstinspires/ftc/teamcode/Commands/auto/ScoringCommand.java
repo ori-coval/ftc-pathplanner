@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 
 public class ScoringCommand extends SequentialCommandGroup {
-    public ScoringCommand(RobotControl robot, Command scoringCommand, Command secondScoringCommand) {
+    public ScoringCommand(Command scoringCommand, Command secondScoringCommand, RobotControl robot) {
         super(
                 new ParallelCommandGroup(
                         new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side)"), robot.autoDriveTrain),

@@ -144,7 +144,7 @@ public class Trajectories {
         );
 
 
-        //Bits
+        //Bites
         trajectorySequenceHashMap.put("Drive back from stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected)").end())
                 .back(8, reduceVelocity(0.6), reduceAcceleration(0.6))
                 .build()
