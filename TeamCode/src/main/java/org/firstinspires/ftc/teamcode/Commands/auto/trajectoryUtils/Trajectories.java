@@ -26,13 +26,10 @@ public class Trajectories {
      */
 
     private final HashMap<String, TrajectorySequence> trajectorySequenceHashMap = new HashMap<>();
-    private final RobotControl robot;
-    private final TrajectoryPoses trajectoryPoses;
 
     public Trajectories(RobotControl robot, Pose2d startPose) {
-        this.robot = robot;
 
-        trajectoryPoses = new TrajectoryPoses(robot);
+        TrajectoryPoses trajectoryPoses = new TrajectoryPoses(robot);
 
         //Purple Pixel Trajectories
         //Robot Far From Backdrop
@@ -275,8 +272,6 @@ public class Trajectories {
                 )
                 .build()
         );
-
-
     }
 
     public TrajectorySequence get(String trajectoryKey) {
