@@ -5,6 +5,9 @@ import org.firstinspires.ftc.teamcode.SubSystems.Extender;
 public enum ArmPosition {
 
     /*
+
+    NOT UPDATED: ('cause no one got the time to do it (and also I'm alone here so there's no one to explain to))
+
     clusters- each cluster is a group containing multiple positions that
 
 
