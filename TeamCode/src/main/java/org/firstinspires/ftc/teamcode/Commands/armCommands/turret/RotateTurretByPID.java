@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
+import org.firstinspires.ftc.teamcode.Commands.auto.ScoringCommand;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
@@ -14,8 +15,11 @@ public class RotateTurretByPID extends CommandBase {
     private final PIDController pidController;
     private final RobotControl robot;
     private long startTime;
-    private final long TIME_WAITING_FOR_TURRET_PID = 100; // todo need to tune this
+    private long startTime0;
+    private final long TIME_WAITING_FOR_TURRET_PID = 200; // todo need to tune this
     private final long TIME_WAITING_FOR_ELBOW = 2000;
+    private final long DEADLINE_FOR_TURRET = 2000;
+
     public RotateTurretByPID(RobotControl robot, double setPoint){
         this.setPoint = setPoint;
         this.robot = robot;
@@ -28,6 +32,8 @@ public class RotateTurretByPID extends CommandBase {
     public void initialize() {
         pidController.setSetPoint(setPoint);
         startTime = Calendar.getInstance().getTimeInMillis();
+        startTime0 = Calendar.getInstance().getTimeInMillis();
+
     }
 
     @Override
@@ -38,11 +44,15 @@ public class RotateTurretByPID extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if(pidController.atSetPoint()) {
-            return Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_TURRET_PID; //todo I can try to remove this and see if it goes faster. or that there's no difference, which means the problem is elsewhere.
+        if(Calendar.getInstance().getTimeInMillis() - startTime0 < DEADLINE_FOR_TURRET) {
+            if(pidController.atSetPoint()) {
+                return Calendar.getInstance().getTimeInMillis() - startTime > TIME_WAITING_FOR_TURRET_PID; //todo I can try to remove this and see if it goes faster. or that there's no difference, which means the problem is elsewhere.
+            } else {
+                startTime = Calendar.getInstance().getTimeInMillis();
+                return false;
+            }
         } else {
-            startTime = Calendar.getInstance().getTimeInMillis();
-            return false;
+            return true;
         }
     }
 
