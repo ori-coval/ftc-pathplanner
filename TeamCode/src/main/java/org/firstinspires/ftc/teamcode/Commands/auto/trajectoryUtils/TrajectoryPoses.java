@@ -195,6 +195,7 @@ public class TrajectoryPoses {
         //CLOSE
         //Middle of field
         parkingCloseMiddle = new Vector2d(getX(15), -53);
+        //Normal
         parkingClose = new Vector2d(getX(60), -53);
 
     }
