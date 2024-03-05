@@ -20,9 +20,9 @@ public class ScoreYellowClose extends SequentialCommandGroup {
                         scoreYellowTrajectory(robot)
                 ),
                 new DetectionSideCommandSwitch(
-                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE, robot.allianceColor == AllianceColor.RED),
-                        new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID, robot.allianceColor == AllianceColor.RED),
-                        new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR, robot.allianceColor == AllianceColor.RED),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_RED, robot.allianceColor == AllianceColor.RED),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID_RED, robot.allianceColor == AllianceColor.RED),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR_RED, robot.allianceColor == AllianceColor.RED),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 )
         );

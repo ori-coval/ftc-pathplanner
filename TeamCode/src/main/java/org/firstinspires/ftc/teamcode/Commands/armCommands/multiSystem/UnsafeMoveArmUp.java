@@ -24,10 +24,10 @@ public class UnsafeMoveArmUp extends SequentialCommandGroup {
                         new ElbowGetToPosition(robot.elbow, position.getElbowPosition()),
                         new ElevatorGetToHeightPID(robot, position.getElevatorHeight())
                 ),
-                new RotateTurretByPID(robot, position.getTurretAngle(isLeftOfBoard)),
-                new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME), //Trying to avoid elbow's servos overload
+                new AntiTurretGetToPosition(robot.antiTurret, position.getAntiTurretPosition(isLeftOfBoard)),
                 new ExtenderSetPosition(robot.extender, position.getExtenderPosition()),
-                new AntiTurretGetToPosition(robot.antiTurret, position.getAntiTurretPosition())
+                new WaitCommand(200),
+                new RotateTurretByPID(robot, position.getTurretAngle(isLeftOfBoard))
         );
     }
 }

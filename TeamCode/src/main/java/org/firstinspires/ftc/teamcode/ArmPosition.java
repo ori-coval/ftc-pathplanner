@@ -43,19 +43,25 @@ public enum ArmPosition {
     SCORE_TOP_FAR(34.1, Extender.Position.MID_WAY, 41.443, 0.42, 0.9, Cluster.scoring), //Can't physically reach this
     SCORE_TOP_FRONT(29.361, Extender.Position.OPEN, 0, 0.47, 0.7, Cluster.scoring),
     SCORE_TOP_CLOSE(34.1, Extender.Position.MID_WAY, 41.443, 0.42, 0.9, Cluster.scoring),
-    SCORE_MID_FAR_2(22.346 + 10, Extender.Position.MID_WAY, 45, 0.336, 1, Cluster.scoring),
-    SCORE_MID_FAR(22.346, Extender.Position.MID_WAY, 45, 0.336, 1, Cluster.scoring),
+    SCORE_MID_FAR_2(22.346 + 10, Extender.Position.MID_WAY, 58, 0.336, 0.9, Cluster.scoring),
+    SCORE_MID_FAR(22.346, Extender.Position.MID_WAY, 58, 0.336, 0.9, Cluster.scoring),
     SCORE_MID_FRONT(27.464, Extender.Position.OPEN, 0, 0.405, 0.7, Cluster.scoring),
     SCORE_MID_CLOSE(22.35, Extender.Position.CLOSED, 40, 0.336, 0.8, Cluster.scoring),
     SCORE_BOTTOM_FAR(12.59, Extender.Position.MID_WAY, 55, 0.336, 0.9, Cluster.scoring),
     SCORE_BOTTOM_FRONT(15.48, Extender.Position.MID_WAY, 0, 0.34, 0.7, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_FAR_2(18.714 + 10, Extender.Position.OPEN, 60, 0.336, 1, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_FAR(18.714, Extender.Position.OPEN, 60, 0.336, 1, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_MID_2(17.59 + 10, Extender.Position.MID_WAY, 60, 0.336, 1, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_MID(17.59, Extender.Position.MID_WAY, 60, 0.336, 1, Cluster.scoring),
-    SCORE_BOTTOM_CLOSE_2(12.34 + 10, Extender.Position.CLOSED, 55, 0.34, 0.9, Cluster.scoring),
-    SCORE_BOTTOM_CLOSE(12.34, Extender.Position.CLOSED, 55, 0.34, 0.9, Cluster.scoring),
-    INTAKE(0, Extender.Position.CLOSED, 0,0.02, 0.03, Cluster.intake),
+    SCORE_AUTO_BOTTOM_FAR_2_RED(18.714 + 10, Extender.Position.OPEN, 52, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_FAR_2_BLUE(18.714 + 10, Extender.Position.OPEN, 42, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_FAR_RED(18.714, Extender.Position.OPEN, 52, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_FAR_BLUE(18.714, Extender.Position.OPEN, 42, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID_2_RED(12.59 + 10, Extender.Position.MID_WAY, 52, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID_2_BLUE(12.59 + 10, Extender.Position.MID_WAY, 42, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID_RED(12.59, Extender.Position.MID_WAY, 52, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID_BLUE(12.59, Extender.Position.MID_WAY, 42, 0.336, 1, Cluster.scoring),
+    SCORE_BOTTOM_CLOSE_2_RED(12.34 + 10, Extender.Position.CLOSED, 48, 0.34, 0.9, Cluster.scoring),
+    SCORE_BOTTOM_CLOSE_2_BLUE(12.34 + 10, Extender.Position.CLOSED, 38, 0.34, 0.9, Cluster.scoring),
+    SCORE_BOTTOM_CLOSE_RED(12.34, Extender.Position.CLOSED, 48, 0.34, 0.9, Cluster.scoring),
+    SCORE_BOTTOM_CLOSE_BLUE(12.34, Extender.Position.CLOSED, 38, 0.34, 0.9, Cluster.scoring),
+    INTAKE(0, Extender.Position.CLOSED, 0,0, 0.03, Cluster.intake),
     AUTO_INTAKE(0, Extender.Position.CLOSED, 0,0.02, 0.03, Cluster.intake),
     AUTONOMOUS_PURPLE_PIXEL(0, Extender.Position.CLOSED_INTAKE, 0, 0.25, 0, Cluster.intake),
     SAFE_PLACE(13, Extender.Position.CLOSED,0,0.45, 0.03, Cluster.intake),
@@ -101,8 +107,10 @@ public enum ArmPosition {
     public double getElbowPosition() {
         return elbowPosition;
     }
-    public double getAntiTurretPosition() {
-        return antiTurretPosition;
+    public double getAntiTurretPosition(boolean isLeftOfBoard) {
+        if(!isLeftOfBoard & (antiTurretPosition > 1./3)) {
+            return (antiTurretPosition + ((antiTurretPosition > 2./3) ? (-2) : 2) * Math.abs(2./3 - antiTurretPosition));
+        } else return antiTurretPosition;
     }
 
     public Cluster getCluster(){

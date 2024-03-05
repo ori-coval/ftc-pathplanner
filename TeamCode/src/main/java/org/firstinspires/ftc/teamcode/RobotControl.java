@@ -223,10 +223,10 @@ public class RobotControl extends Robot {
         initCartridge();
 
 
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ANTI_TURRET));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new CartridgeSetState(cartridge, Cartridge.State.OPEN));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new CartridgeSetState(cartridge, Cartridge.State.CLOSED_TWO_PIXELS));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ANTI_TURRET));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new CartridgeSetState(cartridge, Cartridge.State.OPEN));
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new CartridgeSetState(cartridge, Cartridge.State.CLOSED_TWO_PIXELS));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.CARTRIDGE));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ELBOW_RIGHT, Configuration.ELBOW_LEFT));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
@@ -250,7 +250,7 @@ public class RobotControl extends Robot {
 
         new CartridgeSetState(cartridge, Cartridge.State.CLOSED_TWO_PIXELS).schedule();
         new ExtenderSetPosition(extender, Extender.Position.CLOSED).schedule();
-        new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition()).schedule();
+        new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition(true)).schedule();
         new UnsafeMoveArm(this, ArmPosition.INTAKE, false).schedule();
     }
 

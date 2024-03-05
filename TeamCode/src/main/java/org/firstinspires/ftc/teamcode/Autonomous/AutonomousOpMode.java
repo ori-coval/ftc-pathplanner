@@ -53,9 +53,9 @@ public class AutonomousOpMode extends LinearOpMode {
         if(allianceSide == AllianceSide.FAR) {
             result.addCommands(
                     new GoFromSpikeMarkToStackAndCollect(robot),
-                    new ScoringFirstPixelAuto(robot),
+                    new ScoringFirstPixelAuto(robot)/*,
                     new GoToStackForSecondCycleAndCollect(robot),
-                    new ScoringSecondPixelAuto(robot)
+                    new ScoringSecondPixelAuto(robot)*/
             );
         } else {
             result.addCommands(

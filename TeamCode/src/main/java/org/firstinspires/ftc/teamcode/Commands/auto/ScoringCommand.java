@@ -25,14 +25,12 @@ public class ScoringCommand extends SequentialCommandGroup {
                         new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
                         new WaitCommand(1700).andThen(new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED))
                 ),
-                new WaitCommand(300),
                 scoringCommand,
-                new WaitCommand(1000),
+                new WaitCommand(300),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
                 new ResetPixelCount(robot),
-                new WaitCommand(100),
+                new WaitCommand(300),
                 secondScoringCommand,
-                new WaitCommand(1000),
                 new ArmGetToPosition(robot, ArmPosition.SCORING_AUTO, robot.allianceColor == AllianceColor.RED),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
         );

@@ -26,7 +26,9 @@ public class TrajectoryPoses {
     }
 
     public double getX(double x) {
-        return (robot.allianceColor == AllianceColor.BLUE ? 1 : (-1)) * x;
+        if(robot.allianceColor == AllianceColor.BLUE) {
+            return x + 5;
+        } else return -x;
     }
 
     private MecanumVelocityConstraint reduceVelocity(double newVelocity) {
@@ -170,7 +172,7 @@ public class TrajectoryPoses {
         biteForwardVelocity = reduceVelocity(biteForwardConstant);
         biteForwardAcceleration = reduceAcceleration(biteForwardConstant);
 
-        double biteBackwardConstant = 0.6;
+        double biteBackwardConstant = 0.8;
         biteBackwardVelocity = reduceVelocity(biteBackwardConstant);
         biteBackwardAcceleration = reduceAcceleration(biteBackwardConstant);
 
@@ -178,7 +180,7 @@ public class TrajectoryPoses {
         //Stack <-> Backdrop
         stackAndBackdropPart1 = new Pose2d(getX(12), -10, getAngle(90));
         stackAndBackdropPart2 = new Pose2d(getX(7), -40, getAngle(90));
-        stackAndBackdropPart3 = new Pose2d(getX(15), -64, getAngle(90));
+        stackAndBackdropPart3 = new Pose2d(getX(18), -65, getAngle(90));
 
         //Cycles
         double cycleConstant = 0.3;

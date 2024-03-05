@@ -12,7 +12,7 @@ public class InitializeCommand extends SequentialCommandGroup {
     public InitializeCommand(RobotControl robot) {
         super(
                 new ExtenderSetPosition(robot.extender, Extender.Position.CLOSED),
-                new AntiTurretGetToPosition(robot.antiTurret, ArmPosition.INTAKE.getAntiTurretPosition()),
+                new AntiTurretGetToPosition(robot.antiTurret, ArmPosition.INTAKE.getAntiTurretPosition(true)),
                 new UnsafeMoveArm(robot, ArmPosition.INTAKE, false)
         );
     }

@@ -22,7 +22,7 @@ public class UnsafeMoveArmDown extends SequentialCommandGroup {
         super(
                 new RotateTurretByPID(robot, position.getTurretAngle(isLeftOfBoard)),
                 new ElevatorGetToHeightPID(robot, position.getElevatorHeight()),
-                new AntiTurretGetToPosition(robot.antiTurret, position.getAntiTurretPosition()),
+                new AntiTurretGetToPosition(robot.antiTurret, position.getAntiTurretPosition(isLeftOfBoard)),
                 new ConditionalCommand(
                         new SequentialCommandGroup(
                                 new ElbowGetToPosition(robot.elbow, position.getElbowPosition()),

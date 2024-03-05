@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Commands.intakeRoller.InstantIntakeRotate;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
+import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 
 public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
     public GoToStackForSecondCycleAndCollect(RobotControl robot) {
@@ -23,7 +25,9 @@ public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
                                 robot.autoDriveTrain
                         ),
                         new WaitCommand(600).andThen(
+                                new InstantCommand(() -> Turret.tolerance = 10),
                                 new ArmGetToPosition(robot, ArmPosition.INTAKE, false),
+                                new InstantCommand(() -> Turret.tolerance = 2),
                                 new WaitCommand(300),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.INTAKE_OPEN)
                         ),
