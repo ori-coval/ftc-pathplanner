@@ -36,7 +36,7 @@ public class ScoreYellowClose extends SequentialCommandGroup {
         return new DetectionSideCommandSwitch(
                 new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow (Far Detected)"), robot.autoDriveTrain),
                 new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow (Center Detected)"), robot.autoDriveTrain),
-                new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow (Close Detected)"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(robot.trajectories.get("Close Yellow (Close Detected) Red"), robot.autoDriveTrain),
                 () -> robot.teamPropDetector.getTeamPropSide()
         );
     }

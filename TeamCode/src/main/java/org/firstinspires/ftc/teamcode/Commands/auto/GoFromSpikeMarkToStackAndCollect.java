@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
 
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -15,17 +17,13 @@ import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommand
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
+import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 
 public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
     public GoFromSpikeMarkToStackAndCollect(RobotControl robot) {
-        super(
+        addCommands(
                 new ParallelCommandGroup(
-                        new DetectionSideCommandSwitch(
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Far Detected)"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Center Detected)"), robot.autoDriveTrain),
-                                new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Close Detected)"), robot.autoDriveTrain),
-                                () -> robot.teamPropDetector.getTeamPropSide()
-                        ),
+                        getTrajectoryCommand(robot),
                         new WaitCommand(200).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, false), new WaitCommand(300), new CartridgeSetState(robot.cartridge, Cartridge.State.INTAKE_OPEN)),
                         new InstantIntakeRotate(robot, robot.intake.roller.COLLECT_POWER),
                         new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL)
@@ -33,4 +31,24 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                 new CollectFromStack(robot)
         );
     }
+
+
+    private Command getTrajectoryCommand(RobotControl robot) {
+        return new ConditionalCommand(
+                new DetectionSideCommandSwitch(
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Far Detected) Red"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Center Detected) Red"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Close Detected) Red"), robot.autoDriveTrain),
+                        () -> robot.teamPropDetector.getTeamPropSide()
+                ),
+                new DetectionSideCommandSwitch(
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Far Detected) Blue"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Center Detected) Blue"), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(robot.trajectories.get("Driving to stack (Close Detected) Blue"), robot.autoDriveTrain),
+                        () -> robot.teamPropDetector.getTeamPropSide()
+                ),
+                () -> robot.allianceColor == AllianceColor.RED
+        );
+    }
+
 }

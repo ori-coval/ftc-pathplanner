@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
@@ -19,9 +20,9 @@ import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 
 public class ScoringCommand extends SequentialCommandGroup {
     public ScoringCommand(Command scoringCommand, Command secondScoringCommand, RobotControl robot) {
-        super(
+        addCommands(
                 new ParallelCommandGroup(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side)"), robot.autoDriveTrain),
+                        getTrajectoryCommand(robot),
                         new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
                         new WaitCommand(1700).andThen(new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED))
                 ),
@@ -35,4 +36,14 @@ public class ScoringCommand extends SequentialCommandGroup {
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
         );
     }
+
+
+    private Command getTrajectoryCommand(RobotControl robot) {
+        return new ConditionalCommand(
+                new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side) Red"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side) Blue"), robot.autoDriveTrain),
+                () -> robot.allianceColor == AllianceColor.RED
+        );
+    }
+
 }

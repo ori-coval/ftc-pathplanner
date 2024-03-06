@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RobotControl;
@@ -31,25 +30,27 @@ public class Trajectories {
 
         TrajectoryPoses trajectoryPoses = new TrajectoryPoses(robot);
 
+        //BLUE
+
         //Purple Pixel Trajectories
         //Robot Far From Backdrop
         //Far From Truss Detected
-        trajectorySequenceHashMap.put("Far Purple (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Far Purple (Far Detected) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(
-                        trajectoryPoses.farPurpleFarPart1,
-                        trajectoryPoses.getAngle(0) //Tangent
+                        trajectoryPoses.farPurpleFarPart1Blue,
+                        Math.toRadians(180) //Tangent
                 )
                 .splineToSplineHeading(
-                        trajectoryPoses.farPurpleFarPart2,
-                        trajectoryPoses.getAngle(0) //Tangent
+                        trajectoryPoses.farPurpleFarPart2Blue,
+                        Math.toRadians(180) //Tangent
                 )
                 .build()
         );
-        trajectorySequenceHashMap.put("Driving to stack (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Far Detected)").end())
-                .setTangent(trajectoryPoses.getAngle(45))
+        trajectorySequenceHashMap.put("Driving to stack (Far Detected) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Far Detected) Blue").end())
+                .setTangent(Math.toRadians(135))
                 .splineToLinearHeading(
-                        trajectoryPoses.stackPose,
-                        trajectoryPoses.getAngle(45), //Tangent
+                        trajectoryPoses.stackPoseBlue,
+                        Math.toRadians(135), //Tangent
                         trajectoryPoses.farStackVelocity,
                         trajectoryPoses.farStackAcceleration
                 )
@@ -57,27 +58,28 @@ public class Trajectories {
         );
 
         //Center Detected
-        trajectorySequenceHashMap.put("Far Purple (Center Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Far Purple (Center Detected) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(
-                        trajectoryPoses.farPurpleCenterPart1,
-                        trajectoryPoses.getAngle(0) //Tangent
+                        trajectoryPoses.farPurpleCenterPart1Blue,
+                        Math.toRadians(180) //Tangent
                 )
                 .splineToSplineHeading(
-                        trajectoryPoses.farPurpleCenterPart2,
-                        trajectoryPoses.getAngle(0)) //Tangent
+                        trajectoryPoses.farPurpleCenterPart2Blue,
+                        Math.toRadians(180)) //Tangent
                 .build()
         );
-        trajectorySequenceHashMap.put("Driving to stack (Center Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Center Detected)").end())
-                .setTangent(trajectoryPoses.getAngle(40))
+
+        trajectorySequenceHashMap.put("Driving to stack (Center Detected) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Center Detected) Blue").end())
+                .setTangent(Math.toRadians(140))
                 .splineToSplineHeading(
-                        trajectoryPoses.farStackCenter,
-                        trajectoryPoses.getAngle(90), //Tangent
+                        trajectoryPoses.farStackCenterBlue,
+                        Math.toRadians(90), //Tangent
                         trajectoryPoses.centerStackVelocityPart1,
                         trajectoryPoses.centerStackAccelerationPart1
                 )
                 .splineToSplineHeading(
-                        trajectoryPoses.stackPose,
-                        trajectoryPoses.getAngle(90), //Tangent
+                        trajectoryPoses.stackPoseBlue,
+                        Math.toRadians(90), //Tangent
                         trajectoryPoses.centerStackVelocityPart2,
                         trajectoryPoses.centerStackAccelerationPart2
                 )
@@ -85,113 +87,42 @@ public class Trajectories {
         );
 
         //Close To Truss Detected
-        trajectorySequenceHashMap.put("Far Purple (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+        trajectorySequenceHashMap.put("Far Purple (Close Detected) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
                 .splineToSplineHeading(
-                        trajectoryPoses.farPurpleClosePart1,
-                        trajectoryPoses.getAngle(0) //Tangent
+                        trajectoryPoses.farPurpleClosePart1Blue,
+                        Math.toRadians(180) //Tangent
                 )
                 .splineToConstantHeading(
-                        trajectoryPoses.farPurpleClosePart2,
-                        trajectoryPoses.getAngle(-45) //Tangent
+                        trajectoryPoses.farPurpleClosePart2Blue,
+                        Math.toRadians(225) //Tangent
                 )
                 .build()
         );
-        trajectorySequenceHashMap.put("Driving to stack (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Close Detected)").end())
-                .setTangent(trajectoryPoses.getAngle(45))
+        trajectorySequenceHashMap.put("Driving to stack (Close Detected) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Close Detected) Blue").end())
+                .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(
-                        trajectoryPoses.farStackClose,
-                        trajectoryPoses.getAngle(75) //Tangent
+                        trajectoryPoses.farStackCloseBlue,
+                        Math.toRadians(135) //Tangent
                 )
                 .splineToSplineHeading(
-                        trajectoryPoses.stackPose,
-                        trajectoryPoses.getAngle(45), //Tangent
+                        trajectoryPoses.stackPoseBlue,
+                        Math.toRadians(90), //Tangent
                         trajectoryPoses.closeStackVelocity,
                         trajectoryPoses.closeStackAcceleration
                 )
                 .build()
         );
 
-        //Robot Close To Backdrop Side]
-        //Close to truss
-        trajectorySequenceHashMap.put("Close Purple (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
-                .splineToSplineHeading(
-                        trajectoryPoses.closePurpleClosePart1,
-                        trajectoryPoses.getAngle(0) //Tangent
-                )
-                .splineToLinearHeading(
-                        trajectoryPoses.closePurpleClosePart2,
-                        trajectoryPoses.getAngle(90) //Tangent
-                )
-                .build()
-        );
-
-        trajectorySequenceHashMap.put("Close Yellow (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple (Close Detected)").end())
-                .setTangent(trajectoryPoses.getAngle(-45))
-                .splineToSplineHeading(
-                        trajectoryPoses.closeYellowClosePart1,
-                        trajectoryPoses.getAngle(-90) //Tangent
-                )
-                .splineToConstantHeading(
-                        trajectoryPoses.closeYellowClosePart2,
-                        trajectoryPoses.getAngle(180) //Tangent
-                )
-                .build()
-        );
-
-        //Center
-        trajectorySequenceHashMap.put("Close Purple (Center Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
-                .splineToSplineHeading(
-                        trajectoryPoses.closePurpleCenterPart1,
-                        trajectoryPoses.getAngle(0) //Tangent
-                )
-                .splineToSplineHeading(
-                        trajectoryPoses.closePurpleCenterPart2,
-                        trajectoryPoses.getAngle(0) //Tangent
-                )
-                .build()
-        );
-
-        trajectorySequenceHashMap.put("Close Yellow (Center Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple (Center Detected)").end())
-                .setTangent(trajectoryPoses.getAngle(180))
-                .splineToLinearHeading(
-                        trajectoryPoses.closeYellowCenter,
-                        trajectoryPoses.getAngle(-90) //Tangent
-                )
-                .build()
-        );
-
-        //Far from truss
-        trajectorySequenceHashMap.put("Close Purple (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
-                .splineToSplineHeading(
-                        trajectoryPoses.closePurpleFarPart1,
-                        trajectoryPoses.getAngle(0) //Tangent
-                )
-                .splineToConstantHeading(
-                        trajectoryPoses.closePurpleFarPart2,
-                        trajectoryPoses.getAngle(-45) //Tangent
-                )
-                .build()
-        );
-        
-        trajectorySequenceHashMap.put("Close Yellow (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple (Far Detected)").end())
-                .setTangent(trajectoryPoses.getAngle(180))
-                .splineToLinearHeading(
-                        trajectoryPoses.closeYellowFar,
-                        trajectoryPoses.getAngle(-90) //Tangent
-                )
-                .build()
-        );
-
 
         //Bites
-        trajectorySequenceHashMap.put("Drive back from stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected)").end())
+        trajectorySequenceHashMap.put("Drive back from stack Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected) Blue").end())
                 .back(8,
                         trajectoryPoses.biteBackwardVelocity,
                         trajectoryPoses.biteBackwardAcceleration
                 )
                 .build()
         );
-        trajectorySequenceHashMap.put("Drive back to stack", robot.autoDriveTrain.trajectorySequenceBuilder(get("Drive back from stack").end())
+        trajectorySequenceHashMap.put("Drive back to stack Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Drive back from stack Blue").end())
                 .forward(8,
                         trajectoryPoses.biteForwardVelocity,
                         trajectoryPoses.biteForwardAcceleration
@@ -200,41 +131,244 @@ public class Trajectories {
         );
 
         //Scoring Far
-        trajectorySequenceHashMap.put("Go to backdrop (Far Side)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected)").end())
-                .setTangent(trajectoryPoses.getAngle(-90))
+        trajectorySequenceHashMap.put("Go to backdrop (Far Side) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected) Blue").end())
+                .setTangent(Math.toRadians(270))
                 .splineToSplineHeading(
-                        trajectoryPoses.stackAndBackdropPart1,
-                        trajectoryPoses.getAngle(-90) //Tangent
+                        trajectoryPoses.stackAndBackdropPart1Blue,
+                        Math.toRadians(270) //Tangent
                 )
                 .splineToLinearHeading(
-                       trajectoryPoses.stackAndBackdropPart2,
-                        trajectoryPoses.getAngle(-90) //Tangent
+                        trajectoryPoses.stackAndBackdropPart2Blue,
+                        Math.toRadians(270) //Tangent
                 )
                 .splineToLinearHeading(
-                        trajectoryPoses.stackAndBackdropPart3,
-                        trajectoryPoses.getAngle(-180) //Tangent
+                        trajectoryPoses.stackAndBackdropPart3Blue,
+                        Math.toRadians(360) //Tangent
+                )
+                .build()
+        );
+
+        //Parking
+        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Blue").end())
+                .setTangent(Math.toRadians(180))
+                .splineToConstantHeading(
+                        trajectoryPoses.parkingFarPart1Blue,
+                        Math.toRadians(150) //Tangent
+                )
+                .splineToConstantHeading(
+                        trajectoryPoses.parkingFarPart2Blue,
+                        Math.toRadians(0) //Tangent
+                )
+                .build()
+        );
+
+
+        //RED
+
+        //Purple Pixel Trajectories
+        //Robot Far From Backdrop
+        //Far From Truss Detected
+        trajectorySequenceHashMap.put("Far Purple (Far Detected) Red", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+                .splineToSplineHeading(
+                        trajectoryPoses.farPurpleFarPart1Red,
+                        Math.toRadians(0) //Tangent
+                )
+                .splineToSplineHeading(
+                        trajectoryPoses.farPurpleFarPart2Red,
+                        Math.toRadians(0) //Tangent
+                )
+                .build()
+        );
+        trajectorySequenceHashMap.put("Driving to stack (Far Detected) Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Far Detected) Red").end())
+                .setTangent(Math.toRadians(45))
+                .splineToLinearHeading(
+                        trajectoryPoses.stackPoseRed,
+                        Math.toRadians(45), //Tangent
+                        trajectoryPoses.farStackVelocity,
+                        trajectoryPoses.farStackAcceleration
+                )
+                .build()
+        );
+
+        //Center Detected
+        trajectorySequenceHashMap.put("Far Purple (Center Detected) Red", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+                .splineToSplineHeading(
+                        trajectoryPoses.farPurpleCenterPart1Red,
+                        Math.toRadians(0) //Tangent
+                )
+                .splineToSplineHeading(
+                        trajectoryPoses.farPurpleCenterPart2Red,
+                        Math.toRadians(0)) //Tangent
+                .build()
+        );
+        trajectorySequenceHashMap.put("Driving to stack (Center Detected) Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Center Detected) Red").end())
+                .setTangent(Math.toRadians(40))
+                .splineToSplineHeading(
+                        trajectoryPoses.farStackCenterRed,
+                        Math.toRadians(90), //Tangent
+                        trajectoryPoses.centerStackVelocityPart1,
+                        trajectoryPoses.centerStackAccelerationPart1
+                )
+                .splineToSplineHeading(
+                        trajectoryPoses.stackPoseRed,
+                        Math.toRadians(90), //Tangent
+                        trajectoryPoses.centerStackVelocityPart2,
+                        trajectoryPoses.centerStackAccelerationPart2
+                )
+                .build()
+        );
+
+        //Close To Truss Detected
+        trajectorySequenceHashMap.put("Far Purple (Close Detected) Red", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+                .splineToSplineHeading(
+                        trajectoryPoses.farPurpleClosePart1Red,
+                        Math.toRadians(0) //Tangent
+                )
+                .splineToConstantHeading(
+                        trajectoryPoses.farPurpleClosePart2Red,
+                        Math.toRadians(-45) //Tangent
+                )
+                .build()
+        );
+        trajectorySequenceHashMap.put("Driving to stack (Close Detected) Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Far Purple (Close Detected) Red").end())
+                .setTangent(Math.toRadians(45))
+                .splineToConstantHeading(
+                        trajectoryPoses.farStackCloseRed,
+                        Math.toRadians(75) //Tangent
+                )
+                .splineToSplineHeading(
+                        trajectoryPoses.stackPoseRed,
+                        Math.toRadians(45), //Tangent
+                        trajectoryPoses.closeStackVelocity,
+                        trajectoryPoses.closeStackAcceleration
+                )
+                .build()
+        );
+
+        //Robot Close To Backdrop Side
+        //Close to truss
+        trajectorySequenceHashMap.put("Close Purple (Close Detected) Red", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+                .splineToSplineHeading(
+                        trajectoryPoses.closePurpleClosePart1Red,
+                        Math.toRadians(0) //Tangent
+                )
+                .splineToLinearHeading(
+                        trajectoryPoses.closePurpleClosePart2Red,
+                        Math.toRadians(90) //Tangent
+                )
+                .build()
+        );
+
+        trajectorySequenceHashMap.put("Close Yellow (Close Detected) Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple (Close Detected) Red").end())
+                .setTangent(Math.toRadians(-45))
+                .splineToSplineHeading(
+                        trajectoryPoses.closeYellowClosePart1Red,
+                        Math.toRadians(-90) //Tangent
+                )
+                .splineToConstantHeading(
+                        trajectoryPoses.closeYellowClosePart2Red,
+                        Math.toRadians(180) //Tangent
+                )
+                .build()
+        );
+
+        //Center
+        trajectorySequenceHashMap.put("Close Purple (Center Detected) Red", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+                .splineToSplineHeading(
+                        trajectoryPoses.closePurpleCenterPart1Red,
+                        Math.toRadians(0) //Tangent
+                )
+                .splineToSplineHeading(
+                        trajectoryPoses.closePurpleCenterPart2Red,
+                        Math.toRadians(0) //Tangent
+                )
+                .build()
+        );
+
+        trajectorySequenceHashMap.put("Close Yellow (Center Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple (Center Detected) Red").end())
+                .setTangent(Math.toRadians(180))
+                .splineToLinearHeading(
+                        trajectoryPoses.closeYellowCenterRed,
+                        Math.toRadians(-90) //Tangent
+                )
+                .build()
+        );
+
+        //Far from truss
+        trajectorySequenceHashMap.put("Close Purple (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(startPose)
+                .splineToSplineHeading(
+                        trajectoryPoses.closePurpleFarPart1Red,
+                        Math.toRadians(0) //Tangent
+                )
+                .splineToConstantHeading(
+                        trajectoryPoses.closePurpleFarPart2Red,
+                        Math.toRadians(-45) //Tangent
+                )
+                .build()
+        );
+        
+        trajectorySequenceHashMap.put("Close Yellow (Far Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Purple (Far Detected)").end())
+                .setTangent(Math.toRadians(180))
+                .splineToLinearHeading(
+                        trajectoryPoses.closeYellowFarRed,
+                        Math.toRadians(-90) //Tangent
+                )
+                .build()
+        );
+
+
+        //Bites
+        trajectorySequenceHashMap.put("Drive back from stack Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected) Red").end())
+                .back(8,
+                        trajectoryPoses.biteBackwardVelocity,
+                        trajectoryPoses.biteBackwardAcceleration
+                )
+                .build()
+        );
+        trajectorySequenceHashMap.put("Drive back to stack Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Drive back from stack Red").end())
+                .forward(8,
+                        trajectoryPoses.biteForwardVelocity,
+                        trajectoryPoses.biteForwardAcceleration
+                )
+                .build()
+        );
+
+        //Scoring Far
+        trajectorySequenceHashMap.put("Go to backdrop (Far Side) Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Driving to stack (Close Detected) Red").end())
+                .setTangent(Math.toRadians(-90))
+                .splineToSplineHeading(
+                        trajectoryPoses.stackAndBackdropPart1Red,
+                        Math.toRadians(-90) //Tangent
+                )
+                .splineToLinearHeading(
+                       trajectoryPoses.stackAndBackdropPart2Red,
+                        Math.toRadians(-90) //Tangent
+                )
+                .splineToLinearHeading(
+                        trajectoryPoses.stackAndBackdropPart3Red,
+                        Math.toRadians(-180) //Tangent
                 )
                 .build()
         );
 
         //Second Cycle
-        trajectorySequenceHashMap.put("Back to stack (Second Cycle)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side)").end())
-                .setTangent(trajectoryPoses.getAngle(0))
+        trajectorySequenceHashMap.put("Back to stack (Second Cycle)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Red").end())
+                .setTangent(Math.toRadians(0))
                 .splineToLinearHeading(
-                        trajectoryPoses.stackAndBackdropPart2,
-                        trajectoryPoses.getAngle(90) //Tangent
+                        trajectoryPoses.stackAndBackdropPart2Red,
+                        Math.toRadians(90) //Tangent
                 )
                 .splineToLinearHeading(
-                        trajectoryPoses.stackAndBackdropPart1,
-                        trajectoryPoses.getAngle(90) //Tangent
+                        trajectoryPoses.stackAndBackdropPart1Red,
+                        Math.toRadians(90) //Tangent
                 )
                 .splineToLinearHeading(
-                        trajectoryPoses.aBitBeforeStack,
-                        trajectoryPoses.getAngle(90) //Tangent
+                        trajectoryPoses.aBitBeforeStackRed,
+                        Math.toRadians(90) //Tangent
                 )
                 .splineToLinearHeading(
-                        trajectoryPoses.stackPose,
-                        trajectoryPoses.getAngle(90), //Tangent
+                        trajectoryPoses.stackPoseRed,
+                        Math.toRadians(90), //Tangent
                         trajectoryPoses.beforeStackVelocityCycle,
                         trajectoryPoses.beforeStackAccelerationCycle
                 )
@@ -242,33 +376,33 @@ public class Trajectories {
         );
 
         //Parking
-        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side)").end())
-                .setTangent(trajectoryPoses.getAngle(0))
+        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Red").end())
+                .setTangent(Math.toRadians(0))
                 .splineToConstantHeading(
-                        trajectoryPoses.parkingFarPart1,
-                        trajectoryPoses.getAngle(30) //Tangent
+                        trajectoryPoses.parkingFarPart1Red,
+                        Math.toRadians(30) //Tangent
                 )
                 .splineToConstantHeading(
-                        trajectoryPoses.parkingFarPart2,
-                        trajectoryPoses.getAngle(180) //Tangent
+                        trajectoryPoses.parkingFarPart2Red,
+                        Math.toRadians(180) //Tangent
                 )
                 .build()
         );
 
-        trajectorySequenceHashMap.put("Backdrop Intake Close (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Yellow (Close Detected)").end())
-                .setTangent(trajectoryPoses.getAngle(90))
+        trajectorySequenceHashMap.put("Backdrop Intake Close (Close Detected)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Yellow (Close Detected) Red").end())
+                .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(
-                        trajectoryPoses.parkingCloseMiddle,
-                        trajectoryPoses.getAngle(90) //Tangent
+                        trajectoryPoses.parkingCloseMiddleRed,
+                        Math.toRadians(90) //Tangent
                 )
                 .build()
         );
 
         trajectorySequenceHashMap.put("Backdrop Intake Close", robot.autoDriveTrain.trajectorySequenceBuilder(get("Close Yellow (Far Detected)").end())
-                .setTangent(trajectoryPoses.getAngle(90))
+                .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(
-                        trajectoryPoses.parkingClose,
-                        trajectoryPoses.getAngle(90) //Tangent
+                        trajectoryPoses.parkingCloseRed,
+                        Math.toRadians(90) //Tangent
                 )
                 .build()
         );

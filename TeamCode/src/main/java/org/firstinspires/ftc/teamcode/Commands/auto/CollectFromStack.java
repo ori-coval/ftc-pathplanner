@@ -44,8 +44,8 @@ public class CollectFromStack extends ParallelCommandGroup {
 
     private Command addBite(RobotControl robot) {
             return new SequentialCommandGroup(
-                    new TrajectoryFollowerCommand(robot.trajectories.get("Drive back from stack"), robot.autoDriveTrain),
-                    new TrajectoryFollowerCommand(robot.trajectories.get("Drive back to stack"), robot.autoDriveTrain)
+                    new TrajectoryFollowerCommand(robot.trajectories.get("Drive back from stack Red"), robot.autoDriveTrain),
+                    new TrajectoryFollowerCommand(robot.trajectories.get("Drive back to stack Red"), robot.autoDriveTrain)
             );
     }
 

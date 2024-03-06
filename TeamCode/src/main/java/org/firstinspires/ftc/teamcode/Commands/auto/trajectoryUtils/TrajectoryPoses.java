@@ -27,7 +27,8 @@ public class TrajectoryPoses {
 
     public double getX(double x) {
         if(robot.allianceColor == AllianceColor.BLUE) {
-            if(x == 9) x += 3;
+            if(x == 9) x += 6;
+            if(x == 12) x -= 3;
             return x + 5;
         } else return -x;
     }
@@ -42,60 +43,87 @@ public class TrajectoryPoses {
     //endregion
 
     //region Poses And Movements Variables
-    public Pose2d stackPose;
-    public Pose2d farPurpleFarPart1;
-    public Pose2d farPurpleFarPart2;
+    public Pose2d stackPoseRed;
+    public Pose2d stackPoseBlue;
+    public Pose2d farPurpleFarPart1Red;
+    public Pose2d farPurpleFarPart1Blue;
+    public Pose2d farPurpleFarPart2Red;
+    public Pose2d farPurpleFarPart2Blue;
 
     public MecanumVelocityConstraint farStackVelocity;
     public ProfileAccelerationConstraint farStackAcceleration;
 
-    public Pose2d farPurpleCenterPart1;
-    public Pose2d farPurpleCenterPart2;
-    public Pose2d farStackCenter;
+    public Pose2d farPurpleCenterPart1Red;
+    public Pose2d farPurpleCenterPart1Blue;
+    public Pose2d farPurpleCenterPart2Red;
+    public Pose2d farPurpleCenterPart2Blue;
+    public Pose2d farStackCenterRed;
+    public Pose2d farStackCenterBlue;
 
     public MecanumVelocityConstraint centerStackVelocityPart1;
     public MecanumVelocityConstraint centerStackVelocityPart2;
     public ProfileAccelerationConstraint centerStackAccelerationPart1;
     public ProfileAccelerationConstraint centerStackAccelerationPart2;
 
-    public Pose2d farPurpleClosePart1;
-    public Vector2d farPurpleClosePart2;
-    public Vector2d farStackClose;
+    public Pose2d farPurpleClosePart1Red;
+    public Pose2d farPurpleClosePart1Blue;
+    public Vector2d farPurpleClosePart2Red;
+    public Vector2d farPurpleClosePart2Blue;
+    public Vector2d farStackCloseRed;
+    public Vector2d farStackCloseBlue;
 
     public MecanumVelocityConstraint closeStackVelocity;
     public ProfileAccelerationConstraint closeStackAcceleration;
 
-    public Pose2d closePurpleClosePart1;
-    public Pose2d closePurpleClosePart2;
-    public Pose2d closeYellowClosePart1;
-    public Vector2d closeYellowClosePart2;
+    public Pose2d closePurpleClosePart1Red;
+    public Pose2d closePurpleClosePart1Blue;
+    public Pose2d closePurpleClosePart2Red;
+    public Pose2d closePurpleClosePart2Blue;
+    public Pose2d closeYellowClosePart1Red;
+    public Pose2d closeYellowClosePart1Blue;
+    public Vector2d closeYellowClosePart2Red;
+    public Vector2d closeYellowClosePart2Blue;
 
-    public Pose2d closePurpleCenterPart1;
-    public Pose2d closePurpleCenterPart2;
-    public Pose2d closeYellowCenter;
+    public Pose2d closePurpleCenterPart1Red;
+    public Pose2d closePurpleCenterPart1Blue;
+    public Pose2d closePurpleCenterPart2Red;
+    public Pose2d closePurpleCenterPart2Blue;
+    public Pose2d closeYellowCenterRed;
+    public Pose2d closeYellowCenterBlue;
 
 
-    public Pose2d closePurpleFarPart1;
-    public Vector2d closePurpleFarPart2;
-    public Pose2d closeYellowFar;
+    public Pose2d closePurpleFarPart1Red;
+    public Pose2d closePurpleFarPart1Blue;
+    public Vector2d closePurpleFarPart2Red;
+    public Vector2d closePurpleFarPart2Blue;
+    public Pose2d closeYellowFarRed;
+    public Pose2d closeYellowFarBlue;
 
     public MecanumVelocityConstraint biteForwardVelocity;
     public MecanumVelocityConstraint biteBackwardVelocity;
     public ProfileAccelerationConstraint biteForwardAcceleration;
     public ProfileAccelerationConstraint biteBackwardAcceleration;
 
-    public Pose2d stackAndBackdropPart1;
-    public Pose2d stackAndBackdropPart2;
-    public Pose2d stackAndBackdropPart3;
-    public Pose2d aBitBeforeStack;
+    public Pose2d stackAndBackdropPart1Red;
+    public Pose2d stackAndBackdropPart1Blue;
+    public Pose2d stackAndBackdropPart2Red;
+    public Pose2d stackAndBackdropPart2Blue;
+    public Pose2d stackAndBackdropPart3Red;
+    public Pose2d stackAndBackdropPart3Blue;
+    public Pose2d aBitBeforeStackRed;
+    public Pose2d aBitBeforeStackBlue;
     public MecanumVelocityConstraint beforeStackVelocityCycle;
     public ProfileAccelerationConstraint beforeStackAccelerationCycle;
 
-    public Vector2d parkingFarPart1;
-    public Vector2d parkingFarPart2;
+    public Vector2d parkingFarPart1Red;
+    public Vector2d parkingFarPart1Blue;
+    public Vector2d parkingFarPart2Red;
+    public Vector2d parkingFarPart2Blue;
 
-    public Vector2d parkingCloseMiddle;
-    public Vector2d parkingClose;
+    public Vector2d parkingCloseMiddleRed;
+    public Vector2d parkingCloseMiddleBlue;
+    public Vector2d parkingCloseRed;
+    public Vector2d parkingCloseBlue;
 
 
 
@@ -105,12 +133,15 @@ public class TrajectoryPoses {
         this.robot = robot;
 
         //Poses
-        stackPose = new Pose2d(getX(12), 57, getAngle(90));
+        stackPoseRed = new Pose2d(-12, 57, Math.toRadians(90));
+        stackPoseBlue = new Pose2d(12, 57, Math.toRadians(90));
 
         //FAR
         //Far (Far) Purple
-        farPurpleFarPart1 = new Pose2d(getX(35), 47, getAngle(60));
-        farPurpleFarPart2 = new Pose2d(getX(25), 47, getAngle(60));
+        farPurpleFarPart1Red = new Pose2d(-35, 47, Math.toRadians(60));
+        farPurpleFarPart1Blue = new Pose2d(34, 47, Math.toRadians(120));
+        farPurpleFarPart2Red = new Pose2d(-25, 47, Math.toRadians(60));
+        farPurpleFarPart2Blue = new Pose2d(25, 47, Math.toRadians(120));
 
         //Far (Far) Stack Velocities & Acceleration
         double farStackConstant = 0.4;
@@ -118,11 +149,14 @@ public class TrajectoryPoses {
         farStackAcceleration = reduceAcceleration(farStackConstant);
 
         //Far (Center) Purple
-        farPurpleCenterPart1 = new Pose2d(getX(40), 35, getAngle(60));
-        farPurpleCenterPart2 = new Pose2d(getX(22), 35, getAngle(45));
+        farPurpleCenterPart1Red = new Pose2d(-40, 35, Math.toRadians(60));
+        farPurpleCenterPart1Blue = new Pose2d(40, 35, Math.toRadians(120));
+        farPurpleCenterPart2Red = new Pose2d(-22, 35, Math.toRadians(45));
+        farPurpleCenterPart2Blue = new Pose2d(22, 35, Math.toRadians(135));
 
         //Far (Center) Stack
-        farStackCenter = new Pose2d(getX(12), 47, getAngle(90));
+        farStackCenterRed = new Pose2d(-12, 47, Math.toRadians(90));
+        farStackCenterBlue = new Pose2d(12, 47, Math.toRadians(90));
 
         //Far (Center) Stack Velocities & Acceleration
         double centerStackConstantPart1 = 0.6;
@@ -134,11 +168,14 @@ public class TrajectoryPoses {
         centerStackAccelerationPart2 = reduceAcceleration(centerStackConstantPart2);
 
         //Far (Close) Purple
-        farPurpleClosePart1 = new Pose2d(getX(50), 38, getAngle(45));
-        farPurpleClosePart2 = new Vector2d(getX(34), 26);
+        farPurpleClosePart1Red = new Pose2d(-50, 38, Math.toRadians(45));
+        farPurpleClosePart1Blue = new Pose2d(50, 38, Math.toRadians(135));
+        farPurpleClosePart2Red = new Vector2d(-34, 26);
+        farPurpleClosePart2Blue = new Vector2d(34, 26);
 
         //Far (Close) Stack
-        farStackClose = new Vector2d(getX(22), 40);
+        farStackCloseRed = new Vector2d(-22, 40);
+        farStackCloseBlue = new Vector2d(22, 40);
 
         //Far (Close) Stack Velocities & Acceleration
         double closeStackConstant = 0.4;
@@ -147,26 +184,30 @@ public class TrajectoryPoses {
 
         //CLOSE
         //Close (Close) Purple
-        closePurpleClosePart1 = new Pose2d(getX(40), -15, getAngle(-60));
-        closePurpleClosePart2 = new Pose2d(getX(30), -5, getAngle(-60));
+        closePurpleClosePart1Red = new Pose2d(-40, -15, Math.toRadians(-60));
+        closePurpleClosePart1Blue = new Pose2d(40, -15, Math.toRadians(240));
+        closePurpleClosePart2Red = new Pose2d(-30, -5, Math.toRadians(-60));
+        closePurpleClosePart2Blue = new Pose2d(30, -5, Math.toRadians(-60));
 
         //Close (Close) Yellow
-        closeYellowClosePart1 = new Pose2d(getX(7), -40, getAngle(-90));
-        closeYellowClosePart2 = new Vector2d(getX(15), -64);
+        closeYellowClosePart1Red = new Pose2d(-7, -40, Math.toRadians(-90));
+        closeYellowClosePart1Blue = new Pose2d(7, -40, Math.toRadians(-90));
+        closeYellowClosePart2Red = new Vector2d(-15, -64);
+        closeYellowClosePart2Blue = new Vector2d(15, -64);
 
         //Close (Center) Purple
-        closePurpleCenterPart1 = new Pose2d(getX(40), -13, getAngle(-60));
-        closePurpleCenterPart2 = new Pose2d(getX(22), -13, getAngle(-45));
+        closePurpleCenterPart1Red = new Pose2d(-40, -13, Math.toRadians(-60));
+        closePurpleCenterPart2Red = new Pose2d(-22, -13, Math.toRadians(-45));
 
         //Close (Center) Yellow
-        closeYellowCenter = new Pose2d(getX(60), -64, getAngle(90));
+        closeYellowCenterRed = new Pose2d(-60, -64, Math.toRadians(90));
 
         //Close (Far) Purple
-        closePurpleFarPart1 = new Pose2d(getX(50), -10, getAngle(-45));
-        closePurpleFarPart2 = new Vector2d(getX(34), -22);
+        closePurpleFarPart1Red = new Pose2d(-50, -10, Math.toRadians(-45));
+        closePurpleFarPart2Red = new Vector2d(-34, -22);
 
         //Close (Far) Yellow
-        closeYellowFar = new Pose2d(getX(60), -64, getAngle(90));
+        closeYellowFarRed = new Pose2d(-60, -64, Math.toRadians(90));
 
         //Bite Velocities & Acceleration
         double biteForwardConstant = 0.6;
@@ -179,27 +220,32 @@ public class TrajectoryPoses {
 
         //Scoring Poses (Only Far)
         //Stack <-> Backdrop
-        stackAndBackdropPart1 = new Pose2d(getX(12), -10, getAngle(90));
-        stackAndBackdropPart2 = new Pose2d(getX(7), -40, getAngle(90));
-        stackAndBackdropPart3 = new Pose2d(getX(18), -65, getAngle(90));
+        stackAndBackdropPart1Red = new Pose2d(-12, -10, Math.toRadians(90));
+        stackAndBackdropPart1Blue = new Pose2d(12, -10, Math.toRadians(90));
+        stackAndBackdropPart2Red = new Pose2d(-7, -40, Math.toRadians(90));
+        stackAndBackdropPart2Blue = new Pose2d(7, -40, Math.toRadians(90));
+        stackAndBackdropPart3Red = new Pose2d(-16, -65, Math.toRadians(90));
+        stackAndBackdropPart3Blue = new Pose2d(18, -65, Math.toRadians(90));
 
         //Cycles
         double cycleConstant = 0.3;
-        aBitBeforeStack = new Pose2d(getX(12), 35, getAngle(90));
+        aBitBeforeStackRed = new Pose2d(-12, 35, Math.toRadians(90));
         beforeStackVelocityCycle = reduceVelocity(cycleConstant);
         beforeStackAccelerationCycle = reduceAcceleration(cycleConstant);
 
 
         //Parking
         //FAR
-        parkingFarPart1 = new Vector2d(getX(5), -60);
-        parkingFarPart2 = new Vector2d(getX(9), -51);
+        parkingFarPart1Red = new Vector2d(-5, -60);
+        parkingFarPart1Blue = new Vector2d(5, -60);
+        parkingFarPart2Red = new Vector2d(-9, -55);
+        parkingFarPart2Blue = new Vector2d(9, -55);
 
         //CLOSE
         //Middle of field
-        parkingCloseMiddle = new Vector2d(getX(15), -53);
+        parkingCloseMiddleRed = new Vector2d(-15, -53);
         //Normal
-        parkingClose = new Vector2d(getX(60), -53);
+        parkingCloseRed = new Vector2d(-60, -53);
 
     }
 
