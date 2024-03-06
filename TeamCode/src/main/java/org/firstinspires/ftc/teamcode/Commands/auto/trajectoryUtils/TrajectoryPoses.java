@@ -27,6 +27,7 @@ public class TrajectoryPoses {
 
     public double getX(double x) {
         if(robot.allianceColor == AllianceColor.BLUE) {
+            if(x == 9) x += 3;
             return x + 5;
         } else return -x;
     }

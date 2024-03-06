@@ -29,7 +29,7 @@ public class UnsafeMoveArmDown extends SequentialCommandGroup {
                                 new ExtenderSetPosition(robot.extender, position.getExtenderPosition())
                         ),
                         new SequentialCommandGroup(
-                                new ExtenderSetPosition(robot.extender, position.getExtenderPosition()),
+                                new ExtenderSetPosition(robot.extender, position.getExtenderPosition()), //Todo if the extender still makes problems with the turret. bring this to the top of the command, and hope for the elbow not to break. *skull emoji*
                                 new WaitCommand(UnsafeMoveArm.EXTENDER_WAIT_TIME),
                                 new ElbowGetToPosition(robot.elbow, position.getElbowPosition())
                         ),
