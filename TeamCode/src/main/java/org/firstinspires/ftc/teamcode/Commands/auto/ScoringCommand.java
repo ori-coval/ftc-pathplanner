@@ -24,7 +24,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                         getTrajectoryCommand(robot),
                         new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
-                        new WaitCommand(1700).andThen(new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED))
+                        new WaitCommand(1900).andThen(new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED))
                 ),
                 scoringCommand,
                 new WaitCommand(300),

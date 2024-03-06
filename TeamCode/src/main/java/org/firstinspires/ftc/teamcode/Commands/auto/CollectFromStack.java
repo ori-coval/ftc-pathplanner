@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeStop;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
+import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 
 public class CollectFromStack extends ParallelCommandGroup {
     public CollectFromStack(RobotControl robot) {
@@ -43,9 +45,16 @@ public class CollectFromStack extends ParallelCommandGroup {
     }
 
     private Command addBite(RobotControl robot) {
-            return new SequentialCommandGroup(
-                    new TrajectoryFollowerCommand(robot.trajectories.get("Drive back from stack Red"), robot.autoDriveTrain),
-                    new TrajectoryFollowerCommand(robot.trajectories.get("Drive back to stack Red"), robot.autoDriveTrain)
+            return new ConditionalCommand(
+                    new SequentialCommandGroup(
+                            new TrajectoryFollowerCommand(robot.trajectories.get("Drive back from stack Red"), robot.autoDriveTrain),
+                            new TrajectoryFollowerCommand(robot.trajectories.get("Drive back to stack Red"), robot.autoDriveTrain)
+                    ),
+                    new SequentialCommandGroup(
+                            new TrajectoryFollowerCommand(robot.trajectories.get("Drive back from stack Blue"), robot.autoDriveTrain),
+                            new TrajectoryFollowerCommand(robot.trajectories.get("Drive back to stack Blue"), robot.autoDriveTrain)
+                    ),
+                    () -> robot.allianceColor == AllianceColor.RED
             );
     }
 
