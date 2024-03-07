@@ -135,18 +135,43 @@ public class Trajectories {
                 .setTangent(Math.toRadians(270))
                 .splineToSplineHeading(
                         trajectoryPoses.stackAndBackdropPart1Blue,
-                        Math.toRadians(270) //Tangent
+                        Math.toRadians(260) //Tangent
                 )
                 .splineToLinearHeading(
                         trajectoryPoses.stackAndBackdropPart2Blue,
-                        Math.toRadians(270) //Tangent
+                        Math.toRadians(280) //Tangent
                 )
                 .splineToLinearHeading(
                         trajectoryPoses.stackAndBackdropPart3Blue,
-                        Math.toRadians(360) //Tangent
+                        Math.toRadians(320) //Tangent
                 )
                 .build()
         );
+
+        //Second Cycle
+        trajectorySequenceHashMap.put("Back to stack (Second Cycle) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Blue").end())
+                .setTangent(Math.toRadians(150))
+                .splineToLinearHeading(
+                        trajectoryPoses.stackAndBackdropPart2Blue,
+                        Math.toRadians(95) //Tangent
+                )
+                .splineToLinearHeading(
+                        trajectoryPoses.stackAndBackdropPart1Blue,
+                        Math.toRadians(85) //Tangent
+                )
+                .splineToLinearHeading(
+                        trajectoryPoses.aBitBeforeStackBlue,
+                        Math.toRadians(90) //Tangent
+                )
+                .splineToLinearHeading(
+                        trajectoryPoses.stackPoseBlue,
+                        Math.toRadians(90), //Tangent
+                        trajectoryPoses.beforeStackVelocityCycle,
+                        trajectoryPoses.beforeStackAccelerationCycle
+                )
+                .build()
+        );
+
 
         //Parking
         trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Blue").end())
@@ -352,7 +377,7 @@ public class Trajectories {
         );
 
         //Second Cycle
-        trajectorySequenceHashMap.put("Back to stack (Second Cycle)", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Red").end())
+        trajectorySequenceHashMap.put("Back to stack (Second Cycle) Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Red").end())
                 .setTangent(Math.toRadians(0))
                 .splineToLinearHeading(
                         trajectoryPoses.stackAndBackdropPart2Red,

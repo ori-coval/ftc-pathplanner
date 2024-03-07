@@ -241,9 +241,13 @@ public class TrajectoryPoses {
 
         //Cycles
         double cycleConstant = 0.3;
-        aBitBeforeStackRed = new Pose2d(-12, 35, Math.toRadians(90));
         beforeStackVelocityCycle = reduceVelocity(cycleConstant);
         beforeStackAccelerationCycle = reduceAcceleration(cycleConstant);
+        //RED
+        aBitBeforeStackRed = new Pose2d(-12, 35, Math.toRadians(90));
+        //BLUE
+        aBitBeforeStackBlue = new Pose2d(12, 35, Math.toRadians(90));
+
 
 
         //Parking

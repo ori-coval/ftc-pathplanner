@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -21,6 +23,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToS
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.UnsafeMoveArm;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.RotateTurretByPID;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.DriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.ResetFieldOriented;
@@ -190,7 +193,14 @@ public class RobotControl extends Robot {
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ResetFieldOriented(this));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(this, Side.CENTER));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 10000),
+                        new ArmGetToSelectedPosition(this),
+                        new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 2000),
+                        new InstantCommand(() -> FtcDashboard.getInstance().getTelemetry().addLine("Done" + RotateTurretByPID.DEADLINE_FOR_TURRET))
+                )
+        );
 
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.LEFT));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSide(this, Side.RIGHT));

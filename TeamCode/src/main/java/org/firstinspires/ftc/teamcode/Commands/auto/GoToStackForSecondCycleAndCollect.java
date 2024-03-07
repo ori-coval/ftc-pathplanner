@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
@@ -15,19 +17,15 @@ import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
+import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 
 public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
     public GoToStackForSecondCycleAndCollect(RobotControl robot) {
-        super(
+        addCommands(
                 new ParallelCommandGroup(
-                        new TrajectoryFollowerCommand(
-                                robot.trajectories.get("Back to stack (Second Cycle)"),
-                                robot.autoDriveTrain
-                        ),
+                        getTrajectoryCommand(robot),
                         new WaitCommand(600).andThen(
-                                new InstantCommand(() -> Turret.tolerance = 10),
                                 new ArmGetToPosition(robot, ArmPosition.INTAKE, false),
-                                new InstantCommand(() -> Turret.tolerance = 2),
                                 new WaitCommand(300),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.INTAKE_OPEN)
                         ),
@@ -39,4 +37,20 @@ public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
                 new CollectFromStack(robot, true)
         );
     }
+
+    private Command getTrajectoryCommand(RobotControl robot) {
+        return new ConditionalCommand(
+                new TrajectoryFollowerCommand(
+                        robot.trajectories.get("Back to stack (Second Cycle) Red"),
+                        robot.autoDriveTrain
+                ),
+                new TrajectoryFollowerCommand(
+                        robot.trajectories.get("Back to stack (Second Cycle) Blue"),
+                        robot.autoDriveTrain
+                ),
+                () -> robot.allianceColor == AllianceColor.RED
+        );
+    }
+
+
 }
