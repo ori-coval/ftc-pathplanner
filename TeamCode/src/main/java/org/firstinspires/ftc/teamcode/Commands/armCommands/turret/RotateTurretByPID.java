@@ -16,7 +16,7 @@ public class RotateTurretByPID extends CommandBase {
     private final RobotControl robot;
     private long startTime;
     private long startTime0;
-    private final long TIME_WAITING_FOR_TURRET_PID = 200; // todo need to tune this
+    private final long TIME_WAITING_FOR_TURRET_PID = 50; // todo need to tune this
     private final long TIME_WAITING_FOR_ELBOW = 2000;
     public static long DEADLINE_FOR_TURRET = 2000;
 
