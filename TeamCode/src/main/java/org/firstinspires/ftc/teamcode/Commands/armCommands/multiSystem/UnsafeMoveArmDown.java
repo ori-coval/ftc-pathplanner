@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem;
 
 import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
@@ -20,13 +21,17 @@ import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 public class UnsafeMoveArmDown extends SequentialCommandGroup {
     public UnsafeMoveArmDown(RobotControl robot, ArmPosition position, boolean isLeftOfBoard) {
         super(
-                new RotateTurretByPID(robot, position.getTurretAngle(isLeftOfBoard)),
+                new ParallelCommandGroup(
+                        new ExtenderSetPosition(robot.extender, position.getExtenderPosition()),
+                        new RotateTurretByPID(robot, position.getTurretAngle(isLeftOfBoard)),
+                        new AntiTurretGetToPosition(robot.antiTurret, position.getAntiTurretPosition(isLeftOfBoard))
+                ),
                 new ElevatorGetToHeightPID(robot, position.getElevatorHeight()),
-                new AntiTurretGetToPosition(robot.antiTurret, position.getAntiTurretPosition(isLeftOfBoard)),
-                new ConditionalCommand(
+                new ElbowGetToPosition(robot.elbow, position.getElbowPosition())
+                /*new ConditionalCommand(
                         new SequentialCommandGroup(
                                 new ElbowGetToPosition(robot.elbow, position.getElbowPosition()),
-                                new ExtenderSetPosition(robot.extender, position.getExtenderPosition())
+                                new ExtenderSetPosition(robot.extender, position.getExtenderPosition()),
                         ),
                         new SequentialCommandGroup(
                                 new ExtenderSetPosition(robot.extender, position.getExtenderPosition()), //Todo if the extender still makes problems with the turret. bring this to the top of the command, and hope for the elbow not to break. *skull emoji*
@@ -34,7 +39,7 @@ public class UnsafeMoveArmDown extends SequentialCommandGroup {
                                 new ElbowGetToPosition(robot.elbow, position.getElbowPosition())
                         ),
                         () -> (ArmGetToPosition.lastPosition.getExtenderPosition().getServoPositionAsDouble() < position.getExtenderPosition().getServoPositionAsDouble())
-                )
+                )*/
         );
     }
 }
