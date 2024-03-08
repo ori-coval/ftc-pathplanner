@@ -191,7 +191,7 @@ public class RobotControl extends Robot {
             gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.RIGHT));
         }
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ResetFieldOriented(this));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new BackToIntake(this));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(this, Side.CENTER));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));
 
@@ -201,7 +201,7 @@ public class RobotControl extends Robot {
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(this));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeTakeIn(this));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new BackToIntake(this));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new ResetFieldOriented(this));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeEjectToggle(intake.roller));
 
 
