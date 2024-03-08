@@ -21,17 +21,7 @@ public class ScoringBothPixels extends SequentialCommandGroup {
     public ScoringBothPixels(RobotControl robot, BooleanSupplier triggerCondition) {
         super(
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
-                new ParallelCommandGroup(
-                        new SequentialCommandGroup(
-                                new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 10000000),
-                                new ArmGetToSelectedPosition(robot).interruptOn(() -> !triggerCondition.getAsBoolean())
-                        ),
-                        new SequentialCommandGroup(
-                                new WaitCommand(500),
-                                new CartridgeSetState(robot.cartridge, Cartridge.State.SEMI_OPEN)
-                        )
-                ),
-                new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 2000),
+                new WaitUntilCommand(() -> !triggerCondition.getAsBoolean()),
                 new SideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORING, true),
                         new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, false),

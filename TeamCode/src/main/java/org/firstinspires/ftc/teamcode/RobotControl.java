@@ -193,14 +193,7 @@ public class RobotControl extends Robot {
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ResetFieldOriented(this));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(this, Side.CENTER));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-                new SequentialCommandGroup(
-                        new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 10000),
-                        new ArmGetToSelectedPosition(this),
-                        new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 2000),
-                        new InstantCommand(() -> FtcDashboard.getInstance().getTelemetry().addLine("Done" + RotateTurretByPID.DEADLINE_FOR_TURRET))
-                )
-        );
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));
 
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.LEFT));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSide(this, Side.RIGHT));
