@@ -33,11 +33,11 @@ public class CollectFromStack extends ParallelCommandGroup {
                 new SequentialCommandGroup(
                         new WaitUntilCommand(
                                 () -> robot.intake.roller.getPixelCount() >= 1
-                        ).withTimeout(1000),
+                        ).withTimeout(800),
                         new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.THIRD_PIXEL),
                         new WaitUntilCommand(
                                 robot.intake.roller::isRobotFull
-                        ).withTimeout(1500),
+                        ).withTimeout(800),
                         stopAndCloseCartridge(robot)
                 )
         );

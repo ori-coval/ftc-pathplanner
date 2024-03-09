@@ -28,6 +28,7 @@ public class Turret extends SubsystemBase {
 
     public Turret(HardwareMap hardwareMap) {
         turretMotor = hardwareMap.dcMotor.get(Configuration.TURRET);
+        turretMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         turretEncoder = hardwareMap.dcMotor.get(Configuration.TURRET_ENCODER);
         turretEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); //resets encoder to 0
         turretEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //makes it use power from -1 to 1

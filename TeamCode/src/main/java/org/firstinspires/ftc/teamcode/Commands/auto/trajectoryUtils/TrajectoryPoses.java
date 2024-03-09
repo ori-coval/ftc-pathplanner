@@ -110,6 +110,7 @@ public class TrajectoryPoses {
     public Pose2d stackAndBackdropPart2Blue;
     public Pose2d stackAndBackdropPart3Red;
     public Pose2d stackAndBackdropPart3Blue;
+    public Pose2d stackAndBackdropPart4Blue;
     public MecanumVelocityConstraint enterBackdropVelocity;
     public ProfileAccelerationConstraint enterBackdropAcceleration;
 
@@ -149,8 +150,8 @@ public class TrajectoryPoses {
         farPurpleFarPart2Red = new Pose2d(-25, 47, Math.toRadians(60));
 
         //Far (Far) Purple BLUE
-        farPurpleFarPart1Blue = new Pose2d(34, 47, Math.toRadians(120));
-        farPurpleFarPart2Blue = new Pose2d(25, 47, Math.toRadians(120));
+        farPurpleFarPart1Blue = new Pose2d(40, 50, Math.toRadians(120));
+        farPurpleFarPart2Blue = new Pose2d(30, 50, Math.toRadians(120));
 
         //Far (Far) Stack Velocities & Acceleration
         double farStackConstant = 0.4;
@@ -162,8 +163,8 @@ public class TrajectoryPoses {
         farPurpleCenterPart2Red = new Pose2d(-22, 35, Math.toRadians(45));
 
         //Far (Center) Purple BLUE
-        farPurpleCenterPart1Blue = new Pose2d(40, 35, Math.toRadians(120));
-        farPurpleCenterPart2Blue = new Pose2d(22, 35, Math.toRadians(140));
+        farPurpleCenterPart1Blue = new Pose2d(40, 37, Math.toRadians(140));
+        farPurpleCenterPart2Blue = new Pose2d(25, 37, Math.toRadians(140));
 
         //Far (Center) Stack RED
         farStackCenterRed = new Pose2d(-12, 47, Math.toRadians(90));
@@ -186,7 +187,7 @@ public class TrajectoryPoses {
 
         //Far (Close) Purple BLUE
         farPurpleClosePart1Blue = new Pose2d(50, 39.37, Math.toRadians(135));
-        farPurpleClosePart2Blue = new Vector2d(34, 26);
+        farPurpleClosePart2Blue = new Vector2d(36, 26);
 
         //Far (Close) Stack RED
         farStackCloseRed = new Vector2d(-22, 40);
@@ -247,9 +248,11 @@ public class TrajectoryPoses {
         //Stack <-> Backdrop BLUE
         stackAndBackdropPart1Blue = new Pose2d(15, -15, Math.toRadians(90));
         stackAndBackdropPart2Blue = new Pose2d(9, -40, Math.toRadians(90));
-        stackAndBackdropPart3Blue = new Pose2d(27.5, -64, Math.toRadians(90));
+        stackAndBackdropPart3Blue = new Pose2d(15, -58, Math.toRadians(90));
+        stackAndBackdropPart4Blue = new Pose2d(29, -63, Math.toRadians(90));
 
-        double enterBackdropConstant = 0.5;
+
+        double enterBackdropConstant = 0.6;
         enterBackdropVelocity = reduceVelocity(enterBackdropConstant);
         enterBackdropAcceleration = reduceAcceleration(enterBackdropConstant);
 
@@ -269,7 +272,7 @@ public class TrajectoryPoses {
 
         //FAR BLUE
         parkingFarPart1Blue = new Vector2d(10, -57);
-        parkingFarPart2Blue = new Vector2d(20, -51);
+        parkingFarPart2Blue = new Vector2d(13, -51);
 
         double parkingConstant = 0.7;
         parkingVelocity = reduceVelocity(parkingConstant);

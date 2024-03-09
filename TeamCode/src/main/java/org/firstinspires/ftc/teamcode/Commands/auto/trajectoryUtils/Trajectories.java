@@ -144,7 +144,11 @@ public class Trajectories {
                 )
                 .splineToLinearHeading(
                         trajectoryPoses.stackAndBackdropPart3Blue,
-                        Math.toRadians(320), //Tangent
+                        Math.toRadians(320) //Tangent
+                )
+                .splineToLinearHeading(
+                        trajectoryPoses.stackAndBackdropPart4Blue,
+                        Math.toRadians(-20), //Tangent
                         trajectoryPoses.enterBackdropVelocity,
                         trajectoryPoses.enterBackdropAcceleration
                 )
@@ -191,7 +195,7 @@ public class Trajectories {
                 )
                 .splineToConstantHeading(
                         trajectoryPoses.parkingFarPart2Blue,
-                        Math.toRadians(0), //Tangent
+                        Math.toRadians(45), //Tangent
                         trajectoryPoses.parkingVelocity,
                         trajectoryPoses.parkingAcceleration
                 )

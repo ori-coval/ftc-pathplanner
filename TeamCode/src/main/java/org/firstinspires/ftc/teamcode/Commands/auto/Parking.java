@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
@@ -12,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 
-public class Parking extends SequentialCommandGroup {
+public class Parking extends ParallelCommandGroup {
     public Parking(RobotControl robot) {
         addCommands(
                 new ConditionalCommand(
@@ -20,7 +22,7 @@ public class Parking extends SequentialCommandGroup {
                         getCloseTrajectory(robot),
                         () -> robot.robotSide == AllianceSide.FAR
                 ), //to allow intake to get in
-                new ArmGetToPosition(robot, ArmPosition.INTAKE, false)
+                new WaitCommand(500).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, false))
         );
     }
 
