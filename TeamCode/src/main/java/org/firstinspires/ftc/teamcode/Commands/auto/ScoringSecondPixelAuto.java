@@ -9,7 +9,8 @@ public class ScoringSecondPixelAuto extends ScoringCommand {
     public ScoringSecondPixelAuto(RobotControl robot) {
         super(
                 new ArmGetToPosition(robot, ArmPosition.SCORE_MID_FAR,robot.allianceColor == AllianceColor.RED),
-                new ArmGetToPosition(robot, ArmPosition.SCORE_MID_FAR_2, robot.allianceColor == AllianceColor.RED),
+                new ArmGetToPosition(robot, ArmPosition.SCORE_MID_FAR,robot.allianceColor == AllianceColor.RED),
+//                new ArmGetToPosition(robot, ArmPosition.SCORE_MID_FAR_2, robot.allianceColor == AllianceColor.RED),
                 robot
         );
     }

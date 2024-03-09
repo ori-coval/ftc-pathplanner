@@ -19,11 +19,10 @@ import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 public class CollectFromStack extends ParallelCommandGroup {
     public CollectFromStack(RobotControl robot) {
         addCommands(
-                addBite(robot),
                 new SequentialCommandGroup(
                         new WaitUntilCommand(
                                 robot.intake.roller::isRobotFull
-                        ).withTimeout(2500),
+                        ).withTimeout(1500),
                         stopAndCloseCartridge(robot)
                 )
         );
@@ -33,9 +32,9 @@ public class CollectFromStack extends ParallelCommandGroup {
         addCommands(
                 new SequentialCommandGroup(
                         new WaitUntilCommand(
-                                () -> robot.intake.roller.getPixelCount() == 1
+                                () -> robot.intake.roller.getPixelCount() >= 1
                         ).withTimeout(1000),
-                        new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.THIRD_FOURTH_PIXELS),
+                        new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.THIRD_PIXEL),
                         new WaitUntilCommand(
                                 robot.intake.roller::isRobotFull
                         ).withTimeout(1500),
@@ -60,7 +59,7 @@ public class CollectFromStack extends ParallelCommandGroup {
 
     private Command stopAndCloseCartridge(RobotControl robot) {
         return new SequentialCommandGroup(
-                new WaitCommand(1000),
+                new WaitCommand(200),
                 new IntakeStop(robot),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
         );

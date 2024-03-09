@@ -13,7 +13,7 @@ public class ScoringFirstPixelAuto extends ScoringCommand {
     public ScoringFirstPixelAuto(RobotControl robot) {
         super(
                 getScoringCommand(robot),
-                getSecondScoringCommand(robot),
+                getScoringCommand(robot),
                 robot
         );
     }

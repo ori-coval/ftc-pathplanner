@@ -15,7 +15,7 @@ public class ElbowGetToPosition extends CommandBase {
     private int stepsTaken = 1;
     private final double STEP_SIZE = 0.05;
     private final long TIME_BETWEEN_STEPS = 50; //(In ms)
-    private final double TOLERANCE = 0.05;
+    private final double TOLERANCE = 0.06;
     /*
     If it's too fast, you can always add more time between steps.
      */

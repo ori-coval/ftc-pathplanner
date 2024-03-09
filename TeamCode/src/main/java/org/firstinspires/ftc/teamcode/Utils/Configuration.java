@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Utils;
 
-public class Configuration {
+public class    Configuration {
     public static final String DRIVE_TRAIN_BACK_LEFT = "backLeft"; //0
     public static final String DRIVE_TRAIN_BACK_RIGHT = "backRight"; //3
     public static final String DRIVE_TRAIN_FRONT_LEFT = "frontLeft"; //1

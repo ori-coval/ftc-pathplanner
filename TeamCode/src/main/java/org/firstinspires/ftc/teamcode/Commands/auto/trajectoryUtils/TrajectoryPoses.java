@@ -130,8 +130,8 @@ public class TrajectoryPoses {
         this.robot = robot;
 
         //Poses
-        stackPoseRed = new Pose2d(-12, 57, Math.toRadians(90));
-        stackPoseBlue = new Pose2d(14, 57, Math.toRadians(90));
+        stackPoseRed = new Pose2d(-12, 59, Math.toRadians(90));
+        stackPoseBlue = new Pose2d(14, 59, Math.toRadians(90));
 
         //FAR
         //Far (Far) Purple RED
@@ -230,13 +230,13 @@ public class TrajectoryPoses {
 
         //Scoring Poses (Only Far)
         //Stack <-> Backdrop RED
-        stackAndBackdropPart1Red = new Pose2d(-12, -10, Math.toRadians(90));
-        stackAndBackdropPart2Red = new Pose2d(-7, -40, Math.toRadians(90));
-        stackAndBackdropPart3Red = new Pose2d(-16, -65, Math.toRadians(90));
+        stackAndBackdropPart1Red = new Pose2d(-11, -15, Math.toRadians(90));
+        stackAndBackdropPart2Red = new Pose2d(-9, -40, Math.toRadians(90));
+        stackAndBackdropPart3Red = new Pose2d(-20, -64, Math.toRadians(90));
 
         //Stack <-> Backdrop BLUE
-        stackAndBackdropPart1Blue = new Pose2d(9, -10, Math.toRadians(90));
-        stackAndBackdropPart2Blue = new Pose2d(7, -40, Math.toRadians(90));
+        stackAndBackdropPart1Blue = new Pose2d(11, -15, Math.toRadians(90));
+        stackAndBackdropPart2Blue = new Pose2d(9, -40, Math.toRadians(90));
         stackAndBackdropPart3Blue = new Pose2d(25, -64, Math.toRadians(90));
 
         //Cycles
@@ -244,9 +244,9 @@ public class TrajectoryPoses {
         beforeStackVelocityCycle = reduceVelocity(cycleConstant);
         beforeStackAccelerationCycle = reduceAcceleration(cycleConstant);
         //RED
-        aBitBeforeStackRed = new Pose2d(-12, 35, Math.toRadians(90));
+        aBitBeforeStackRed = new Pose2d(-12, 48, Math.toRadians(90));
         //BLUE
-        aBitBeforeStackBlue = new Pose2d(12, 35, Math.toRadians(90));
+        aBitBeforeStackBlue = new Pose2d(14, 48, Math.toRadians(90));
 
 
 
@@ -257,7 +257,7 @@ public class TrajectoryPoses {
 
         //FAR BLUE
         parkingFarPart1Blue = new Vector2d(13, -60);
-        parkingFarPart2Blue = new Vector2d(18, -55);
+        parkingFarPart2Blue = new Vector2d(18, -51);
 
         //CLOSEz
         //Middle of field
