@@ -24,11 +24,12 @@ public class Trajectories {
      *
      */
 
+    public TrajectoryPoses trajectoryPoses;
     private final HashMap<String, TrajectorySequence> trajectorySequenceHashMap = new HashMap<>();
 
     public Trajectories(RobotControl robot, Pose2d startPose) {
 
-        TrajectoryPoses trajectoryPoses = new TrajectoryPoses(robot);
+        trajectoryPoses = new TrajectoryPoses(robot);
 
         //BLUE
 
@@ -143,13 +144,15 @@ public class Trajectories {
                 )
                 .splineToLinearHeading(
                         trajectoryPoses.stackAndBackdropPart3Blue,
-                        Math.toRadians(320) //Tangent
+                        Math.toRadians(320), //Tangent
+                        trajectoryPoses.enterBackdropVelocity,
+                        trajectoryPoses.enterBackdropAcceleration
                 )
                 .build()
         );
 
         //Second Cycle
-        trajectorySequenceHashMap.put("Back to stack (Second Cycle) Part 1 Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Blue").end())
+        trajectorySequenceHashMap.put("Back to stack (Second Cycle) Part 1 Blue", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropPoseBlue)
                 .setTangent(Math.toRadians(150))
                 .splineToLinearHeading(
                         trajectoryPoses.stackAndBackdropPart2Blue,
@@ -166,7 +169,7 @@ public class Trajectories {
                 .setTangent(Math.toRadians(85))
                 .splineToLinearHeading(
                         trajectoryPoses.aBitBeforeStackBlue,
-                        Math.toRadians(85) //Tangent
+                        Math.toRadians(90) //Tangent
                 )
                 .splineToLinearHeading(
                         trajectoryPoses.stackPoseBlue,
@@ -180,15 +183,17 @@ public class Trajectories {
 
 
         //Parking
-        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Blue").end())
+        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropPoseBlue)
                 .setTangent(Math.toRadians(180))
                 .splineToConstantHeading(
                         trajectoryPoses.parkingFarPart1Blue,
-                        Math.toRadians(150) //Tangent
+                        Math.toRadians(90) //Tangent
                 )
                 .splineToConstantHeading(
                         trajectoryPoses.parkingFarPart2Blue,
-                        Math.toRadians(0) //Tangent
+                        Math.toRadians(0), //Tangent
+                        trajectoryPoses.parkingVelocity,
+                        trajectoryPoses.parkingAcceleration
                 )
                 .build()
         );

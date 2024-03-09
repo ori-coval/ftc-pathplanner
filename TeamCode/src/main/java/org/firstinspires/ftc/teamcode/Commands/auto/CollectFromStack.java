@@ -60,7 +60,7 @@ public class CollectFromStack extends ParallelCommandGroup {
     private Command stopAndCloseCartridge(RobotControl robot) {
         return new SequentialCommandGroup(
                 new WaitCommand(200),
-                new IntakeStop(robot),
+// <- todo remove this later               new IntakeStop(robot),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
         );
     }

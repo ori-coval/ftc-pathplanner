@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -22,8 +23,8 @@ public class ScoringCommand extends SequentialCommandGroup {
     public ScoringCommand(Command scoringCommand, Command secondScoringCommand, RobotControl robot) {
         addCommands(
                 new ParallelCommandGroup(
-                        getTrajectoryCommand(robot),
-                        new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
+                        getTrajectoryCommand(robot).andThen(resetPoseEstimate(robot)),
+// <- todo remove this later                       new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
                         new WaitCommand(1700).andThen(new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED)).andThen(scoringCommand)
                 ),
                 new WaitCommand(300),
@@ -39,6 +40,14 @@ public class ScoringCommand extends SequentialCommandGroup {
         return new ConditionalCommand(
                 new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side) Red"), robot.autoDriveTrain),
                 new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side) Blue"), robot.autoDriveTrain),
+                () -> robot.allianceColor == AllianceColor.RED
+        );
+    }
+
+    private Command resetPoseEstimate(RobotControl robot) {
+        return new ConditionalCommand(
+                new InstantCommand(() -> robot.autoDriveTrain.setPoseEstimate(new Pose2d(-20, -64, Math.toRadians(90)))),
+                new InstantCommand(() -> robot.autoDriveTrain.setPoseEstimate(robot.trajectories.trajectoryPoses.realBackdropPoseBlue)),
                 () -> robot.allianceColor == AllianceColor.RED
         );
     }

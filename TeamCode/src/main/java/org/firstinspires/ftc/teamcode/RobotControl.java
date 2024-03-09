@@ -144,9 +144,9 @@ public class RobotControl extends Robot {
         startPose = new Pose2d();
         if(robotSide == AllianceSide.FAR) {
             if(allianceColor == AllianceColor.RED) {
-                startPose = new Pose2d(-63, 38, Math.toRadians(0));
+                startPose = new Pose2d(-64.12598425, 39.37, Math.toRadians(0));
             } else {
-                startPose = new Pose2d(63, 38, Math.toRadians(180));
+                startPose = new Pose2d(64.12598425, 39.37, Math.toRadians(180));
             }
         } else {
             if(allianceColor == AllianceColor.RED) {
