@@ -131,7 +131,7 @@ public class TrajectoryPoses {
 
         //Poses
         stackPoseRed = new Pose2d(-12, 59, Math.toRadians(90));
-        stackPoseBlue = new Pose2d(14, 59, Math.toRadians(90));
+        stackPoseBlue = new Pose2d(14, 57, Math.toRadians(90));
 
         //FAR
         //Far (Far) Purple RED
@@ -235,7 +235,7 @@ public class TrajectoryPoses {
         stackAndBackdropPart3Red = new Pose2d(-20, -64, Math.toRadians(90));
 
         //Stack <-> Backdrop BLUE
-        stackAndBackdropPart1Blue = new Pose2d(11, -15, Math.toRadians(90));
+        stackAndBackdropPart1Blue = new Pose2d(15, -15, Math.toRadians(90));
         stackAndBackdropPart2Blue = new Pose2d(9, -40, Math.toRadians(90));
         stackAndBackdropPart3Blue = new Pose2d(25, -64, Math.toRadians(90));
 
