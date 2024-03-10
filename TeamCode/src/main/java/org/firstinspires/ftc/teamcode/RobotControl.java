@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -16,14 +14,17 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurret
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.Climb;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorGoUp;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorDownJoystick;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorUpJoystick;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ResetElevatorEncoder;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.extender.ExtenderSetPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToSelectedPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.BackToIntake;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.SetRobotSide;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.UnsafeMoveArm;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.RotateTurretByPID;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.ResetTurretEncoder;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.TurretLeftJoystick;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.TurretRightJoystick;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.DriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.ResetFieldOriented;
@@ -75,6 +76,7 @@ public class RobotControl extends Robot {
     public Intake intake;
     public Telemetry telemetry;
     public static double lastHeading = 0;
+    public boolean inDebugMode = false;
 
     private final double TRIGGER_THRESHOLD = 0.5;
 
@@ -212,12 +214,28 @@ public class RobotControl extends Robot {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(ArmPositionSelector::moveRight));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new Climb(this));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whileActiveOnce(new ElevatorGoUp(this));
+
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> turret.isListeningToElbowSensor = !turret.isListeningToElbowSensor)); //todo a way for the driver to know
 
 
+        //Elevator control (Climb and Resting)
+        Trigger elevatorUpJoyStick = new Trigger(() -> (gamepadEx2.getLeftY() > TRIGGER_THRESHOLD));
+        Trigger elevatorDownJoyStick = new Trigger(() -> (gamepadEx2.getLeftY() < -TRIGGER_THRESHOLD));
+
+        elevatorUpJoyStick.whileActiveOnce(new ElevatorUpJoystick(this));
+        elevatorDownJoyStick.whileActiveOnce(new ElevatorDownJoystick(this));
+
+
+        //Debug Mode
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new InstantCommand(() -> inDebugMode = !inDebugMode));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ResetElevatorEncoder(this));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new ResetTurretEncoder(this));
+
+        Trigger turretRightJoyStick = new Trigger(() -> (gamepadEx2.getRightX() > TRIGGER_THRESHOLD));
+        Trigger turretLeftJoyStick = new Trigger(() -> (gamepadEx2.getRightX() < -TRIGGER_THRESHOLD));
+
+        turretRightJoyStick.whileActiveOnce(new TurretRightJoystick(this));
+        turretLeftJoyStick.whileActiveOnce(new TurretLeftJoystick(this));
 
     }
 

@@ -5,17 +5,18 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosition;
 import org.firstinspires.ftc.teamcode.RobotControl;
 
-public class Climb extends CommandBase {
-
+public class ElevatorUpJoystick extends CommandBase {
 
     RobotControl robot;
-    public Climb(RobotControl robot) {
+
+    public ElevatorUpJoystick(RobotControl robot) {
         this.robot = robot;
     }
 
     @Override
     public void initialize() {
-        robot.elevator.setPower(-1);
+        new ElbowGetToPosition(robot.elbow, 0.4).schedule();
+        robot.elevator.setPower(0.5);
     }
 
     @Override

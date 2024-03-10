@@ -22,9 +22,9 @@ public class Turret extends SubsystemBase {
     public static double kI = 0.01;
     public static double kD = 0;
     public static double tolerance = 2;
-
     private final PIDController pidController = new PIDController(kP, kI, kD);
-    public boolean isListeningToElbowSensor = true;
+    private double encoderOffset;
+
 
     public Turret(HardwareMap hardwareMap) {
         turretMotor = hardwareMap.dcMotor.get(Configuration.TURRET);
@@ -34,16 +34,25 @@ public class Turret extends SubsystemBase {
         turretEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //makes it use power from -1 to 1
 
     }
-    public void setPower (double power) {
+    public void setPower(double power) {
         power = Math.min(power,1);
         power = Math.max(power,-1);
         turretMotor.setPower(power);
     }
-    public double getAngle(){
-        return turretEncoder.getCurrentPosition()/TICKS_PER_REV * 360 * GEAR_RATIO;
+
+    private double getEncoderValue() {
+        return turretEncoder.getCurrentPosition() - encoderOffset;
     }
 
-    public void stop(){
+    public void resetEncoder() {
+        encoderOffset = turretEncoder.getCurrentPosition();
+    }
+
+    public double getAngle() {
+        return getEncoderValue()/TICKS_PER_REV * 360 * GEAR_RATIO;
+    }
+
+    public void stop() {
         setPower(0);
     }
 
