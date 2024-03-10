@@ -26,8 +26,9 @@ public class ScoringCommand extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                         getTrajectoryCommand(robot).andThen(resetPoseEstimate(robot)),
 // <- todo remove this later                       new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
-                        new WaitCommand(1700).andThen(new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
-                                new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 700),
+                        new WaitCommand(1700).andThen(
+                                new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
+                                new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 700),//todo maybe will work with less time
                                 scoringCommand
                         )
                 ),
@@ -50,8 +51,20 @@ public class ScoringCommand extends SequentialCommandGroup {
 
     private Command resetPoseEstimate(RobotControl robot) {
         return new ConditionalCommand(
-                new InstantCommand(() -> robot.autoDriveTrain.setPoseEstimate(new Pose2d(-20, -64, Math.toRadians(90)))),
-                new InstantCommand(() -> robot.autoDriveTrain.setPoseEstimate(robot.trajectories.trajectoryPoses.realBackdropPoseBlue)),
+                new InstantCommand(() ->
+                        robot.autoDriveTrain.setPoseEstimate(new Pose2d(
+                                robot.trajectories.trajectoryPoses.realBackdropPoseRed.getX(),
+                                robot.trajectories.trajectoryPoses.realBackdropPoseRed.getY(),
+                                robot.autoDriveTrain.getPoseEstimate().getHeading()
+                        ))
+                ),
+                new InstantCommand(() ->
+                    robot.autoDriveTrain.setPoseEstimate(new Pose2d(
+                            robot.trajectories.trajectoryPoses.realBackdropPoseBlue.getX(),
+                            robot.trajectories.trajectoryPoses.realBackdropPoseBlue.getY(),
+                            robot.autoDriveTrain.getPoseEstimate().getHeading()
+                    ))
+                ),
                 () -> robot.allianceColor == AllianceColor.RED
         );
     }

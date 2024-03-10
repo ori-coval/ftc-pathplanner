@@ -388,11 +388,17 @@ public class Trajectories {
                         trajectoryPoses.stackAndBackdropPart3Red,
                         Math.toRadians(-140) //Tangent
                 )
+                .splineToLinearHeading(
+                        trajectoryPoses.stackAndBackdropPart4Red,
+                        Math.toRadians(200), //Tangent
+                        trajectoryPoses.enterBackdropVelocity,
+                        trajectoryPoses.enterBackdropAcceleration
+                )
                 .build()
         );
 
         //Second Cycle
-        trajectorySequenceHashMap.put("Back to stack (Second Cycle) Part 1 Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Red").end())
+        trajectorySequenceHashMap.put("Back to stack (Second Cycle) Part 1 Red", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropPoseRed)
                 .setTangent(Math.toRadians(30))
                 .splineToLinearHeading(
                         trajectoryPoses.stackAndBackdropPart2Red,
@@ -421,7 +427,7 @@ public class Trajectories {
 
 
         //Parking
-        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Red", robot.autoDriveTrain.trajectorySequenceBuilder(get("Go to backdrop (Far Side) Red").end())
+        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Red", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropPoseRed)
                 .setTangent(Math.toRadians(0))
                 .splineToConstantHeading(
                         trajectoryPoses.parkingFarPart1Red,

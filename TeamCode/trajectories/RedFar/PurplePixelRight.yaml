@@ -1,18 +1,18 @@
 ---
 startPose:
-  x: -63.0
-  y: 38.0
+  x: -64.13
+  y: 39.37
   heading: 0.0
 startTangent: 0.0
 waypoints:
 - position:
     x: -50.0
-    y: 38.0
+    y: 39.37
   heading: 0.7853981633974483
   tangent: 0.0
   interpolationType: "SPLINE"
 - position:
-    x: -34.0
+    x: -36.0
     y: 26.0
   heading: 0.0
   tangent: -0.7853981633974483

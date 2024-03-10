@@ -46,7 +46,7 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public void setYaw(double newYaw) {
-        yawOffset = newYaw - imu.getAngularOrientation().firstAngle; //TODO need to be checked
+        yawOffset = newYaw - imu.getAngularOrientation().firstAngle;
     }
 
     public void resetYaw() {

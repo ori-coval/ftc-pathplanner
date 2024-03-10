@@ -18,12 +18,12 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
 
     public ScoringPurplePixel(RobotControl robot) {
         addCommands(
-                new ParallelCommandGroup(
-                        getTrajectoryCommand(robot),
-//                        new WaitCommand(2000).andThen(new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(500))
-                        new WaitCommand(2500) //todo remove later
-                ),
-                new WaitCommand(300).andThen(new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, false))
+                getTrajectoryCommand(robot),
+//                new WaitCommand(2000).andThen(new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(500))
+                new WaitCommand(2500), //todo remove later
+                new WaitCommand(300).andThen(
+                        new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, false)
+                )
         );
     }
 
@@ -36,7 +36,7 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                                 new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Close Detected) Red"), robot.autoDriveTrain),
                                 () -> robot.teamPropDetector.getTeamPropSide()
                         ),
-                        new DetectionSideCommandSwitch(
+                        new DetectionSideCommandSwitch( //todo
                                 new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Far Detected)"), robot.autoDriveTrain),
                                 new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Center Detected) Red"), robot.autoDriveTrain),
                                 new TrajectoryFollowerCommand(robot.trajectories.get("Close Purple (Close Detected) Red"), robot.autoDriveTrain),
@@ -44,11 +44,20 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                         ),
                         () -> robot.robotSide == AllianceSide.FAR
                 ),
-                new DetectionSideCommandSwitch(
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Far Detected) Blue"), robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Center Detected) Blue"), robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Close Detected) Blue"), robot.autoDriveTrain),
-                        () -> robot.teamPropDetector.getTeamPropSide()
+                new ConditionalCommand(
+                        new DetectionSideCommandSwitch(
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Far Detected) Blue"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Center Detected) Blue"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Close Detected) Blue"), robot.autoDriveTrain),
+                                () -> robot.teamPropDetector.getTeamPropSide()
+                        ),
+                        new DetectionSideCommandSwitch( //todo
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Far Detected) Blue"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Center Detected) Blue"), robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(robot.trajectories.get("Far Purple (Close Detected) Blue"), robot.autoDriveTrain),
+                                () -> robot.teamPropDetector.getTeamPropSide()
+                        ),
+                        () -> robot.robotSide == AllianceSide.FAR
                 ),
                 () -> robot.allianceColor == AllianceColor.RED
         );

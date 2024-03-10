@@ -75,6 +75,7 @@ public class RobotControl extends Robot {
     public Intake intake;
     public Telemetry telemetry;
     public static double lastHeading = 0;
+
     private final double TRIGGER_THRESHOLD = 0.5;
 
     public enum OpModeType {
