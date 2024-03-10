@@ -40,6 +40,7 @@ public class TeleOpMode extends CommandOpMode {
         ArmPositionSelector.telemetry(telemetry);
 
 
+        telemetry.addData("inDebugMode", robot.inDebugMode);
         telemetry.addData("Elevator Height", robot.elevator.getHeight());
         telemetry.addData("elevator Switch", robot.elevator.getSwitchState());
         telemetry.addData("pixelCount", robot.intake.roller.getPixelCount());

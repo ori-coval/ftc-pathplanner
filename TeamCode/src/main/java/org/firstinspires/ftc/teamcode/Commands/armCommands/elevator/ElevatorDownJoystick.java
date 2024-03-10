@@ -1,26 +1,17 @@
 package org.firstinspires.ftc.teamcode.Commands.armCommands.elevator;
 
-import com.arcrobotics.ftclib.command.CommandBase;
-
-import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosition;
 import org.firstinspires.ftc.teamcode.RobotControl;
 
-public class ElevatorDownJoystick extends CommandBase {
+public class ElevatorDownJoystick extends ElevatorJoystick {
 
+    private static final double ELEVATOR_POWER = -1;
 
-    RobotControl robot;
     public ElevatorDownJoystick(RobotControl robot) {
-        this.robot = robot;
+        super(
+                ELEVATOR_POWER,
+                robot
+        );
     }
 
-    @Override
-    public void initialize() {
-        new ElbowGetToPosition(robot.elbow, 0.4).schedule();
-        robot.elevator.setPower(-1);
-    }
 
-    @Override
-    public void end(boolean interrupted) {
-        robot.elevator.setPower(0);
-    }
 }
