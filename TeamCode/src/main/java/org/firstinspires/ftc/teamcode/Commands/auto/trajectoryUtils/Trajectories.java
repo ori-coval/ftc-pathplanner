@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RobotControl;
@@ -390,9 +391,21 @@ public class Trajectories {
                 )
                 .splineToLinearHeading(
                         trajectoryPoses.stackAndBackdropPart4Red,
-                        Math.toRadians(200), //Tangent
+                        Math.toRadians(180), //Tangent
                         trajectoryPoses.enterBackdropVelocity,
                         trajectoryPoses.enterBackdropAcceleration
+                )
+                .build()
+        );
+
+        trajectorySequenceHashMap.put("Go to backdrop (Front) Red", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.stackPoseRed)
+                .splineToConstantHeading(
+                        new Vector2d(trajectoryPoses.stackAndBackdropPart1Red.getX(), trajectoryPoses.stackAndBackdropPart1Red.getY()),
+                        Math.toRadians(-95) //Tangent
+                )
+                .splineToConstantHeading(
+                        new Vector2d(trajectoryPoses.backdropFrontRed.getX(), trajectoryPoses.backdropFrontRed.getY()),
+                        Math.toRadians(180)
                 )
                 .build()
         );
@@ -417,7 +430,7 @@ public class Trajectories {
                         Math.toRadians(85) //Tangent
                 )
                 .splineToLinearHeading(
-                        trajectoryPoses.stackPoseRed,
+                        trajectoryPoses.annoyingStackRed,
                         Math.toRadians(90), //Tangent
                         trajectoryPoses.beforeStackVelocityCycle,
                         trajectoryPoses.beforeStackAccelerationCycle

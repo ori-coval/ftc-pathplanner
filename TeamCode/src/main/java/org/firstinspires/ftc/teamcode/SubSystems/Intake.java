@@ -27,7 +27,7 @@ public class Intake {
     }
 
     public enum LifterPosition { //Pixels From Top
-        INIT(0.4), DEFAULT(0.8), STANDBY(0.472), FIRST_PIXEL(0.421), SECOND_PIXEL(0.388), THIRD_PIXEL(0.378);
+        INIT(1), DEFAULT(0.743), STANDBY(0.501), FIRST_PIXEL(0.45), SECOND_PIXEL(0.417), THIRD_PIXEL(0.39);
         final double servoPosition;
         LifterPosition(double servoPosition) { this.servoPosition = servoPosition; }
         public double getServoPositionAsDouble() {

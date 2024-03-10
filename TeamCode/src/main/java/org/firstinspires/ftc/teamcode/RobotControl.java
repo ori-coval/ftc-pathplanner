@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.TurretRightJoy
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.DriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.ResetFieldOriented;
-import org.firstinspires.ftc.teamcode.Commands.drone.DroneLauncherSetState;
+import org.firstinspires.ftc.teamcode.Commands.drone.DroneLaunch;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
@@ -215,7 +215,7 @@ public class RobotControl extends Robot {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(ArmPositionSelector::moveDown));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(ArmPositionSelector::moveLeft));
 
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLauncherSetState(droneLauncher, DroneLauncher.State.RELEASE));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new DroneLaunch(this));
 
 
         //Elevator control (Climb and Resting)
@@ -241,8 +241,10 @@ public class RobotControl extends Robot {
 
     public void initDebugGamepad() {
         GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
+        GamepadEx gamepadEx2 = new GamepadEx(gamepad2);
 
         initCartridge();
+        initIntake();
 
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.ANTI_TURRET));
@@ -254,6 +256,9 @@ public class RobotControl extends Robot {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.DRONE));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.INTAKE_SERVO));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.EXTENDER));
+
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeRotateToggle(this));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeEjectToggle(intake.roller));
 
         //        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new ExtenderSetPosition(this.extender, Extender.Position.OPEN));
 //        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ExtenderSetPosition(this.extender, Extender.Position.MID_WAY));

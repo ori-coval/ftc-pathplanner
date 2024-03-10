@@ -22,7 +22,7 @@ public class Parking extends ParallelCommandGroup {
                         getCloseTrajectory(robot),
                         () -> robot.robotSide == AllianceSide.FAR
                 ), //to allow intake to get in
-                new WaitCommand(500).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, false))
+                new WaitCommand(500).andThen(new ArmGetToPosition(robot, ArmPosition.INTAKE, true))
         );
     }
 

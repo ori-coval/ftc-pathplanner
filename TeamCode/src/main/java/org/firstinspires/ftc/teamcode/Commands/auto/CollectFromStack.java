@@ -9,11 +9,9 @@ import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryFollowerCommand;
-import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetLifterPosition;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeStop;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
-import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 
 public class CollectFromStack extends ParallelCommandGroup {
@@ -32,12 +30,8 @@ public class CollectFromStack extends ParallelCommandGroup {
         addCommands(
                 new SequentialCommandGroup(
                         new WaitUntilCommand(
-                                () -> robot.intake.roller.getPixelCount() >= 1
-                        ).withTimeout(800),
-                        new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.THIRD_PIXEL),
-                        new WaitUntilCommand(
                                 robot.intake.roller::isRobotFull
-                        ).withTimeout(800),
+                        ).withTimeout(1000),
                         stopAndCloseCartridge(robot)
                 )
         );
@@ -60,7 +54,7 @@ public class CollectFromStack extends ParallelCommandGroup {
     private Command stopAndCloseCartridge(RobotControl robot) {
         return new SequentialCommandGroup(
                 new WaitCommand(200),
-// <- todo remove this later               new IntakeStop(robot),
+                new IntakeStop(robot),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
         );
     }

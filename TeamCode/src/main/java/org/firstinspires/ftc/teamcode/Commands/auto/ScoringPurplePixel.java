@@ -19,10 +19,9 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
     public ScoringPurplePixel(RobotControl robot) {
         addCommands(
                 getTrajectoryCommand(robot),
-//                new WaitCommand(2000).andThen(new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(500))
-                new WaitCommand(2500), //todo remove later
+                new WaitCommand(2000).andThen(new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(300)),
                 new WaitCommand(300).andThen(
-                        new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, false)
+                        new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, true)
                 )
         );
     }

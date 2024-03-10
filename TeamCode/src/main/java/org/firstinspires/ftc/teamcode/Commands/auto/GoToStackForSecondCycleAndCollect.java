@@ -23,7 +23,7 @@ public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                         getTrajectoryCommandPart1(robot),
                         new ArmGetToPosition(robot, ArmPosition.SCORING_AUTO, robot.allianceColor == AllianceColor.RED).andThen(
-                                new ArmGetToPosition(robot, ArmPosition.INTAKE, false)
+                                new ArmGetToPosition(robot, ArmPosition.INTAKE, true)
                         ),
                         new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
                 ),
@@ -31,8 +31,8 @@ public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
                         getTrajectoryCommandPart2(robot),
                         new WaitCommand(300).andThen(new CartridgeSetState(robot.cartridge, Cartridge.State.INTAKE_OPEN)),
                         new WaitCommand(500).andThen(
-// <- todo remove this later                                new InstantIntakeRotate(robot, robot.intake.roller.COLLECT_POWER),
-                                new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL)
+                                new InstantIntakeRotate(robot, robot.intake.roller.COLLECT_POWER),
+                                new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.THIRD_PIXEL)
                         )
                 ),
                 new CollectFromStack(robot, true)

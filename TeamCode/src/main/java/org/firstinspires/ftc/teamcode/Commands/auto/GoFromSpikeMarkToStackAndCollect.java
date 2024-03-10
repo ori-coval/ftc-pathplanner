@@ -25,11 +25,11 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                 new ParallelCommandGroup(
                         getTrajectoryCommand(robot),
                         new WaitCommand(200).andThen(
-                                new ArmGetToPosition(robot, ArmPosition.INTAKE, false),
+                                new ArmGetToPosition(robot, ArmPosition.INTAKE, true),
                                 new WaitCommand(300),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.INTAKE_OPEN)
                         ),
-// <- todo remove this later                      new InstantIntakeRotate(robot, robot.intake.roller.COLLECT_POWER),
+                        new InstantIntakeRotate(robot, robot.intake.roller.COLLECT_POWER),
                         new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL)
                 ),
                 new CollectFromStack(robot)

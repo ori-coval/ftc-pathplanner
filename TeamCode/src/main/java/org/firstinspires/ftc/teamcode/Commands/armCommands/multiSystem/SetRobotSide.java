@@ -18,7 +18,7 @@ public class SetRobotSide extends SequentialCommandGroup {
                 new InstantCommand(() -> ArmPositionSelector.setRobotSide(side)),
                 new SideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORING, true),
-                        new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, false),
+                        new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, true),
                         new ArmGetToPosition(robot, ArmPosition.SCORING, false),
                         () -> side
                 )

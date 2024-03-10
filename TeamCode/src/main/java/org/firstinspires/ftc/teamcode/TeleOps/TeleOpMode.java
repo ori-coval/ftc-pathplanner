@@ -33,7 +33,7 @@ public class TeleOpMode extends CommandOpMode {
         super.run();
         if(firstIteration) {
             robot.intake.lifter.setPosition(Intake.LifterPosition.DEFAULT);
-            robot.droneLauncher.setState(DroneLauncher.State.HOLD);
+            robot.droneLauncher.setPosition(0);
             firstIteration = false;
         }
 

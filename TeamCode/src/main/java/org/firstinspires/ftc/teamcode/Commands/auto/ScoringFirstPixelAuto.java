@@ -14,7 +14,8 @@ public class ScoringFirstPixelAuto extends ScoringCommand {
         super(
                 getScoringCommand(robot),
                 getSecondScoringCommand(robot),
-                robot
+                robot,
+                1.
         );
     }
 

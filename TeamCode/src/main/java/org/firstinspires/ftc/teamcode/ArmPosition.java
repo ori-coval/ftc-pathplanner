@@ -40,30 +40,30 @@ public enum ArmPosition {
 
      */
 
-    SCORE_TOP_FAR(34.1, Extender.Position.OPEN, 40.443, 0.42, 0.85, Cluster.scoring), //Can't physically reach this
+    SCORE_TOP_FAR(34.1, Extender.Position.OPEN, 42, 0.42, 0.85, Cluster.scoring), //Can't physically reach this
     SCORE_TOP_FRONT(29.361, Extender.Position.OPEN, 0, 0.47, 0.7, Cluster.scoring),
-    SCORE_TOP_CLOSE(34.1, Extender.Position.MID_WAY, 41.443, 0.42, 0.9, Cluster.scoring),
-    SCORE_MID_FAR_2(27.346 + 10, Extender.Position.MID_WAY, 49, 0.336, 0.88, Cluster.scoring),
-    SCORE_MID_FAR(27.346, Extender.Position.MID_WAY, 49, 0.336, 0.88, Cluster.scoring),
-    SCORE_MID_FRONT(17.464, Extender.Position.OPEN, 0, 0.405, 0.7, Cluster.scoring),
-    SCORE_MID_CLOSE(22.35, Extender.Position.CLOSED, 40, 0.336, 0.8, Cluster.scoring),
-    SCORE_BOTTOM_FAR(12.59, Extender.Position.MID_WAY, 55, 0.336, 0.9, Cluster.scoring),
-    SCORE_BOTTOM_FRONT(15.48, Extender.Position.MID_WAY, 0, 0.34, 0.7, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_FAR_2_RED(18.714 + 10, Extender.Position.OPEN, 52, 0.336, 1, Cluster.scoring),
+    SCORE_TOP_CLOSE(34.1, Extender.Position.MID_WAY, 44, 0.42, 0.9, Cluster.scoring),
+    SCORE_MID_FAR_2(27.346 + 10, Extender.Position.MID_WAY, 55, 0.336, 0.88, Cluster.scoring),
+    SCORE_MID_FAR(27.346, Extender.Position.MID_WAY, 55, 0.336, 0.88, Cluster.scoring),
+    SCORE_MID_FRONT(17.464, Extender.Position.MID_FRONT, 0, 0.45, 0.7, Cluster.scoring),
+    SCORE_MID_CLOSE(22.35, Extender.Position.CLOSED, 42, 0.336, 0.8, Cluster.scoring),
+    SCORE_BOTTOM_FAR(12.59, Extender.Position.MID_WAY, 57, 0.336, 0.9, Cluster.scoring),
+    SCORE_BOTTOM_FRONT(15.48, Extender.Position.BOTTOM_FRONT, 0, 0.34, 0.7, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_FAR_2_RED(22.59 + 10, Extender.Position.OPEN, 70, 0.336, 1, Cluster.scoring),
     SCORE_AUTO_BOTTOM_FAR_2_BLUE(20.714 + 10, Extender.Position.OPEN, 59, 0.336, 0.92, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_FAR_RED(18.714, Extender.Position.OPEN, 52, 0.336, 1, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_FAR_BLUE(20.714, Extender.Position.OPEN, 59, 0.336, 0.92, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_MID_2_RED(12.59 + 10, Extender.Position.MID_WAY, 52, 0.336, 1, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_MID_2_BLUE(17.59 + 10, Extender.Position.MID_WAY, 70, 0.336, 1, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_MID_RED(12.59, Extender.Position.MID_WAY, 52, 0.336, 1, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_MID_BLUE(17.59, Extender.Position.MID_WAY, 70, 0.336, 1, Cluster.scoring),
-    SCORE_BOTTOM_CLOSE_2_RED(12.34 + 10, Extender.Position.CLOSED, 48, 0.34, 0.9, Cluster.scoring),
-    SCORE_BOTTOM_CLOSE_2_BLUE(12.34 + 10, Extender.Position.CLOSED, 70, 0.34, 0.9, Cluster.scoring),
-    SCORE_BOTTOM_CLOSE_RED(12.34, Extender.Position.CLOSED, 48, 0.34, 0.9, Cluster.scoring),
-    SCORE_BOTTOM_CLOSE_BLUE(12.34, Extender.Position.CLOSED, 70, 0.34, 0.9, Cluster.scoring),
-    INTAKE(0, Extender.Position.CLOSED, 0,0, 0, Cluster.intake),
-    AUTO_INTAKE(0, Extender.Position.CLOSED, 0,0.02, 0, Cluster.intake),
-    AUTONOMOUS_PURPLE_PIXEL(0, Extender.Position.CLOSED_INTAKE, 0, 0.25, 0, Cluster.intake),
+    SCORE_AUTO_BOTTOM_FAR_RED(22.59, Extender.Position.OPEN, 70, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_FAR_BLUE(20.714, Extender.Position.OPEN, 62, 0.336, 0.92, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID_2_RED(12.59 + 10, Extender.Position.MID_WAY, 54, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID_2_BLUE(24.59 + 10, Extender.Position.MID_WAY, 72, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID_RED(12.59, Extender.Position.MID_WAY, 54, 0.336, 1, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID_BLUE(24.59, Extender.Position.MID_WAY, 72, 0.336, 1, Cluster.scoring),
+    SCORE_BOTTOM_CLOSE_2_RED(12.34 + 10, Extender.Position.CLOSED, 50, 0.34, 0.9, Cluster.scoring),
+    SCORE_BOTTOM_CLOSE_2_BLUE(12.34 + 10, Extender.Position.CLOSED, 72, 0.34, 0.9, Cluster.scoring),
+    SCORE_BOTTOM_CLOSE_RED(12.34, Extender.Position.CLOSED, 50, 0.34, 0.9, Cluster.scoring),
+    SCORE_BOTTOM_CLOSE_BLUE(12.34, Extender.Position.CLOSED, 72, 0.34, 0.9, Cluster.scoring),
+    INTAKE(0, Extender.Position.CLOSED, 0,0.001, 0.03, Cluster.intake),
+    AUTO_INTAKE(0, Extender.Position.CLOSED, 0,0.02, 0.03, Cluster.intake),
+    AUTONOMOUS_PURPLE_PIXEL(0, Extender.Position.AUTONOMOUS_PURPLE, 0, 0.25, 0, Cluster.intake),
     SAFE_PLACE(12.32, Extender.Position.CLOSED,0,0.45, 0.7, Cluster.intake),
     SCORING(12.32, Extender.Position.CLOSED, 90, 0.45, 0.9, Cluster.scoring),
     SCORING_AUTO(12.32, Extender.Position.CLOSED, 110, 0.45, 0.9, Cluster.scoring);/*,
@@ -109,8 +109,8 @@ public enum ArmPosition {
     }
     public double getAntiTurretPosition(boolean isLeftOfBoard) {
         if(!isLeftOfBoard & (antiTurretPosition > 1./3)) {
-            return (antiTurretPosition + ((antiTurretPosition > 2./3) ? (-2) : 2) * Math.abs(2./3 - antiTurretPosition));
-        } else return antiTurretPosition;
+            return (antiTurretPosition + ((antiTurretPosition > 2./3) ? (-2) : 2) * Math.abs(2./3 - antiTurretPosition)) - 0.02;
+        } else return antiTurretPosition + 0.02;
     }
 
     public Cluster getCluster(){

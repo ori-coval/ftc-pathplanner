@@ -24,7 +24,7 @@ public class ScoringBothPixels extends SequentialCommandGroup {
                 new WaitUntilCommand(() -> !triggerCondition.getAsBoolean()),
                 new SideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORING, true),
-                        new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, false),
+                        new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, true),
                         new ArmGetToPosition(robot, ArmPosition.SCORING, false),
                         ArmPositionSelector::getSelectedRobotSide
                 ),

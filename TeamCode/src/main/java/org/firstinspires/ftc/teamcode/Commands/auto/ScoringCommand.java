@@ -20,19 +20,29 @@ import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 
+import java.util.function.Supplier;
+
 public class ScoringCommand extends SequentialCommandGroup {
-    public ScoringCommand(Command scoringCommand, Command secondScoringCommand, RobotControl robot) {
+    public ScoringCommand(Command scoringCommand, Command secondScoringCommand, RobotControl robot, Double numOfCycle) {
         addCommands(
                 new ParallelCommandGroup(
-                        getTrajectoryCommand(robot).andThen(resetPoseEstimate(robot)),
-// <- todo remove this later                       new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
+                        getTrajectoryCommand(robot),
+                        new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
                         new WaitCommand(1700).andThen(
                                 new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
                                 new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 700),//todo maybe will work with less time
                                 scoringCommand
                         )
                 ),
-                new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
+                new ConditionalCommand(
+                        new SequentialCommandGroup(
+                                new CartridgeSetState(robot.cartridge, Cartridge.State.SEMI_OPEN),
+                                new WaitCommand(200),
+                                new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN)
+                        ),
+                        new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
+                        () -> numOfCycle == 1
+                ),
                 new ResetPixelCount(robot),
                 new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 2000),
                 new WaitCommand(300)
@@ -43,8 +53,8 @@ public class ScoringCommand extends SequentialCommandGroup {
 
     private Command getTrajectoryCommand(RobotControl robot) {
         return new ConditionalCommand(
-                new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side) Red"), robot.autoDriveTrain),
-                new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side) Blue"), robot.autoDriveTrain),
+                new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side) Red"), robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
+                new TrajectoryFollowerCommand(robot.trajectories.get("Go to backdrop (Far Side) Blue"), robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
                 () -> robot.allianceColor == AllianceColor.RED
         );
     }
