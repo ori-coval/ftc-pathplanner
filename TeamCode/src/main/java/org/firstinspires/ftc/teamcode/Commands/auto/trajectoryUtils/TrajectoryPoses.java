@@ -42,10 +42,10 @@ public class TrajectoryPoses {
 
     //region Poses And Movements Variables
 
-    public Pose2d realBackdropPoseBlue;
-    public Pose2d realBackdropPoseRed;
-    public Pose2d stackPoseRed;
-    public Pose2d stackPoseBlue;
+    public static Pose2d realBackdropPoseRed = new Pose2d(-15.75, -64.13, Math.toRadians(90));
+    public static Pose2d realBackdropPoseBlue = new Pose2d(17.7, -64.9, Math.toRadians(90));
+    public static Pose2d stackPoseRed = new Pose2d(-13, 58, Math.toRadians(90));
+    public static Pose2d stackPoseBlue = new Pose2d(16, 57, Math.toRadians(90));
     public Pose2d farPurpleFarPart1Red;
     public Pose2d farPurpleFarPart1Blue;
     public Pose2d farPurpleFarPart2Red;
@@ -146,11 +146,11 @@ public class TrajectoryPoses {
         this.robot = robot;
 
         //Poses
-        stackPoseRed = new Pose2d(-13, 58, Math.toRadians(90));
-        stackPoseBlue = new Pose2d(16, 57, Math.toRadians(90));
+//        stackPoseRed = new Pose2d(-13, 58, Math.toRadians(90));
+//        stackPoseBlue = new Pose2d(16, 57, Math.toRadians(90));
 
-        realBackdropPoseRed = new Pose2d(-15.75, -64.13, Math.toRadians(90));
-        realBackdropPoseBlue = new Pose2d(17.7, -64.9, Math.toRadians(90));
+//        realBackdropPoseRed = new Pose2d(-15.75, -64.13, Math.toRadians(90));
+//        realBackdropPoseBlue = new Pose2d(17.7, -64.9, Math.toRadians(90));
 
         //FAR
         //Far (Far) Purple RED

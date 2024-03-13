@@ -2,7 +2,10 @@ package org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.constraints.MecanumVelocityConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint;
 
+import org.firstinspires.ftc.teamcode.RoadRunner.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RobotControl;
 
@@ -470,6 +473,15 @@ public class Trajectories {
                 )
                 .build()
         );
+    }
+
+
+    public MecanumVelocityConstraint reduceVelocity(double newVelocity) {
+        return new MecanumVelocityConstraint(DriveConstants.MAX_VEL * newVelocity, DriveConstants.TRACK_WIDTH);
+    }
+
+    public ProfileAccelerationConstraint reduceAcceleration(double newAcceleration) {
+        return new ProfileAccelerationConstraint(DriveConstants.MAX_ACCEL * newAcceleration);
     }
 
     public TrajectorySequence get(String trajectoryKey) {
