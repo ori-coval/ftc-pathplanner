@@ -31,7 +31,11 @@ public class Extender extends SubsystemBase {
         curretPosition = position;
     }
 
-    public Position getPosition() {
+    public Position getExtenderPosition() {
         return curretPosition;
+    }
+
+    public double getServoPosition() {
+        return linearServo.getPosition();
     }
 }

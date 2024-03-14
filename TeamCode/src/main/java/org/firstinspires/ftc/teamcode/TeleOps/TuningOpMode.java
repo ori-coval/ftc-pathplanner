@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
 import org.firstinspires.ftc.teamcode.RobotControl;
-import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
-import org.firstinspires.ftc.teamcode.Utils.Side;
 
 
 @TeleOp(name = "TuningOpMode")
@@ -30,10 +28,13 @@ public class TuningOpMode extends CommandOpMode {
         telemetry.addLine("----------------------------");
 
         telemetry.addData("antiTurret pos", robot.antiTurret.getPosition());
-        telemetry.addData("elbow", robot.elbow.getServoPosition());
+        telemetry.addData("cartridge pos", robot.cartridge.getPosition());
+        telemetry.addData("elbow pos", robot.elbow.getServoPosition());
         telemetry.addData("elevator height", robot.elevator.getHeight());
         telemetry.addData("turret angle", robot.turret.getAngle());
-        telemetry.addData("Extender pos", robot.extender.getPosition());
+        telemetry.addData("Extender pos", robot.extender.getServoPosition());
+        telemetry.addLine("Remember that in the extender case,\nthere are CLOSED, MID_WAY and OPEN.\n" +
+                "If you want to change them, you need to change it in Extender.java\n(or contact me if you want it differently)");
         telemetry.update();
     }
 }
