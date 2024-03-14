@@ -21,7 +21,7 @@ public class TurretJoystick extends CommandBase {
     public void initialize() {
         if(robot.inDebugMode) {
             if(Math.abs(robot.elbow.getServoPosition() - ELBOW_SAFE_POS) > ELBOW_TOLERANCE) {
-                new ElbowGetToPosition(robot.elbow, ELBOW_SAFE_POS).schedule();
+                new ElbowGetToPosition(robot.elbow, ELBOW_SAFE_POS).schedule(); //todo waitCommand after, so the arm wouldn't break or smth
             }
             robot.turret.setPower(power);
         }
