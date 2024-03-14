@@ -32,7 +32,8 @@ public class TuningOpMode extends CommandOpMode {
         telemetry.addData("elbow pos", robot.elbow.getServoPosition());
         telemetry.addData("elevator height", robot.elevator.getHeight());
         telemetry.addData("turret angle", robot.turret.getAngle());
-        telemetry.addData("Extender pos", robot.extender.getServoPosition());
+        telemetry.addData("Extender Servo Pos", robot.extender.getServoPosition());
+        telemetry.addData("Extender Enum Pos", robot.extender.getExtenderPosition());
         telemetry.addLine("Remember that in the extender case,\nthere are CLOSED, MID_WAY and OPEN.\n" +
                 "If you want to change them, you need to change it in Extender.java\n(or contact me if you want it differently)");
         telemetry.update();
