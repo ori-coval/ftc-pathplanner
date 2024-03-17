@@ -29,6 +29,7 @@ import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.Trajectories
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.DriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.ResetFieldOriented;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLaunch;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeCollectFromStack;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
@@ -198,14 +199,12 @@ public class RobotControl extends Robot {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(this, Side.CENTER));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmGetToSelectedPosition(this));
 
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new SetRobotSide(this, Side.LEFT));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new SetRobotSide(this, Side.RIGHT));
-//        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new SetRobotSide(this, Side.CENTER));
 
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeRotateToggle(this));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new IntakeTakeIn(this));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new IntakeTakeIn(this));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new ResetFieldOriented(this));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new IntakeEjectToggle(intake.roller));
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new IntakeRotateToggle(this));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new IntakeEjectToggle(this));
 
 
         gamepadEx2 = new GamepadEx(gamepad2);
@@ -258,7 +257,7 @@ public class RobotControl extends Robot {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.EXTENDER));
 
         gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeRotateToggle(this));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeEjectToggle(intake.roller));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeEjectToggle(this));
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(this.extender, Extender.Position.OPEN));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ExtenderSetPosition(this.extender, Extender.Position.MID_WAY));
