@@ -38,12 +38,12 @@ public class    Configuration {
                     3: backRight             (GoBilda 5202/3/4 series)            (dcMotor)
 
             SERVOS:
-                    0: drone                 (servo)                              (servo)
+                    0:
                     1:
                     2:
-                    3: intakeServo           (servo)                              (servo)
-                    4:
-                    5:
+                    3:
+                    4: intakeServo           (servo)                              (servo)
+                    5: drone                 (servo)                              (servo)
 
             DIGITAL DEVICES:
                     0: conveyorSwitch       (Digital Device)                     (digitalChannel)
@@ -61,14 +61,14 @@ public class    Configuration {
                     3: turret                  (GoBilda 5202/3/4 series)            (dcMotor)
 
             SERVOS:
-                    0: elbowRight            (servo)                              (servo)
-                    1: extender              (servo)                              (servo)
-                    2: elbowLeft             (servo)                              (servo)
-                    3:                       (servo)                              (servo)
+                    0: extender              (servo)                              (servo)
+                    1: elbowLeft             (servo)                              (servo)
+                    2: elbowRight            (servo)                              (servo)
+                    3: antiTurret            (servo)                              (servo)
                     4: cartridge             (servo)                              (servo)
-                    5: antiTurret            (servo)                              (servo)
+                    5:
 
             Digital Devices:
-                    0: elevatorSwitch
-                    2: safePlaceSwitch
+                    0: safePlaceSwitch
+                    2: elevatorSwitch
    */

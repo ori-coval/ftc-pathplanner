@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurret
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorDownJoystick;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorUpJoystick;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ResetElevatorEncoder;
@@ -276,6 +277,7 @@ public class RobotControl extends Robot {
 
         new CartridgeSetState(cartridge, Cartridge.State.CLOSED_TWO_PIXELS).schedule();
         new ExtenderSetPosition(extender, Extender.Position.CLOSED).schedule();
+        new ElbowGetToPosition(elbow, ArmPosition.INTAKE.getElbowPosition()).schedule();
         new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition(true)).schedule();
         new UnsafeMoveArm(this, ArmPosition.INTAKE, false).schedule();
     }

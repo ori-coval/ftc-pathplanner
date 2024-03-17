@@ -33,7 +33,7 @@ public class Elevator extends SubsystemBase {
     public Elevator(HardwareMap hardwareMap) {
         elevatorMotors[0] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_RIGHT);
         elevatorMotors[1] = hardwareMap.dcMotor.get(Configuration.ELEVATOR_LEFT);
-        elevatorMotors[0].setDirection(DcMotorSimple.Direction.REVERSE);
+        elevatorMotors[1].setDirection(DcMotorSimple.Direction.REVERSE);
         encoder = elevatorMotors[0];
         encoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         encoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); //If doesn't work use RUN_USING_ENCODER
