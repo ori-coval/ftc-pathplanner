@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
-import org.firstinspires.ftc.teamcode.Commands.auto.GoToScoringAuto;
+import org.firstinspires.ftc.teamcode.Commands.auto.GoToScoringAutoPosition;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoToStackForSecondCycleAndCollect;
 import org.firstinspires.ftc.teamcode.Commands.auto.Parking;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoreYellowClose;
@@ -57,7 +57,7 @@ public class AutonomousOpMode extends LinearOpMode {
                     new ScoringFirstPixelAuto(robot),
                     new GoToStackForSecondCycleAndCollect(robot),
                     new ScoringSecondPixelAuto(robot),
-                    new GoToScoringAuto(robot)
+                    new GoToScoringAutoPosition(robot)
             );
         } else {
             result.addCommands(

@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 
-public class GoToScoringAuto extends ParallelCommandGroup {
-    public GoToScoringAuto(RobotControl robot) {
+public class GoToScoringAutoPosition extends ParallelCommandGroup {
+    public GoToScoringAutoPosition(RobotControl robot) {
         super(
                 new ArmGetToPosition(robot, ArmPosition.SCORING_AUTO, robot.allianceColor == AllianceColor.RED),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)

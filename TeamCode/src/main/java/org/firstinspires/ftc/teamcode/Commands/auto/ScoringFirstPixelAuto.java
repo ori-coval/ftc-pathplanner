@@ -24,13 +24,13 @@ public class ScoringFirstPixelAuto extends ScoringCommand {
                 new DetectionSideCommandSwitch(
                     new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_RED, robot.allianceColor == AllianceColor.RED),
                     new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID_RED, robot.allianceColor == AllianceColor.RED),
-                    new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR_RED, robot.allianceColor == AllianceColor.RED),
+                    new ArmGetToPosition(robot, ArmPosition.SCORE_TOP_FRONT, true),
                     () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 new DetectionSideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_BLUE, robot.allianceColor == AllianceColor.RED),
                         new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID_BLUE, robot.allianceColor == AllianceColor.RED),
-                        new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR_BLUE, robot.allianceColor == AllianceColor.RED),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_TOP_FRONT, true),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 () -> robot.allianceColor == AllianceColor.RED

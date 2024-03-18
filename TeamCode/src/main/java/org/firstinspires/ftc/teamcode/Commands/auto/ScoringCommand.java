@@ -19,10 +19,8 @@ import org.firstinspires.ftc.teamcode.Commands.intakeRoller.ResetPixelCount;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
-import org.firstinspires.ftc.teamcode.SubSystems.Turret;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
-
-import java.util.function.Supplier;
+import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 
 public class ScoringCommand extends SequentialCommandGroup {
 
@@ -35,13 +33,17 @@ public class ScoringCommand extends SequentialCommandGroup {
                         getTrajectoryCommand(robot),
                         new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
                         new WaitCommand(1700).andThen(
-                                new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
+                                new ConditionalCommand(
+                                        new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
+                                        new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, true),
+                                        () -> robot.teamPropDetector.getTeamPropSide() != DetectionSide.CLOSE
+                                ),
                                 new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 700),//todo maybe will work with less time
                                 scoringCommand
                         )
                 ),
                 new ConditionalCommand(
-                        new SequentialCommandGroup(
+                        new SequentialCommandGroup( //todo ask if we still need this ('cause it's another 200ms wasted)
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.SEMI_OPEN),
                                 new WaitCommand(200),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN)
@@ -59,8 +61,8 @@ public class ScoringCommand extends SequentialCommandGroup {
 
     private Command getTrajectoryCommand(RobotControl robot) {
         return new ConditionalCommand(
-                new TrajectoryFollowerCommand(Trajectories.RED.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
-                new TrajectoryFollowerCommand(Trajectories.BLUE.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
+                new TrajectoryFollowerCommand(TrajectoriesRed.NORMAL.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
+                new TrajectoryFollowerCommand(TrajectoriesBlue.NORMAL.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
                 () -> robot.allianceColor == AllianceColor.RED
         );
     }
@@ -87,9 +89,9 @@ public class ScoringCommand extends SequentialCommandGroup {
 
     //Go to backdrop depending on alliance color. //todo front scoring
 
-    public enum Trajectories {
+    public enum TrajectoriesRed {
 
-        RED(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseRed)
+        NORMAL(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseRed)
                 .setTangent(Math.toRadians(-90))
                 .splineToSplineHeading(
                         new Pose2d(TrajectoryPoses.stackPoseRed.getX() + 3, -15, Math.toRadians(90)),
@@ -111,7 +113,20 @@ public class ScoringCommand extends SequentialCommandGroup {
                 )
                 .build()
         ),
-        BLUE(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+        FRONT();
+
+        final TrajectorySequence trajectory;
+
+        TrajectoriesRed(TrajectorySequence trajectory) {
+            this.trajectory = trajectory;
+        }
+
+    }
+
+
+    public enum TrajectoriesBlue {
+
+        NORMAL(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
                 .setTangent(Math.toRadians(270))
                 .splineToSplineHeading(
                         new Pose2d(TrajectoryPoses.stackPoseBlue.getX() - 2, -15, Math.toRadians(90)),
@@ -132,11 +147,12 @@ public class ScoringCommand extends SequentialCommandGroup {
                         robot.trajectories.reduceAcceleration(0.6)
                 )
                 .build()
-        );
+        ),
+        FRONT();
 
         final TrajectorySequence trajectory;
 
-        Trajectories(TrajectorySequence trajectory) {
+        TrajectoriesBlue(TrajectorySequence trajectory) {
             this.trajectory = trajectory;
         }
 

@@ -402,6 +402,7 @@ public class Trajectories {
         );
 
         trajectorySequenceHashMap.put("Go to backdrop (Front) Red", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.stackPoseRed)
+                .setTangent(Math.toRadians(-90))
                 .splineToConstantHeading(
                         new Vector2d(trajectoryPoses.stackAndBackdropPart1Red.getX(), trajectoryPoses.stackAndBackdropPart1Red.getY()),
                         Math.toRadians(-95) //Tangent
