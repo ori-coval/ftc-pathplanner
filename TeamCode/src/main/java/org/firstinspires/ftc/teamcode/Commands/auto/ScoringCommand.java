@@ -80,15 +80,15 @@ public class ScoringCommand extends SequentialCommandGroup {
         return new ConditionalCommand(
                 new InstantCommand(() ->
                         robot.autoDriveTrain.setPoseEstimate(new Pose2d(
-                                TrajectoryPoses.realBackdropPoseRed.getX(),
-                                TrajectoryPoses.realBackdropPoseRed.getY(),
+                                TrajectoryPoses.realBackdropFarPoseRed.getX(),
+                                TrajectoryPoses.realBackdropFarPoseRed.getY(),
                                 robot.autoDriveTrain.getPoseEstimate().getHeading()
                         ))
                 ),
                 new InstantCommand(() ->
                     robot.autoDriveTrain.setPoseEstimate(new Pose2d(
-                            TrajectoryPoses.realBackdropPoseBlue.getX(),
-                            TrajectoryPoses.realBackdropPoseBlue.getY(),
+                            TrajectoryPoses.realBackdropFarPoseBlue.getX(),
+                            TrajectoryPoses.realBackdropFarPoseBlue.getY(),
                             robot.autoDriveTrain.getPoseEstimate().getHeading()
                     ))
                 ),
@@ -130,11 +130,11 @@ public class ScoringCommand extends SequentialCommandGroup {
                 )
                 .splineToConstantHeading(
                         new Vector2d(-30, -20),
-                        Math.toRadians(180)
+                        Math.toRadians(180) //Tangent
                 )
                 .splineToConstantHeading(
                         new Vector2d(-40, -36),
-                        Math.toRadians(-90)
+                        Math.toRadians(-90) //Tangent
                 )
                 .build()
         );
@@ -180,11 +180,11 @@ public class ScoringCommand extends SequentialCommandGroup {
                 )
                 .splineToConstantHeading(
                         new Vector2d(30, -20),
-                        Math.toRadians(0)
+                        Math.toRadians(0) //Tangent
                 )
                 .splineToConstantHeading(
                         new Vector2d(40, -36),
-                        Math.toRadians(270)
+                        Math.toRadians(270) //Tangent
                 )
                 .build());
 

@@ -12,7 +12,6 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
-import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryFollowerCommand;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryPoses;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetLifterPosition;
@@ -69,7 +68,7 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
 
     public enum TrajectoriesRed {
 
-        FAR(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesRed.FAR_FAR_PURPLE.trajectory.end())
+        FAR(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesRed.FAR_FAR.trajectory.end())
                 .setTangent(Math.toRadians(45))
                 .splineToLinearHeading(
                         TrajectoryPoses.stackPoseRed,
@@ -80,7 +79,7 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                 .build()
         ),
 
-        CENTER(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesRed.FAR_CENTER_PURPLE.trajectory.end())
+        CENTER(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesRed.FAR_CENTER.trajectory.end())
                 .setTangent(Math.toRadians(40))
                 .splineToSplineHeading(
                         new Pose2d(TrajectoryPoses.stackPoseRed.getX(), 47, Math.toRadians(90)),
@@ -97,7 +96,7 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                 .build()
         ),
 
-        CLOSE(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesRed.FAR_CLOSE_PURPLE.trajectory.end())
+        CLOSE(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesRed.FAR_CLOSE.trajectory.end())
                 .setTangent(Math.toRadians(45))
                 .splineToConstantHeading(
                         new Vector2d(-22, 40),
@@ -121,7 +120,7 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
 
     public enum TrajectoriesBlue {
 
-        FAR(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesBlue.FAR_FAR_PURPLE.trajectory.end())
+        FAR(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesBlue.FAR_FAR.trajectory.end())
                 .setTangent(Math.toRadians(135))
                 .splineToLinearHeading(
                         TrajectoryPoses.stackPoseBlue,
@@ -131,7 +130,7 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                 )
                 .build()
         ),
-        CENTER(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesBlue.FAR_CENTER_PURPLE.trajectory.end())
+        CENTER(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesBlue.FAR_CENTER.trajectory.end())
                 .setTangent(Math.toRadians(140))
                 .splineToSplineHeading(
                         new Pose2d(TrajectoryPoses.stackPoseBlue.getX(), 47, Math.toRadians(90)),
@@ -147,7 +146,7 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
                 )
                 .build()
         ),
-        CLOSE(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesBlue.FAR_CLOSE_PURPLE.trajectory.end())
+        CLOSE(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.TrajectoriesBlue.FAR_CLOSE.trajectory.end())
                 .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(
                         new Vector2d(22, 40),

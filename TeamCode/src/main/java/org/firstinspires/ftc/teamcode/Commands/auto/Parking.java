@@ -41,16 +41,24 @@ public class Parking extends ParallelCommandGroup {
 
     private Command getCloseTrajectory(RobotControl robot) {
         return new ConditionalCommand(
-                new TrajectoryFollowerCommand(robot.trajectories.get("Backdrop Intake Close (Close Detected)"), robot.autoDriveTrain),
-                new TrajectoryFollowerCommand(robot.trajectories.get("Backdrop Intake Close"), robot.autoDriveTrain),
-                () ->  robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
+                new ConditionalCommand(
+                        new TrajectoryFollowerCommand(TrajectoriesRed.CLOSE_FRONT.trajectory, robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(TrajectoriesRed.CLOSE.trajectory, robot.autoDriveTrain),
+                        () ->  robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
+                ),
+                new ConditionalCommand(
+                        new TrajectoryFollowerCommand(TrajectoriesBlue.CLOSE_FRONT.trajectory, robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(TrajectoriesBlue.CLOSE.trajectory, robot.autoDriveTrain),
+                        () ->  robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
+                ),
+                () -> robot.allianceColor == AllianceColor.RED
         );
     }
 
 
     public enum TrajectoriesRed {
 
-        FAR(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropPoseRed)
+        FAR(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseRed)
                 .setTangent(Math.toRadians(0))
                 .splineToConstantHeading(
                         new Vector2d(-10, -57),
@@ -61,6 +69,23 @@ public class Parking extends ParallelCommandGroup {
                         Math.toRadians(180), //Tangent
                         robot.trajectories.reduceVelocity(0.7),
                         robot.trajectories.reduceAcceleration(0.7)
+                )
+                .build()
+        ),
+
+        CLOSE(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropClosePoseRed)
+                .setTangent(180)
+                .splineToConstantHeading(
+                        new Vector2d(-60, -50),
+                        Math.toRadians(90)
+                )
+                .build()
+        ),
+
+        CLOSE_FRONT(robot.autoDriveTrain.trajectorySequenceBuilder(ScoreYellowClose.TrajectoriesRed.CLOSE.trajectory.end())
+                .splineToConstantHeading(
+                        new Vector2d(-33, -50),
+                        Math.toRadians(90)
                 )
                 .build()
         );
@@ -75,7 +100,7 @@ public class Parking extends ParallelCommandGroup {
 
     public enum TrajectoriesBlue {
 
-        FAR(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropPoseBlue)
+        FAR(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseBlue)
                 .setTangent(Math.toRadians(180))
                 .splineToConstantHeading(
                         new Vector2d(10, -57),
@@ -86,6 +111,23 @@ public class Parking extends ParallelCommandGroup {
                         Math.toRadians(45), //Tangent
                         robot.trajectories.reduceVelocity(0.7),
                         robot.trajectories.reduceAcceleration(0.7)
+                )
+                .build()
+        ),
+
+        CLOSE(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropClosePoseBlue)
+                .setTangent(180)
+                .splineToConstantHeading(
+                        new Vector2d(60, -50),
+                        Math.toRadians(90)
+                )
+                .build()
+        ),
+
+        CLOSE_FRONT(robot.autoDriveTrain.trajectorySequenceBuilder(ScoreYellowClose.TrajectoriesBlue.CLOSE.trajectory.end())
+                .splineToConstantHeading(
+                        new Vector2d(33, -50),
+                        Math.toRadians(90)
                 )
                 .build()
         );

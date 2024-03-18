@@ -160,7 +160,7 @@ public class Trajectories {
         );
 
         //Second Cycle
-        trajectorySequenceHashMap.put("Back to stack (Second Cycle) Part 1 Blue", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropPoseBlue)
+        trajectorySequenceHashMap.put("Back to stack (Second Cycle) Part 1 Blue", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropFarPoseBlue)
                 .setTangent(Math.toRadians(150))
                 .splineToLinearHeading(
                         trajectoryPoses.stackAndBackdropPart2Blue,
@@ -191,7 +191,7 @@ public class Trajectories {
 
 
         //Parking
-        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropPoseBlue)
+        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Blue", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropFarPoseBlue)
                 .setTangent(Math.toRadians(180))
                 .splineToConstantHeading(
                         trajectoryPoses.parkingFarPart1Blue,
@@ -415,7 +415,7 @@ public class Trajectories {
         );
 
         //Second Cycle
-        trajectorySequenceHashMap.put("Back to stack (Second Cycle) Part 1 Red", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropPoseRed)
+        trajectorySequenceHashMap.put("Back to stack (Second Cycle) Part 1 Red", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropFarPoseRed)
                 .setTangent(Math.toRadians(30))
                 .splineToLinearHeading(
                         trajectoryPoses.stackAndBackdropPart2Red,
@@ -444,7 +444,7 @@ public class Trajectories {
 
 
         //Parking
-        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Red", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropPoseRed)
+        trajectorySequenceHashMap.put("Parking Arm To Intake (Far Side) Red", robot.autoDriveTrain.trajectorySequenceBuilder(trajectoryPoses.realBackdropFarPoseRed)
                 .setTangent(Math.toRadians(0))
                 .splineToConstantHeading(
                         trajectoryPoses.parkingFarPart1Red,

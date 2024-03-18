@@ -155,9 +155,9 @@ public class RobotControl extends Robot {
             }
         } else {
             if(allianceColor == AllianceColor.RED) {
-                startPose = new Pose2d(-63, -10, Math.toRadians(0));
+                startPose = new Pose2d(-63, -16, Math.toRadians(0));
             } else {
-                startPose = new Pose2d(63, -10, Math.toRadians(180));
+                startPose = new Pose2d(63, -16, Math.toRadians(180));
             }
         }
         autoDriveTrain.setPoseEstimate(startPose);
@@ -276,7 +276,7 @@ public class RobotControl extends Robot {
         initCartridge();
 
         new CartridgeSetState(cartridge, Cartridge.State.CLOSED_TWO_PIXELS).schedule();
-        new ExtenderSetPosition(extender, Extender.Position.CLOSED).schedule();
+        new ExtenderSetPosition(extender, ArmPosition.INTAKE.getExtenderPosition()).schedule();
         new ElbowGetToPosition(elbow, ArmPosition.INTAKE.getElbowPosition()).schedule();
         new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition(true)).schedule();
         new UnsafeMoveArm(this, ArmPosition.INTAKE, false).schedule();

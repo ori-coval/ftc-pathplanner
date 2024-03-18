@@ -76,7 +76,7 @@ public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
 
     public enum TrajectoriesRed {
 
-        FIRST_PART(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropPoseRed)
+        FIRST_PART(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseRed)
                 .setTangent(Math.toRadians(30))
                 .splineToLinearHeading(
                         new Pose2d(-9, -40, Math.toRadians(90)),
@@ -113,7 +113,7 @@ public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
 
     public enum TrajectoriesBlue {
 
-        FIRST_PART(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropPoseBlue)
+        FIRST_PART(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseBlue)
                 .setTangent(Math.toRadians(150))
                 .splineToLinearHeading(
                         new Pose2d(9, -40, Math.toRadians(90)),
