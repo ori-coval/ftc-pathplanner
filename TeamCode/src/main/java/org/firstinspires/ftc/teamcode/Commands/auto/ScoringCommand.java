@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -61,8 +62,16 @@ public class ScoringCommand extends SequentialCommandGroup {
 
     private Command getTrajectoryCommand(RobotControl robot) {
         return new ConditionalCommand(
-                new TrajectoryFollowerCommand(TrajectoriesRed.NORMAL.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
-                new TrajectoryFollowerCommand(TrajectoriesBlue.NORMAL.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
+                new ConditionalCommand(
+                        new TrajectoryFollowerCommand(TrajectoriesRed.FRONT.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
+                        new TrajectoryFollowerCommand(TrajectoriesRed.NORMAL.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
+                        () -> robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
+                ),
+                new ConditionalCommand(
+                        new TrajectoryFollowerCommand(TrajectoriesBlue.FRONT.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
+                        new TrajectoryFollowerCommand(TrajectoriesBlue.NORMAL.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
+                        () -> robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
+                ),
                 () -> robot.allianceColor == AllianceColor.RED
         );
     }
@@ -87,7 +96,7 @@ public class ScoringCommand extends SequentialCommandGroup {
         );
     }
 
-    //Go to backdrop depending on alliance color. //todo front scoring
+    //Go to backdrop depending on alliance color.
 
     public enum TrajectoriesRed {
 
@@ -113,7 +122,22 @@ public class ScoringCommand extends SequentialCommandGroup {
                 )
                 .build()
         ),
-        FRONT();
+        FRONT(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseRed)
+                .setTangent(Math.toRadians(-90))
+                .splineToConstantHeading(
+                        new Vector2d(TrajectoryPoses.stackPoseRed.getX() + 1, -15),
+                        Math.toRadians(-95) //Tangent
+                )
+                .splineToConstantHeading(
+                        new Vector2d(-30, -20),
+                        Math.toRadians(180)
+                )
+                .splineToConstantHeading(
+                        new Vector2d(-40, -36),
+                        Math.toRadians(-90)
+                )
+                .build()
+        );
 
         final TrajectorySequence trajectory;
 
@@ -148,7 +172,21 @@ public class ScoringCommand extends SequentialCommandGroup {
                 )
                 .build()
         ),
-        FRONT();
+        FRONT(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+                .setTangent(Math.toRadians(270))
+                .splineToConstantHeading(
+                        new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 1, -15),
+                        Math.toRadians(275) //Tangent
+                )
+                .splineToConstantHeading(
+                        new Vector2d(30, -20),
+                        Math.toRadians(0)
+                )
+                .splineToConstantHeading(
+                        new Vector2d(40, -36),
+                        Math.toRadians(270)
+                )
+                .build());
 
         final TrajectorySequence trajectory;
 
