@@ -9,12 +9,23 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
 import org.firstinspires.ftc.robotcontroller.external.samples.RobotHardware;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class DriveTrain extends SubsystemBase {
+
+    final double[][] transformationMatrix = {
+            {1, 1, 1}, //frontLeft
+            {-1, 1, 1}, //backLeft
+            {-1, 1, -1}, //frontRight
+            {1, 1, -1} //backRight
+    };
+
     private final DcMotor motorFR;
     private final DcMotor motorFL;
     private final DcMotor motorBL;
@@ -34,11 +45,53 @@ public class DriveTrain extends SubsystemBase {
         motorBL = hardwareMap.dcMotor.get(Configuration.DRIVE_TRAIN_BACK_LEFT);
         motorFL.setDirection(DcMotorSimple.Direction.REVERSE);
         motorBL.setDirection(DcMotorSimple.Direction.REVERSE);
+
     }
 
     public DriveTrain(HardwareMap hardwareMap, double lastAngle){
         this(hardwareMap);
         setYaw(lastAngle);
+    }
+
+    private double[] joystickToPower(double x, double y, double yaw) {
+
+        RealVector joystickVector = MatrixUtils.createRealVector(new double[] {
+                x,
+                y,
+                yaw
+        });
+
+        RealMatrix matrixT = MatrixUtils.createRealMatrix(transformationMatrix);
+
+        RealVector powerVector = matrixT.operate(joystickVector); //p = Tv
+
+        double[] powerArray = powerVector.toArray();
+
+        for(int i = 0; i < powerArray.length; i++) {
+            powerArray[i] = Math.max(Math.abs(x) + Math.abs(y) + Math.abs(yaw), 1);
+        }
+
+        return powerArray;
+
+    }
+
+
+
+    private void setMotorPower(double[] power) {
+        motorFL.setPower(power[0]);
+        motorBL.setPower(power[1]);
+        motorFR.setPower(power[2]);
+        motorBR.setPower(power[3]);
+    }
+    public void drive(double x, double y, double yaw) {
+        setMotorPower(joystickToPower(x, y, yaw));
+    }
+
+
+    public void fieldOrientedDrive(double x, double y, double yaw) {
+        Vector2d joystickDirection = new Vector2d(x, y);
+        Vector2d fieldOrientedVector = joystickDirection.rotateBy(-getYawInDegrees());
+        drive(fieldOrientedVector.getX(), fieldOrientedVector.getY(), yaw);
     }
 
     public double getYawInDegrees() {
@@ -52,40 +105,5 @@ public class DriveTrain extends SubsystemBase {
     public void resetYaw() {
         setYaw(0);
     }
-    public double[] calculationOfPowerRatio(double x, double y , double turn) {
-        //                     {STRAIGHT}                 {STRAFE}                  {TURN}
-        double FL_Power =           y           +            x           +          turn         ;
-        double BL_Power =           y            -            x           +          turn         ;
-        double FR_Power =           y           -            x           -          turn         ;
-        double BR_Power =           y            +            x           -          turn         ;
-        return new double[]{FL_Power,BL_Power,FR_Power,BR_Power};
-    }
-    public static double[] normalize(double[] ratiopower) {
-        double[] power = ratiopower;
-        double highestAbsulutNum = Math.max(
-                Math.max(Math.abs(ratiopower[2]),Math.abs(ratiopower[3])),
-                Math.max(Math.abs(ratiopower[0]),Math.abs(ratiopower[1])));
-        if (highestAbsulutNum < 1){return ratiopower;}
-        for (int i = 0; i < 4; i++) {
-            power[i] = ratiopower[i] / highestAbsulutNum;
-        }
-        return power;
-    }
-    private void setMotorPower(double[] normalize) {
-        motorFL.setPower(normalize[0]);
-        motorBL.setPower(normalize[1]);
-        motorFR.setPower(normalize[2]);
-        motorBR.setPower(normalize[3]);
-    }
-    public void drive(double x,double y, double turn) {
-        setMotorPower(normalize(calculationOfPowerRatio(x, y, turn)));
-    }
-
-    public void fieldOrientedDrive(double x, double y, double turn) {
-        Vector2d joyStickDirection = new Vector2d(x,y);
-        Vector2d fieldOrientedVector = joyStickDirection.rotateBy(-getYawInDegrees());
-        drive(fieldOrientedVector.getX(),fieldOrientedVector.getY(),turn);
-    }
-
 
 }
