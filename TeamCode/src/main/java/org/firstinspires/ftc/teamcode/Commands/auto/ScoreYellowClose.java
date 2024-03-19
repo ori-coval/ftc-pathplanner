@@ -7,14 +7,18 @@ import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryFollowerCommand;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryPoses;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.ResetPixelCount;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RobotControl;
+import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 
@@ -26,19 +30,28 @@ public class ScoreYellowClose extends SequentialCommandGroup {
         ScoreYellowClose.robot = robot;
         addCommands(
                 new ParallelCommandGroup(
-                        new ConditionalCommand(
-                                new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, true),
-                                new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.BLUE),
-                                () -> robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
-                        ),
+                        getPreScorePosition(),
                         getScoreYellowTrajectory().andThen(resetPoseEstimate())
-                ), //todo add actual scoring *skull emoji*
+                ),
                 new DetectionSideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_RED, robot.allianceColor == AllianceColor.RED),
                         new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID_RED, robot.allianceColor == AllianceColor.RED),
                         new ArmGetToPosition(robot, ArmPosition.SCORE_TOP_FRONT, true),
                         () -> robot.teamPropDetector.getTeamPropSide()
-                )
+                ),
+                new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
+                new ResetPixelCount(robot),
+                new WaitCommand(500),
+                getPreScorePosition(),
+                new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS) //todo i really don't know how the cartridge works at this point
+        );
+    }
+
+    private Command getPreScorePosition() {
+        return new ConditionalCommand(
+                new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, true),
+                new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.BLUE),
+                () -> robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
         );
     }
 
