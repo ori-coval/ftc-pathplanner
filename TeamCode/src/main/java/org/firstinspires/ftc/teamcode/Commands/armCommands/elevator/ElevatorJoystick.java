@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.Commands.armCommands.elevator;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeSetLifterPosition;
 import org.firstinspires.ftc.teamcode.RobotControl;
+import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 
 public class ElevatorJoystick extends CommandBase {
 
@@ -22,6 +24,7 @@ public class ElevatorJoystick extends CommandBase {
     public void initialize() {
         if(Math.abs(robot.elbow.getServoPosition() - ELBOW_POS) > TOLERANCE) {
             new ElbowGetToPosition(robot.elbow, ELBOW_POS).schedule();
+            new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.INIT).schedule();
         }
         robot.elevator.setPower(power);
     }
