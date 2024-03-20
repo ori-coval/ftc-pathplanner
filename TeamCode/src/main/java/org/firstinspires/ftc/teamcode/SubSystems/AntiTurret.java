@@ -6,17 +6,17 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
-import java.util.function.DoubleSupplier;
-
 public class AntiTurret extends SubsystemBase {
-    private Servo antiTurret;
+    private final Servo antiTurret;
+
+    final private double M = .555/180;
 
     public AntiTurret(HardwareMap hardwareMap) {
         antiTurret = hardwareMap.servo.get(Configuration.ANTI_TURRET);
     }
 
-    public void setPos(double pos) {
-        antiTurret.setPosition(pos);
+    public void setAngle(double angle) {
+        antiTurret.setPosition(M * angle + 0.045);
     }
 
     public double getPosition() {

@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToAngle;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
@@ -30,7 +30,6 @@ import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.Trajectories
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.DriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.ResetFieldOriented;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLaunch;
-import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeCollectFromStack;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
@@ -278,7 +277,7 @@ public class RobotControl extends Robot {
         new CartridgeSetState(cartridge, Cartridge.State.CLOSED_TWO_PIXELS).schedule();
         new ExtenderSetPosition(extender, ArmPosition.INTAKE.getExtenderPosition()).schedule();
         new ElbowGetToPosition(elbow, ArmPosition.INTAKE.getElbowPosition()).schedule();
-        new AntiTurretGetToPosition(antiTurret, ArmPosition.INTAKE.getAntiTurretPosition(true)).schedule();
+        new AntiTurretGetToAngle(antiTurret, ArmPosition.INTAKE.getAntiTurretAngle(true)).schedule();
         new UnsafeMoveArm(this, ArmPosition.INTAKE, false).schedule();
     }
 
