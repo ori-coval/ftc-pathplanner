@@ -68,7 +68,7 @@ public class DriveTrain extends SubsystemBase {
         double[] powerArray = powerVector.toArray();
 
         for(int i = 0; i < powerArray.length; i++) {
-            powerArray[i] = Math.max(Math.abs(x) + Math.abs(y) + Math.abs(yaw), 1);
+            powerArray[i] = powerArray[i] / Math.max(Math.abs(x) + Math.abs(y) + Math.abs(yaw), 1);
         }
 
         return powerArray;

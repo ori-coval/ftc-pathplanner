@@ -22,7 +22,7 @@ public class DriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        driveTrain.fieldOrientedDrive(gamepad.left_stick_x, -gamepad.left_stick_y, gamepad.right_stick_x);
+        driveTrain.drive(gamepad.left_stick_x, -gamepad.left_stick_y, gamepad.right_stick_x);
     }
 
     @Override
