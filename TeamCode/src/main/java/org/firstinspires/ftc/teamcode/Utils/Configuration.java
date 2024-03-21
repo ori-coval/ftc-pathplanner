@@ -64,9 +64,9 @@ public class    Configuration {
                     0: extender              (servo)                              (servo)
                     1: elbowLeft             (servo)                              (servo)
                     2: elbowRight            (servo)                              (servo)
-                    3: antiTurret            (servo)                              (servo)
+                    3: DISABLED (DOESN'T WORK ON THE EXPANSION)
                     4: cartridge             (servo)                              (servo)
-                    5:
+                    5: antiTurret            (servo)                              (servo)
 
             Digital Devices:
                     0: safePlaceSwitch
