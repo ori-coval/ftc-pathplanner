@@ -7,12 +7,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoToScoringAutoPosition;
+import org.firstinspires.ftc.teamcode.Commands.auto.GoToStackForFirstCycleAndCollect;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoToStackForSecondCycleAndCollect;
 import org.firstinspires.ftc.teamcode.Commands.auto.Parking;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoreYellowClose;
-import org.firstinspires.ftc.teamcode.Commands.auto.ScoringFirstPixelAuto;
+import org.firstinspires.ftc.teamcode.Commands.auto.ScoreYellowFar;
 import org.firstinspires.ftc.teamcode.Commands.auto.ScoringPurplePixel;
-import org.firstinspires.ftc.teamcode.Commands.auto.ScoringSecondPixelAuto;
+import org.firstinspires.ftc.teamcode.Commands.auto.ScoringFirstCycleAuto;
+import org.firstinspires.ftc.teamcode.Commands.auto.ScoringSecondCycleAuto;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
@@ -53,10 +55,12 @@ public class AutonomousOpMode extends LinearOpMode {
         );
         if(allianceSide == AllianceSide.FAR) {
             result.addCommands(
-                    new GoFromSpikeMarkToStackAndCollect(robot),
-                    new ScoringFirstPixelAuto(robot),
+                    GoFromSpikeMarkToStackAndCollect.getTrajectoryCommand(),
+                    new ScoreYellowFar(robot),
+                    new GoToStackForFirstCycleAndCollect(robot),
+                    new ScoringFirstCycleAuto(robot),
                     new GoToStackForSecondCycleAndCollect(robot),
-                    new ScoringSecondPixelAuto(robot),
+                    new ScoringSecondCycleAuto(robot),
                     new GoToScoringAutoPosition(robot)
             );
         } else {

@@ -58,17 +58,11 @@ public class Parking extends ParallelCommandGroup {
 
     public enum TrajectoriesRed {
 
-        FAR(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseRed)
-                .setTangent(Math.toRadians(0))
+        FAR(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.TrajectoriesRed.CYCLES.trajectory.end())
+                .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(
-                        new Vector2d(-10, -57),
-                        Math.toRadians(30) //Tangent
-                )
-                .splineToConstantHeading(
-                        new Vector2d(-13, -51),
-                        Math.toRadians(180), //Tangent
-                        robot.trajectories.reduceVelocity(0.7),
-                        robot.trajectories.reduceAcceleration(0.7)
+                        new Vector2d(-36, -50),
+                        Math.toRadians(90) //Tangent
                 )
                 .build()
         ),
@@ -101,16 +95,10 @@ public class Parking extends ParallelCommandGroup {
     public enum TrajectoriesBlue {
 
         FAR(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseBlue)
-                .setTangent(Math.toRadians(180))
+                .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(
-                        new Vector2d(10, -57),
+                        new Vector2d(36, -50),
                         Math.toRadians(90) //Tangent
-                )
-                .splineToConstantHeading(
-                        new Vector2d(13, -51),
-                        Math.toRadians(45), //Tangent
-                        robot.trajectories.reduceVelocity(0.7),
-                        robot.trajectories.reduceAcceleration(0.7)
                 )
                 .build()
         ),
@@ -125,6 +113,7 @@ public class Parking extends ParallelCommandGroup {
         ),
 
         CLOSE_FRONT(robot.autoDriveTrain.trajectorySequenceBuilder(ScoreYellowClose.TrajectoriesBlue.CLOSE.trajectory.end())
+                .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(
                         new Vector2d(33, -50),
                         Math.toRadians(90)

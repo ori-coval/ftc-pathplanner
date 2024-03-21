@@ -9,13 +9,13 @@ import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommand
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 
-public class ScoringFirstPixelAuto extends ScoringCommand {
-    public ScoringFirstPixelAuto(RobotControl robot) {
+public class ScoreYellowFar extends ScoringCommand {
+    public ScoreYellowFar(RobotControl robot) {
         super(
                 getScoringCommand(robot),
                 getSecondScoringCommand(robot),
                 robot,
-                1.
+                0
         );
     }
 

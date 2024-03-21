@@ -45,7 +45,7 @@ public class GoFromSpikeMarkToStackAndCollect extends SequentialCommandGroup {
     }
 
 
-    private Command getTrajectoryCommand() {
+    public static Command getTrajectoryCommand() {
         return new ConditionalCommand(
                 new DetectionSideCommandSwitch(
                         new TrajectoryFollowerCommand(TrajectoriesRed.FAR.trajectory, robot.autoDriveTrain),
