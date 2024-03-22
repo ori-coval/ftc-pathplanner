@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 
 public class ElevatorJoystick extends CommandBase {
 
-    private final double ELBOW_POS = 0.6;
+    private final double ELBOW_POS = 1;
     private final double TOLERANCE = 0.1;
 
     RobotControl robot;
@@ -31,6 +31,6 @@ public class ElevatorJoystick extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        robot.elevator.setPower(0);
+        robot.elevator.stop();
     }
 }

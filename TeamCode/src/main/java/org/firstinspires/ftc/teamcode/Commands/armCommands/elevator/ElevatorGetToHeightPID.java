@@ -69,7 +69,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        robot.elevator.setPower(0);
+        robot.elevator.stop();
         if(switchWasPressed) robot.elevator.resetEncoder();
     }
 }

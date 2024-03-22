@@ -36,7 +36,7 @@ public class FindGravitationForce extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        elevator.setPower(0);
+        elevator.stop();
         telemetry.addData("min power", power);
         telemetry.update();
         power = 0;

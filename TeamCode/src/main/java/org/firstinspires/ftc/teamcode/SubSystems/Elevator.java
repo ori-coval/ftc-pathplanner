@@ -49,6 +49,10 @@ public class Elevator extends SubsystemBase {
         }
     }
 
+    public void stop() {
+        setPower(0);
+    }
+
     public int getEncoderValue() {
         return encoder.getCurrentPosition() - encoderOffset;
     }
