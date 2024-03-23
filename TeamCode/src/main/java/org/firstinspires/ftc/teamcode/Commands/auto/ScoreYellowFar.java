@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
+import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;
@@ -24,13 +25,13 @@ public class ScoreYellowFar extends ScoringCommand {
                 new DetectionSideCommandSwitch(
                     new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_RED, robot.allianceColor == AllianceColor.RED),
                     new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID_RED, robot.allianceColor == AllianceColor.RED),
-                    new ArmGetToPosition(robot, ArmPosition.SCORE_TOP_FRONT, true),
+                    new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_FRONT, true),
                     () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 new DetectionSideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_BLUE, robot.allianceColor == AllianceColor.RED),
                         new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID_BLUE, robot.allianceColor == AllianceColor.RED),
-                        new ArmGetToPosition(robot, ArmPosition.SCORE_TOP_FRONT, true),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_FRONT, true),
                         () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 () -> robot.allianceColor == AllianceColor.RED

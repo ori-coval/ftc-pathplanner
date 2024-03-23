@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
+import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;

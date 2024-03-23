@@ -13,23 +13,26 @@ public class ElevatorGetToHeightPID extends CommandBase {
     private final double goalHeight;
     private final PIDController pidController;
     private long startTime0;
+    private long startTime1;
     private boolean isListeningToPID = true;
     private boolean switchWasPressed = false;
-    private final long TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN = 200; //todo need to tune this
-    private final double RESTING_POWER = -0.8; //todo need to tune this
+    private final long TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN = 200;
+    private final long DEADLINE_FOR_ELEVATOR = 600;
+    private final double RESETTING_POWER = -0.8;
 
 
     public ElevatorGetToHeightPID(RobotControl robot, double goalHeight) {
         this.robot = robot;
         this.goalHeight = goalHeight;
         pidController = robot.elevator.getPidController();
-        pidController.setTolerance(1);
+        pidController.setTolerance(0.5);
         addRequirements(robot.elevator);
     }
 
     @Override
     public void initialize() {
         pidController.setSetPoint(goalHeight);
+        startTime1 = Calendar.getInstance().getTimeInMillis();
         isListeningToPID = true;
         switchWasPressed = false;
     }
@@ -39,7 +42,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
         if (goalHeight <= 0) {
             if (!isListeningToPID || pidController.atSetPoint()) {
                 isListeningToPID = false;
-                robot.elevator.setPower(RESTING_POWER);
+                robot.elevator.setPower(RESETTING_POWER);
             } else {
                 activatePID();
                 startTime0 = Calendar.getInstance().getTimeInMillis();
@@ -62,9 +65,7 @@ public class ElevatorGetToHeightPID extends CommandBase {
                 switchWasPressed = true;
                 return true;
             } else return Calendar.getInstance().getTimeInMillis() - startTime0 > TIME_WAITING_FOR_ELEVATOR_TO_COME_DOWN;
-        } else {
-            return pidController.atSetPoint();
-        }
+        } else return Calendar.getInstance().getTimeInMillis() - startTime1 > DEADLINE_FOR_ELEVATOR || pidController.atSetPoint();
     }
 
     @Override

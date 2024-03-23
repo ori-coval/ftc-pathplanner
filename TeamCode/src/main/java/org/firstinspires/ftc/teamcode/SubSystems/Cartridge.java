@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class Cartridge extends SubsystemBase {
     public enum State {
-        CLOSED_ONE_PIXEL(0.9), CLOSED_TWO_PIXELS(0.5), SEMI_OPEN(0.25), OPEN(0), INTAKE_OPEN(0.114); //TODO: NEW CARTRIDGE POS
+        CLOSED_ONE_PIXEL(1), CLOSED_TWO_PIXELS(1), SEMI_OPEN(0.7), OPEN(0.5), INTAKE_OPEN(0.8); //TODO: NEW CARTRIDGE POS
         final double position;
         State(double position){
             this.position = position;

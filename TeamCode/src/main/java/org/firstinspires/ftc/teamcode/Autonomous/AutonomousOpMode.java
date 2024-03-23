@@ -5,8 +5,7 @@ import com.arcrobotics.ftclib.command.WaitUntilCommand;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
-import org.firstinspires.ftc.teamcode.Commands.auto.GoFromSpikeMarkToStackAndCollect;
-import org.firstinspires.ftc.teamcode.Commands.auto.GoToScoringAutoPosition;
+import org.firstinspires.ftc.teamcode.Commands.auto.LeaveSpikeMark;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoToStackForFirstCycleAndCollect;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoToStackForSecondCycleAndCollect;
 import org.firstinspires.ftc.teamcode.Commands.auto.Parking;
@@ -21,7 +20,7 @@ import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 
 public class AutonomousOpMode extends LinearOpMode {
 
-    RobotControl robot;
+    public static RobotControl robot;
 
     public AllianceColor allianceColor;
 
@@ -50,25 +49,24 @@ public class AutonomousOpMode extends LinearOpMode {
     private SequentialCommandGroup getCommandsToRun() {
         SequentialCommandGroup result = new SequentialCommandGroup(
                 new WaitUntilCommand(this::isStarted),
-                new AutoInit(robot),
-                new ScoringPurplePixel(robot)
+                new AutoInit(),
+                new ScoringPurplePixel()
         );
         if(allianceSide == AllianceSide.FAR) {
             result.addCommands(
-                    GoFromSpikeMarkToStackAndCollect.getTrajectoryCommand(),
+                    new LeaveSpikeMark(),
                     new ScoreYellowFar(robot),
-                    new GoToStackForFirstCycleAndCollect(robot),
+                    new GoToStackForFirstCycleAndCollect(),
                     new ScoringFirstCycleAuto(robot),
-                    new GoToStackForSecondCycleAndCollect(robot),
-                    new ScoringSecondCycleAuto(robot),
-                    new GoToScoringAutoPosition(robot)
+                    new GoToStackForSecondCycleAndCollect(),
+                    new ScoringSecondCycleAuto(robot)
             );
         } else {
             result.addCommands(
-                    new ScoreYellowClose(robot)
+                    new ScoreYellowClose()
             );
         }
-        result.addCommands(new Parking(robot));
+        result.addCommands(new Parking());
         return result;
 
     }

@@ -21,8 +21,8 @@ public class Elevator extends SubsystemBase {
     private final double TEETH_PER_REV = 8;
     private final double CHAIN_LINK_DISTANCE = 0.8;
     private final double TICKS_PER_REV = 751.8;
-    public static double kP = 0.22; //0.18
-    public static double kI = 0;
+    public static double kP = 0.4;
+    public static double kI = 0.05;
     public static double kD = 0;
     public static double kG = 0.01;
     public static double kS = 0.02;

@@ -10,6 +10,7 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
+import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.turret.RotateTurretByPID;
@@ -25,24 +26,34 @@ import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 
 public class ScoringCommand extends SequentialCommandGroup {
 
-    static RobotControl robot;
-
-    static int numOfCycle;
+    static RobotControl robot = AutonomousOpMode.robot;
 
     public ScoringCommand(Command scoringCommand, Command secondScoringCommand, RobotControl robot, Integer numOfCycle) {
         ScoringCommand.robot = robot;
-        ScoringCommand.numOfCycle = numOfCycle;
         addCommands(
                 new ParallelCommandGroup(
-                        getTrajectoryCommand(robot),
-                        new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
-                        new WaitCommand(getWaitTime()).andThen(
+                        getTrajectoryCommand(robot, numOfCycle),
+                        new ConditionalCommand(
+                                new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1500),
+                                new InstantCommand(),
+                                () -> numOfCycle != 0
+                        ),
+                        new WaitCommand(getWaitTime(numOfCycle)).andThen(
                                 new ConditionalCommand(
                                         new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
                                         new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, true),
                                         () -> robot.teamPropDetector.getTeamPropSide() != DetectionSide.CLOSE & numOfCycle == 0
                                 ),
                                 new InstantCommand(() -> RotateTurretByPID.DEADLINE_FOR_TURRET = 700),//todo maybe will work with less time
+                                new ConditionalCommand(
+                                        new ConditionalCommand(
+                                                new WaitCommand(600),
+                                                new WaitCommand(550),
+                                                () -> robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
+                                        ),
+                                        new InstantCommand(),
+                                        () -> (numOfCycle != 0) || robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
+                                ),
                                 scoringCommand
                         )
                 ),
@@ -55,35 +66,45 @@ public class ScoringCommand extends SequentialCommandGroup {
     }
 
 
-    private long getWaitTime() {
-        return (numOfCycle == 0 && robot.teamPropDetector.getTeamPropSide() != DetectionSide.CLOSE) ? 1700 : 1000;
+    private long getWaitTime(int numOfCycle) {
+        return numOfCycle == 0 ? 1700 : 1200;
     }
 
-    private Command getTrajectoryCommand(RobotControl robot) {
+    private Command getTrajectoryCommand(RobotControl robot, int numOfCycle) {
         return new ConditionalCommand(
                 new ConditionalCommand(
                         new ConditionalCommand(
-                                new TrajectoryFollowerCommand(TrajectoriesRed.FRONT.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
-                                new TrajectoryFollowerCommand(TrajectoriesRed.NORMAL.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
+                                new TrajectoryFollowerCommand(FRONT_RED, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
+                                new TrajectoryFollowerCommand(NORMAL_RED, robot.autoDriveTrain).andThen(resetPoseEstimateOnSide(robot)),
                                 () -> robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
                         ),
                         new ConditionalCommand(
-                                new TrajectoryFollowerCommand(TrajectoriesBlue.FRONT.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
-                                new TrajectoryFollowerCommand(TrajectoriesBlue.NORMAL.trajectory, robot.autoDriveTrain).andThen(resetPoseEstimate(robot)),
+                                new TrajectoryFollowerCommand(FRONT_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
+                                new TrajectoryFollowerCommand(NORMAL_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateOnSide(robot)),
                                 () -> robot.teamPropDetector.getTeamPropSide() == DetectionSide.CLOSE
                         ),
                         () -> robot.allianceColor == AllianceColor.RED
                 ),
                 new ConditionalCommand(
-                        new TrajectoryFollowerCommand(TrajectoriesRed.CYCLES.trajectory, robot.autoDriveTrain),
-                        new TrajectoryFollowerCommand(TrajectoriesBlue.CYCLES.trajectory, robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(getCyclesRedTrajectory(robot), robot.autoDriveTrain),
+                        new TrajectoryFollowerCommand(getCyclesBlueTrajectory(robot), robot.autoDriveTrain),
                         () -> robot.allianceColor == AllianceColor.RED
-                ),
+                ).andThen(resetPoseEstimateFront(robot)),
                 () -> numOfCycle == 0
         );
     }
 
-    private Command resetPoseEstimate(RobotControl robot) {
+    private Command resetPoseEstimateFront(RobotControl robot) {
+        return new InstantCommand(() ->
+                robot.autoDriveTrain.setPoseEstimate(new Pose2d(
+                        robot.autoDriveTrain.getPoseEstimate().getX(),
+                        TrajectoryPoses.realBackdropFront.getY(),
+                        robot.autoDriveTrain.getPoseEstimate().getHeading()
+                ))
+        );
+    }
+
+    private Command resetPoseEstimateOnSide(RobotControl robot) {
         return new ConditionalCommand(
                 new InstantCommand(() ->
                         robot.autoDriveTrain.setPoseEstimate(new Pose2d(
@@ -105,9 +126,8 @@ public class ScoringCommand extends SequentialCommandGroup {
 
     //Go to backdrop depending on alliance color.
 
-    public enum TrajectoriesRed {
 
-        NORMAL(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseRed)
+    static final TrajectorySequence NORMAL_RED = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseRed)
                 .setTangent(Math.toRadians(-90))
                 .splineToSplineHeading(
                         new Pose2d(TrajectoryPoses.stackPoseRed.getX() + 3, -15, Math.toRadians(90)),
@@ -127,10 +147,9 @@ public class ScoringCommand extends SequentialCommandGroup {
                         robot.trajectories.reduceVelocity(0.6),
                         robot.trajectories.reduceAcceleration(0.6)
                 )
-                .build()
-        ),
-        FRONT(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseRed)
-                .setTangent(Math.toRadians(-90))
+                .build();
+    static final TrajectorySequence FRONT_RED = robot.autoDriveTrain.trajectorySequenceBuilder(LeaveSpikeMark.CLOSE_RED.end())
+                .setTangent(Math.toRadians(-70))
                 .splineToConstantHeading(
                         new Vector2d(TrajectoryPoses.stackPoseRed.getX() + 1, -15),
                         Math.toRadians(-95) //Tangent
@@ -140,39 +159,33 @@ public class ScoringCommand extends SequentialCommandGroup {
                         Math.toRadians(180) //Tangent
                 )
                 .splineToConstantHeading(
-                        new Vector2d(-40, -36),
+                        new Vector2d(-42, -36),
                         Math.toRadians(-90) //Tangent
                 )
                 .splineToConstantHeading(
-                        new Vector2d(-40, -57),
+                        new Vector2d(-42, -48.5),
                         Math.toRadians(-90), //Tangent
-                        robot.trajectories.reduceVelocity(0.8),
-                        robot.trajectories.reduceAcceleration(0.8)
+                        robot.trajectories.reduceVelocity(0.4),
+                        robot.trajectories.reduceAcceleration(0.4)
                 )
-                .build()
-        ),
+                .build();
 
-        CYCLES(robot.autoDriveTrain.trajectorySequenceBuilder(GoToStackForFirstCycleAndCollect.TrajectoriesRed.FRONT.trajectory.end())
+    static TrajectorySequence getCyclesRedTrajectory(RobotControl robot) {
+        return robot.autoDriveTrain.trajectorySequenceBuilder(GoToStackForFirstCycleAndCollect.FRONT_RED.end())
                 .setTangent(Math.toRadians(-90))
                 .splineToConstantHeading(
-                        new Vector2d(-36, -57),
+                        new Vector2d(-36, -48),
                         Math.toRadians(-90) //Tangent
                 )
-                .build()
-        );
-
-        final TrajectorySequence trajectory;
-
-        TrajectoriesRed(TrajectorySequence trajectory) {
-            this.trajectory = trajectory;
-        }
-
+                .build();
     }
 
 
-    public enum TrajectoriesBlue {
 
-        NORMAL(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+    //BLUE
+
+
+    static final TrajectorySequence NORMAL_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
                 .setTangent(Math.toRadians(270))
                 .splineToSplineHeading(
                         new Pose2d(TrajectoryPoses.stackPoseBlue.getX() - 2, -15, Math.toRadians(90)),
@@ -192,9 +205,8 @@ public class ScoringCommand extends SequentialCommandGroup {
                         robot.trajectories.reduceVelocity(0.6),
                         robot.trajectories.reduceAcceleration(0.6)
                 )
-                .build()
-        ),
-        FRONT(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+                .build();
+    static final TrajectorySequence FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
                 .setTangent(Math.toRadians(270))
                 .splineToConstantHeading(
                         new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 1, -15),
@@ -208,25 +220,16 @@ public class ScoringCommand extends SequentialCommandGroup {
                         new Vector2d(40, -36),
                         Math.toRadians(270) //Tangent
                 )
-                .build()
-        ),
+                .build();
 
-        CYCLES(robot.autoDriveTrain.trajectorySequenceBuilder(GoToStackForFirstCycleAndCollect.TrajectoriesBlue.FRONT.trajectory.end())
+    static TrajectorySequence getCyclesBlueTrajectory(RobotControl robot) {
+        return robot.autoDriveTrain.trajectorySequenceBuilder(GoToStackForFirstCycleAndCollect.FRONT_BLUE.end())
                 .setTangent(Math.toRadians(270))
                 .splineToConstantHeading(
                         new Vector2d(36, -52),
                         Math.toRadians(270) //Tangent
                 )
-                .build()
-        );
-
-        final TrajectorySequence trajectory;
-
-        TrajectoriesBlue(TrajectorySequence trajectory) {
-            this.trajectory = trajectory;
-        }
-
+                .build();
     }
-
 
 }

@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ThreadPool;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToAngle;
@@ -31,6 +32,8 @@ import org.firstinspires.ftc.teamcode.Commands.driveTrain.DriveCommand;
 import org.firstinspires.ftc.teamcode.Commands.driveTrain.ResetFieldOriented;
 import org.firstinspires.ftc.teamcode.Commands.drone.DroneLaunch;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.LifterDown;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.LifterUp;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
@@ -256,8 +259,11 @@ public class RobotControl extends Robot {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.INTAKE_SERVO));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whileActiveOnce(new ServoTuningCommand(hardwareMap, telemetry, gamepadEx1, Configuration.EXTENDER));
 
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.A).whenPressed(new IntakeRotateToggle(this));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeEjectToggle(this));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.X).whenPressed(new IntakeRotateToggle(this));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new IntakeEjectToggle(this));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new LifterUp(intake.lifter));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new LifterDown(intake.lifter));
+
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(this.extender, Extender.Position.OPEN));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ExtenderSetPosition(this.extender, Extender.Position.MID_WAY));

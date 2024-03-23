@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Commands.intakeLifter.LifterUp;
 
 public class ServoTuningCommand extends CommandBase {
     public static final double SENSITIVITY = 0.1;
@@ -54,6 +55,7 @@ public class ServoTuningCommand extends CommandBase {
         telemetry.addLine("A - Extender OPEN");
         telemetry.addLine("L-Bumper - Extender MID_WAY");
         telemetry.addLine("R-Bumper - Extender CLOSED");
+        telemetry.addLine(String.valueOf(LifterUp.lifterPositions[LifterUp.currentValue]));
 
     }
 

@@ -9,6 +9,7 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
+import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryFollowerCommand;
@@ -24,10 +25,9 @@ import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 
 public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
 
-    static RobotControl robot;
+    static RobotControl robot = AutonomousOpMode.robot;
 
-    public GoToStackForFirstCycleAndCollect(RobotControl robot) {
-        GoToStackForFirstCycleAndCollect.robot = robot;
+    public GoToStackForFirstCycleAndCollect() {
         addCommands(
                 new ConditionalCommand(
                         new SequentialCommandGroup(
@@ -39,7 +39,7 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
                                         new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
                                 ),
                                 new ParallelCommandGroup(
-                                        getTrajectoryCommandPart2(robot),
+                                        getTrajectoryCommandPart2(),
                                         new WaitCommand(300).andThen(
                                                 new CartridgeSetState(robot.cartridge, Cartridge.State.INTAKE_OPEN)
                                         ),
@@ -67,11 +67,11 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
     private Command getFrontTrajectory() {
         return new ConditionalCommand(
                 new TrajectoryFollowerCommand(
-                        TrajectoriesRed.FRONT.trajectory,
+                        FRONT_RED,
                         robot.autoDriveTrain
                 ),
                 new TrajectoryFollowerCommand(
-                        TrajectoriesBlue.FRONT.trajectory,
+                        FRONT_BLUE,
                         robot.autoDriveTrain
                 ),
                 () -> robot.allianceColor == AllianceColor.RED
@@ -81,34 +81,33 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
     private Command getTrajectoryCommandPart1() {
         return new ConditionalCommand(
                 new TrajectoryFollowerCommand(
-                        TrajectoriesRed.FIRST_PART.trajectory,
+                        FIRST_PART_RED,
                         robot.autoDriveTrain
                 ),
                 new TrajectoryFollowerCommand(
-                        TrajectoriesBlue.FIRST_PART.trajectory,
+                        FIRST_PART_BLUE,
                         robot.autoDriveTrain
                 ),
                 () -> robot.allianceColor == AllianceColor.RED
         );
     }
 
-    private Command getTrajectoryCommandPart2(RobotControl robot) {
+    private Command getTrajectoryCommandPart2() {
         return new ConditionalCommand(
                 new TrajectoryFollowerCommand(
-                        TrajectoriesRed.SECOND_PART.trajectory,
+                        SECOND_PART_RED,
                         robot.autoDriveTrain
                 ),
                 new TrajectoryFollowerCommand(
-                        TrajectoriesBlue.SECOND_PART.trajectory,
+                        SECOND_PART_BLUE,
                         robot.autoDriveTrain
                 ),
                 () -> robot.allianceColor == AllianceColor.RED
         );
     }
 
-    public enum TrajectoriesRed {
 
-        FIRST_PART(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseRed)
+    static final TrajectorySequence FIRST_PART_RED = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseRed)
                 .setTangent(Math.toRadians(30))
                 .splineToLinearHeading(
                         new Pose2d(-9, -40, Math.toRadians(90)),
@@ -118,42 +117,30 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
                         new Pose2d(-36, -15, Math.toRadians(90)),
                         Math.toRadians(92) //Tangent
                 )
-                .build()
-        ),
-        FRONT(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.TrajectoriesRed.FRONT.trajectory.end())
+                .build();
+    static final TrajectorySequence FRONT_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.FRONT_RED.end())
                 .setTangent(Math.toRadians(80))
                 .splineToConstantHeading(
-                        new Vector2d(-36, 58),
+                        new Vector2d(-36, 60),
                         Math.toRadians(90) //Tangent
                 )
-                .build()
-        ),
-        SECOND_PART(robot.autoDriveTrain.trajectorySequenceBuilder(FIRST_PART.trajectory.end())
+                .build();
+    static final TrajectorySequence SECOND_PART_RED = robot.autoDriveTrain.trajectorySequenceBuilder(FIRST_PART_RED.end())
                 .splineToConstantHeading(
                         new Vector2d(-36, 48),
                         Math.toRadians(90) //Tangent
                 )
                 .splineToConstantHeading(
-                        new Vector2d(-36, 58),
+                        new Vector2d(-36, 60),
                         Math.toRadians(90), //Tangent
-                        robot.trajectories.reduceVelocity(0.4),
-                        robot.trajectories.reduceAcceleration(0.4)
+                        robot.trajectories.reduceVelocity(0.7),
+                        robot.trajectories.reduceAcceleration(0.7)
                 )
-                .build()
-        );
-
-        final TrajectorySequence trajectory;
-
-        TrajectoriesRed(TrajectorySequence trajectory) {
-            this.trajectory = trajectory;
-        }
-
-    }
+                .build();
 
 
-    public enum TrajectoriesBlue {
 
-        FIRST_PART(robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseBlue)
+    static final TrajectorySequence FIRST_PART_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseBlue)
                 .setTangent(Math.toRadians(150))
                 .splineToLinearHeading(
                         new Pose2d(9, -40, Math.toRadians(90)),
@@ -163,19 +150,17 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
                         new Pose2d(36, -15, Math.toRadians(90)),
                         Math.toRadians(88) //Tangent
                 )
-                .build()
-        ),
+                .build();
 
-        FRONT(robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.TrajectoriesBlue.FRONT.trajectory.end())
+    static final TrajectorySequence FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.FRONT_BLUE.end())
                 .setTangent(Math.toRadians(100))
                 .splineToConstantHeading(
                         new Vector2d(36, 58),
                         Math.toRadians(90) //Tangent
                 )
-                .build()
-        ),
+                .build();
 
-        SECOND_PART(robot.autoDriveTrain.trajectorySequenceBuilder(FIRST_PART.trajectory.end())
+    static final TrajectorySequence SECOND_PART_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(FIRST_PART_BLUE.end())
                 .splineToConstantHeading(
                         new Vector2d(36, 48),
                         Math.toRadians(90) //Tangent
@@ -186,16 +171,6 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
                         robot.trajectories.reduceVelocity(0.4),
                         robot.trajectories.reduceAcceleration(0.4)
                 )
-                .build()
-        );
-
-        final TrajectorySequence trajectory;
-
-
-        TrajectoriesBlue(TrajectorySequence trajectory) {
-            this.trajectory = trajectory;
-        }
-    }
-
+                .build();
 
 }
