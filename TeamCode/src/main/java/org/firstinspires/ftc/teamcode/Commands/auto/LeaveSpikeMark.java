@@ -58,7 +58,7 @@ public class LeaveSpikeMark extends ParallelCommandGroup {
     //This trajectory is meant to drive to stack depending on the prop detected and the alliance color.
 
     static final TrajectorySequence FAR_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_FAR_RED.end())
-            .setTangent(Math.toRadians(45))
+            .setTangent(Math.toRadians(75))
             .splineToLinearHeading(
                     TrajectoryPoses.stackPoseRed,
                     Math.toRadians(45) //Tangent

@@ -3,12 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
+import com.arcrobotics.ftclib.command.StartEndCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ThreadPool;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToAngle;
@@ -34,6 +34,8 @@ import org.firstinspires.ftc.teamcode.Commands.drone.DroneLaunch;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.IntakeTakeIn;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.LifterDown;
 import org.firstinspires.ftc.teamcode.Commands.intakeLifter.LifterUp;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.AutonomousLikePurpleClose;
+import org.firstinspires.ftc.teamcode.Commands.intakeRoller.AutonomousLikePurpleFar;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeEjectToggle;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.ServoTuningCommand;
@@ -142,7 +144,7 @@ public class RobotControl extends Robot {
         initDriveTrain();
         initArm();
         initIntake();
-        intake.roller.setPixelCount(1);
+//        intake.roller.setPixelCount(1);
         initVision();
         initTrajectories();
     }
@@ -263,6 +265,8 @@ public class RobotControl extends Robot {
         gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new IntakeEjectToggle(this));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new LifterUp(intake.lifter));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new LifterDown(intake.lifter));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new AutonomousLikePurpleFar(intake.roller));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenHeld(new AutonomousLikePurpleClose(intake.roller));
 
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ExtenderSetPosition(this.extender, Extender.Position.OPEN));

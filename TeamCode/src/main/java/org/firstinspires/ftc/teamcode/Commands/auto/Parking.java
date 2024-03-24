@@ -65,9 +65,9 @@ public class Parking extends ParallelCommandGroup {
 
     static final TrajectorySequence FAR_RED = robot.autoDriveTrain.trajectorySequenceBuilder(
             new Pose2d(
-                    ScoringCommand.getCyclesRedTrajectory(robot).end().getX(),
+                    ScoringCommand.FRONT_RED.end().getX(),
                     TrajectoryPoses.realBackdropFront.getY(),
-                    ScoringCommand.getCyclesRedTrajectory(robot).end().getHeading()
+                    ScoringCommand.FRONT_RED.end().getHeading()
             ))
             .forward(4)
             .build();
@@ -94,9 +94,9 @@ public class Parking extends ParallelCommandGroup {
 
     static final TrajectorySequence FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(
             new Pose2d(
-                    ScoringCommand.getCyclesRedTrajectory(robot).end().getX(),
+                    ScoringCommand.FRONT_BLUE.end().getX(),
                     TrajectoryPoses.realBackdropFront.getY(),
-                    ScoringCommand.getCyclesRedTrajectory(robot).end().getHeading()
+                    ScoringCommand.FRONT_BLUE.end().getHeading()
             ))
             .setTangent(Math.toRadians(90))
             .splineToConstantHeading(

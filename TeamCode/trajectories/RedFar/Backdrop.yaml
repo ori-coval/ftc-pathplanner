@@ -14,20 +14,14 @@ waypoints:
 - position:
     x: -9.0
     y: -40.0
-  heading: 1.5707963267948966
+  heading: 0.0
   tangent: -1.5707963267948966
-  interpolationType: "LINEAR"
+  interpolationType: "CONSTANT"
 - position:
-    x: -15.0
-    y: -61.0
-  heading: 1.5707963267948966
-  tangent: -2.443460952792061
-  interpolationType: "LINEAR"
-- position:
-    x: -25.0
-    y: -63.0
-  heading: 1.5707963267948966
+    x: -18.0
+    y: -60.0
+  heading: 0.0
   tangent: 3.141592653589793
-  interpolationType: "LINEAR"
+  interpolationType: "CONSTANT"
 resolution: 0.25
 version: 1

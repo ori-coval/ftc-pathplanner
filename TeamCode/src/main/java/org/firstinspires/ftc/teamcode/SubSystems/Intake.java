@@ -27,7 +27,7 @@ public class Intake {
     }
 
     public enum LifterPosition { //Pixels From Top
-        INIT(1), DEFAULT(0.743), STANDBY(0.501), FIRST_PIXEL(0.407), SECOND_PIXEL(0.37), THIRD_PIXEL(0.355), FOURTH_PIXEL(0.325);
+        INIT(1), DEFAULT(0.743), STANDBY(0.501), FIRST_PIXEL(0.407), SECOND_PIXEL(0.3888), THIRD_PIXEL(0.355), FOURTH_PIXEL(0.325);
         final double servoPosition;
         LifterPosition(double servoPosition) { this.servoPosition = servoPosition; }
         public double getServoPositionAsDouble() {
@@ -49,6 +49,8 @@ public class Intake {
 
     public class Roller extends SubsystemBase {
         public final double COLLECT_POWER = 1;
+        public final double PURPLE_PIXEL_FAR_POWER = 0.55;
+        public final double PURPLE_PIXEL_CLOSE_POWER = -0.5;
         public final double EJECT_POWER = -0.9;
 
         private int pixelCount;

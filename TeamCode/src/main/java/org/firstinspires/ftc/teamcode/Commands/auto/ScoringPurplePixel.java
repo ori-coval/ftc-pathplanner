@@ -6,7 +6,6 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
@@ -14,10 +13,8 @@ import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToP
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryFollowerCommand;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotate;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RobotControl;
-import org.firstinspires.ftc.teamcode.SubSystems.AutoDriveTrain;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 
@@ -28,8 +25,14 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
     public ScoringPurplePixel() {
         addCommands(
                 getTrajectoryCommand(),
-                new WaitCommand(2000).andThen(
-                        new IntakeRotate(robot.intake.roller, robot.intake.roller.COLLECT_POWER).withTimeout(350)
+                new ConditionalCommand(
+                        new WaitCommand(2000).andThen(
+                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_POWER).withTimeout(300)
+                        ),
+                        new WaitCommand(2000).andThen(
+                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_CLOSE_POWER).withTimeout(300)
+                        ),
+                        () -> robot.robotSide == AllianceSide.FAR
                 ),
                 new WaitCommand(300).andThen(
                         new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, true)
@@ -77,11 +80,11 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
         //(Robot Side)_(Detection Side)
     static final TrajectorySequence FAR_FAR_RED = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
                 .splineToSplineHeading(
-                        new Pose2d(-40, 50, Math.toRadians(60)),
+                        new Pose2d(-40, 50, Math.toRadians(45)),
                         Math.toRadians(0) //Tangent
                 )
                 .splineToSplineHeading(
-                        new Pose2d(-30, 50, Math.toRadians(60)),
+                        new Pose2d(-30, 50, Math.toRadians(45)),
                         Math.toRadians(0) //Tangent
                 ).build();
     static final TrajectorySequence FAR_CENTER_RED = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
@@ -105,32 +108,24 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
             .build();
     static final TrajectorySequence CLOSE_FAR_RED = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
             .splineToConstantHeading(
-                    new Vector2d(-50, -16),
+                    new Vector2d(-41, -20),
                     Math.toRadians(0) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(-33, -20),
-                    Math.toRadians(-45) //Tangent
             )
             .build();
     static final TrajectorySequence CLOSE_CENTER_RED = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
             .splineToSplineHeading(
-                    new Pose2d(-40, -13, Math.toRadians(-70)),
-                    Math.toRadians(0) //Tangent
-            )
-            .splineToSplineHeading(
-                    new Pose2d(-27, -13, Math.toRadians(-90)),
+                    new Pose2d(-35, -13, Math.toRadians(-70)),
                     Math.toRadians(0) //Tangent
             )
             .build();
     static final TrajectorySequence CLOSE_CLOSE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
             .setTangent(Math.toRadians(0))
             .splineToSplineHeading(
-                    new Pose2d(-50, -16, Math.toRadians(-45)),
+                    new Pose2d(-50, -16, Math.toRadians(60)),
                     Math.toRadians(0) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(-33, -5),
+                    new Vector2d(-36, -10),
                     Math.toRadians(45) //Tangent
             )
             .build();

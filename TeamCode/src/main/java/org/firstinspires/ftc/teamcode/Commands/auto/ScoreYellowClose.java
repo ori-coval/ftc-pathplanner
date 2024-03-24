@@ -30,7 +30,7 @@ public class ScoreYellowClose extends SequentialCommandGroup {
     public ScoreYellowClose() {
         addCommands(
                 new ParallelCommandGroup(
-                        getPreScorePosition(),
+                        getPreScoreArmPosition(),
                         getScoreYellowTrajectory().andThen(resetPoseEstimate())
                 ),
                 new DetectionSideCommandSwitch(
@@ -42,12 +42,12 @@ public class ScoreYellowClose extends SequentialCommandGroup {
                 new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
                 new ResetPixelCount(robot),
                 new WaitCommand(500),
-                getPreScorePosition(),
+                getPreScoreArmPosition(),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS) //todo i really don't know how the cartridge works at this point
         );
     }
 
-    private Command getPreScorePosition() {
+    private Command getPreScoreArmPosition() {
         return new ConditionalCommand(
                 new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, true),
                 new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.BLUE),
@@ -96,52 +96,25 @@ public class ScoreYellowClose extends SequentialCommandGroup {
 
 
     static final TrajectorySequence FAR_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_FAR_RED.end())
-            .setTangent(Math.toRadians(0))
-            .splineToConstantHeading(
-                    new Vector2d(-20, -20),
-                    Math.toRadians(0) //Tangent
-            )
-            .splineToSplineHeading(
-                    new Pose2d(-10, -30, Math.toRadians(90)),
-                    Math.toRadians(-90) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(-20, -40),
-                    Math.toRadians(180) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(-60, -55),
-                    Math.toRadians(-90) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(-53, -64),
-                    Math.toRadians(0) //Tangent
+            .setTangent(Math.toRadians(180))
+            .splineToLinearHeading(
+                    new Pose2d(-53, -64, Math.toRadians(90)),
+                    Math.toRadians(-45) //Tangent
             )
             .build();
 
     static final TrajectorySequence CENTER_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_CENTER_RED.end())
-            .splineToSplineHeading(
-                    new Pose2d(-15, -27, Math.toRadians(90)),
-                    Math.toRadians(-90) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(-60, -55),
-                    Math.toRadians(-90) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(-53, -64),
-                    Math.toRadians(0) //Tangent
+            .setTangent(Math.toRadians(180))
+            .splineToLinearHeading(
+                    new Pose2d(-53, -64, Math.toRadians(90)),
+                    Math.toRadians(-45) //Tangent
             )
             .build();
 
     static final TrajectorySequence CLOSE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_CLOSE_RED.end())
-            .setTangent(Math.toRadians(-45))
-            .splineToConstantHeading(
-                    new Vector2d(-20, -20),
-                    Math.toRadians(220) //Tangent
-            )
+            .setTangent(Math.toRadians(-90))
             .splineToSplineHeading(
-                    new Pose2d(-33, -58, Math.toRadians(90)),
+                    new Pose2d(-33, -55, Math.toRadians(90)),
                     Math.toRadians(-90) //Tangent
             )
             .build();

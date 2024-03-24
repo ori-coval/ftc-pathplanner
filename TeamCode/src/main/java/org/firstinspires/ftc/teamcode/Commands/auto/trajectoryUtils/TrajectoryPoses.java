@@ -42,12 +42,12 @@ public class TrajectoryPoses {
 
     //region Poses And Movements Variables
 
-    public static Pose2d realBackdropFarPoseRed = new Pose2d(-15.75, -64.13, Math.toRadians(90));
+    public static Pose2d realBackdropFarPoseRed = new Pose2d(-17.7165, -62.15748, Math.toRadians(90));
     public static Pose2d realBackdropClosePoseRed = new Pose2d(0, 0, 0); //todo need to find this
     public static Pose2d realBackdropFarPoseBlue = new Pose2d(17.7, -64.9, Math.toRadians(90));
     public static Pose2d realBackdropClosePoseBlue = new Pose2d(0, 0, 0); //todo need to find this
     public static Pose2d realBackdropFront = new Pose2d(0, -49.9527559, 0);
-    public static Pose2d stackPoseRed = new Pose2d(-13, 58, Math.toRadians(90));
+    public static Pose2d stackPoseRed = new Pose2d(-15, 59, Math.toRadians(90));
     public static Pose2d stackPoseBlue = new Pose2d(16, 57, Math.toRadians(90));
     public Pose2d farPurpleFarPart1Red;
     public Pose2d farPurpleFarPart1Blue;

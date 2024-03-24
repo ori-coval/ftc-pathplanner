@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.command.WaitUntilCommand;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Commands.auto.AutoInit;
+import org.firstinspires.ftc.teamcode.Commands.auto.GoToScoringAutoPosition;
 import org.firstinspires.ftc.teamcode.Commands.auto.LeaveSpikeMark;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoToStackForFirstCycleAndCollect;
 import org.firstinspires.ftc.teamcode.Commands.auto.GoToStackForSecondCycleAndCollect;

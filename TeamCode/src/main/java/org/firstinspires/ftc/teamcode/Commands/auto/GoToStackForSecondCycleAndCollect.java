@@ -53,23 +53,35 @@ public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
 
     static final TrajectorySequence RED = robot.autoDriveTrain.trajectorySequenceBuilder(
             new Pose2d(
-                    ScoringCommand.getCyclesRedTrajectory(robot).end().getX(),
+                    ScoringCommand.FRONT_RED.end().getX(),
                     TrajectoryPoses.realBackdropFront.getY(),
-                    ScoringCommand.getCyclesRedTrajectory(robot).end().getHeading()
+                    ScoringCommand.FRONT_RED.end().getHeading()
+            ))
+            .setTangent(Math.toRadians(80))
+            .splineToConstantHeading(
+                    new Vector2d(TrajectoryPoses.stackPoseRed.getX() + 3, 0),
+                    Math.toRadians(90)
             )
+            .splineToConstantHeading(
+                    new Vector2d(TrajectoryPoses.stackPoseRed.getX() - 4, TrajectoryPoses.stackPoseRed.getY() + 1),
+                    Math.toRadians(90)
             )
-                .setTangent(Math.toRadians(90))
-                .splineToConstantHeading(
-                        new Vector2d(-36, 60.5),
-                        Math.toRadians(90)
-                )
-                .build();
-    static final TrajectorySequence BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.getCyclesBlueTrajectory(robot).end())
-                .setTangent(Math.toRadians(90))
-                .splineToConstantHeading(
-                        new Vector2d(36, 65),
-                        Math.toRadians(90)
-                )
-                .build();
+            .build();
+    static final TrajectorySequence BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(
+            new Pose2d(
+                    ScoringCommand.FRONT_BLUE.end().getX(),
+                    TrajectoryPoses.realBackdropFront.getY(),
+                    ScoringCommand.FRONT_BLUE.end().getHeading()
+            ))
+            .setTangent(Math.toRadians(100))
+            .splineToConstantHeading(
+                    new Vector2d(TrajectoryPoses.stackPoseBlue.getX(), 0),
+                    Math.toRadians(90)
+            )
+            .splineToConstantHeading(
+                    TrajectoryPoses.stackPoseBlue.vec(),
+                    Math.toRadians(90)
+            )
+            .build();
 
 }
