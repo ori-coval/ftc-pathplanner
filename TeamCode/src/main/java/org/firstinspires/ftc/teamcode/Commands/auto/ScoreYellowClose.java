@@ -123,49 +123,26 @@ public class ScoreYellowClose extends SequentialCommandGroup {
 
 
     static final TrajectorySequence FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_FAR_BLUE.end())
-            .setTangent(Math.toRadians(180))
-            .splineToConstantHeading(
-                    new Vector2d(20, -20),
-                    Math.toRadians(180) //Tangent
-            )
-            .splineToSplineHeading(
-                    new Pose2d(10, -30, Math.toRadians(90)),
-                    Math.toRadians(270) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(20, -40),
-                    Math.toRadians(0) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(60, -64),
-                    Math.toRadians(270) //Tangent
+            .setTangent(Math.toRadians(0))
+            .splineToLinearHeading(
+                    new Pose2d(53, -64, Math.toRadians(90)),
+                    Math.toRadians(225) //Tangent
             )
             .build();
 
     static final TrajectorySequence CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_CENTER_BLUE.end())
-            .splineToSplineHeading(
-                    new Pose2d(15, -27, Math.toRadians(90)),
-                    Math.toRadians(270) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(60, -64),
-                    Math.toRadians(270) //Tangent
+            .setTangent(Math.toRadians(0))
+            .splineToLinearHeading(
+                    new Pose2d(53, -64, Math.toRadians(90)),
+                    Math.toRadians(225) //Tangent
             )
             .build();
 
     static final TrajectorySequence CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_CLOSE_BLUE.end())
-            .setTangent(Math.toRadians(225))
-            .splineToConstantHeading(
-                    new Vector2d(20, -20),
-                    Math.toRadians(-20) //Tangent
-            )
+            .setTangent(Math.toRadians(270))
             .splineToSplineHeading(
-                    new Pose2d(60, -64, Math.toRadians(90)),
+                    new Pose2d(33, -55, Math.toRadians(90)),
                     Math.toRadians(270) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(53, -64),
-                    Math.toRadians(180) //Tangent
             )
             .build();
 

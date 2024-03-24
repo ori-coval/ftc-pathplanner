@@ -38,7 +38,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                                 new InstantCommand(),
                                 () -> numOfCycle != 0
                         ),
-                        new WaitCommand(getWaitTime(numOfCycle)).andThen(
+                        new WaitCommand(getWaitTime(robot, numOfCycle)).andThen(
                                 new ConditionalCommand(
                                         new ArmGetToPosition(robot, ArmPosition.SCORING, robot.allianceColor == AllianceColor.RED),
                                         new ArmGetToPosition(robot, ArmPosition.SAFE_PLACE, true),
@@ -66,8 +66,12 @@ public class ScoringCommand extends SequentialCommandGroup {
     }
 
 
-    private long getWaitTime(int numOfCycle) {
-        return numOfCycle == 0 ? 1700 : 1200;
+    private long getWaitTime(RobotControl robot, int numOfCycle) {
+        if(robot.allianceColor == AllianceColor.RED) {
+            return numOfCycle == 0 ? 1700 : 1200;
+        } else {
+            return numOfCycle == 0 ? 1700 : 1700;
+        }
     }
 
     private Command getTrajectoryCommand(RobotControl robot, int numOfCycle) {
@@ -79,7 +83,11 @@ public class ScoringCommand extends SequentialCommandGroup {
                         ),
                         new ConditionalCommand(
                                 new TrajectoryFollowerCommand(NORMAL_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateOnSide(robot)),
-                                new TrajectoryFollowerCommand(FRONT_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
+                                new ConditionalCommand(
+                                        new TrajectoryFollowerCommand(FRONT_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
+                                        new TrajectoryFollowerCommand(CYCLES_FRONT_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
+                                        () -> numOfCycle == 0
+                                ),
                                 () -> robot.teamPropDetector.getTeamPropSide() != DetectionSide.CLOSE && numOfCycle == 0
                         ),
                         () -> robot.allianceColor == AllianceColor.RED
@@ -139,19 +147,21 @@ public class ScoringCommand extends SequentialCommandGroup {
     static final TrajectorySequence FRONT_RED = robot.autoDriveTrain.trajectorySequenceBuilder(LeaveSpikeMark.CLOSE_RED.end())
             .setTangent(Math.toRadians(-70))
             .splineToConstantHeading(
-                    new Vector2d(TrajectoryPoses.stackPoseRed.getX() + 1, -15),
+                    new Vector2d(TrajectoryPoses.stackPoseRed.getX() + 1, -25),
                     Math.toRadians(-95) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(-30, -20),
+                    new Vector2d(-30, -30),
                     Math.toRadians(180) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(-40, -32),
-                    Math.toRadians(-90) //Tangent
+                    new Vector2d(-42, -35),
+                    Math.toRadians(-90), //Tangent
+                    robot.trajectories.reduceVelocity(0.4),
+                    robot.trajectories.reduceAcceleration(0.4)
             )
             .splineToConstantHeading(
-                    new Vector2d(-40, -48.5),
+                    new Vector2d(-42, -47),
                     Math.toRadians(-90), //Tangent
                     robot.trajectories.reduceVelocity(0.4),
                     robot.trajectories.reduceAcceleration(0.4)
@@ -164,40 +174,67 @@ public class ScoringCommand extends SequentialCommandGroup {
 
 
     static final TrajectorySequence NORMAL_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
-                .setTangent(Math.toRadians(270))
-                .splineToSplineHeading(
-                        new Pose2d(TrajectoryPoses.stackPoseBlue.getX() - 2, -15, Math.toRadians(90)),
-                        Math.toRadians(270) //Tangent
-                )
-                .splineToLinearHeading(
-                        new Pose2d(9, -40, Math.toRadians(90)),
-                        Math.toRadians(270) //Tangent
-                )
-                .splineToLinearHeading(
-                        new Pose2d(15, -58, Math.toRadians(90)),
-                        Math.toRadians(320) //Tangent
-                )
-                .splineToLinearHeading(
-                        new Pose2d(28, -63, Math.toRadians(90)),
-                        Math.toRadians(-20), //Tangent
-                        robot.trajectories.reduceVelocity(0.6),
-                        robot.trajectories.reduceAcceleration(0.6)
-                )
-                .build();
-    static final TrajectorySequence FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
-                .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(
-                        new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 1, -15),
-                        Math.toRadians(275) //Tangent
-                )
-                .splineToConstantHeading(
-                        new Vector2d(30, -20),
-                        Math.toRadians(0) //Tangent
-                )
-                .splineToConstantHeading(
-                        new Vector2d(40, -36),
-                        Math.toRadians(270) //Tangent
-                )
-                .build();
+            .setTangent(Math.toRadians(270))
+            .splineToSplineHeading(
+                    new Pose2d(TrajectoryPoses.stackPoseBlue.getX() + 3, -15, Math.toRadians(90)),
+                    Math.toRadians(270) //Tangent
+            )
+            .splineToConstantHeading(
+                    new Vector2d(9, -40),
+                    Math.toRadians(270) //Tangent
+            )
+            .splineToConstantHeading(
+                    new Vector2d(22, -52),
+                    Math.toRadians(-30), //Tangent
+                    robot.trajectories.reduceVelocity(0.6),
+                    robot.trajectories.reduceAcceleration(0.6)
+            )
+            .build();
+    static final TrajectorySequence FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(LeaveSpikeMark.CLOSE_BLUE.end())
+            .setTangent(Math.toRadians(250))
+            .splineToConstantHeading(
+                    new Vector2d(TrajectoryPoses.stackPoseBlue.getX() + 1, -25),
+                    Math.toRadians(275) //Tangent
+            )
+            .splineToConstantHeading(
+                    new Vector2d(30, -30),
+                    Math.toRadians(0) //Tangent
+            )
+            .splineToConstantHeading(
+                    new Vector2d(46, -35),
+                    Math.toRadians(270), //Tangent
+                    robot.trajectories.reduceVelocity(0.4),
+                    robot.trajectories.reduceAcceleration(0.4)
+            )
+            .splineToConstantHeading(
+                    new Vector2d(46, -48),
+                    Math.toRadians(270), //Tangent
+                    robot.trajectories.reduceVelocity(0.4),
+                    robot.trajectories.reduceAcceleration(0.4)
+            )
+            .build();
+    static final TrajectorySequence CYCLES_FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+            .setTangent(Math.toRadians(250))
+            .splineToConstantHeading(
+                    new Vector2d(TrajectoryPoses.stackPoseBlue.getX() + 1, -25),
+                    Math.toRadians(275) //Tangent
+            )
+            .splineToConstantHeading(
+                    new Vector2d(30, -30),
+                    Math.toRadians(0) //Tangent
+            )
+            .splineToConstantHeading(
+                    new Vector2d(44, -35),
+                    Math.toRadians(270), //Tangent
+                    robot.trajectories.reduceVelocity(0.4),
+                    robot.trajectories.reduceAcceleration(0.4)
+            )
+            .splineToConstantHeading(
+                    new Vector2d(44, -51),
+                    Math.toRadians(270), //Tangent
+                    robot.trajectories.reduceVelocity(0.4),
+                    robot.trajectories.reduceAcceleration(0.4)
+            )
+            .build();
 
 }

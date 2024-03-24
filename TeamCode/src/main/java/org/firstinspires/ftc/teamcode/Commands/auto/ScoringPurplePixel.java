@@ -93,7 +93,7 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                     Math.toRadians(0) //Tangent
             )
             .splineToSplineHeading(
-                    new Pose2d(-25, 37, Math.toRadians(40)),
+                    new Pose2d(-23, 37, Math.toRadians(40)),
                     Math.toRadians(0)) //Tangent
             .build();
     static final TrajectorySequence FAR_CLOSE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
@@ -135,67 +135,53 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
 
     //(Robot Side)_(Detection Side)
     static final TrajectorySequence FAR_FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
-            .setTangent(Math.toRadians(180))
             .splineToSplineHeading(
-                    new Pose2d(40, 50, Math.toRadians(120)),
+                    new Pose2d(40, 50, Math.toRadians(135)),
                     Math.toRadians(180) //Tangent
             )
             .splineToSplineHeading(
-                    new Pose2d(30, 50, Math.toRadians(120)),
+                    new Pose2d(30, 50, Math.toRadians(135)),
                     Math.toRadians(180) //Tangent
-            )
-            .build();
+            ).build();
     static final TrajectorySequence FAR_CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
-            .setTangent(Math.toRadians(180))
             .splineToSplineHeading(
                     new Pose2d(40, 37, Math.toRadians(120)),
                     Math.toRadians(180) //Tangent
             )
             .splineToSplineHeading(
-                    new Pose2d(25, 37, Math.toRadians(140)),
+                    new Pose2d(23, 37, Math.toRadians(140)),
                     Math.toRadians(180)) //Tangent
             .build();
     static final TrajectorySequence FAR_CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
-            .setTangent(Math.toRadians(180))
             .splineToSplineHeading(
                     new Pose2d(50, robot.startPose.getY(), Math.toRadians(135)),
                     Math.toRadians(180) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(36, 26),
+                    new Vector2d(34, 29),
                     Math.toRadians(225) //Tangent
             )
             .build();
     static final TrajectorySequence CLOSE_FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
-            .setTangent(Math.toRadians(180))
             .splineToConstantHeading(
-                    new Vector2d(50, -16),
+                    new Vector2d(41, -20),
                     Math.toRadians(180) //Tangent
-            )
-            .splineToConstantHeading(
-                    new Vector2d(33, -20),
-                    Math.toRadians(225) //Tangent
             )
             .build();
     static final TrajectorySequence CLOSE_CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
-            .setTangent(Math.toRadians(180))
             .splineToSplineHeading(
-                    new Pose2d(40, -13, Math.toRadians(250)),
-                    Math.toRadians(180) //Tangent
-            )
-            .splineToSplineHeading(
-                    new Pose2d(27, -13, Math.toRadians(270)),
+                    new Pose2d(35, -13, Math.toRadians(250)),
                     Math.toRadians(180) //Tangent
             )
             .build();
     static final TrajectorySequence CLOSE_CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
             .setTangent(Math.toRadians(180))
             .splineToSplineHeading(
-                    new Pose2d(50, -16, Math.toRadians(225)),
+                    new Pose2d(50, -16, Math.toRadians(120)),
                     Math.toRadians(180) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(33, -5),
+                    new Vector2d(36, -10),
                     Math.toRadians(135) //Tangent
             )
             .build();

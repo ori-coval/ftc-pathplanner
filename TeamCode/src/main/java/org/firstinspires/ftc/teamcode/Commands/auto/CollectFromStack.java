@@ -67,17 +67,17 @@ public class CollectFromStack extends ParallelCommandGroup {
     }
 
     static TrajectorySequence BITE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseRed)
-            .back(4)
+            .back(2)
             .splineToConstantHeading(
                     TrajectoryPoses.stackPoseRed.vec(),
                     Math.toRadians(90),
-                    robot.trajectories.reduceVelocity(0.6),
-                    robot.trajectories.reduceAcceleration(0.6)
+                    robot.trajectories.reduceVelocity(0.4),
+                    robot.trajectories.reduceAcceleration(0.4)
             )
             .build();
 
     static TrajectorySequence BITE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
-            .back(4)
+            .back(2)
             .splineToConstantHeading(
                     TrajectoryPoses.stackPoseBlue.vec(),
                     Math.toRadians(90)

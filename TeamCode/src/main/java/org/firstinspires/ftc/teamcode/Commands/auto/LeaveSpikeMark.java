@@ -90,33 +90,31 @@ public class LeaveSpikeMark extends ParallelCommandGroup {
 
 
     static final TrajectorySequence FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_FAR_BLUE.end())
-                .setTangent(Math.toRadians(135))
-                .splineToLinearHeading(
-                        TrajectoryPoses.stackPoseBlue,
-                        Math.toRadians(135) //Tangent
-                )
-                .build();
+            .setTangent(Math.toRadians(105))
+            .splineToLinearHeading(
+                    TrajectoryPoses.stackPoseBlue,
+                    Math.toRadians(135) //Tangent
+            )
+            .build();
+
     static final TrajectorySequence CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_CENTER_BLUE.end())
-                .setTangent(Math.toRadians(140))
-                .splineToSplineHeading(
-                        new Pose2d(TrajectoryPoses.stackPoseBlue.getX(), 47, Math.toRadians(90)),
-                        Math.toRadians(90) //Tangent
-                )
-                .splineToSplineHeading(
-                        TrajectoryPoses.stackPoseRed,
-                        Math.toRadians(90) //Tangent
-                )
-                .build();
+            .setTangent(Math.toRadians(140))
+            .splineToSplineHeading(
+                    new Pose2d(TrajectoryPoses.stackPoseBlue.getX(), 47, Math.toRadians(90)),
+                    Math.toRadians(90) //Tangent
+            )
+            .splineToSplineHeading(
+                    TrajectoryPoses.stackPoseBlue,
+                    Math.toRadians(90) //Tangent
+            )
+            .build();
+
     static final TrajectorySequence CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_CLOSE_BLUE.end())
-                .setTangent(Math.toRadians(90))
-                .splineToConstantHeading(
-                        new Vector2d(22, 40),
-                        Math.toRadians(135) //Tangent
-                )
-                .splineToSplineHeading(
-                        TrajectoryPoses.stackPoseBlue,
-                        Math.toRadians(90) //Tangent
-                )
-                .build();
+            .setTangent(Math.toRadians(135))
+            .splineToLinearHeading(
+                    new Pose2d(18, 40, Math.toRadians(90)),
+                    Math.toRadians(150) //Tangent
+            )
+            .build();
 
 }

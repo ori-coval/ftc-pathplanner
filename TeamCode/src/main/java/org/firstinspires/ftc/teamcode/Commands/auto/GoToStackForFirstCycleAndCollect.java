@@ -130,7 +130,7 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
             )
             .splineToConstantHeading(
                     new Vector2d(
-                            TrajectoryPoses.stackPoseRed.getX() - 2,
+                            TrajectoryPoses.stackPoseRed.getX() + 2,
                             TrajectoryPoses.stackPoseRed.getY()
                     ),
                     Math.toRadians(90) //Tangent
@@ -155,36 +155,40 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
 
 
     static final TrajectorySequence FIRST_PART_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseBlue)
-            .setTangent(Math.toRadians(150))
+            .setTangent(Math.toRadians(180))
             .splineToConstantHeading(
                     new Vector2d(7, -40),
                     Math.toRadians(90) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(TrajectoryPoses.stackPoseBlue.getX() + 3, -15),
+                    new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 3, -15),
                     Math.toRadians(90) //Tangent
             )
             .build();
-
     static final TrajectorySequence FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.FRONT_BLUE.end())
             .setTangent(Math.toRadians(100))
             .splineToConstantHeading(
-                    new Vector2d(TrajectoryPoses.stackPoseBlue.getX() + 3, 0),
+                    new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 3, 0),
                     Math.toRadians(90)
             )
             .splineToConstantHeading(
-                    TrajectoryPoses.stackPoseBlue.vec(),
+                    new Vector2d(
+                            TrajectoryPoses.stackPoseBlue.getX() - 2,
+                            TrajectoryPoses.stackPoseBlue.getY()
+                    ),
                     Math.toRadians(90) //Tangent
             )
             .build();
-
     static final TrajectorySequence SECOND_PART_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(FIRST_PART_BLUE.end())
             .splineToConstantHeading(
                     new Vector2d(TrajectoryPoses.stackPoseBlue.getX(), 48),
                     Math.toRadians(90) //Tangent
             )
             .splineToConstantHeading(
-                    TrajectoryPoses.stackPoseBlue.vec(),
+                    new Vector2d(
+                            TrajectoryPoses.stackPoseBlue.getX() - 2,
+                            TrajectoryPoses.stackPoseBlue.getY()
+                    ),
                     Math.toRadians(90), //Tangent
                     robot.trajectories.reduceVelocity(0.7),
                     robot.trajectories.reduceAcceleration(0.7)

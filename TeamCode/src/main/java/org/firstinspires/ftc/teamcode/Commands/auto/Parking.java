@@ -98,15 +98,11 @@ public class Parking extends ParallelCommandGroup {
                     TrajectoryPoses.realBackdropFront.getY(),
                     ScoringCommand.FRONT_BLUE.end().getHeading()
             ))
-            .setTangent(Math.toRadians(90))
-            .splineToConstantHeading(
-                    new Vector2d(36, -50),
-                    Math.toRadians(90) //Tangent
-            )
+            .forward(4)
             .build();
 
     static final TrajectorySequence CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropClosePoseBlue)
-            .setTangent(180)
+            .setTangent(0)
             .splineToConstantHeading(
                     new Vector2d(60, -50),
                     Math.toRadians(90)
@@ -114,7 +110,6 @@ public class Parking extends ParallelCommandGroup {
             .build();
 
     static final TrajectorySequence CLOSE_FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoreYellowClose.CLOSE_BLUE.end())
-            .setTangent(Math.toRadians(90))
             .splineToConstantHeading(
                     new Vector2d(33, -50),
                     Math.toRadians(90)
