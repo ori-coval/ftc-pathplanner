@@ -97,25 +97,25 @@ public class ScoringCommand extends SequentialCommandGroup {
 
     private Command getTrajectoryCommand(RobotControl robot, int numOfCycle) {
         return new ConditionalCommand(
-                new DetectionSideCommandSwitch(
-                        new TrajectoryFollowerCommand(YELLOW_SIDE_FAR_RED, robot.autoDriveTrain).andThen(resetPoseEstimateOnSide(robot)),
-                        new TrajectoryFollowerCommand(YELLOW_SIDE_CENTER_RED, robot.autoDriveTrain).andThen(resetPoseEstimateOnSide(robot)),
-                        new ConditionalCommand(
-                                new TrajectoryFollowerCommand(YELLOW_FRONT_RED, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
-                                new TrajectoryFollowerCommand(CYCLES_FRONT_RED, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
-                                () -> numOfCycle == 0
+                new ConditionalCommand(
+                        new DetectionSideCommandSwitch(
+                                new TrajectoryFollowerCommand(YELLOW_SIDE_FAR_RED, robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(YELLOW_SIDE_CENTER_RED, robot.autoDriveTrain),
+                                new TrajectoryFollowerCommand(YELLOW_FRONT_RED, robot.autoDriveTrain),
+                                () -> robot.teamPropDetector.getTeamPropSide()
                         ),
-                        () -> robot.teamPropDetector.getTeamPropSide()
+                        new TrajectoryFollowerCommand(CYCLES_FRONT_RED, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
+                        () -> numOfCycle == 0
                 ),
-                new DetectionSideCommandSwitch(
-                        new TrajectoryFollowerCommand(YELLOW_SIDE_FAR_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateOnSide(robot)),
-                        new TrajectoryFollowerCommand(YELLOW_SIDE_CENTER_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateOnSide(robot)),
-                        new ConditionalCommand(
+                new ConditionalCommand(
+                        new DetectionSideCommandSwitch(
+                                new TrajectoryFollowerCommand(YELLOW_SIDE_FAR_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateOnSide(robot)),
+                                new TrajectoryFollowerCommand(YELLOW_SIDE_CENTER_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateOnSide(robot)),
                                 new TrajectoryFollowerCommand(YELLOW_FRONT_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
-                                new TrajectoryFollowerCommand(CYCLES_FRONT_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
-                                () -> numOfCycle == 0
+                                () -> robot.teamPropDetector.getTeamPropSide()
                         ),
-                        () -> robot.teamPropDetector.getTeamPropSide()
+                        new TrajectoryFollowerCommand(CYCLES_FRONT_BLUE, robot.autoDriveTrain).andThen(resetPoseEstimateFront(robot)),
+                        () -> numOfCycle == 0
                 ),
                 () -> robot.allianceColor == AllianceColor.RED
         );
@@ -278,7 +278,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                     Math.toRadians(270) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(21, -59),
+                    new Vector2d(23, -59),
                     Math.toRadians(0), //Tangent
                     robot.trajectories.reduceVelocity(0.6),
                     robot.trajectories.reduceAcceleration(0.6)
@@ -300,20 +300,20 @@ public class ScoringCommand extends SequentialCommandGroup {
                     Math.toRadians(0) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(44.6, -35),
+                    new Vector2d(44.8, -35),
                     Math.toRadians(270), //Tangent
                     robot.trajectories.reduceVelocity(0.4),
                     robot.trajectories.reduceAcceleration(0.4)
             )
             .splineToConstantHeading(
-                    new Vector2d(44.6, -49),
+                    new Vector2d(44.8, -49),
                     Math.toRadians(270), //Tangent
                     robot.trajectories.reduceVelocity(0.4),
                     robot.trajectories.reduceAcceleration(0.4)
             )
             .build();
 
-    static final TrajectorySequence CYCLES_FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+    static final TrajectorySequence CYCLES_FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(CollectFromStack.BITE_BLUE.end())
             .setTangent(Math.toRadians(250))
             .splineToConstantHeading(
                     new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 3, -20),

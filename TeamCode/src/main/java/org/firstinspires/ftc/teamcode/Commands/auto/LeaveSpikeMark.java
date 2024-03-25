@@ -27,7 +27,7 @@ public class LeaveSpikeMark extends ParallelCommandGroup {
     public LeaveSpikeMark() {
         addCommands(
                 getTrajectoryCommand(robot),
-                new WaitCommand(200).andThen(
+                new WaitCommand(1200).andThen(
                         new ArmGetToPosition(robot, ArmPosition.INTAKE, true),
                         new WaitCommand(300),
                         new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
