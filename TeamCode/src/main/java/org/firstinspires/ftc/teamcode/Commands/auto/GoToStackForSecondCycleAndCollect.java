@@ -53,9 +53,9 @@ public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
 
     static final TrajectorySequence RED = robot.autoDriveTrain.trajectorySequenceBuilder(
             new Pose2d(
-                    ScoringCommand.FRONT_RED.end().getX(),
+                    ScoringCommand.CYCLES_FRONT_RED.end().getX(),
                     TrajectoryPoses.realBackdropFront.getY(),
-                    ScoringCommand.FRONT_RED.end().getHeading()
+                    ScoringCommand.CYCLES_FRONT_RED.end().getHeading()
             ))
             .setTangent(Math.toRadians(80))
             .splineToConstantHeading(
@@ -63,15 +63,15 @@ public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
                     Math.toRadians(90)
             )
             .splineToConstantHeading(
-                    new Vector2d(TrajectoryPoses.stackPoseRed.getX() - 3, TrajectoryPoses.stackPoseRed.getY() + 1),
+                    new Vector2d(TrajectoryPoses.stackPoseRed.getX() + 2, TrajectoryPoses.stackPoseRed.getY() + 2),
                     Math.toRadians(90)
             )
             .build();
     static final TrajectorySequence BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(
                     new Pose2d(
-                            ScoringCommand.FRONT_BLUE.end().getX(),
+                            ScoringCommand.CYCLES_FRONT_BLUE.end().getX(),
                             TrajectoryPoses.realBackdropFront.getY(),
-                            ScoringCommand.FRONT_BLUE.end().getHeading()
+                            ScoringCommand.CYCLES_FRONT_BLUE.end().getHeading()
                     ))
             .setTangent(Math.toRadians(100))
             .splineToConstantHeading(
@@ -79,7 +79,7 @@ public class GoToStackForSecondCycleAndCollect extends SequentialCommandGroup {
                     Math.toRadians(90)
             )
             .splineToConstantHeading(
-                    new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 3, TrajectoryPoses.stackPoseBlue.getY() + 1),
+                    new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 3, TrajectoryPoses.stackPoseBlue.getY() + 2),
                     Math.toRadians(90)
             )
             .build();

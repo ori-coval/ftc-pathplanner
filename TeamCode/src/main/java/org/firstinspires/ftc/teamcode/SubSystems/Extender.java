@@ -11,7 +11,7 @@ public class Extender extends SubsystemBase {
     private Position curretPosition;
 
     public enum Position {
-        CLOSED(0), AUTONOMOUS_PURPLE(0.15), TOP_CLOSE(0.2), BOTTOM_FRONT(0.36), MID_WAY(0.40), MID_FRONT(0.53), OPEN(0.56);
+        CLOSED(0), AUTONOMOUS_PURPLE(0.15), TOP_CLOSE(0.2), BOTTOM_FRONT(0.36), MID_WAY(0.40), MID_FRONT(0.5), OPEN(0.56);
         private final double servoPosition;
         Position(double position){
             this.servoPosition = position;

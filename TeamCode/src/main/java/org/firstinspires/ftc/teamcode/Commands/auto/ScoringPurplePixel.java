@@ -79,13 +79,14 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
 
         //(Robot Side)_(Detection Side)
     static final TrajectorySequence FAR_FAR_RED = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
+                .setTangent(Math.toRadians(30))
                 .splineToSplineHeading(
-                        new Pose2d(-40, 50, Math.toRadians(45)),
-                        Math.toRadians(0) //Tangent
+                        new Pose2d(-40, 50, Math.toRadians(60)),
+                        Math.toRadians(30) //Tangent
                 )
                 .splineToSplineHeading(
                         new Pose2d(-30, 50, Math.toRadians(45)),
-                        Math.toRadians(0) //Tangent
+                        Math.toRadians(-30) //Tangent
                 ).build();
     static final TrajectorySequence FAR_CENTER_RED = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
             .splineToSplineHeading(
@@ -102,7 +103,7 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                     Math.toRadians(0) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(-34, 29),
+                    new Vector2d(-34, 28),
                     Math.toRadians(-45) //Tangent
             )
             .build();
@@ -135,13 +136,14 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
 
     //(Robot Side)_(Detection Side)
     static final TrajectorySequence FAR_FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
+            .setTangent(Math.toRadians(150))
             .splineToSplineHeading(
-                    new Pose2d(40, 50, Math.toRadians(135)),
-                    Math.toRadians(180) //Tangent
+                    new Pose2d(40, 50, Math.toRadians(120)),
+                    Math.toRadians(150) //Tangent
             )
             .splineToSplineHeading(
                     new Pose2d(30, 50, Math.toRadians(135)),
-                    Math.toRadians(180) //Tangent
+                    Math.toRadians(210) //Tangent
             ).build();
     static final TrajectorySequence FAR_CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
             .splineToSplineHeading(
@@ -158,8 +160,8 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                     Math.toRadians(180) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(34, 29),
-                    Math.toRadians(225) //Tangent
+                    new Vector2d(34, 28),
+                    Math.toRadians(135) //Tangent
             )
             .build();
     static final TrajectorySequence CLOSE_FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)

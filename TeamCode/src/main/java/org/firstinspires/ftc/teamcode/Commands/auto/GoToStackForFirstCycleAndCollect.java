@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
@@ -47,7 +46,7 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
                                         new WaitCommand(300).andThen(
                                                 new CartridgeSetState(robot.cartridge, Cartridge.State.INTAKE_OPEN)
                                         ),
-                                        new WaitCommand(500).andThen(
+                                        new WaitCommand(1700).andThen(
                                                 new InstantIntakeRotate(robot, robot.intake.roller.COLLECT_POWER),
                                                 new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL)
                                         )
@@ -57,7 +56,7 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
                                 getFrontTrajectory(),
                                 new ArmGetToPosition(robot, ArmPosition.INTAKE, true),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.INTAKE_OPEN),
-                                new WaitCommand(700).andThen(
+                                new WaitCommand(3000).andThen(
                                         new InstantIntakeRotate(robot, robot.intake.roller.COLLECT_POWER),
                                         new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.FIRST_PIXEL)
                                 )
@@ -122,18 +121,25 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
                     Math.toRadians(90) //Tangent
             )
             .build();
-    static final TrajectorySequence FRONT_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.FRONT_RED.end())
+    static final TrajectorySequence FRONT_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.YELLOW_FRONT_RED.end())
             .setTangent(Math.toRadians(80))
             .splineToConstantHeading(
+                    new Vector2d(TrajectoryPoses.stackPoseRed.getX() + 3, -25),
+                    Math.toRadians(90) //Tangent
+            )
+            .splineToConstantHeading(
                     new Vector2d(TrajectoryPoses.stackPoseRed.getX() + 3, 0),
-                    Math.toRadians(90)
+                    Math.toRadians(90) //Tangent
             )
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseRed.getX() + 2,
-                            TrajectoryPoses.stackPoseRed.getY()
+                            TrajectoryPoses.stackPoseRed.getY() + 1
                     ),
-                    Math.toRadians(90) //Tangent
+                    Math.toRadians(90), //Tangent
+                    robot.trajectories.reduceVelocity(0.7),
+                    robot.trajectories.reduceAcceleration(0.7)
+
             )
             .build();
     static final TrajectorySequence SECOND_PART_RED = robot.autoDriveTrain.trajectorySequenceBuilder(FIRST_PART_RED.end())
@@ -143,8 +149,8 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
             )
             .splineToConstantHeading(
                     new Vector2d(
-                            TrajectoryPoses.stackPoseRed.getX() - 2,
-                            TrajectoryPoses.stackPoseRed.getY()
+                            TrajectoryPoses.stackPoseRed.getX() + 2,
+                            TrajectoryPoses.stackPoseRed.getY() + 1
                     ),
                     Math.toRadians(90), //Tangent
                     robot.trajectories.reduceVelocity(0.7),
@@ -152,6 +158,8 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
             )
             .build();
 
+
+    //BLUE
 
 
     static final TrajectorySequence FIRST_PART_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropFarPoseBlue)
@@ -165,8 +173,12 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
                     Math.toRadians(90) //Tangent
             )
             .build();
-    static final TrajectorySequence FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.FRONT_BLUE.end())
+    static final TrajectorySequence FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.YELLOW_FRONT_BLUE.end())
             .setTangent(Math.toRadians(100))
+            .splineToConstantHeading(
+                    new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 3, -25),
+                    Math.toRadians(90)
+            )
             .splineToConstantHeading(
                     new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 3, 0),
                     Math.toRadians(90)
@@ -174,9 +186,12 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseBlue.getX() - 2,
-                            TrajectoryPoses.stackPoseBlue.getY()
+                            TrajectoryPoses.stackPoseBlue.getY() + 1
                     ),
-                    Math.toRadians(90) //Tangent
+                    Math.toRadians(90), //Tangent
+                    robot.trajectories.reduceVelocity(0.7),
+                    robot.trajectories.reduceAcceleration(0.7)
+
             )
             .build();
     static final TrajectorySequence SECOND_PART_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(FIRST_PART_BLUE.end())
@@ -186,8 +201,8 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
             )
             .splineToConstantHeading(
                     new Vector2d(
-                            TrajectoryPoses.stackPoseBlue.getX() - 2,
-                            TrajectoryPoses.stackPoseBlue.getY()
+                            TrajectoryPoses.stackPoseBlue.getX() + 2,
+                            TrajectoryPoses.stackPoseBlue.getY() - 1
                     ),
                     Math.toRadians(90), //Tangent
                     robot.trajectories.reduceVelocity(0.7),

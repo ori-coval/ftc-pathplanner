@@ -58,9 +58,9 @@ public class AutonomousOpMode extends LinearOpMode {
                     new LeaveSpikeMark(),
                     new ScoreYellowFar(robot),
                     new GoToStackForFirstCycleAndCollect(),
-                    new ScoringFirstCycleAuto(robot),
+                    new ScoringFirstCycleAuto(robot)/*,
                     new GoToStackForSecondCycleAndCollect(),
-                    new ScoringSecondCycleAuto(robot)
+                    new ScoringSecondCycleAuto(robot)*/
             );
         } else {
             result.addCommands(

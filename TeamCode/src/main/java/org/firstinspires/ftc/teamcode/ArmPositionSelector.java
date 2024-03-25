@@ -10,7 +10,7 @@ public class ArmPositionSelector {
             {ArmPosition.SCORE_BOTTOM_CLOSE, ArmPosition.SCORE_BOTTOM_FAR}
     };
     public static ArmPosition[] frontScorePositions = {ArmPosition.SCORE_TOP_FRONT, ArmPosition.SCORE_MID_FRONT, ArmPosition.SCORE_BOTTOM_FRONT};
-    private static int selectedScoreHeight = 0;
+    private static int selectedScoreHeight = 1;
     private static boolean isSelectedScoreSideLeft = false;
     private static Side selectedRobotSide = Side.CENTER;
 

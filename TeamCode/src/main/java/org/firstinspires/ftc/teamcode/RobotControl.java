@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
-import com.arcrobotics.ftclib.command.StartEndCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -14,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.antiTurret.AntiTurretGetToAngle;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringBothPixels;
-import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.ScoringFirstPixel;
+import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.OverScoring;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elbow.ElbowGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorDownJoystick;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.elevator.ElevatorUpJoystick;
@@ -191,7 +190,7 @@ public class RobotControl extends Robot {
         Trigger rightTrigger1 = new Trigger(rightTriggerCondition);
         Trigger leftTrigger1 = new Trigger(leftTriggerCondition);
 
-        leftTrigger1.whenActive(new ScoringFirstPixel(cartridge, leftTriggerCondition));
+        leftTrigger1.whenActive(new OverScoring(this, leftTriggerCondition));
         rightTrigger1.whenActive(new ScoringBothPixels(this, rightTriggerCondition));
 
         if(allianceColor == AllianceColor.RED) {

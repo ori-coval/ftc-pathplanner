@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
@@ -24,15 +25,16 @@ public class CollectFromStack extends ParallelCommandGroup {
     public CollectFromStack(RobotControl robot) {
         CollectFromStack.robot = robot;
         addCommands(
-                addBite(robot),
                 new SequentialCommandGroup(
-                        new WaitUntilCommand(
-                                () -> robot.intake.roller.getPixelCount() == 1
-                        ).withTimeout(300),
-                        new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL),
-                        new WaitUntilCommand(
-                                robot.intake.roller::isRobotFull
-                        ).withTimeout(1000),
+                        new ParallelCommandGroup(
+                                addBite(robot),
+                                new WaitCommand(300).andThen(
+                                        new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL)
+                                )
+                        ),
+                        new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
+                        addBite(robot),
+                        new WaitCommand(600),
                         stopAndCloseCartridge(robot)
                 )
         );
@@ -56,20 +58,19 @@ public class CollectFromStack extends ParallelCommandGroup {
 
     private Command addBite(RobotControl robot) {
             return new ConditionalCommand(
-                    new SequentialCommandGroup(
-                            new TrajectoryFollowerCommand(BITE_RED, robot.autoDriveTrain)
-                    ),
-                    new SequentialCommandGroup(
-                            new TrajectoryFollowerCommand(BITE_BLUE, robot.autoDriveTrain)
-                    ),
+                    new TrajectoryFollowerCommand(BITE_RED, robot.autoDriveTrain),
+                    new TrajectoryFollowerCommand(BITE_BLUE, robot.autoDriveTrain),
                     () -> robot.allianceColor == AllianceColor.RED
             );
     }
 
     static TrajectorySequence BITE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseRed)
-            .back(2)
+            .back(3)
             .splineToConstantHeading(
-                    TrajectoryPoses.stackPoseRed.vec(),
+                    new Vector2d(
+                            TrajectoryPoses.stackPoseRed.getX(),
+                            TrajectoryPoses.stackPoseRed.getY() + 1
+                    ),
                     Math.toRadians(90),
                     robot.trajectories.reduceVelocity(0.4),
                     robot.trajectories.reduceAcceleration(0.4)
@@ -77,10 +78,15 @@ public class CollectFromStack extends ParallelCommandGroup {
             .build();
 
     static TrajectorySequence BITE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
-            .back(2)
+            .back(3)
             .splineToConstantHeading(
-                    TrajectoryPoses.stackPoseBlue.vec(),
-                    Math.toRadians(90)
+                    new Vector2d(
+                            TrajectoryPoses.stackPoseBlue.getX() - 1,
+                            TrajectoryPoses.stackPoseBlue.getY() + 2
+                    ),
+                    Math.toRadians(90),
+                    robot.trajectories.reduceVelocity(0.4),
+                    robot.trajectories.reduceAcceleration(0.4)
             )
             .build();
 

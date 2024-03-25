@@ -12,7 +12,7 @@ public class DroneLaunch extends SequentialCommandGroup {
 
     public DroneLaunch(RobotControl robot) {
         addCommands(
-                setPos(robot, 0.5),
+                setPos(robot, 1),
                 setPos(robot, 0.3),
                 setPos(robot, 0.6)
         );

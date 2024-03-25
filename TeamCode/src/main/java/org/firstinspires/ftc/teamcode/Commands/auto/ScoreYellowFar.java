@@ -23,10 +23,10 @@ public class ScoreYellowFar extends ScoringCommand {
     private static Command getScoringCommand(RobotControl robot) {
         return new ConditionalCommand(
                 new DetectionSideCommandSwitch(
-                    new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_RED, robot.allianceColor == AllianceColor.RED),
-                    new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID_RED, robot.allianceColor == AllianceColor.RED),
-                    new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_FRONT, true),
-                    () -> robot.teamPropDetector.getTeamPropSide()
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_RED, robot.allianceColor == AllianceColor.RED),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_MID_RED, robot.allianceColor == AllianceColor.RED),
+                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_FRONT, true),
+                        () -> robot.teamPropDetector.getTeamPropSide()
                 ),
                 new DetectionSideCommandSwitch(
                         new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_BLUE, robot.allianceColor == AllianceColor.RED),

@@ -47,8 +47,8 @@ public class TrajectoryPoses {
     public static Pose2d realBackdropFarPoseBlue = new Pose2d(17.7, -64.9, Math.toRadians(90));
     public static Pose2d realBackdropClosePoseBlue = new Pose2d(0, 0, 0); //todo need to find this
     public static Pose2d realBackdropFront = new Pose2d(0, -49.9527559, 0);
-    public static Pose2d stackPoseRed = new Pose2d(-15, 59, Math.toRadians(90));
-    public static Pose2d stackPoseBlue = new Pose2d(16, 57, Math.toRadians(90));
+    public static Pose2d stackPoseRed = new Pose2d(-13, 59, Math.toRadians(90));
+    public static Pose2d stackPoseBlue = new Pose2d(16, 59, Math.toRadians(90));
     public Pose2d farPurpleFarPart1Red;
     public Pose2d farPurpleFarPart1Blue;
     public Pose2d farPurpleFarPart2Red;

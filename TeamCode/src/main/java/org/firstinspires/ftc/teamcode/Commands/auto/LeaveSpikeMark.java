@@ -60,27 +60,31 @@ public class LeaveSpikeMark extends ParallelCommandGroup {
     static final TrajectorySequence FAR_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_FAR_RED.end())
             .setTangent(Math.toRadians(75))
             .splineToLinearHeading(
-                    TrajectoryPoses.stackPoseRed,
-                    Math.toRadians(45) //Tangent
+                    new Pose2d(
+                            TrajectoryPoses.stackPoseRed.getX(),
+                            TrajectoryPoses.stackPoseRed.getY() - 7,
+                            TrajectoryPoses.stackPoseRed.getHeading()
+                    ),
+                    Math.toRadians(-20) //Tangent
             )
             .build();
 
     static final TrajectorySequence CENTER_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_CENTER_RED.end())
-            .setTangent(Math.toRadians(40))
-            .splineToSplineHeading(
-                    new Pose2d(TrajectoryPoses.stackPoseRed.getX(), 47, Math.toRadians(90)),
-                    Math.toRadians(90) //Tangent
+            .setTangent(Math.toRadians(35))
+            .splineToConstantHeading(
+                    new Vector2d(-15, 42),
+                    Math.toRadians(35)
             )
             .splineToSplineHeading(
-                    TrajectoryPoses.stackPoseRed,
-                    Math.toRadians(90) //Tangent
+                    new Pose2d(-10, 47, Math.toRadians(90)),
+                    Math.toRadians(45) //Tangent
             )
             .build();
 
     static final TrajectorySequence CLOSE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_CLOSE_RED.end())
-            .setTangent(Math.toRadians(45))
+            .setTangent(Math.toRadians(60))
             .splineToLinearHeading(
-                    new Pose2d(-18, 40, Math.toRadians(90)),
+                    new Pose2d(-18, 43, Math.toRadians(90)),
                     Math.toRadians(30) //Tangent
             )
             .build();
@@ -92,27 +96,31 @@ public class LeaveSpikeMark extends ParallelCommandGroup {
     static final TrajectorySequence FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_FAR_BLUE.end())
             .setTangent(Math.toRadians(105))
             .splineToLinearHeading(
-                    TrajectoryPoses.stackPoseBlue,
-                    Math.toRadians(135) //Tangent
+                    new Pose2d(
+                            TrajectoryPoses.stackPoseBlue.getX(),
+                            TrajectoryPoses.stackPoseBlue.getY() - 7,
+                            TrajectoryPoses.stackPoseBlue.getHeading()
+                    ),
+                    Math.toRadians(160) //Tangent
             )
             .build();
 
     static final TrajectorySequence CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_CENTER_BLUE.end())
-            .setTangent(Math.toRadians(140))
-            .splineToSplineHeading(
-                    new Pose2d(TrajectoryPoses.stackPoseBlue.getX(), 47, Math.toRadians(90)),
-                    Math.toRadians(90) //Tangent
+            .setTangent(Math.toRadians(145))
+            .splineToConstantHeading(
+                    new Vector2d(15, 42),
+                    Math.toRadians(145)
             )
             .splineToSplineHeading(
-                    TrajectoryPoses.stackPoseBlue,
-                    Math.toRadians(90) //Tangent
+                    new Pose2d(10, 47, Math.toRadians(90)),
+                    Math.toRadians(135) //Tangent
             )
             .build();
 
     static final TrajectorySequence CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_CLOSE_BLUE.end())
-            .setTangent(Math.toRadians(135))
+            .setTangent(Math.toRadians(120))
             .splineToLinearHeading(
-                    new Pose2d(18, 40, Math.toRadians(90)),
+                    new Pose2d(18, 43, Math.toRadians(90)),
                     Math.toRadians(150) //Tangent
             )
             .build();

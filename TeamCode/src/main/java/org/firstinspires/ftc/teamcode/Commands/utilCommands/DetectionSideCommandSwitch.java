@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 public class DetectionSideCommandSwitch extends SelectCommand {
 
-    public DetectionSideCommandSwitch(CommandBase far, CommandBase center, CommandBase close, Supplier<Object> sideSupplier) {
+    public DetectionSideCommandSwitch(Command far, Command center, Command close, Supplier<Object> sideSupplier) {
         super(new HashMap<Object, Command>() {
                   {
                       put(DetectionSide.FAR, far);

@@ -41,13 +41,13 @@ public enum ArmPosition {
      */
 
     SCORE_TOP_FAR(34.1, Extender.Position.OPEN, 42, 0.42, 135, Cluster.scoring), //Can't physically reach this
-    SCORE_TOP_FRONT(35, Extender.Position.OPEN, 0, 0.42, 183, Cluster.scoring),
+    SCORE_TOP_FRONT(37, Extender.Position.OPEN, 0, 0.35, 183, Cluster.scoring),
     SCORE_TOP_CLOSE(35, Extender.Position.TOP_CLOSE, 35, 0.42, 150, Cluster.scoring),
     SCORE_MID_FAR_2(27.346 + 10, Extender.Position.MID_WAY, 55, 0.336, 100, Cluster.scoring),
-    SCORE_MID_FAR(27.346, Extender.Position.MID_WAY, 55, 0.336, 100, Cluster.scoring),
+    SCORE_MID_FAR(27.346, Extender.Position.MID_WAY, 55, 0.35, 125, Cluster.scoring),
     SCORE_MID_FRONT(24.464, Extender.Position.MID_FRONT, 0, 0.45, 183, Cluster.scoring),
     SCORE_MID_CLOSE(27.35, Extender.Position.CLOSED, 60, 0.336, 120, Cluster.scoring),
-    SCORE_BOTTOM_FAR(21, Extender.Position.MID_WAY, 64, 0.32, 125, Cluster.scoring),
+    SCORE_BOTTOM_FAR(21, Extender.Position.MID_WAY, 64, 0.35, 125, Cluster.scoring),
     SCORE_BOTTOM_FRONT(15.48, Extender.Position.BOTTOM_FRONT, 0, 0.34, 183, Cluster.scoring),
     SCORE_BOTTOM_CLOSE(12.34, Extender.Position.CLOSED, 63, 0.34, 126, Cluster.scoring),
     SCORE_AUTO_BOTTOM_FAR_2_RED(22.59 + 10, Extender.Position.OPEN, 70, 0.336, 100, Cluster.scoring),
@@ -56,8 +56,8 @@ public enum ArmPosition {
     SCORE_AUTO_BOTTOM_FAR_BLUE(20.714, Extender.Position.OPEN, 62, 0.336, 100, Cluster.scoring),
     SCORE_AUTO_BOTTOM_MID_2_RED(12.59 + 10, Extender.Position.MID_WAY, 54, 0.336, 100, Cluster.scoring),
     SCORE_AUTO_BOTTOM_MID_2_BLUE(24.59 + 10, Extender.Position.MID_WAY, 72, 0.336, 100, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_MID_RED(12.59, Extender.Position.MID_WAY, 54, 0.336, 100, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_MID_BLUE(24.59, Extender.Position.MID_WAY, 72, 0.336, 100, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID_RED(19, Extender.Position.MID_WAY, 64, 0.35, 125, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_MID_BLUE(19, Extender.Position.MID_WAY, 64, 0.35, 125, Cluster.scoring),
     SCORE_BOTTOM_CLOSE_2_RED(12.34 + 10, Extender.Position.CLOSED, 50, 0.34, 100, Cluster.scoring),
     SCORE_BOTTOM_CLOSE_2_BLUE(12.34 + 10, Extender.Position.CLOSED, 72, 0.34, 100, Cluster.scoring),
     SCORE_BOTTOM_CLOSE_RED(12.34, Extender.Position.CLOSED, 50, 0.34, 115, Cluster.scoring),
