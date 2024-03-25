@@ -33,6 +33,8 @@ public class CollectFromStack extends ParallelCommandGroup {
                                 )
                         ),
                         new WaitCommand(600),
+                        new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
+                        addBite(robot, 2),
                         stopAndCloseCartridge(robot)
                 )
         );
@@ -96,11 +98,11 @@ public class CollectFromStack extends ParallelCommandGroup {
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseBlue.getX() - 1,
-                            TrajectoryPoses.stackPoseBlue.getY()
+                            TrajectoryPoses.stackPoseBlue.getY() + 3
                     ),
                     Math.toRadians(90),
-                    robot.trajectories.reduceVelocity(0.4),
-                    robot.trajectories.reduceAcceleration(0.4)
+                    robot.trajectories.reduceVelocity(0.3),
+                    robot.trajectories.reduceAcceleration(0.3)
             )
             .build();
 
