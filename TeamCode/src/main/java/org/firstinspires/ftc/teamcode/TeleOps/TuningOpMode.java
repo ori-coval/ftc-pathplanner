@@ -27,6 +27,9 @@ public class TuningOpMode extends CommandOpMode {
 
         telemetry.addLine("----------------------------");
 
+        telemetry.addData("pixelCount", robot.intake.roller.getPixelCount());
+        telemetry.addData("isRobotFull", robot.intake.roller.isRobotFull());
+
         telemetry.addData("antiTurret pos", robot.antiTurret.getPosition());
         telemetry.addData("cartridge pos", robot.cartridge.getPosition());
         telemetry.addData("elbow pos", robot.elbow.getServoPosition());

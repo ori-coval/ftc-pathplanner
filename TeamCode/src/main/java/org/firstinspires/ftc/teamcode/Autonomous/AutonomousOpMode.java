@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -81,9 +83,12 @@ public class AutonomousOpMode extends LinearOpMode {
         // run the scheduler
         while (!isStopRequested() && opModeIsActive()) {
             robot.run();
+            FtcDashboard.getInstance().getTelemetry().addData("pixelCount", robot.intake.roller.getPixelCount());
+            FtcDashboard.getInstance().getTelemetry().addData("isRobotFull", robot.intake.roller.isRobotFull());
             telemetry.addData("pixelCount", robot.intake.roller.getPixelCount());
             telemetry.addData("poseEstimateX", robot.autoDriveTrain.getPoseEstimate().getX());
             telemetry.addData("poseEstimateY", robot.autoDriveTrain.getPoseEstimate().getY());
+            FtcDashboard.getInstance().getTelemetry().update();
             telemetry.update();
         }
 

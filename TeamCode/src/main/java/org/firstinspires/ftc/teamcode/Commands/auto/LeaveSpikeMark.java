@@ -105,7 +105,11 @@ public class LeaveSpikeMark extends ParallelCommandGroup {
             )
             .build();
 
-    static final TrajectorySequence CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.FAR_CENTER_BLUE.end())
+    static final TrajectorySequence CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(new Pose2d(
+                ScoringPurplePixel.FAR_CENTER_BLUE.end().getX() - 1,
+                    ScoringPurplePixel.FAR_CENTER_BLUE.end().getY(),
+                    ScoringPurplePixel.FAR_CENTER_BLUE.end().getHeading()
+            ))
             .setTangent(Math.toRadians(145))
             .splineToConstantHeading(
                     new Vector2d(15, 42),

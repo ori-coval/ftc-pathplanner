@@ -49,8 +49,8 @@ public class Intake {
 
     public class Roller extends SubsystemBase {
         public final double COLLECT_POWER = 1;
-        public final double PURPLE_PIXEL_FAR_RED_POWER = 0.75;
-        public final double PURPLE_PIXEL_FAR_BLUE_POWER = 0.60;
+        public final double PURPLE_PIXEL_FAR_RED_POWER = 0.7;
+        public final double PURPLE_PIXEL_FAR_BLUE_POWER = 0.75;
         public final double PURPLE_PIXEL_CLOSE_RED_POWER = -0.3;
         public final double PURPLE_PIXEL_CLOSE_BLUE_POWER = -0.3;
         public final double EJECT_POWER = -0.9;

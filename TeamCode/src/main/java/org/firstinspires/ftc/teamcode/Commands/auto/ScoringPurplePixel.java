@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySe
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
+import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 
 public class ScoringPurplePixel extends ParallelCommandGroup {
 
@@ -24,23 +26,35 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
 
     public ScoringPurplePixel() {
         addCommands(
-                getTrajectoryCommand(),
-                new ConditionalCommand(
-                        new WaitCommand(2000).andThen(
-                                new ConditionalCommand(
-                                        new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_RED_POWER).withTimeout(300),
-                                        new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_BLUE_POWER).withTimeout(400),
-                                        () -> robot.allianceColor == AllianceColor.RED
-                                )
+                getTrajectoryCommand().andThen(
+                        new ConditionalCommand(
+                                new WaitCommand(300),
+                                new InstantCommand(),
+                                () -> robot.teamPropDetector.getTeamPropSide() == DetectionSide.CENTER && robot.allianceColor == AllianceColor.BLUE
+                        )
+                ), //1800, 2000
+                new ConditionalCommand( //blue far
+                        new WaitCommand(1800).andThen(
+                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_BLUE_POWER).withTimeout(420)
+                        ), //else
+                        new ConditionalCommand(
+                                new WaitCommand(2000).andThen(
+                                        new ConditionalCommand(
+                                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_RED_POWER).withTimeout(300),
+                                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_BLUE_POWER).withTimeout(420),
+                                                () -> robot.allianceColor == AllianceColor.RED
+                                        )
+                                ),
+                                new WaitCommand(2000).andThen(
+                                        new ConditionalCommand(
+                                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_CLOSE_RED_POWER).withTimeout(250),
+                                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_CLOSE_BLUE_POWER).withTimeout(250),
+                                                () -> robot.allianceColor == AllianceColor.RED
+                                        )
+                                ),
+                                () -> robot.robotSide == AllianceSide.FAR
                         ),
-                        new WaitCommand(2000).andThen(
-                                new ConditionalCommand(
-                                        new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_CLOSE_RED_POWER).withTimeout(250),
-                                        new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_CLOSE_BLUE_POWER).withTimeout(250),
-                                        () -> robot.allianceColor == AllianceColor.RED
-                                )
-                        ),
-                        () -> robot.robotSide == AllianceSide.FAR
+                        () -> robot.allianceColor == AllianceColor.BLUE && robot.teamPropDetector.getTeamPropSide() == DetectionSide.CENTER
                 ),
                 new WaitCommand(300).andThen(
                         new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, true)
@@ -159,7 +173,7 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                     Math.toRadians(180) //Tangent
             )
             .splineToSplineHeading(
-                    new Pose2d(25, 37, Math.toRadians(140)),
+                    new Pose2d(26, 37, Math.toRadians(140)),
                     Math.toRadians(180)) //Tangent
             .build();
     static final TrajectorySequence FAR_CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)
@@ -168,7 +182,7 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                     Math.toRadians(180) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(34, 28),
+                    new Vector2d(34, 27),
                     Math.toRadians(135) //Tangent
             )
             .build();

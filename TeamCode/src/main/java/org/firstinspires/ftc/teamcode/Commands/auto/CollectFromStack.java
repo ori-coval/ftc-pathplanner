@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Commands.auto;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -19,25 +20,49 @@ import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
+import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
 
 public class CollectFromStack extends ParallelCommandGroup {
     static RobotControl robot = AutonomousOpMode.robot;
+    boolean canStop = false;
+
     public CollectFromStack(RobotControl robot) {
         CollectFromStack.robot = robot;
-        addCommands(
-                new SequentialCommandGroup(
-                        new ParallelCommandGroup(
-                                addBite(robot, 1),
-                                new WaitCommand(300).andThen(
-                                        new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL)
-                                )
+        addCommands(new ConditionalCommand(
+                new ParallelCommandGroup(
+                        new SequentialCommandGroup(
+                                new WaitUntilCommand(robot.intake.roller::isRobotFull).interruptOn(() -> canStop),
+                                stopAndCloseCartridge(robot)
                         ),
-                        new WaitCommand(600),
-                        new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
-                        addBite(robot, 2),
-                        stopAndCloseCartridge(robot)
-                )
-        );
+                        new SequentialCommandGroup(
+                                new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL),
+                                addBite(robot, 1),
+                                new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
+                                addBite(robot, 2),
+                                new WaitCommand(500),
+                                new InstantCommand(() -> canStop = true)
+                        )
+                ),
+                new ParallelCommandGroup(
+                        new SequentialCommandGroup(
+                                new WaitUntilCommand(robot.intake.roller::isRobotFull).interruptOn(() -> canStop),
+                                stopAndCloseCartridge(robot)
+                        ),
+                        new SequentialCommandGroup(
+                                new ParallelCommandGroup(
+                                        addBite(robot, 2),
+                                        new WaitCommand(200).andThen(
+                                                new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL),
+                                                new WaitCommand(500),
+                                                new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT)
+                                        )
+                                ),
+                                new WaitCommand(500),
+                                new InstantCommand(() -> canStop = true)
+                        )
+                ),
+                () -> robot.allianceColor == AllianceColor.RED
+        ));
     }
 
     public CollectFromStack(RobotControl robot, boolean secondCycle) {
@@ -58,22 +83,30 @@ public class CollectFromStack extends ParallelCommandGroup {
 
     private Command addBite(RobotControl robot, int numOfBite) {
             return new ConditionalCommand(
-                    new TrajectoryFollowerCommand(BITE_RED, robot.autoDriveTrain),
+                    new ConditionalCommand(
+                            new TrajectoryFollowerCommand(FIRST_BITE_RED, robot.autoDriveTrain),
+                            new TrajectoryFollowerCommand(SECOND_BITE_RED, robot.autoDriveTrain),
+                            () -> numOfBite == 1
+                    ),
                     new ConditionalCommand(
                             new TrajectoryFollowerCommand(FIRST_BITE_BLUE, robot.autoDriveTrain),
-                            new TrajectoryFollowerCommand(SECOND_BITE_BLUE, robot.autoDriveTrain),
+                            new ConditionalCommand(
+                                    new TrajectoryFollowerCommand(SECOND_BITE_FAR_BLUE, robot.autoDriveTrain),
+                                    new TrajectoryFollowerCommand(SECOND_BITE_BLUE, robot.autoDriveTrain),
+                                    () -> robot.teamPropDetector.getTeamPropSide() == DetectionSide.FAR
+                            ),
                             () -> numOfBite == 1
                     ),
                     () -> robot.allianceColor == AllianceColor.RED
             );
     }
 
-    static TrajectorySequence BITE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseRed)
+    static TrajectorySequence FIRST_BITE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(GoToStackForFirstCycleAndCollect.SECOND_PART_RED.end())
             .back(3)
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseRed.getX(),
-                            TrajectoryPoses.stackPoseRed.getY() + 1
+                            TrajectoryPoses.stackPoseRed.getY() + 5
                     ),
                     Math.toRadians(90),
                     robot.trajectories.reduceVelocity(0.4),
@@ -81,34 +114,59 @@ public class CollectFromStack extends ParallelCommandGroup {
             )
             .build();
 
-    static TrajectorySequence FIRST_BITE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+    static TrajectorySequence SECOND_BITE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(FIRST_BITE_RED.end())
             .back(3)
+            .splineToConstantHeading(
+                    new Vector2d(
+                            TrajectoryPoses.stackPoseRed.getX(),
+                            TrajectoryPoses.stackPoseRed.getY() + 7
+                    ),
+                    Math.toRadians(90),
+                    robot.trajectories.reduceVelocity(0.4),
+                    robot.trajectories.reduceAcceleration(0.4)
+            )
+            .build();
+
+    static TrajectorySequence FIRST_BITE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(GoToStackForFirstCycleAndCollect.SECOND_PART_CENTER_BLUE.end())
+            .back(5)
+            .splineToConstantHeading(
+                    new Vector2d(
+                            TrajectoryPoses.stackPoseBlue.getX() - 1,
+                            TrajectoryPoses.stackPoseBlue.getY() + 4
+                    ),
+                    Math.toRadians(90),
+                    robot.trajectories.reduceVelocity(0.5),
+                    robot.trajectories.reduceAcceleration(0.5)
+            )
+            .build();
+    static TrajectorySequence SECOND_BITE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+            .back(13)
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseBlue.getX() - 1,
                             TrajectoryPoses.stackPoseBlue.getY() + 2
                     ),
                     Math.toRadians(90),
-                    robot.trajectories.reduceVelocity(0.4),
-                    robot.trajectories.reduceAcceleration(0.4)
+                    robot.trajectories.reduceVelocity(0.25),
+                    robot.trajectories.reduceAcceleration(0.25)
             )
             .build();
-    static TrajectorySequence SECOND_BITE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
-            .back(3)
+    static TrajectorySequence SECOND_BITE_FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+            .back(13)
             .splineToConstantHeading(
                     new Vector2d(
-                            TrajectoryPoses.stackPoseBlue.getX() - 1,
-                            TrajectoryPoses.stackPoseBlue.getY() + 3
+                            TrajectoryPoses.stackPoseBlue.getX() - 5,
+                            TrajectoryPoses.stackPoseBlue.getY() - 5
                     ),
                     Math.toRadians(90),
-                    robot.trajectories.reduceVelocity(0.3),
-                    robot.trajectories.reduceAcceleration(0.3)
+                    robot.trajectories.reduceVelocity(0.25),
+                    robot.trajectories.reduceAcceleration(0.25)
             )
             .build();
 
     private Command stopAndCloseCartridge(RobotControl robot) {
         return new SequentialCommandGroup(
-                new WaitCommand(300),
+                new WaitCommand(200),
                 new IntakeStop(robot),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS)
         );

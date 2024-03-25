@@ -37,7 +37,7 @@ public class TeamPropDetector extends OpenCvPipeline {
     private final Mat currentColorChannel = new Mat();
 
     public enum FarTolerance {
-        RED_CENTER(131), RED_FAR(134), BLUE_CENTER(130), BLUE_FAR(129);
+        RED_CENTER(131), RED_FAR(134), BLUE_CENTER(127), BLUE_FAR(129);
 
         final double tolerance;
 
@@ -65,7 +65,7 @@ public class TeamPropDetector extends OpenCvPipeline {
                 centerRectangle = new Rect(310,  279,270,200);
                 farRectangle = new Rect(0, 279, 160, 200);
             } else {
-                centerRectangle = new Rect(0,  279,300,200);
+                centerRectangle = new Rect(0,  279,330,200);
                 farRectangle = new Rect(445, 279, 160, 200);
             }
         } else {
