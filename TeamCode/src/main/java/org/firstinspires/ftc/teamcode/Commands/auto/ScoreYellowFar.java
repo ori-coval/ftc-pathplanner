@@ -4,7 +4,6 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 
 import org.firstinspires.ftc.teamcode.ArmPosition;
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RobotControl;

@@ -27,13 +27,11 @@ public class CollectFromStack extends ParallelCommandGroup {
         addCommands(
                 new SequentialCommandGroup(
                         new ParallelCommandGroup(
-                                addBite(robot),
+                                addBite(robot, 1),
                                 new WaitCommand(300).andThen(
                                         new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL)
                                 )
                         ),
-                        new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
-                        addBite(robot),
                         new WaitCommand(600),
                         stopAndCloseCartridge(robot)
                 )
@@ -42,7 +40,7 @@ public class CollectFromStack extends ParallelCommandGroup {
 
     public CollectFromStack(RobotControl robot, boolean secondCycle) {
         addCommands(
-                addBite(robot),
+                addBite(robot, 1),
                 new SequentialCommandGroup(
                         new WaitUntilCommand(
                                 () -> robot.intake.roller.getPixelCount() == 1
@@ -56,10 +54,14 @@ public class CollectFromStack extends ParallelCommandGroup {
         );
     }
 
-    private Command addBite(RobotControl robot) {
+    private Command addBite(RobotControl robot, int numOfBite) {
             return new ConditionalCommand(
                     new TrajectoryFollowerCommand(BITE_RED, robot.autoDriveTrain),
-                    new TrajectoryFollowerCommand(BITE_BLUE, robot.autoDriveTrain),
+                    new ConditionalCommand(
+                            new TrajectoryFollowerCommand(FIRST_BITE_BLUE, robot.autoDriveTrain),
+                            new TrajectoryFollowerCommand(SECOND_BITE_BLUE, robot.autoDriveTrain),
+                            () -> numOfBite == 1
+                    ),
                     () -> robot.allianceColor == AllianceColor.RED
             );
     }
@@ -77,12 +79,24 @@ public class CollectFromStack extends ParallelCommandGroup {
             )
             .build();
 
-    static TrajectorySequence BITE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+    static TrajectorySequence FIRST_BITE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
             .back(3)
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseBlue.getX() - 1,
                             TrajectoryPoses.stackPoseBlue.getY() + 2
+                    ),
+                    Math.toRadians(90),
+                    robot.trajectories.reduceVelocity(0.4),
+                    robot.trajectories.reduceAcceleration(0.4)
+            )
+            .build();
+    static TrajectorySequence SECOND_BITE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
+            .back(3)
+            .splineToConstantHeading(
+                    new Vector2d(
+                            TrajectoryPoses.stackPoseBlue.getX() - 1,
+                            TrajectoryPoses.stackPoseBlue.getY()
                     ),
                     Math.toRadians(90),
                     robot.trajectories.reduceVelocity(0.4),

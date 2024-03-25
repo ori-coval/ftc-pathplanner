@@ -72,7 +72,7 @@ public class Parking extends ParallelCommandGroup {
             .forward(4)
             .build();
 
-    static final TrajectorySequence CLOSE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropClosePoseRed)
+    static final TrajectorySequence CLOSE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoreYellowClose.CENTER_RED.end())
             .setTangent(180)
             .splineToConstantHeading(
                     new Vector2d(-60, -50),
@@ -82,8 +82,16 @@ public class Parking extends ParallelCommandGroup {
 
     static final TrajectorySequence CLOSE_FRONT_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoreYellowClose.CLOSE_RED.end())
             .splineToConstantHeading(
-                    new Vector2d(-33, -50),
-                    Math.toRadians(90)
+                    new Vector2d(-60, -50),
+                    Math.toRadians(-90),
+                    robot.trajectories.reduceVelocity(0.8),
+                    robot.trajectories.reduceAcceleration(0.8)
+            )
+            .splineToConstantHeading(
+                    new Vector2d(-54, -63),
+                    Math.toRadians(-20),
+                    robot.trajectories.reduceVelocity(0.5),
+                    robot.trajectories.reduceAcceleration(0.5)
             )
             .build();
 
@@ -101,7 +109,7 @@ public class Parking extends ParallelCommandGroup {
             .forward(4)
             .build();
 
-    static final TrajectorySequence CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.realBackdropClosePoseBlue)
+    static final TrajectorySequence CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoreYellowClose.CENTER_BLUE.end())
             .setTangent(0)
             .splineToConstantHeading(
                     new Vector2d(60, -50),
@@ -111,8 +119,16 @@ public class Parking extends ParallelCommandGroup {
 
     static final TrajectorySequence CLOSE_FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoreYellowClose.CLOSE_BLUE.end())
             .splineToConstantHeading(
-                    new Vector2d(33, -50),
-                    Math.toRadians(90)
+                    new Vector2d(60, -50),
+                    Math.toRadians(270),
+                    robot.trajectories.reduceVelocity(0.8),
+                    robot.trajectories.reduceAcceleration(0.8)
+            )
+            .splineToConstantHeading(
+                    new Vector2d(54, -60),
+                    Math.toRadians(200),
+                    robot.trajectories.reduceVelocity(0.5),
+                    robot.trajectories.reduceAcceleration(0.5)
             )
             .build();
 

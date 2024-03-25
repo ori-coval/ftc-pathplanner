@@ -3,10 +3,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
+import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 import org.firstinspires.ftc.teamcode.Utils.DetectionSide;
-import org.firstinspires.ftc.teamcode.Utils.Side;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -17,11 +18,12 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 public class TeamPropDetector extends OpenCvPipeline {
     Telemetry telemetry;
-    public OpenCvCamera webcam;
-    private final AllianceColor allianceColor;
+    public OpenCvWebcam webcam;
+    private final RobotControl robot;
     private DetectionSide teamPropSide = null;
 
     private final Rect farRectangle;
@@ -34,30 +36,55 @@ public class TeamPropDetector extends OpenCvPipeline {
     private final Mat blurredImage = new Mat();
     private final Mat currentColorChannel = new Mat();
 
-    public enum Tolerance {
-        RED_CENTER(131), RED_FAR(134), BLUE_CENTER(128), BLUE_FAR(129);
+    public enum FarTolerance {
+        RED_CENTER(131), RED_FAR(134), BLUE_CENTER(130), BLUE_FAR(129);
 
         final double tolerance;
 
-        Tolerance(double tolerance) {
+        FarTolerance(double tolerance) {
             this.tolerance = tolerance;
         }
     }
 
-    public TeamPropDetector(HardwareMap hardwareMap, AllianceColor allianceColor, Telemetry telemetry) {
-        this.telemetry = telemetry;
-        this.allianceColor = allianceColor;
+    public enum CloseTolerance {
+        RED_CENTER(131), RED_FAR(133), BLUE_CENTER(128), BLUE_FAR(129);
 
-        if(allianceColor == AllianceColor.RED) {
-            centerRectangle = new Rect(310,  279,270,200);
-            farRectangle = new Rect(0, 279, 160, 200); //LEFT (RED)
+        final double tolerance;
+
+        CloseTolerance(double tolerance) {
+            this.tolerance = tolerance;
+        }
+    }
+
+    public TeamPropDetector(HardwareMap hardwareMap, RobotControl robot, Telemetry telemetry) {
+        this.telemetry = telemetry;
+        this.robot = robot;
+
+        if(robot.robotSide == AllianceSide.FAR) {
+            if(robot.allianceColor == AllianceColor.RED) {
+                centerRectangle = new Rect(310,  279,270,200);
+                farRectangle = new Rect(0, 279, 160, 200);
+            } else {
+                centerRectangle = new Rect(0,  279,300,200);
+                farRectangle = new Rect(445, 279, 160, 200);
+            }
         } else {
-            centerRectangle = new Rect(0,  279,300,200);
-            farRectangle = new Rect(445, 279, 160, 200); //RIGHT (BLUE)
+            if(robot.allianceColor == AllianceColor.RED) { //done
+                centerRectangle = new Rect(40, 280, 300, 199);
+                farRectangle = new Rect(400, 240, 239, 239);
+            } else {
+                centerRectangle = new Rect(300,  240,339,239);
+                farRectangle = new Rect(0, 240, 200, 239);
+            }
         }
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, Configuration.WEB_CAM), cameraMonitorViewId);
+
+
+        webcam.setPipeline(this);
+
+        webcam.setMillisecondsPermissionTimeout(5000);
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -70,7 +97,6 @@ public class TeamPropDetector extends OpenCvPipeline {
             }
         });
 
-        webcam.setPipeline(this);
 
     }
 
@@ -83,7 +109,7 @@ public class TeamPropDetector extends OpenCvPipeline {
         Imgproc.cvtColor(blurredImage, YCrCb, Imgproc.COLOR_RGB2YCrCb);
 
         // choose wanted channel
-        switch (allianceColor){
+        switch (robot.allianceColor){
             case RED: {
                 Core.extractChannel(YCrCb, currentColorChannel, 1);
                 break;
@@ -100,8 +126,16 @@ public class TeamPropDetector extends OpenCvPipeline {
         farMean = Core.mean(farMat).val[0];
         centerMean = Core.mean(centerMat).val[0];
 
-        double centerTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_CENTER.tolerance : Tolerance.RED_CENTER.tolerance;
-        double farTolerance = (allianceColor == AllianceColor.BLUE) ? Tolerance.BLUE_FAR.tolerance : Tolerance.RED_FAR.tolerance;
+        double centerTolerance;
+        double farTolerance;
+
+        if(robot.robotSide == AllianceSide.FAR) {
+            centerTolerance = (robot.allianceColor == AllianceColor.BLUE) ? FarTolerance.BLUE_CENTER.tolerance : FarTolerance.RED_CENTER.tolerance;
+            farTolerance = (robot.allianceColor == AllianceColor.BLUE) ? FarTolerance.BLUE_FAR.tolerance : FarTolerance.RED_FAR.tolerance;
+        } else {
+            centerTolerance = (robot.allianceColor == AllianceColor.BLUE) ? CloseTolerance.BLUE_CENTER.tolerance : FarTolerance.RED_CENTER.tolerance;
+            farTolerance = (robot.allianceColor == AllianceColor.BLUE) ? CloseTolerance.BLUE_FAR.tolerance : FarTolerance.RED_FAR.tolerance;
+        }
 
         // choose the most prominent side
         DetectionSide tempResult = DetectionSide.CLOSE;

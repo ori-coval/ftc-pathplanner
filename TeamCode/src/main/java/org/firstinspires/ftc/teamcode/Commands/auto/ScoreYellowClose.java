@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -31,17 +30,27 @@ public class ScoreYellowClose extends SequentialCommandGroup {
         addCommands(
                 new ParallelCommandGroup(
                         getPreScoreArmPosition(),
-                        getScoreYellowTrajectory().andThen(resetPoseEstimate())
+                        getScoreYellowTrajectory()/*.andThen(resetPoseEstimate())*/
                 ),
-                new DetectionSideCommandSwitch(
-                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE, robot.allianceColor == AllianceColor.RED),
-                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_FAR, robot.allianceColor == AllianceColor.RED),
-                        new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_FRONT, true),
-                        () -> robot.teamPropDetector.getTeamPropSide()
+                new ConditionalCommand(
+                        new DetectionSideCommandSwitch(
+                                new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_RED_CLOSE, false),
+                                new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR_RED_CLOSE, false),
+                                new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_FRONT, true),
+                                () -> robot.teamPropDetector.getTeamPropSide()
+                        ),
+                        new DetectionSideCommandSwitch(
+                                new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_CLOSE_BLUE_CLOSE, true),
+                                new ArmGetToPosition(robot, ArmPosition.SCORE_AUTO_BOTTOM_FAR_BLUE_CLOSE, true),
+                                new ArmGetToPosition(robot, ArmPosition.SCORE_BOTTOM_FRONT_LOWER, true),
+                                () -> robot.teamPropDetector.getTeamPropSide()
+                        ),
+                        () -> robot.allianceColor == AllianceColor.RED
                 ),
-                new CartridgeSetState(robot.cartridge, Cartridge.State.OPEN),
-                new ResetPixelCount(robot),
                 new WaitCommand(500),
+                new CartridgeSetState(robot.cartridge, Cartridge.State.AUTONOMOUS_OPEN),
+                new ResetPixelCount(robot),
+                new WaitCommand(1000),
                 getPreScoreArmPosition(),
                 new CartridgeSetState(robot.cartridge, Cartridge.State.CLOSED_TWO_PIXELS) //todo i really don't know how the cartridge works at this point
         );
@@ -98,24 +107,27 @@ public class ScoreYellowClose extends SequentialCommandGroup {
     static final TrajectorySequence FAR_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_FAR_RED.end())
             .setTangent(Math.toRadians(180))
             .splineToLinearHeading(
-                    new Pose2d(-53, -64, Math.toRadians(90)),
-                    Math.toRadians(-45) //Tangent
+                    new Pose2d(-52, -64, Math.toRadians(90)),
+                    Math.toRadians(-40) //Tangent
             )
             .build();
 
     static final TrajectorySequence CENTER_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_CENTER_RED.end())
             .setTangent(Math.toRadians(180))
             .splineToLinearHeading(
-                    new Pose2d(-53, -64, Math.toRadians(90)),
-                    Math.toRadians(-45) //Tangent
+                    new Pose2d(-51, -63, Math.toRadians(90)),
+                    Math.toRadians(-40) //Tangent
             )
             .build();
 
     static final TrajectorySequence CLOSE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_CLOSE_RED.end())
             .setTangent(Math.toRadians(-90))
             .splineToSplineHeading(
-                    new Pose2d(-33, -55, Math.toRadians(90)),
-                    Math.toRadians(-90) //Tangent
+                    new Pose2d(-29, -55, Math.toRadians(90)),
+                    Math.toRadians(-90), //Tangent
+                    robot.trajectories.reduceVelocity(0.8),
+                    robot.trajectories.reduceAcceleration(0.8)
+
             )
             .build();
 
@@ -125,24 +137,27 @@ public class ScoreYellowClose extends SequentialCommandGroup {
     static final TrajectorySequence FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_FAR_BLUE.end())
             .setTangent(Math.toRadians(0))
             .splineToLinearHeading(
-                    new Pose2d(53, -64, Math.toRadians(90)),
-                    Math.toRadians(225) //Tangent
+                    new Pose2d(52, -64, Math.toRadians(90)),
+                    Math.toRadians(220) //Tangent
             )
             .build();
 
     static final TrajectorySequence CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_CENTER_BLUE.end())
             .setTangent(Math.toRadians(0))
             .splineToLinearHeading(
-                    new Pose2d(53, -64, Math.toRadians(90)),
-                    Math.toRadians(225) //Tangent
+                    new Pose2d(50, -64, Math.toRadians(90)),
+                    Math.toRadians(220) //Tangent
             )
             .build();
 
     static final TrajectorySequence CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_CLOSE_BLUE.end())
             .setTangent(Math.toRadians(270))
             .splineToSplineHeading(
-                    new Pose2d(33, -55, Math.toRadians(90)),
-                    Math.toRadians(270) //Tangent
+                    new Pose2d(29, -55, Math.toRadians(90)),
+                    Math.toRadians(270), //Tangent
+                    robot.trajectories.reduceVelocity(0.8),
+                    robot.trajectories.reduceAcceleration(0.8)
+
             )
             .build();
 

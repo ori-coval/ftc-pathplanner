@@ -98,7 +98,7 @@ public class LeaveSpikeMark extends ParallelCommandGroup {
             .splineToLinearHeading(
                     new Pose2d(
                             TrajectoryPoses.stackPoseBlue.getX(),
-                            TrajectoryPoses.stackPoseBlue.getY() - 7,
+                            TrajectoryPoses.stackPoseBlue.getY() - 4,
                             TrajectoryPoses.stackPoseBlue.getHeading()
                     ),
                     Math.toRadians(160) //Tangent

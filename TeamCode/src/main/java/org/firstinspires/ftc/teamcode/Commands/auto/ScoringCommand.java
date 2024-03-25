@@ -260,7 +260,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                     Math.toRadians(270) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(23, -58),
+                    new Vector2d(23, -59),
                     Math.toRadians(0), //Tangent
                     robot.trajectories.reduceVelocity(0.6),
                     robot.trajectories.reduceAcceleration(0.6)
@@ -313,7 +313,7 @@ public class ScoringCommand extends SequentialCommandGroup {
             )
             .build();
 
-    static final TrajectorySequence CYCLES_FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(CollectFromStack.BITE_BLUE.end())
+    static final TrajectorySequence CYCLES_FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(CollectFromStack.FIRST_BITE_BLUE.end())
             .setTangent(Math.toRadians(250))
             .splineToConstantHeading(
                     new Vector2d(TrajectoryPoses.stackPoseBlue.getX() - 3, -20),

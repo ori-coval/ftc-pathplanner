@@ -158,9 +158,9 @@ public class RobotControl extends Robot {
             }
         } else {
             if(allianceColor == AllianceColor.RED) {
-                startPose = new Pose2d(-63, -16, Math.toRadians(0));
+                startPose = new Pose2d(-62.15748031, -17.7165354, Math.toRadians(0));
             } else {
-                startPose = new Pose2d(63, -16, Math.toRadians(180));
+                startPose = new Pose2d(62.15748031, -17.7165354, Math.toRadians(180));
             }
         }
         autoDriveTrain.setPoseEstimate(startPose);
@@ -313,7 +313,7 @@ public class RobotControl extends Robot {
         antiTurret = new AntiTurret(hardwareMap);
     }
     public void initVision() {
-        teamPropDetector = new TeamPropDetector(hardwareMap, allianceColor, telemetry);
+        teamPropDetector = new TeamPropDetector(hardwareMap, this, telemetry);
     }
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
