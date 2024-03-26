@@ -62,7 +62,7 @@ public enum ArmPosition {
     SCORE_AUTO_BOTTOM_MID_RED(16, Extender.Position.FAR_CENTER_RED, 64, 0.35, 125, Cluster.scoring),
     SCORE_AUTO_BOTTOM_FAR_BLUE_CLOSE(19, Extender.Position.MID_WAY, 64, 0.33, 125, Cluster.scoring),
     SCORE_AUTO_BOTTOM_MID_BLUE(19, Extender.Position.MID_WAY, 64, 0.35, 125, Cluster.scoring),
-    SCORE_AUTO_BOTTOM_FAR_RED_CLOSE(19, Extender.Position.MID_WAY, 64, 0.35, 120, Cluster.scoring),
+    SCORE_AUTO_BOTTOM_FAR_RED_CLOSE(19, Extender.Position.MID_WAY, 64, 0.35, 110, Cluster.scoring),
     SCORE_BOTTOM_CLOSE_2_RED(12.34 + 10, Extender.Position.CLOSED, 50, 0.34, 100, Cluster.scoring),
     SCORE_BOTTOM_CLOSE_2_BLUE(12.34 + 10, Extender.Position.CLOSED, 72, 0.34, 100, Cluster.scoring),
     SCORE_BOTTOM_CLOSE_RED(12.34, Extender.Position.CLOSED, 50, 0.34, 115, Cluster.scoring),
