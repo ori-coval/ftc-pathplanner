@@ -58,7 +58,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                                                         () -> numOfCycle != 0
                                                 ),
                                                 new ConditionalCommand(
-                                                        new WaitCommand(2700), //cycles blue
+                                                        new WaitCommand(2400), //cycles blue
                                                         new WaitCommand(1200), //close yellow blue
                                                         () -> numOfCycle != 0
                                                 ),
@@ -70,6 +70,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                                 scoringCommand
                         )
                 ),
+                new WaitCommand(500),
                 new ConditionalCommand(
                         new CartridgeSetState(robot.cartridge, Cartridge.State.AUTONOMOUS_OPEN),
                         new SequentialCommandGroup(
@@ -93,7 +94,7 @@ public class ScoringCommand extends SequentialCommandGroup {
 
     private long getWaitTime(RobotControl robot, int numOfCycle) {
         if(robot.allianceColor == AllianceColor.RED) {
-            return numOfCycle == 0 ? 1700 : 1400;
+            return numOfCycle == 0 ? 1850 : 1400;
         } else {
             return 1700;
         }
@@ -215,7 +216,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                     robot.trajectories.reduceAcceleration(0.4)
             )
             .splineToConstantHeading(
-                    new Vector2d(-43, -51),
+                    new Vector2d(-43.5, -51),
                     Math.toRadians(-90), //Tangent
                     robot.trajectories.reduceVelocity(0.4),
                     robot.trajectories.reduceAcceleration(0.4)
@@ -243,8 +244,8 @@ public class ScoringCommand extends SequentialCommandGroup {
             .splineToConstantHeading(
                     new Vector2d(-35, -50),
                     Math.toRadians(-90), //Tangent
-                    robot.trajectories.reduceVelocity(0.5),
-                    robot.trajectories.reduceAcceleration(0.5)
+                    robot.trajectories.reduceVelocity(0.3),
+                    robot.trajectories.reduceAcceleration(0.3)
             )
             .build();
 

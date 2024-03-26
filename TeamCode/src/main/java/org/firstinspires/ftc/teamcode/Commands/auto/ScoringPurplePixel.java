@@ -40,7 +40,7 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                         new ConditionalCommand(
                                 new WaitCommand(2000).andThen(
                                         new ConditionalCommand(
-                                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_RED_POWER).withTimeout(350),
+                                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_RED_POWER).withTimeout(420),
                                                 new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_BLUE_POWER).withTimeout(420),
                                                 () -> robot.allianceColor == AllianceColor.RED
                                         )
@@ -118,7 +118,7 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                     Math.toRadians(0) //Tangent
             )
             .splineToSplineHeading(
-                    new Pose2d(-23, 37, Math.toRadians(40)),
+                    new Pose2d(-24, 37, Math.toRadians(40)),
                     Math.toRadians(0)) //Tangent
             .build();
     static final TrajectorySequence FAR_CLOSE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)

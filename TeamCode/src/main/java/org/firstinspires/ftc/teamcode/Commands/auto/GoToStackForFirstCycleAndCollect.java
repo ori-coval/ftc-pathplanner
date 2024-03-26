@@ -176,7 +176,7 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseRed.getX(),
-                            TrajectoryPoses.stackPoseRed.getY() + 10
+                            TrajectoryPoses.stackPoseRed.getY() + 7
                     ),
                     Math.toRadians(90), //Tangent
                     robot.trajectories.reduceVelocity(0.7),

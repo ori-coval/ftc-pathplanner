@@ -39,7 +39,7 @@ public class CollectFromStack extends ParallelCommandGroup {
                                 addBite(robot, 1),
                                 new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT),
                                 addBite(robot, 2),
-                                new WaitCommand(500),
+                                new WaitCommand(300),
                                 new InstantCommand(() -> canStop = true)
                         )
                 ),
@@ -102,24 +102,24 @@ public class CollectFromStack extends ParallelCommandGroup {
     }
 
     static TrajectorySequence FIRST_BITE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(GoToStackForFirstCycleAndCollect.SECOND_PART_RED.end())
-            .back(12)
+            .back(7)
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseRed.getX(),
-                            TrajectoryPoses.stackPoseRed.getY() + 10
+                            TrajectoryPoses.stackPoseRed.getY() + 4
                     ),
                     Math.toRadians(90),
-                    robot.trajectories.reduceVelocity(0.4),
-                    robot.trajectories.reduceAcceleration(0.4)
+                    robot.trajectories.reduceVelocity(0.6),
+                    robot.trajectories.reduceAcceleration(0.6)
             )
             .build();
 
     static TrajectorySequence SECOND_BITE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(FIRST_BITE_RED.end())
-            .back(9)
+            .back(12)
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseRed.getX(),
-                            TrajectoryPoses.stackPoseRed.getY() + 7
+                            TrajectoryPoses.stackPoseRed.getY() + 3
                     ),
                     Math.toRadians(90),
                     robot.trajectories.reduceVelocity(0.4),
@@ -156,7 +156,7 @@ public class CollectFromStack extends ParallelCommandGroup {
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseBlue.getX() - 4,
-                            TrajectoryPoses.stackPoseBlue.getY() - 3
+                            TrajectoryPoses.stackPoseBlue.getY() - 5
                     ),
                     Math.toRadians(90),
                     robot.trajectories.reduceVelocity(0.25),
