@@ -102,11 +102,11 @@ public class CollectFromStack extends ParallelCommandGroup {
     }
 
     static TrajectorySequence FIRST_BITE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(GoToStackForFirstCycleAndCollect.SECOND_PART_RED.end())
-            .back(3)
+            .back(12)
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseRed.getX(),
-                            TrajectoryPoses.stackPoseRed.getY() + 5
+                            TrajectoryPoses.stackPoseRed.getY() + 8
                     ),
                     Math.toRadians(90),
                     robot.trajectories.reduceVelocity(0.4),
@@ -115,11 +115,11 @@ public class CollectFromStack extends ParallelCommandGroup {
             .build();
 
     static TrajectorySequence SECOND_BITE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(FIRST_BITE_RED.end())
-            .back(3)
+            .back(9)
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseRed.getX(),
-                            TrajectoryPoses.stackPoseRed.getY() + 7
+                            TrajectoryPoses.stackPoseRed.getY() + 4
                     ),
                     Math.toRadians(90),
                     robot.trajectories.reduceVelocity(0.4),
@@ -140,11 +140,11 @@ public class CollectFromStack extends ParallelCommandGroup {
             )
             .build();
     static TrajectorySequence SECOND_BITE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
-            .back(13)
+            .back(10)
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseBlue.getX() - 1,
-                            TrajectoryPoses.stackPoseBlue.getY() + 2
+                            TrajectoryPoses.stackPoseBlue.getY() + 3
                     ),
                     Math.toRadians(90),
                     robot.trajectories.reduceVelocity(0.25),
@@ -152,11 +152,11 @@ public class CollectFromStack extends ParallelCommandGroup {
             )
             .build();
     static TrajectorySequence SECOND_BITE_FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(TrajectoryPoses.stackPoseBlue)
-            .back(13)
+            .back(10)
             .splineToConstantHeading(
                     new Vector2d(
-                            TrajectoryPoses.stackPoseBlue.getX() - 5,
-                            TrajectoryPoses.stackPoseBlue.getY() - 4
+                            TrajectoryPoses.stackPoseBlue.getX() - 4,
+                            TrajectoryPoses.stackPoseBlue.getY() - 3
                     ),
                     Math.toRadians(90),
                     robot.trajectories.reduceVelocity(0.25),

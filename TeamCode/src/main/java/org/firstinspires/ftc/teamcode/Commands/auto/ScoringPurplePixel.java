@@ -40,7 +40,7 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                         new ConditionalCommand(
                                 new WaitCommand(2000).andThen(
                                         new ConditionalCommand(
-                                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_RED_POWER).withTimeout(300),
+                                                new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_RED_POWER).withTimeout(350),
                                                 new IntakeRotate(robot.intake.roller, robot.intake.roller.PURPLE_PIXEL_FAR_BLUE_POWER).withTimeout(420),
                                                 () -> robot.allianceColor == AllianceColor.RED
                                         )

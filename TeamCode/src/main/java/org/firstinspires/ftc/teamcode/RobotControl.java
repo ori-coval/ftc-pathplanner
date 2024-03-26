@@ -314,8 +314,7 @@ public class RobotControl extends Robot {
         antiTurret = new AntiTurret(hardwareMap);
     }
     public void initVision() {
-        gamepadEx1 = new GamepadEx(gamepad1); //check this and teleop right after
-        teamPropDetector = new TeamPropDetector(gamepadEx1, hardwareMap, this, telemetry);
+        teamPropDetector = new TeamPropDetector(gamepad1, hardwareMap, this, telemetry);
     }
     public void initElevator() {
         elevator = new Elevator(hardwareMap);

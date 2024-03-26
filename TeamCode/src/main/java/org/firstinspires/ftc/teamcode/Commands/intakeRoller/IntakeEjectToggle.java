@@ -15,9 +15,7 @@ public class IntakeEjectToggle extends CommandBase {
     @Override
     public void initialize() {
         new IntakeRotate(robot.intake.roller, IntakeRotateToggle.isRollerActive ? 0 : robot.intake.roller.EJECT_POWER).schedule();
-        if(IntakeRotateToggle.isRollerActive) {
-            new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT).schedule();
-        }
+        robot.schedule(IntakeRotateToggle.intakeArmCommand(robot));
         IntakeRotateToggle.isRollerActive = !IntakeRotateToggle.isRollerActive;
     }
 

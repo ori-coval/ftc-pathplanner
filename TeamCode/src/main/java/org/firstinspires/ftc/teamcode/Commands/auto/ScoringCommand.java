@@ -169,7 +169,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                         Math.toRadians(-90) //Tangent
                 )
                 .splineToConstantHeading(
-                        new Vector2d(-23, -58),
+                        new Vector2d(-22, -60),
                         Math.toRadians(180), //Tangent
                         robot.trajectories.reduceVelocity(0.6),
                         robot.trajectories.reduceAcceleration(0.6)
@@ -231,20 +231,20 @@ public class ScoringCommand extends SequentialCommandGroup {
             .splineToConstantHeading(
                     new Vector2d(-30, -30),
                     Math.toRadians(180), //Tangent
-                    robot.trajectories.reduceVelocity(0.4),
-                    robot.trajectories.reduceAcceleration(0.4)
+                    robot.trajectories.reduceVelocity(0.7),
+                    robot.trajectories.reduceAcceleration(0.7)
             )
             .splineToConstantHeading(
                     new Vector2d(-35, -35),
                     Math.toRadians(-90), //Tangent
-                    robot.trajectories.reduceVelocity(0.3),
-                    robot.trajectories.reduceAcceleration(0.3)
+                    robot.trajectories.reduceVelocity(0.4),
+                    robot.trajectories.reduceAcceleration(0.4)
             )
             .splineToConstantHeading(
                     new Vector2d(-35, -50),
                     Math.toRadians(-90), //Tangent
-                    robot.trajectories.reduceVelocity(0.2),
-                    robot.trajectories.reduceAcceleration(0.2)
+                    robot.trajectories.reduceVelocity(0.5),
+                    robot.trajectories.reduceAcceleration(0.5)
             )
             .build();
 
@@ -334,7 +334,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                     robot.trajectories.reduceAcceleration(0.7)
             )
             .splineToConstantHeading(
-                    new Vector2d(35, -49),
+                    new Vector2d(35, -51),
                     Math.toRadians(270), //Tangent
                     robot.trajectories.reduceVelocity(0.3),
                     robot.trajectories.reduceAcceleration(0.3)

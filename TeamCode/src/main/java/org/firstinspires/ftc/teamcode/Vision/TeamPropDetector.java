@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Vision;
+import android.view.textclassifier.TextClassifierEvent;
+
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -26,6 +29,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 public class TeamPropDetector extends OpenCvPipeline {
     Telemetry telemetry;
+    private Gamepad gamepad1;
     public OpenCvWebcam webcam;
     private final RobotControl robot;
     private DetectionSide teamPropSide = null;
@@ -63,34 +67,35 @@ public class TeamPropDetector extends OpenCvPipeline {
         }
     }
 
-    public TeamPropDetector(GamepadEx gamepad1Ex, HardwareMap hardwareMap, RobotControl robot, Telemetry telemetry) {
+    public TeamPropDetector(Gamepad gamepad1, HardwareMap hardwareMap, RobotControl robot, Telemetry telemetry) {
         this.telemetry = telemetry;
         this.robot = robot;
+        this.gamepad1 = gamepad1;
 
         //Gamepad
         if(robot.robotSide == AllianceSide.FAR) {
             if(robot.allianceColor == AllianceColor.RED) {
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> FarTolerance.RED_CENTER.tolerance++));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> FarTolerance.RED_CENTER.tolerance--));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> FarTolerance.RED_FAR.tolerance++));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> FarTolerance.RED_FAR.tolerance--));
+                new Trigger(() -> gamepad1.dpad_up).whenActive(new InstantCommand(() -> FarTolerance.RED_CENTER.tolerance++));
+                new Trigger(() -> gamepad1.dpad_down).whenActive(new InstantCommand(() -> FarTolerance.RED_CENTER.tolerance--));
+                new Trigger(() -> gamepad1.dpad_right).whenActive(new InstantCommand(() -> FarTolerance.RED_FAR.tolerance++));
+                new Trigger(() -> gamepad1.dpad_left).whenActive(new InstantCommand(() -> FarTolerance.RED_FAR.tolerance--));
             } else {
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance++));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance--));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance++));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance--));
+                new Trigger(() -> gamepad1.dpad_up).whenActive(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance++));
+                new Trigger(() -> gamepad1.dpad_down).whenActive(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance--));
+                new Trigger(() -> gamepad1.dpad_right).whenActive(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance++));
+                new Trigger(() -> gamepad1.dpad_left).whenActive(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance--));
             }
         } else {
             if(robot.allianceColor == AllianceColor.RED) {
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> CloseTolerance.RED_CENTER.tolerance++));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> CloseTolerance.RED_CENTER.tolerance--));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> CloseTolerance.RED_FAR.tolerance++));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> CloseTolerance.RED_FAR.tolerance--));
+                new Trigger(() -> gamepad1.dpad_up).whenActive(new InstantCommand(() -> CloseTolerance.RED_CENTER.tolerance++));
+                new Trigger(() -> gamepad1.dpad_down).whenActive(new InstantCommand(() -> CloseTolerance.RED_CENTER.tolerance--));
+                new Trigger(() -> gamepad1.dpad_right).whenActive(new InstantCommand(() -> CloseTolerance.RED_FAR.tolerance++));
+                new Trigger(() -> gamepad1.dpad_left).whenActive(new InstantCommand(() -> CloseTolerance.RED_FAR.tolerance--));
             } else {
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance++));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance--));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance++));
-                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance--));
+                new Trigger(() -> gamepad1.dpad_up).whenActive(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance++));
+                new Trigger(() -> gamepad1.dpad_down).whenActive(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance--));
+                new Trigger(() -> gamepad1.dpad_right).whenActive(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance++));
+                new Trigger(() -> gamepad1.dpad_left).whenActive(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance--));
             }
         }
 
@@ -136,6 +141,7 @@ public class TeamPropDetector extends OpenCvPipeline {
 
     @Override
     public Mat processFrame(Mat frame) {
+
         // blur image
         Imgproc.GaussianBlur(frame, blurredImage, new Size(15,15), 0.0);
 

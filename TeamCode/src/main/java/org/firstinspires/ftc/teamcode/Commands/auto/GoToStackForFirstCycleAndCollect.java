@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands.auto;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
@@ -54,7 +55,14 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
                         ),
                         new ParallelCommandGroup(
                                 getFrontTrajectory(),
-                                new ArmGetToPosition(robot, ArmPosition.INTAKE, true),
+                                new ConditionalCommand(
+                                        new ArmGetToPosition(robot, ArmPosition.DRIVING_INTAKE, true),
+                                        new ArmGetToPosition(robot, ArmPosition.INTAKE, true),
+                                        () -> robot.allianceColor == AllianceColor.RED
+                                ).andThen(
+                                        new WaitCommand(1700),
+                                        new ArmGetToPosition(robot, ArmPosition.INTAKE, true)
+                                ),
                                 new CartridgeSetState(robot.cartridge, Cartridge.State.INTAKE_OPEN),
                                 new WaitCommand(3000).andThen(
                                         new InstantIntakeRotate(robot, robot.intake.roller.COLLECT_POWER),
@@ -136,10 +144,14 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
             )
             .build();
     static final TrajectorySequence FRONT_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringCommand.YELLOW_FRONT_RED.end())
-            .setTangent(Math.toRadians(80))
+            .setTangent(Math.toRadians(90))
             .splineToConstantHeading(
-                    new Vector2d(TrajectoryPoses.stackPoseRed.getX() + 3, -25),
-                    Math.toRadians(90) //Tangent
+                    new Vector2d(-40, -46),
+                    Math.toRadians(90)
+            )
+            .splineToConstantHeading(
+                    new Vector2d(-17, -25),
+                    Math.toRadians(45) //Tangent
             )
             .splineToConstantHeading(
                     new Vector2d(TrajectoryPoses.stackPoseRed.getX() + 3, 0),
@@ -221,8 +233,8 @@ public class GoToStackForFirstCycleAndCollect extends SequentialCommandGroup {
             )
             .splineToConstantHeading(
                     new Vector2d(
-                            TrajectoryPoses.stackPoseBlue.getX() - 6,
-                            TrajectoryPoses.stackPoseBlue.getY() - 2
+                            TrajectoryPoses.stackPoseBlue.getX() - 4,
+                            TrajectoryPoses.stackPoseBlue.getY() - 1
                     ),
                     Math.toRadians(90), //Tangent
                     robot.trajectories.reduceVelocity(0.7),

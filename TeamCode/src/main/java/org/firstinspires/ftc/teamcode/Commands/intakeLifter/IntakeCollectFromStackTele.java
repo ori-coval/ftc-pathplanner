@@ -10,9 +10,10 @@ import org.firstinspires.ftc.teamcode.Commands.intakeRoller.IntakeRotateToggle;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 
-public class IntakeCollectFromStackTele extends ParallelCommandGroup {
+public class IntakeCollectFromStackTele extends SequentialCommandGroup {
     public IntakeCollectFromStackTele(RobotControl robot) {
         super(
+                IntakeRotateToggle.intakeArmCommand(robot),
                 new InstantIntakeRotate(robot, robot.intake.roller.COLLECT_POWER),
                 new InstantCommand(() -> IntakeRotateToggle.isRollerActive = true),
                 new SequentialCommandGroup(
