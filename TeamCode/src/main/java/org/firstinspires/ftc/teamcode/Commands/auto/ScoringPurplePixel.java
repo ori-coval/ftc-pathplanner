@@ -57,7 +57,9 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                         () -> robot.allianceColor == AllianceColor.BLUE && robot.teamPropDetector.getTeamPropSide() == DetectionSide.CENTER
                 ),
                 new WaitCommand(300).andThen(
-                        new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL, true)
+                        new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_1, true),
+                        new WaitCommand(2200),
+                        new ArmGetToPosition(robot, ArmPosition.AUTONOMOUS_PURPLE_PIXEL_2, true)
                 )
         );
     }
@@ -164,7 +166,7 @@ public class ScoringPurplePixel extends ParallelCommandGroup {
                     Math.toRadians(150) //Tangent
             )
             .splineToSplineHeading(
-                    new Pose2d(35, 50, Math.toRadians(135)),
+                    new Pose2d(35, 49, Math.toRadians(135)),
                     Math.toRadians(210) //Tangent
             ).build();
     static final TrajectorySequence FAR_CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(robot.startPose)

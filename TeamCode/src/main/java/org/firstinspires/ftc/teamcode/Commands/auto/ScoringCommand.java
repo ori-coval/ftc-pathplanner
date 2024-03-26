@@ -264,7 +264,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                     Math.toRadians(270) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(25, -61),
+                    new Vector2d(24, -61),
                     Math.toRadians(0), //Tangent
                     robot.trajectories.reduceVelocity(0.6),
                     robot.trajectories.reduceAcceleration(0.6)

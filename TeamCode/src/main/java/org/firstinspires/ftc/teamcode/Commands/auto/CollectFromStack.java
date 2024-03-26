@@ -156,7 +156,7 @@ public class CollectFromStack extends ParallelCommandGroup {
             .splineToConstantHeading(
                     new Vector2d(
                             TrajectoryPoses.stackPoseBlue.getX() - 5,
-                            TrajectoryPoses.stackPoseBlue.getY() - 5
+                            TrajectoryPoses.stackPoseBlue.getY() - 4
                     ),
                     Math.toRadians(90),
                     robot.trajectories.reduceVelocity(0.25),

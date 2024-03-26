@@ -1,4 +1,8 @@
 package org.firstinspires.ftc.teamcode.Vision;
+import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -32,14 +36,17 @@ public class TeamPropDetector extends OpenCvPipeline {
     private double farMean;
     private double centerMean;
 
+    private double centerTolerance;
+    private double farTolerance;
+
     private final Mat YCrCb = new Mat();
     private final Mat blurredImage = new Mat();
     private final Mat currentColorChannel = new Mat();
 
     public enum FarTolerance {
-        RED_CENTER(131), RED_FAR(134), BLUE_CENTER(127), BLUE_FAR(129);
+        RED_CENTER(131), RED_FAR(134), BLUE_CENTER(129), BLUE_FAR(129);
 
-        final double tolerance;
+        double tolerance;
 
         FarTolerance(double tolerance) {
             this.tolerance = tolerance;
@@ -49,16 +56,43 @@ public class TeamPropDetector extends OpenCvPipeline {
     public enum CloseTolerance {
         RED_CENTER(131), RED_FAR(133), BLUE_CENTER(128), BLUE_FAR(129);
 
-        final double tolerance;
+        double tolerance;
 
         CloseTolerance(double tolerance) {
             this.tolerance = tolerance;
         }
     }
 
-    public TeamPropDetector(HardwareMap hardwareMap, RobotControl robot, Telemetry telemetry) {
+    public TeamPropDetector(GamepadEx gamepad1Ex, HardwareMap hardwareMap, RobotControl robot, Telemetry telemetry) {
         this.telemetry = telemetry;
         this.robot = robot;
+
+        //Gamepad
+        if(robot.robotSide == AllianceSide.FAR) {
+            if(robot.allianceColor == AllianceColor.RED) {
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> FarTolerance.RED_CENTER.tolerance++));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> FarTolerance.RED_CENTER.tolerance--));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> FarTolerance.RED_FAR.tolerance++));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> FarTolerance.RED_FAR.tolerance--));
+            } else {
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance++));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance--));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance++));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> FarTolerance.BLUE_CENTER.tolerance--));
+            }
+        } else {
+            if(robot.allianceColor == AllianceColor.RED) {
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> CloseTolerance.RED_CENTER.tolerance++));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> CloseTolerance.RED_CENTER.tolerance--));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> CloseTolerance.RED_FAR.tolerance++));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> CloseTolerance.RED_FAR.tolerance--));
+            } else {
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance++));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance--));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance++));
+                gamepad1Ex.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> CloseTolerance.BLUE_CENTER.tolerance--));
+            }
+        }
 
         if(robot.robotSide == AllianceSide.FAR) {
             if(robot.allianceColor == AllianceColor.RED) {
@@ -126,9 +160,6 @@ public class TeamPropDetector extends OpenCvPipeline {
         farMean = Core.mean(farMat).val[0];
         centerMean = Core.mean(centerMat).val[0];
 
-        double centerTolerance;
-        double farTolerance;
-
         if(robot.robotSide == AllianceSide.FAR) {
             centerTolerance = (robot.allianceColor == AllianceColor.BLUE) ? FarTolerance.BLUE_CENTER.tolerance : FarTolerance.RED_CENTER.tolerance;
             farTolerance = (robot.allianceColor == AllianceColor.BLUE) ? FarTolerance.BLUE_FAR.tolerance : FarTolerance.RED_FAR.tolerance;
@@ -137,10 +168,16 @@ public class TeamPropDetector extends OpenCvPipeline {
             farTolerance = (robot.allianceColor == AllianceColor.BLUE) ? CloseTolerance.BLUE_FAR.tolerance : FarTolerance.RED_FAR.tolerance;
         }
 
+        double centerDistance = Math.abs(centerMean - centerTolerance);
+        double farDistance = Math.abs(farMean - farTolerance);
+
+
         // choose the most prominent side
         DetectionSide tempResult = DetectionSide.CLOSE;
 
-        if(centerMean > centerTolerance) {
+        if(centerMean > centerTolerance && farMean > farTolerance) {
+            tempResult = (centerDistance > farDistance) ? DetectionSide.CENTER : DetectionSide.FAR;
+        } else if(centerMean > centerTolerance) {
             tempResult = DetectionSide.CENTER;
         } else if(farMean > farTolerance) {
             tempResult = DetectionSide.FAR;
@@ -163,7 +200,9 @@ public class TeamPropDetector extends OpenCvPipeline {
     public void telemetry() {
         telemetry.addData("teamPropSide", teamPropSide);
         telemetry.addData("farMean", farMean);
+        telemetry.addData("farTolerance", farTolerance);
         telemetry.addData("centerMean", centerMean);
+        telemetry.addData("centerTolerance", centerTolerance);
         telemetry.update();
     }
 

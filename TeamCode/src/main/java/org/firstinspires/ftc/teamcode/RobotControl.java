@@ -283,6 +283,7 @@ public class RobotControl extends Robot {
         initAntiTurret();
         initCartridge();
 
+        //dumb ftclib
         new CartridgeSetState(cartridge, Cartridge.State.CLOSED_TWO_PIXELS).schedule();
         new ExtenderSetPosition(extender, ArmPosition.INTAKE.getExtenderPosition()).schedule();
         new ElbowGetToPosition(elbow, ArmPosition.INTAKE.getElbowPosition()).schedule();
@@ -313,7 +314,8 @@ public class RobotControl extends Robot {
         antiTurret = new AntiTurret(hardwareMap);
     }
     public void initVision() {
-        teamPropDetector = new TeamPropDetector(hardwareMap, this, telemetry);
+        gamepadEx1 = new GamepadEx(gamepad1); //check this and teleop right after
+        teamPropDetector = new TeamPropDetector(gamepadEx1, hardwareMap, this, telemetry);
     }
     public void initElevator() {
         elevator = new Elevator(hardwareMap);
