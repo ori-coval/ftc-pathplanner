@@ -37,7 +37,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                         new ConditionalCommand(
                                 new IntakeRotate(robot.intake.roller, robot.intake.roller.EJECT_POWER).withTimeout(1700),
                                 new InstantCommand(),
-                                () -> numOfCycle != 0 && robot.intake.roller.isRobotFull()
+                                () -> numOfCycle != 0 /*&& robot.intake.roller.isRobotFull()*/
                         ),
                         new WaitCommand(getWaitTime(robot, numOfCycle)).andThen(
                                 new ConditionalCommand(
@@ -94,7 +94,7 @@ public class ScoringCommand extends SequentialCommandGroup {
 
     private long getWaitTime(RobotControl robot, int numOfCycle) {
         if(robot.allianceColor == AllianceColor.RED) {
-            return numOfCycle == 0 ? 1850 : 1400;
+            return numOfCycle == 0 ? 1900 : 1400;
         } else {
             return 1700;
         }
@@ -279,7 +279,7 @@ public class ScoringCommand extends SequentialCommandGroup {
                     Math.toRadians(270) //Tangent
             )
             .splineToConstantHeading(
-                    new Vector2d(9, -40),
+                    new Vector2d(6, -40),
                     Math.toRadians(270) //Tangent
             )
             .splineToConstantHeading(
@@ -293,7 +293,7 @@ public class ScoringCommand extends SequentialCommandGroup {
     static final TrajectorySequence YELLOW_FRONT_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(LeaveSpikeMark.CLOSE_BLUE.end())
             .setTangent(Math.toRadians(220))
             .splineToConstantHeading(
-                    new Vector2d(11, 30),
+                    new Vector2d(9, 30),
                     Math.toRadians(270)
             )
             .splineToConstantHeading(

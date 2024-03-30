@@ -108,15 +108,19 @@ public class ScoreYellowClose extends SequentialCommandGroup {
             .setTangent(Math.toRadians(180))
             .splineToLinearHeading(
                     new Pose2d(-52, -64, Math.toRadians(90)),
-                    Math.toRadians(-40) //Tangent
+                    Math.toRadians(0),//Tangent
+                    robot.trajectories.reduceVelocity(0.9),
+                    robot.trajectories.reduceAcceleration(0.9)
             )
             .build();
 
     static final TrajectorySequence CENTER_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_CENTER_RED.end())
             .setTangent(Math.toRadians(180))
             .splineToLinearHeading(
-                    new Pose2d(-51, -63, Math.toRadians(90)),
-                    Math.toRadians(-40) //Tangent
+                    new Pose2d(-51, -65, Math.toRadians(90)),
+                    Math.toRadians(0), //Tangent
+                    robot.trajectories.reduceVelocity(0.9),
+                    robot.trajectories.reduceAcceleration(0.9)
             )
             .build();
 
@@ -125,8 +129,8 @@ public class ScoreYellowClose extends SequentialCommandGroup {
             .splineToSplineHeading(
                     new Pose2d(-29, -55, Math.toRadians(90)),
                     Math.toRadians(-90), //Tangent
-                    robot.trajectories.reduceVelocity(0.8),
-                    robot.trajectories.reduceAcceleration(0.8)
+                    robot.trajectories.reduceVelocity(0.9),
+                    robot.trajectories.reduceAcceleration(0.9)
 
             )
             .build();
@@ -138,15 +142,19 @@ public class ScoreYellowClose extends SequentialCommandGroup {
             .setTangent(Math.toRadians(0))
             .splineToLinearHeading(
                     new Pose2d(52, -64, Math.toRadians(90)),
-                    Math.toRadians(220) //Tangent
+                    Math.toRadians(180), //Tangent
+                    robot.trajectories.reduceVelocity(0.9),
+                    robot.trajectories.reduceAcceleration(0.9)
             )
             .build();
 
     static final TrajectorySequence CENTER_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoringPurplePixel.CLOSE_CENTER_BLUE.end())
             .setTangent(Math.toRadians(0))
             .splineToLinearHeading(
-                    new Pose2d(50, -64, Math.toRadians(90)),
-                    Math.toRadians(220) //Tangent
+                    new Pose2d(52, -64, Math.toRadians(90)),
+                    Math.toRadians(180), //Tangent
+                    robot.trajectories.reduceVelocity(0.9),
+                    robot.trajectories.reduceAcceleration(0.9)
             )
             .build();
 
@@ -155,8 +163,8 @@ public class ScoreYellowClose extends SequentialCommandGroup {
             .splineToSplineHeading(
                     new Pose2d(29, -55, Math.toRadians(90)),
                     Math.toRadians(270), //Tangent
-                    robot.trajectories.reduceVelocity(0.8),
-                    robot.trajectories.reduceAcceleration(0.8)
+                    robot.trajectories.reduceVelocity(0.9),
+                    robot.trajectories.reduceAcceleration(0.9)
 
             )
             .build();

@@ -75,7 +75,7 @@ public class Parking extends ParallelCommandGroup {
     static final TrajectorySequence CLOSE_RED = robot.autoDriveTrain.trajectorySequenceBuilder(ScoreYellowClose.CENTER_RED.end())
             .setTangent(180)
             .splineToConstantHeading(
-                    new Vector2d(-60, -50),
+                    new Vector2d(-64, -50),
                     Math.toRadians(90)
             )
             .build();
@@ -112,7 +112,7 @@ public class Parking extends ParallelCommandGroup {
     static final TrajectorySequence CLOSE_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(ScoreYellowClose.CENTER_BLUE.end())
             .setTangent(0)
             .splineToConstantHeading(
-                    new Vector2d(60, -50),
+                    new Vector2d(64, -50),
                     Math.toRadians(90)
             )
             .build();

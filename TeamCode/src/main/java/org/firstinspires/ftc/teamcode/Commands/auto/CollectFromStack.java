@@ -53,7 +53,7 @@ public class CollectFromStack extends ParallelCommandGroup {
                                         addBite(robot, 2),
                                         new WaitCommand(200).andThen(
                                                 new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.SECOND_PIXEL),
-                                                new WaitCommand(500),
+                                                new WaitCommand(1000),
                                                 new IntakeSetLifterPosition(robot.intake.lifter, Intake.LifterPosition.DEFAULT)
                                         )
                                 ),

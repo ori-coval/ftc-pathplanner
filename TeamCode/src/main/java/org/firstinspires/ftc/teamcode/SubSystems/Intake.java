@@ -52,7 +52,7 @@ public class Intake {
         public final double PURPLE_PIXEL_FAR_RED_POWER = 0.7;
         public final double PURPLE_PIXEL_FAR_BLUE_POWER = 1;
         public final double PURPLE_PIXEL_CLOSE_RED_POWER = -0.5;
-        public final double PURPLE_PIXEL_CLOSE_BLUE_POWER = -0.5;
+        public final double PURPLE_PIXEL_CLOSE_BLUE_POWER = -0.4;
         public final double EJECT_POWER = -0.9;
 
         private int pixelCount;

@@ -9,7 +9,7 @@ public class ArmPositionSelector {
             {ArmPosition.SCORE_MID_CLOSE, ArmPosition.SCORE_MID_FAR},
             {ArmPosition.SCORE_BOTTOM_CLOSE, ArmPosition.SCORE_BOTTOM_FAR} //TODO SCORE_BOTTOM_CLOSE
     };
-    public static ArmPosition[] frontScorePositions = {ArmPosition.SCORE_TOP_FRONT, ArmPosition.SCORE_FIRST_CYCLE_LOW_RED, ArmPosition.SCORE_FIRST_CYCLE_LOW_BLUE};
+    public static ArmPosition[] frontScorePositions = {ArmPosition.SCORE_TOP_FRONT, ArmPosition.SCORE_MID_FRONT, ArmPosition.SCORE_BOTTOM_FRONT};
     private static int selectedScoreHeight = 1;
     private static boolean isSelectedScoreSideLeft = false;
     private static Side selectedRobotSide = Side.CENTER;
