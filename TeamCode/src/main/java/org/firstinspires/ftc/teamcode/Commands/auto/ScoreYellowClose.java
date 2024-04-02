@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryFollowerCommand;
-import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryPoses;
 import org.firstinspires.ftc.teamcode.Commands.intakeRoller.ResetPixelCount;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
@@ -86,13 +86,13 @@ public class ScoreYellowClose extends SequentialCommandGroup {
         return new ConditionalCommand(
                 new ConditionalCommand(
                         new InstantCommand(() -> robot.autoDriveTrain.setPoseEstimate(new Pose2d(
-                                TrajectoryPoses.realBackdropClosePoseRed.getX(),
-                                TrajectoryPoses.realBackdropClosePoseRed.getY(),
+                                Trajectories.realBackdropClosePoseRed.getX(),
+                                Trajectories.realBackdropClosePoseRed.getY(),
                                 robot.autoDriveTrain.getPoseEstimate().getHeading()
                         ))),
                         new InstantCommand(() -> robot.autoDriveTrain.setPoseEstimate(new Pose2d(
-                                TrajectoryPoses.realBackdropClosePoseBlue.getX(),
-                                TrajectoryPoses.realBackdropClosePoseBlue.getY(),
+                                Trajectories.realBackdropClosePoseBlue.getX(),
+                                Trajectories.realBackdropClosePoseBlue.getY(),
                                 robot.autoDriveTrain.getPoseEstimate().getHeading()
                         ))),
                         () -> robot.allianceColor == AllianceColor.RED
@@ -109,8 +109,8 @@ public class ScoreYellowClose extends SequentialCommandGroup {
             .splineToLinearHeading(
                     new Pose2d(-52, -64, Math.toRadians(90)),
                     Math.toRadians(0),//Tangent
-                    robot.trajectories.reduceVelocity(0.9),
-                    robot.trajectories.reduceAcceleration(0.9)
+                    Trajectories.reduceVelocity(0.9),
+                    Trajectories.reduceAcceleration(0.9)
             )
             .build();
 
@@ -119,8 +119,8 @@ public class ScoreYellowClose extends SequentialCommandGroup {
             .splineToLinearHeading(
                     new Pose2d(-51, -65, Math.toRadians(90)),
                     Math.toRadians(0), //Tangent
-                    robot.trajectories.reduceVelocity(0.9),
-                    robot.trajectories.reduceAcceleration(0.9)
+                    Trajectories.reduceVelocity(0.9),
+                    Trajectories.reduceAcceleration(0.9)
             )
             .build();
 
@@ -129,8 +129,8 @@ public class ScoreYellowClose extends SequentialCommandGroup {
             .splineToSplineHeading(
                     new Pose2d(-29, -55, Math.toRadians(90)),
                     Math.toRadians(-90), //Tangent
-                    robot.trajectories.reduceVelocity(0.9),
-                    robot.trajectories.reduceAcceleration(0.9)
+                    Trajectories.reduceVelocity(0.9),
+                    Trajectories.reduceAcceleration(0.9)
 
             )
             .build();
@@ -143,8 +143,8 @@ public class ScoreYellowClose extends SequentialCommandGroup {
             .splineToLinearHeading(
                     new Pose2d(52, -64, Math.toRadians(90)),
                     Math.toRadians(180), //Tangent
-                    robot.trajectories.reduceVelocity(0.9),
-                    robot.trajectories.reduceAcceleration(0.9)
+                    Trajectories.reduceVelocity(0.9),
+                    Trajectories.reduceAcceleration(0.9)
             )
             .build();
 
@@ -153,8 +153,8 @@ public class ScoreYellowClose extends SequentialCommandGroup {
             .splineToLinearHeading(
                     new Pose2d(52, -64, Math.toRadians(90)),
                     Math.toRadians(180), //Tangent
-                    robot.trajectories.reduceVelocity(0.9),
-                    robot.trajectories.reduceAcceleration(0.9)
+                    Trajectories.reduceVelocity(0.9),
+                    Trajectories.reduceAcceleration(0.9)
             )
             .build();
 
@@ -163,8 +163,8 @@ public class ScoreYellowClose extends SequentialCommandGroup {
             .splineToSplineHeading(
                     new Pose2d(29, -55, Math.toRadians(90)),
                     Math.toRadians(270), //Tangent
-                    robot.trajectories.reduceVelocity(0.9),
-                    robot.trajectories.reduceAcceleration(0.9)
+                    Trajectories.reduceVelocity(0.9),
+                    Trajectories.reduceAcceleration(0.9)
 
             )
             .build();

@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryFollowerCommand;
-import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryPoses;
 import org.firstinspires.ftc.teamcode.Commands.utilCommands.DetectionSideCommandSwitch;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RobotControl;
@@ -61,9 +61,9 @@ public class LeaveSpikeMark extends ParallelCommandGroup {
             .setTangent(Math.toRadians(75))
             .splineToLinearHeading(
                     new Pose2d(
-                            TrajectoryPoses.stackPoseRed.getX(),
-                            TrajectoryPoses.stackPoseRed.getY() - 7,
-                            TrajectoryPoses.stackPoseRed.getHeading()
+                            Trajectories.stackPoseRed.getX(),
+                            Trajectories.stackPoseRed.getY() - 7,
+                            Trajectories.stackPoseRed.getHeading()
                     ),
                     Math.toRadians(-20) //Tangent
             )
@@ -97,9 +97,9 @@ public class LeaveSpikeMark extends ParallelCommandGroup {
             .setTangent(Math.toRadians(105))
             .splineToLinearHeading(
                     new Pose2d(
-                            TrajectoryPoses.stackPoseBlue.getX(),
-                            TrajectoryPoses.stackPoseBlue.getY() - 4,
-                            TrajectoryPoses.stackPoseBlue.getHeading()
+                            Trajectories.stackPoseBlue.getX(),
+                            Trajectories.stackPoseBlue.getY() - 4,
+                            Trajectories.stackPoseBlue.getHeading()
                     ),
                     Math.toRadians(160) //Tangent
             )

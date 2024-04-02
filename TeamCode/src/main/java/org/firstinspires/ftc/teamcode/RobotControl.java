@@ -164,7 +164,6 @@ public class RobotControl extends Robot {
             }
         }
         autoDriveTrain.setPoseEstimate(startPose);
-        trajectories = new Trajectories(this, startPose);
     }
 
     public void initDebug() {

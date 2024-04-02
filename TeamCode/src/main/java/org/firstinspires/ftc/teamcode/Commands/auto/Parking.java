@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.ArmPosition;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousOpMode;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.cartridge.CartridgeSetState;
 import org.firstinspires.ftc.teamcode.Commands.armCommands.multiSystem.ArmGetToPosition;
+import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.Trajectories;
 import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryFollowerCommand;
-import org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils.TrajectoryPoses;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.RobotControl;
 import org.firstinspires.ftc.teamcode.SubSystems.Cartridge;
@@ -66,7 +66,7 @@ public class Parking extends ParallelCommandGroup {
     static final TrajectorySequence FAR_RED = robot.autoDriveTrain.trajectorySequenceBuilder(
             new Pose2d(
                     ScoringCommand.CYCLES_FRONT_RED.end().getX(),
-                    TrajectoryPoses.realBackdropFront.getY(),
+                    Trajectories.realBackdropFront.getY(),
                     ScoringCommand.CYCLES_FRONT_RED.end().getHeading()
             ))
             .forward(4)
@@ -84,14 +84,14 @@ public class Parking extends ParallelCommandGroup {
             .splineToConstantHeading(
                     new Vector2d(-60, -50),
                     Math.toRadians(-90),
-                    robot.trajectories.reduceVelocity(0.8),
-                    robot.trajectories.reduceAcceleration(0.8)
+                    Trajectories.reduceVelocity(0.8),
+                    Trajectories.reduceAcceleration(0.8)
             )
             .splineToConstantHeading(
                     new Vector2d(-54, -63),
                     Math.toRadians(-20),
-                    robot.trajectories.reduceVelocity(0.5),
-                    robot.trajectories.reduceAcceleration(0.5)
+                    Trajectories.reduceVelocity(0.5),
+                    Trajectories.reduceAcceleration(0.5)
             )
             .build();
 
@@ -103,7 +103,7 @@ public class Parking extends ParallelCommandGroup {
     static final TrajectorySequence FAR_BLUE = robot.autoDriveTrain.trajectorySequenceBuilder(
             new Pose2d(
                     ScoringCommand.CYCLES_FRONT_BLUE.end().getX(),
-                    TrajectoryPoses.realBackdropFront.getY(),
+                    Trajectories.realBackdropFront.getY(),
                     ScoringCommand.CYCLES_FRONT_BLUE.end().getHeading()
             ))
             .forward(4)
@@ -121,14 +121,14 @@ public class Parking extends ParallelCommandGroup {
             .splineToConstantHeading(
                     new Vector2d(60, -50),
                     Math.toRadians(270),
-                    robot.trajectories.reduceVelocity(0.8),
-                    robot.trajectories.reduceAcceleration(0.8)
+                    Trajectories.reduceVelocity(0.8),
+                    Trajectories.reduceAcceleration(0.8)
             )
             .splineToConstantHeading(
                     new Vector2d(54, -60),
                     Math.toRadians(200),
-                    robot.trajectories.reduceVelocity(0.5),
-                    robot.trajectories.reduceAcceleration(0.5)
+                    Trajectories.reduceVelocity(0.5),
+                    Trajectories.reduceAcceleration(0.5)
             )
             .build();
 
