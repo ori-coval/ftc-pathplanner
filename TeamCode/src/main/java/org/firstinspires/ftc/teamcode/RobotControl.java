@@ -96,18 +96,13 @@ public class RobotControl extends Robot {
     }
 
     public RobotControl(OpModeType type, AllianceColor allianceColor, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
-        opModeType = type;
+        this(type, hardwareMap, gamepad1, gamepad2, telemetry);
         this.allianceColor = allianceColor;
-        initializeAttributes(type, hardwareMap, gamepad1, gamepad2, telemetry);
-        initializeSystems(type);
     }
 
     public RobotControl(OpModeType type, AllianceColor allianceColor, AllianceSide robotSide, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
-        opModeType = type;
-        this.allianceColor = allianceColor;
+        this(type, allianceColor, hardwareMap, gamepad1, gamepad2, telemetry);
         this.robotSide = robotSide;
-        initializeAttributes(type, hardwareMap, gamepad1, gamepad2, telemetry);
-        initializeSystems(type);
     }
 
     private void initializeAttributes(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
