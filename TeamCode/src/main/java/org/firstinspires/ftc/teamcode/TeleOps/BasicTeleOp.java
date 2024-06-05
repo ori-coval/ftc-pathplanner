@@ -26,8 +26,8 @@ public class BasicTeleOp extends CommandOpMode {
 
         //setup buttons
         //Ex: gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenActive(new SomethingCommand());
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenActive(new ShootByPower(shooter,0.5));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenActive(new ShootBySupplier(shooter,()->gamepadEx1.getRightY()));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whileActiveOnce(new ShootByPower(shooter,0.5));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whileActiveOnce(new ShootBySupplier(shooter,()->gamepadEx1.getRightY()));
 
 
         //create new triggers
