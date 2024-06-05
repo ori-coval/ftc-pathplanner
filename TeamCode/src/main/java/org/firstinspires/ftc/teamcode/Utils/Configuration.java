@@ -6,7 +6,7 @@ public class Configuration {
     public static final String DRIVE_TRAIN_FRONT_LEFT = "frontLeft"; //1
     public static final String DRIVE_TRAIN_FRONT_RIGHT = "frontRight"; //2
     public static final String IMU = "imu";
-
+    public static final String SHOOTER = "shooter";
 
 }
 
@@ -26,11 +26,11 @@ public class Configuration {
                     1:
                     2:
                     3:
-                    4: intakeServo           (servo)                              (servo)
-                    5: drone                 (servo)                              (servo)
+                    4:
+                    5:
 
             DIGITAL DEVICES:
-                    0: conveyorSwitch       (Digital Device)                     (digitalChannel)
+                    0:      (Digital Device)                     (digitalChannel)
 
             I2C Bus 0:
                     imu                      (REV internal IMU (BNO055))          (BNO055IMU)
@@ -39,20 +39,20 @@ public class Configuration {
 
   - EXPANSION HUB -
             MOTORS:
-                    0: elevatorLeft            (GoBilda 5202/3/4 series)            (dcMotor)
-                    1: elevatorRight           (GoBilda 5202/3/4 series)            (dcMotor)
-                    2: intake                  (GoBilda 5202/3/4 series)            (dcMotor)
-                    3: turret                  (GoBilda 5202/3/4 series)            (dcMotor)
+                    0:
+                    1:
+                    2:
+                    3:
 
             SERVOS:
-                    0: extender              (servo)                              (servo)
-                    1: elbowLeft             (servo)                              (servo)
-                    2: elbowRight            (servo)                              (servo)
-                    3: DISABLED (DOESN'T WORK ON THE EXPANSION)
-                    4: cartridge             (servo)                              (servo)
-                    5: antiTurret            (servo)                              (servo)
+                    0:
+                    1:
+                    2:
+                    3:
+                    4:
+                    5:
 
             Digital Devices:
-                    0: safePlaceSwitch
-                    2: elevatorSwitch
+                    0:
+                    2:
    */
