@@ -10,11 +10,12 @@ public class DriveCommand extends CommandBase {
 
     private Gamepad gamepad;
 
-    public DriveCommand(DriveTrain driveTrain, Gamepad gamepad){
+    public DriveCommand(DriveTrain driveTrain, Gamepad gamepad) {
         this.driveTrain = driveTrain;
         this.gamepad = gamepad;
         this.addRequirements(driveTrain);
     }
+
     @Override
     public void initialize() {
         super.initialize();
@@ -27,7 +28,7 @@ public class DriveCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        driveTrain.drive(0,0,0);
+        driveTrain.drive(0, 0, 0);
     }
 
     @Override

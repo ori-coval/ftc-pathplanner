@@ -1,20 +1,15 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
+
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.geometry.Vector2d;
-import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
-import org.firstinspires.ftc.robotcontroller.external.samples.RobotHardware;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.MotionDetection;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class DriveTrain extends SubsystemBase {
@@ -48,14 +43,14 @@ public class DriveTrain extends SubsystemBase {
 
     }
 
-    public DriveTrain(HardwareMap hardwareMap, double lastAngle){
+    public DriveTrain(HardwareMap hardwareMap, double lastAngle) {
         this(hardwareMap);
         setYaw(lastAngle);
     }
 
     private double[] joystickToPower(double x, double y, double yaw) {
 
-        RealVector joystickVector = MatrixUtils.createRealVector(new double[] {
+        RealVector joystickVector = MatrixUtils.createRealVector(new double[]{
                 x,
                 y,
                 yaw
@@ -67,7 +62,7 @@ public class DriveTrain extends SubsystemBase {
 
         double[] powerArray = powerVector.toArray();
 
-        for(int i = 0; i < powerArray.length; i++) {
+        for (int i = 0; i < powerArray.length; i++) {
             powerArray[i] = powerArray[i] / Math.max(Math.abs(x) + Math.abs(y) + Math.abs(yaw), 1);
         }
 
@@ -76,13 +71,13 @@ public class DriveTrain extends SubsystemBase {
     }
 
 
-
     private void setMotorPower(double[] power) {
         motorFL.setPower(power[0]);
         motorBL.setPower(power[1]);
         motorFR.setPower(power[2]);
         motorBR.setPower(power[3]);
     }
+
     public void drive(double x, double y, double yaw) {
         setMotorPower(joystickToPower(x, y, yaw));
     }

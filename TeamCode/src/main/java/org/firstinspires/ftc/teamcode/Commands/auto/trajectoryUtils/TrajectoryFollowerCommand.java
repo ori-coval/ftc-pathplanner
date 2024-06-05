@@ -2,10 +2,8 @@ package org.firstinspires.ftc.teamcode.Commands.auto.trajectoryUtils;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.SubSystems.AutoDriveTrain;
-import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 
 public class TrajectoryFollowerCommand extends CommandBase {
 
