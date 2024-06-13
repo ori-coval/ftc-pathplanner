@@ -12,13 +12,11 @@ public class Shooter extends SubsystemBase {
 
     public Shooter(HardwareMap hardwareMap) {
         this.motor = hardwareMap.get(DcMotorEx.class, Configuration.SHOOTER);
+        this.register();
     }
 
     public void setPower(double power) {
         motor.setPower(power);
     }
 
-    public double getVelocity() {
-        return motor.getVelocity();
-    }
 }
