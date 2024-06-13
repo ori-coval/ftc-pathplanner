@@ -11,8 +11,8 @@ public class Shooter extends SubsystemBase {
 
     DcMotorEx motor;
 
-    public Shooter(HardwareMap hardwareMap) {
-        this.motor = hardwareMap.get(DcMotorEx.class, Configuration.SHOOTER);
+    public Shooter() {
+        this.motor = MMRobot.getInstance().mmSystems.hardwareMap.get(DcMotorEx.class, Configuration.SHOOTER);
         this.register();
     }
 

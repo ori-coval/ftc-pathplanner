@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
+import org.firstinspires.ftc.teamcode.SubSystems.ShooterPID;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
@@ -26,7 +27,7 @@ public class MMRobot extends Robot {
         instance = null;
     }
 
-    //Attributes
+    //Systems
 
     public MMRobotParams mmSystems = new MMRobotParams();
 
@@ -67,7 +68,7 @@ public class MMRobot extends Robot {
 
     private void initTele() {
         //initialize subsystems required for teleop
-        mmSystems.shooter = new Shooter(mmSystems.hardwareMap);
+        mmSystems.shooterPID = new ShooterPID();
     }
 
     private void initAuto() {
