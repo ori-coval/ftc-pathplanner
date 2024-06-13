@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class Shooter extends SubsystemBase {
@@ -19,4 +20,8 @@ public class Shooter extends SubsystemBase {
         motor.setPower(power);
     }
 
+    @Override
+    public void periodic() {
+        MMRobot.getInstance().mmSystems.telemetry.addLine(String.valueOf(motor.getPower()));
+    }
 }

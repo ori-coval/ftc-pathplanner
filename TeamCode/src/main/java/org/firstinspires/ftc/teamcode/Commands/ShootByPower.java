@@ -2,14 +2,14 @@ package org.firstinspires.ftc.teamcode.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
+import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
 
 public class ShootByPower extends CommandBase {
 
-    Shooter shooter;
+    Shooter shooter = MMRobot.getInstance().mmSystems.shooter;
     double power;
-    public ShootByPower(Shooter shooter, double power){
-        this.shooter = shooter;
+    public ShootByPower(double power){
         this.power = power;
         this.addRequirements(shooter);
     }

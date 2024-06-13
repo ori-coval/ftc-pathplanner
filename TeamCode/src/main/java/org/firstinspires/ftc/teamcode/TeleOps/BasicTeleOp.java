@@ -1,50 +1,46 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
-import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Commands.DefaultShooterPower;
-import org.firstinspires.ftc.teamcode.Commands.ShootByPower;
 import org.firstinspires.ftc.teamcode.Commands.ShootBySupplier;
-import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
+import org.firstinspires.ftc.teamcode.MMRobot;
+import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp(name = "Teleop")
 public class BasicTeleOp extends CommandOpMode {
 
-    // subsystems here
-    Shooter shooter;
+    MMRobot mmRobot = MMRobot.getInstance();
 
     @Override
     public void initialize() {
-        //init gamepad
-        GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
 
-        //init subsystem
-        //Ex: subsystem  = new Subsystem(hardwareMap)
-        shooter = new Shooter(hardwareMap);
-        shooter.setDefaultCommand(new DefaultShooterPower(shooter));
+        mmRobot.init(OpModeType.TELEOP, hardwareMap, gamepad1, gamepad2, telemetry);
 
+        mmRobot.mmSystems.shooter.setDefaultCommand(new CommandBase() {
+            {
+                addRequirements(mmRobot.mmSystems.shooter);
+            }
+            @Override
+            public void execute() {
+                mmRobot.mmSystems.shooter.setPower(0.5);
+            }
+        });
 
-        //setup buttons
-        //Ex: gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenActive(new SomethingCommand());
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whileActiveOnce(new ShootByPower(shooter, 1));
+        mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whileActiveOnce(
+                new ShootBySupplier(mmRobot.mmSystems.gamepadEx1::getLeftY)
+        );
 
-
-        //create new triggers
-        //Ex: Trigger newTrigger = new Trigger(() -> gamepadEx1.getLeftY() > 0.5);
     }
 
     @Override
     public void run() {
         super.run();
 
-        //setting up telemetry
-        //telemetry.addData("name", value)
-
-
+        telemetry.addLine(String.valueOf(mmRobot.mmSystems.opModeType));
+        telemetry.update();
 
     }
 }
