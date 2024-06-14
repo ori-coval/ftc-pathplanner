@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TeleOps;
+package org.firstinspires.ftc.teamcode.MMLib.Examples;
 
 import android.hardware.TriggerEvent;
 import android.hardware.TriggerEventListener;
@@ -9,6 +9,8 @@ import com.arcrobotics.ftclib.command.StartEndCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.Commands.ShootBySupplier;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
@@ -38,10 +40,12 @@ public class ExperimentingTeleOp extends MMTeleOp {
         Runnable changeStage = () -> isActive = !isActiveSupplier.getAsBoolean();
 
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenActive(
-                new ShootBySupplier(mmRobot.mmSystems.gamepadEx1::getRightY).alongWith(new StartEndCommand(
-                        changeStage,
-                        changeStage
-                ))
+                new ShootBySupplier(mmRobot.mmSystems.gamepadEx1::getRightY).alongWith(
+                        new StartEndCommand(
+                                changeStage,
+                                changeStage
+                        )
+                )
         );
 
     }
