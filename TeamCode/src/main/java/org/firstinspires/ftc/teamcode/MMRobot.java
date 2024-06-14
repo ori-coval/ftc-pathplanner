@@ -68,7 +68,7 @@ public class MMRobot extends Robot {
 
     private void initTele() {
         //initialize subsystems required for teleop
-        mmSystems.shooterPID = new ShooterPID();
+        initShooterPID();
     }
 
     private void initAuto() {
@@ -80,6 +80,8 @@ public class MMRobot extends Robot {
     }
 
     //initSubsystems and GamepadKeys
-
+    private void initShooterPID() {
+        mmSystems.shooterPID = new ShooterPID();
+    }
 
 }
