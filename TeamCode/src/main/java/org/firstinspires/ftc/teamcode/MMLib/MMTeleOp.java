@@ -15,8 +15,9 @@ import java.util.List;
 
 public abstract class MMTeleOp extends CommandOpMode {
 
-    MMRobot mmRobot = MMRobot.getInstance();
+    private final MMRobot mmRobot = MMRobot.getInstance();
 
+    private boolean isExperimenting = false;
     private AllianceColor allianceColor;
     private AllianceSide allianceSide;
 
@@ -24,8 +25,11 @@ public abstract class MMTeleOp extends CommandOpMode {
     private final List<Command> commandsOnRun = new ArrayList<>();
 
 
-    public MMTeleOp() { //for debugging or smth
-
+    /**
+     * use this if u want to initialize the subsystems and buttons urself
+     */
+    public MMTeleOp() {
+        isExperimenting = true;
     }
 
     public MMTeleOp(AllianceColor allianceColor) {
@@ -42,14 +46,15 @@ public abstract class MMTeleOp extends CommandOpMode {
 
         robotInit();
 
-        addRunnableOrCommands();
+        main();
 
         scheduleCommandsAndRun();
 
     }
 
-    public void robotInit() {
-        mmRobot.init(OpModeType.TELEOP, allianceColor, allianceSide, hardwareMap, gamepad1, gamepad2, telemetry);
+    private void robotInit() {
+        OpModeType opModeType = isExperimenting ? OpModeType.EXPERIMENTING : OpModeType.TELEOP;
+        mmRobot.init(opModeType, allianceColor, allianceSide, hardwareMap, gamepad1, gamepad2, telemetry);
     }
 
     /**
@@ -58,8 +63,9 @@ public abstract class MMTeleOp extends CommandOpMode {
      * you can't run command on init, but you can run runnable on init, and commands right after opmode is active.
      * use addRunnableOnInit and/or addCommandsOnRun.
      * leave it empty if you don't need them.
+     * this ofc can also be used to add custom buttons (in experimenting) or whatever you might want.
      */
-    public abstract void addRunnableOrCommands(); //use addRunnableOnInit or addCommandsOnRun
+    public abstract void main();
 
     public void addRunnableOnInit(Runnable... runOnInit) {
         this.runOnInit.addAll(Arrays.asList(runOnInit));
@@ -71,7 +77,7 @@ public abstract class MMTeleOp extends CommandOpMode {
           the problem was that the scheduler for some reason always ran the first instant command even tho it wasnt on yet*/
     }
 
-    public void scheduleCommandsAndRun() {
+    private void scheduleCommandsAndRun() {
         for(Runnable runnable : runOnInit) {
             runnable.run();
         }

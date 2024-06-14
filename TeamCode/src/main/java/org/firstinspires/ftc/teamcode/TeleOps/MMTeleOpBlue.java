@@ -18,7 +18,7 @@ public class MMTeleOpBlue extends MMTeleOpTest {
     }
 
     @Override
-    public void addRunnableOrCommands() {
+    public void main() {
         addRunnableOnInit(
                 () -> MMRobot.getInstance().mmSystems.shooterPID.setPower(0.5)
         );

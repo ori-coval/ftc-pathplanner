@@ -20,6 +20,10 @@ public class Shooter extends SubsystemBase {
         motor.setPower(power);
     }
 
+    public boolean isActive() {
+        return motor.getPower() != 0;
+    }
+
     @Override
     public void periodic() {
         MMRobot.getInstance().mmSystems.telemetry.addLine(String.valueOf(motor.getPower()));

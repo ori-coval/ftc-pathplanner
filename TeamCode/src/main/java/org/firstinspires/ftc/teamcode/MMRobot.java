@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Path;
+
 import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -31,8 +33,8 @@ public class MMRobot extends Robot {
 
     public MMRobotParams mmSystems = new MMRobotParams();
 
+
     public void init(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
-        mmSystems.opModeType = type;
         initializeAttributes(type, hardwareMap, gamepad1, gamepad2, telemetry);
         initializeSystems(type);
     }
@@ -61,7 +63,7 @@ public class MMRobot extends Robot {
             initTele();
         } else if (type == OpModeType.AUTO) {
             initAuto();
-        } else {
+        } else if(type == OpModeType.DEBUG) {
             initDebug();
         }
     }
