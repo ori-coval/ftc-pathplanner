@@ -1,7 +1,12 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
+import android.hardware.TriggerEvent;
+import android.hardware.TriggerEventListener;
+
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.StartEndCommand;
+import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -18,19 +23,25 @@ public class ExperimentingTeleOp extends MMTeleOp {
 
     MMRobot mmRobot = MMRobot.getInstance();
 
-    static BooleanSupplier isActive;
+    boolean isActive = false;
+
+    BooleanSupplier isActiveSupplier = this::getIsActive;
+
+    public boolean getIsActive() {
+        return isActive;
+    }
 
     @Override
     public void main() {
         mmRobot.mmSystems.shooter = new Shooter();
 
+        Runnable changeStage = () -> isActive = !isActiveSupplier.getAsBoolean();
+
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenActive(
-                new SequentialCommandGroup(
-                        new ShootBySupplier(mmRobot.mmSystems.gamepadEx1::getRightY),
-                        new InstantCommand(() ->
-                                isActive = () -> !isActive.getAsBoolean()
-                        )
-                )
+                new ShootBySupplier(mmRobot.mmSystems.gamepadEx1::getRightY).alongWith(new StartEndCommand(
+                        changeStage,
+                        changeStage
+                ))
         );
 
     }
@@ -39,7 +50,7 @@ public class ExperimentingTeleOp extends MMTeleOp {
     public void run() {
         super.run();
 
-        telemetry.addData("isActive", isActive.getAsBoolean()); //I wanted to know if when I update the old telemetry gets deleted
+        telemetry.addData("isActive", isActiveSupplier.getAsBoolean());
         telemetry.update();
 
     }
