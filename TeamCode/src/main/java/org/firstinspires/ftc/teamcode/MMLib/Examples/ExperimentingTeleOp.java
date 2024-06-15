@@ -29,6 +29,10 @@ public class ExperimentingTeleOp extends MMTeleOp {
 
     BooleanSupplier isActiveSupplier = this::getIsActive;
 
+    public ExperimentingTeleOp() {
+        super(false);
+    }
+
     public boolean getIsActive() {
         return isActive;
     }

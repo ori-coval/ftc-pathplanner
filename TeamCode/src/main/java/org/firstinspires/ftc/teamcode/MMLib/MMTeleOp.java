@@ -17,7 +17,8 @@ public abstract class MMTeleOp extends CommandOpMode {
 
     private final MMRobot mmRobot = MMRobot.getInstance();
 
-    private boolean isExperimenting = false;
+    private OpModeType opModeType = OpModeType.TELEOP;
+
     private AllianceColor allianceColor;
     private AllianceSide allianceSide;
 
@@ -28,8 +29,8 @@ public abstract class MMTeleOp extends CommandOpMode {
     /**
      * use this if u want to initialize the subsystems and buttons urself
      */
-    public MMTeleOp() {
-        isExperimenting = true;
+    public MMTeleOp(boolean withExpansion) {
+        opModeType = withExpansion ? OpModeType.EXPERIMENTING : OpModeType.EXPERIMENTING_NO_EXPANSION;
     }
 
     public MMTeleOp(AllianceColor allianceColor) {
@@ -53,7 +54,6 @@ public abstract class MMTeleOp extends CommandOpMode {
     }
 
     private void robotInit() {
-        OpModeType opModeType = isExperimenting ? OpModeType.EXPERIMENTING : OpModeType.TELEOP;
         mmRobot.init(opModeType, allianceColor, allianceSide, hardwareMap, gamepad1, gamepad2, telemetry);
     }
 

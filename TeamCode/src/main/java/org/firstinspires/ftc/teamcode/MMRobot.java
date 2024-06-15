@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.roboctopi.cuttlefishftcbridge.devices.CuttleRevHub;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
@@ -52,6 +53,10 @@ public class MMRobot extends Robot {
     private void initializeAttributes(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         mmSystems.opModeType = type;
         mmSystems.hardwareMap = hardwareMap;
+        mmSystems.controlHub = new CuttleRevHub(hardwareMap, CuttleRevHub.HubTypes.CONTROL_HUB);
+        if(type != OpModeType.EXPERIMENTING_NO_EXPANSION) {
+            mmSystems.expansionHub = new CuttleRevHub(hardwareMap, CuttleRevHub.HubTypes.EXPANSION_HUB);
+        }
         mmSystems.gamepadEx1 = new GamepadEx(gamepad1);
         mmSystems.gamepadEx2 = new GamepadEx(gamepad2);
         mmSystems.telemetry = telemetry;
