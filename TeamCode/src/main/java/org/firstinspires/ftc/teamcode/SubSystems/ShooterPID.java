@@ -11,20 +11,18 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class ShooterPID extends MMPIDSubsystem {
 
-    public static final double kP = 0.2;
+    public static final double kP = 0.01;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double tolerance = 0;
 
-    private final CuttleMotor motor;
-    private final CuttleEncoder encoder;
+    private final DcMotorEx motor;
 
     private final MMRobot mmRobot = MMRobot.getInstance();
 
     public ShooterPID() {
         super(kP, kI, kD, tolerance);
-        this.motor = mmRobot.mmSystems.controlHub.getMotor(Configuration.SHOOTER);
-        this.encoder = mmRobot.mmSystems.controlHub.getEncoder(Configuration.SHOOTER, 3895);
+        this.motor = mmRobot.mmSystems.hardwareMap.get(DcMotorEx.class, "shooter");
     }
 
     @Override
@@ -34,7 +32,7 @@ public class ShooterPID extends MMPIDSubsystem {
 
     @Override
     public double getCurrentValue() {
-        return encoder.getRotation();
+        return motor.getCurrentPosition();
     }
 
     @Override

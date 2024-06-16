@@ -25,7 +25,7 @@ public class BasicTeleOp extends CommandOpMode {
         );
 
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
-                new ShootByPID(30)
+                new ShootByPID(500)
         );
 
     }
