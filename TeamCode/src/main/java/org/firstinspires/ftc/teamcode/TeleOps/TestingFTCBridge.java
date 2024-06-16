@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.TeleOps;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.roboctopi.cuttlefishftcbridge.devices.CuttleMotor;
 
+import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMRobot;
 

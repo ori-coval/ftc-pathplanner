@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.roboctopi.cuttlefishftcbridge.devices.CuttleMotor;
 
+import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleEncoder;
+import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.MMLib.MMPIDCommand;
 import org.firstinspires.ftc.teamcode.MMLib.MMPIDSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
@@ -16,12 +17,14 @@ public class ShooterPID extends MMPIDSubsystem {
     public static final double tolerance = 0;
 
     private final CuttleMotor motor;
+    private final CuttleEncoder encoder;
 
     private final MMRobot mmRobot = MMRobot.getInstance();
 
     public ShooterPID() {
         super(kP, kI, kD, tolerance);
         this.motor = MMRobot.getInstance().mmSystems.controlHub.getMotor(Configuration.SHOOTER);
+        this.encoder = MMRobot.getInstance().mmSystems.controlHub.getEncoder(Configuration.SHOOTER, 3895.9);
     }
 
     @Override
@@ -31,7 +34,7 @@ public class ShooterPID extends MMPIDSubsystem {
 
     @Override
     public double getCurrentValue() {
-        return motor.positionController.getEnc().getRotation();
+        return encoder.getCounts();
     }
 
     @Override

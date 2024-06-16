@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.roboctopi.cuttlefishftcbridge.devices.CuttleMotor;
+import com.roboctopi.cuttlefish.utils.Direction;
 
+import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
@@ -14,6 +13,7 @@ public class Shooter extends SubsystemBase {
 
     public Shooter() {
         this.motor = MMRobot.getInstance().mmSystems.controlHub.getMotor(Configuration.SHOOTER);
+        motor.setDirection(Direction.REVERSE);
         this.register();
     }
 
@@ -23,6 +23,6 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        MMRobot.getInstance().mmSystems.telemetry.addLine(String.valueOf(motor.power));
+        MMRobot.getInstance().mmSystems.telemetry.addData("Power", String.valueOf(motor.getPower()));
     }
 }

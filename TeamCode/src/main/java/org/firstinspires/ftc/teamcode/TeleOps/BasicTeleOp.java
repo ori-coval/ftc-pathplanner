@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Commands.ShootByPID;
 import org.firstinspires.ftc.teamcode.MMRobot;
+import org.firstinspires.ftc.teamcode.SubSystems.ShooterPID;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp(name = "Teleop")
@@ -15,7 +16,9 @@ public class BasicTeleOp extends CommandOpMode {
 
     @Override
     public void initialize() {
-        mmRobot.init(OpModeType.TELEOP, hardwareMap, gamepad1, gamepad2, telemetry);
+        mmRobot.init(OpModeType.EXPERIMENTING_NO_EXPANSION, hardwareMap, gamepad1, gamepad2, telemetry);
+
+        mmRobot.mmSystems.shooterPID = new ShooterPID();
 
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new ShootByPID(0)

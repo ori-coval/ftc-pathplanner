@@ -2,16 +2,15 @@ package org.firstinspires.ftc.teamcode.TeleOps;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
-import com.roboctopi.cuttlefishftcbridge.devices.CuttleRevHub;
 
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 
 @TeleOp
-public class Test extends MMTeleOp {
+public class BatteryTest extends MMTeleOp {
 
     VoltageSensor sensor;
 
-    public Test() {
+    public BatteryTest() {
         super(false);
     }
 
