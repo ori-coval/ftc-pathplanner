@@ -23,8 +23,8 @@ public class ShooterPID extends MMPIDSubsystem {
 
     public ShooterPID() {
         super(kP, kI, kD, tolerance);
-        this.motor = MMRobot.getInstance().mmSystems.controlHub.getMotor(Configuration.SHOOTER);
-        this.encoder = MMRobot.getInstance().mmSystems.controlHub.getEncoder(Configuration.SHOOTER, 3895.9);
+        this.motor = mmRobot.mmSystems.controlHub.getMotor(Configuration.SHOOTER);
+        this.encoder = mmRobot.mmSystems.controlHub.getEncoder(Configuration.SHOOTER, 3895);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ShooterPID extends MMPIDSubsystem {
 
     @Override
     public double getCurrentValue() {
-        return encoder.getCounts();
+        return encoder.getRotation();
     }
 
     @Override
