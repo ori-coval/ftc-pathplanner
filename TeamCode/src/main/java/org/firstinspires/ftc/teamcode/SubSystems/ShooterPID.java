@@ -1,28 +1,33 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleEncoder;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleMotor;
-import org.firstinspires.ftc.teamcode.MMLib.MMPIDCommand;
 import org.firstinspires.ftc.teamcode.MMLib.MMPIDSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
+
+@Config
 public class ShooterPID extends MMPIDSubsystem {
 
-    public static final double kP = 0.01;
-    public static final double kI = 0;
-    public static final double kD = 0;
-    public static final double tolerance = 0;
+    public static double kP = 0.01;
+    public static double kI = 0;
+    public static double kD = 0;
+    public static double tolerance = 0;
 
-    private final DcMotorEx motor;
+    private final CuttleMotor motor;
+    private final CuttleEncoder encoder;
 
     private final MMRobot mmRobot = MMRobot.getInstance();
 
     public ShooterPID() {
         super(kP, kI, kD, tolerance);
-        this.motor = mmRobot.mmSystems.hardwareMap.get(DcMotorEx.class, "shooter");
+        this.motor = mmRobot.mmSystems.controlHub.getMotor(Configuration.SHOOTER);
+        this.encoder = mmRobot.mmSystems.controlHub.getEncoder(Configuration.SHOOTER, 3895.9);
     }
 
     @Override
@@ -32,7 +37,7 @@ public class ShooterPID extends MMPIDSubsystem {
 
     @Override
     public double getCurrentValue() {
-        return motor.getCurrentPosition();
+        return encoder.getVelocity();
     }
 
     @Override
@@ -42,6 +47,14 @@ public class ShooterPID extends MMPIDSubsystem {
 
     @Override
     public void periodic() {
-        mmRobot.mmSystems.telemetry.addData("Current Value", getCurrentValue());
+        mmRobot.mmSystems.controlHub.pullBulkData();
+        telemetry();
     }
+
+    private void telemetry() {
+        mmRobot.mmSystems.telemetry.addData("Current Value", getCurrentValue());
+        FtcDashboard.getInstance().getTelemetry().addData("Current Value", getCurrentValue());
+        FtcDashboard.getInstance().getTelemetry().addData("Target", getPidController().getSetPoint());
+    }
+
 }

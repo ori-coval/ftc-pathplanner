@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -20,12 +21,16 @@ public class BasicTeleOp extends CommandOpMode {
 
         mmRobot.mmSystems.shooterPID = new ShooterPID();
 
+        mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
+                new ShootByPID(-5)
+        );
+
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new ShootByPID(0)
         );
 
-        mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
-                new ShootByPID(500)
+        mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(
+                new ShootByPID(5)
         );
 
     }
@@ -33,6 +38,7 @@ public class BasicTeleOp extends CommandOpMode {
     @Override
     public void run() {
         super.run();
+        FtcDashboard.getInstance().getTelemetry().update();
         telemetry.update();
     }
 }
