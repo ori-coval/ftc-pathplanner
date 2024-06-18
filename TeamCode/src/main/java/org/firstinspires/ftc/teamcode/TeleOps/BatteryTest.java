@@ -3,12 +3,13 @@ package org.firstinspires.ftc.teamcode.TeleOps;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+import org.firstinspires.ftc.teamcode.MMLib.MMBattery;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 
 @TeleOp
 public class BatteryTest extends MMTeleOp {
 
-    VoltageSensor sensor;
+    MMBattery mmBattery;
 
     public BatteryTest() {
         super(false);
@@ -16,14 +17,14 @@ public class BatteryTest extends MMTeleOp {
 
     @Override
     public void main() {
-        sensor = hardwareMap.voltageSensor.iterator().next();
+        mmBattery = new MMBattery(hardwareMap);
     }
 
     @Override
     public void run() {
         super.run();
 
-        telemetry.addData("Voltage", sensor.getVoltage());
+        telemetry.addData("Voltage", mmBattery.getVoltage());
         telemetry.update();
 
     }
