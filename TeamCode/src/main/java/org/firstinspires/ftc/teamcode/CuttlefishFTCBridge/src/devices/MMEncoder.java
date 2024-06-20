@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.roboctopi.cuttlefish.components.RotaryEncoder;
 import com.roboctopi.cuttlefish.utils.Direction;
 
 /**
  * Rotary encoder connected through a motor encoder port
  * */
-public class CuttleEncoder implements RotaryEncoder
+public class MMEncoder implements RotaryEncoder
 {
-    public CuttleRevHub hub;
+    public MMRevHub hub;
     private final double encTicks;
     private int direction = 1;
     public int mPort;
@@ -21,7 +19,7 @@ public class CuttleEncoder implements RotaryEncoder
      * @param port Motor port of the encoder
      * @param countsPerRevolution Number of counts per revolution of the encoder
      * */
-    public CuttleEncoder(CuttleRevHub revHub, int port, double countsPerRevolution) {
+    public MMEncoder(MMRevHub revHub, int port, double countsPerRevolution) {
         hub = revHub;
         encTicks = countsPerRevolution;
         mPort = port;

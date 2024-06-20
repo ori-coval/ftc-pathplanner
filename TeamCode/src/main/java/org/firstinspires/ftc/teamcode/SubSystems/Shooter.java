@@ -3,13 +3,13 @@ package org.firstinspires.ftc.teamcode.SubSystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.roboctopi.cuttlefish.utils.Direction;
 
-import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleMotor;
+import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMMotor;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class Shooter extends SubsystemBase {
 
-    CuttleMotor motor;
+    MMMotor motor;
 
     public Shooter() {
         this.motor = MMRobot.getInstance().mmSystems.controlHub.getMotor(Configuration.SHOOTER);

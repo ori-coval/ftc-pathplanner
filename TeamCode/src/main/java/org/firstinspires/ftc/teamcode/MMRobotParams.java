@@ -5,7 +5,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleRevHub;
+import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMRevHub;
 import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
 import org.firstinspires.ftc.teamcode.SubSystems.ShooterPID;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
@@ -18,8 +18,8 @@ public class MMRobotParams {
     public AllianceColor allianceColor;
     public AllianceSide robotSide;
     public HardwareMap hardwareMap;
-    public CuttleRevHub controlHub;
-    public CuttleRevHub expansionHub;
+    public MMRevHub controlHub;
+    public MMRevHub expansionHub;
     public GamepadEx gamepadEx1;
     public GamepadEx gamepadEx2;
     public Telemetry telemetry;

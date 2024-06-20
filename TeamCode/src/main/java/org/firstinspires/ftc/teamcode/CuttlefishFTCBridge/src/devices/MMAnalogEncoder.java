@@ -7,9 +7,9 @@ import static com.roboctopi.cuttlefish.utils.MathUtilsKt.rFullToHalf;
 /**
  * Analog rotary encoder.
  * */
-public class CuttleAnalogEncoder implements RotaryEncoder
+public class MMAnalogEncoder implements RotaryEncoder
 {
-    public CuttleRevHub hub;
+    public MMRevHub hub;
     private int direction = 1;
     public int aPort;
 
@@ -23,7 +23,7 @@ public class CuttleAnalogEncoder implements RotaryEncoder
      * @param offset Amount of offset the angle of the encoder in radians
      * @param maxVoltage Voltage of the sensor in its furthest position in milli-volts. This is probably the supply voltage of the sensor.
      * */
-    public CuttleAnalogEncoder(CuttleRevHub revHub, int port, double offset, double maxVoltage) {
+    public MMAnalogEncoder(MMRevHub revHub, int port, double offset, double maxVoltage) {
         hub = revHub;
         aPort = port;
         rotationOffset = offset;

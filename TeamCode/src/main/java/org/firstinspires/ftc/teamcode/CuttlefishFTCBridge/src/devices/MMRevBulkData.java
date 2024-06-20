@@ -1,12 +1,12 @@
 package org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices;
 import com.qualcomm.hardware.lynx.commands.core.LynxGetBulkInputDataResponse;
 
-public class CuttleRevBulkData {
+public class MMRevBulkData {
     // The point of this class is to format the response from the hubs and get it for usage
     // Nvm it doesnt need to, but this class is staying anyway for now
     LynxGetBulkInputDataResponse response;
     public boolean success = false;
-    public CuttleRevBulkData() {}
+    public MMRevBulkData() {}
 
     public void updateData(LynxGetBulkInputDataResponse response)
     {
@@ -21,7 +21,7 @@ public class CuttleRevBulkData {
     }
 
 
-    public CuttleRevBulkData(boolean success)
+    public MMRevBulkData(boolean success)
     {
         this.success = success;
     }

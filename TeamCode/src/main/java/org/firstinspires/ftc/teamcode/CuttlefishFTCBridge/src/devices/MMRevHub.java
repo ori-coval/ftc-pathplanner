@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Object that represents a Rev Robotics Control or Expansion hub. This is the basis of the Cuttlefish device architecture.
  * */
-public class CuttleRevHub  extends LynxCommExceptionHandler implements RobotArmingStateNotifier.Callback {
+public class MMRevHub extends LynxCommExceptionHandler implements RobotArmingStateNotifier.Callback {
 
    boolean armed = false;
 
@@ -71,14 +71,14 @@ public class CuttleRevHub  extends LynxCommExceptionHandler implements RobotArmi
 
    public LynxModule revHub;
 
-   public CuttleRevBulkData bulkData;
+   public MMRevBulkData bulkData;
 
    /**
     * Create Rev hub object using the name of the hub (this can be found in the robot config).
     * @param hardwareMap The opmode's hardwareMap
     * @param hubName "Control Hub" or "Expansion Hub"
     */
-   public CuttleRevHub(HardwareMap hardwareMap,String hubName)
+   public MMRevHub(HardwareMap hardwareMap, String hubName)
    {
       revHub = hardwareMap.get(LynxModule.class,hubName);
       revHub.registerCallback(this,true);
@@ -90,7 +90,7 @@ public class CuttleRevHub  extends LynxCommExceptionHandler implements RobotArmi
             e.printStackTrace();
          }
       }
-      bulkData = new CuttleRevBulkData();
+      bulkData = new MMRevBulkData();
       pullBulkData();
 
 
@@ -100,7 +100,7 @@ public class CuttleRevHub  extends LynxCommExceptionHandler implements RobotArmi
     * @param hardwareMap The opmode's hardwareMap
     * @param hubType HubTypes enum automatically sets name to "Control Hub" or "Expansion Hub". If this doesn't work check config and set the name manually.
     */
-   public CuttleRevHub(HardwareMap hardwareMap,HubTypes hubType)
+   public MMRevHub(HardwareMap hardwareMap, HubTypes hubType)
    {
       switch(hubType)
       {
@@ -111,7 +111,7 @@ public class CuttleRevHub  extends LynxCommExceptionHandler implements RobotArmi
             revHub = hardwareMap.get(LynxModule.class,"Expansion Hub");
             break;
       }
-      bulkData = new CuttleRevBulkData();
+      bulkData = new MMRevBulkData();
       pullBulkData();
    }
 
@@ -165,9 +165,9 @@ public class CuttleRevHub  extends LynxCommExceptionHandler implements RobotArmi
     * Return a motor with port and hub set
     * @param port The port of the motor
     */
-   public CuttleMotor getMotor(int port)
+   public MMMotor getMotor(int port)
    {
-      return new CuttleMotor(this,port);
+      return new MMMotor(this,port);
    }
 
    /**
@@ -175,9 +175,9 @@ public class CuttleRevHub  extends LynxCommExceptionHandler implements RobotArmi
     * @param port The digital port that the sensor is on
     * @return Digital Sensor
     * */
-   public CuttleDigital getDigital(int port)
+   public MMDigital getDigital(int port)
    {
-      return new CuttleDigital(this,port);
+      return new MMDigital(this,port);
    }
 
 
@@ -185,14 +185,14 @@ public class CuttleRevHub  extends LynxCommExceptionHandler implements RobotArmi
     * Return a analog sensor with port and hub set
     * @param port The analog port that the sensor is on
     * */
-   public CuttleAnalog getAnalog(int port) {return new CuttleAnalog(this,port);}
+   public MMAnalog getAnalog(int port) {return new MMAnalog(this,port);}
 
    /**
     * Return an encoder with port counts, and hub set
     * @param port The motor port of the encoder
     * @param counts Number of encoder counts per revolution
     */
-   public CuttleEncoder getEncoder(int port,double counts) {return new CuttleEncoder(this,port,counts);}
+   public MMEncoder getEncoder(int port, double counts) {return new MMEncoder(this,port,counts);}
 
    /**
     * Return a configured analog encoder
@@ -200,7 +200,7 @@ public class CuttleRevHub  extends LynxCommExceptionHandler implements RobotArmi
     * @param offset The offset of the analog port
     * @param voltage Voltage of the sensor at its positive extreme. This is probably the supply voltage of the sensor.
     * */
-   public CuttleAnalogEncoder getAnalogEncoder(int port,double offset, double voltage) {return new CuttleAnalogEncoder(this,port,offset,voltage);}
+   public MMAnalogEncoder getAnalogEncoder(int port, double offset, double voltage) {return new MMAnalogEncoder(this,port,offset,voltage);}
 
    /**
     * Set the zero power behaviour of the motor
@@ -287,10 +287,10 @@ public class CuttleRevHub  extends LynxCommExceptionHandler implements RobotArmi
     * Return a configured servo by port
     * @param port Port of the servo
     */
-   public CuttleServo getServo(int port)
+   public MMServo getServo(int port)
    {
       setServoPWM(port);
-      return new CuttleServo(this,port);
+      return new MMServo(this,port);
    }
 
 

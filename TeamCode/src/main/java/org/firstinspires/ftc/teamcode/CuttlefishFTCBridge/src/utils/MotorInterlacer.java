@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.utils;
 
-import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleMotor;
+import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMMotor;
 
 import java.util.ArrayList;
 
 public class MotorInterlacer {
-    public ArrayList<CuttleMotor[]> groups = new ArrayList<>();
+    public ArrayList<MMMotor[]> groups = new ArrayList<>();
 
-    public void addMotorGroup(CuttleMotor... motors)
+    public void addMotorGroup(MMMotor... motors)
     {
         groups.add(motors);
         for(int j = 0; j < motors.length; j++)
@@ -18,7 +18,7 @@ public class MotorInterlacer {
     private int i = 0;
     public void loop()
     {
-        CuttleMotor[] group = groups.get(i);
+        MMMotor[] group = groups.get(i);
         for(int j = 0; j < group.length; j++)
         {
             group[j].sendPower();

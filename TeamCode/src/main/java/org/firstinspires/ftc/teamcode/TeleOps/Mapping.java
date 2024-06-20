@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleServo;
+import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMServo;
 import org.firstinspires.ftc.teamcode.MMLib.MMPoint2D;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMLib.MMUtils;
@@ -19,7 +19,7 @@ public class Mapping extends MMTeleOp {
 
     MMRobot mmRobot = MMRobot.getInstance();
 
-    CuttleServo servo;
+    MMServo servo;
 
     @Override
     public void main() {

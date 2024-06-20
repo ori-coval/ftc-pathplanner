@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.CuttleServo;
+import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMServo;
 import org.firstinspires.ftc.teamcode.MMLib.MMPoint2D;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMLib.MMUtils;
@@ -20,7 +20,7 @@ public class CartridgeTest extends MMTeleOp {
 
     @Override
     public void main() {
-        CuttleServo servo = mmRobot.mmSystems.expansionHub.getServo(4);
+        MMServo servo = mmRobot.mmSystems.expansionHub.getServo(4);
 
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whileActiveOnce(
                 new CommandBase() {
