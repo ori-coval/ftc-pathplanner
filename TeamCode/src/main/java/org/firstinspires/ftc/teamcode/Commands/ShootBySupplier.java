@@ -25,6 +25,6 @@ public class ShootBySupplier extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        shooter.setPower(0);
+        shooter.setPower(0.);
     }
 }

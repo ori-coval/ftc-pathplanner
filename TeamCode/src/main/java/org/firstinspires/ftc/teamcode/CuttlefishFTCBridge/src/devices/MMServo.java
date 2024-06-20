@@ -32,7 +32,7 @@ public class MMServo implements Servo {
         port = servoPort;
         hub = revHub;
         presetsArr = new ArrayList<Double>();
-        FTCServo= false;
+        FTCServo = false;
     }
     /**
      * Initialize servo using hardwareMap
@@ -41,7 +41,7 @@ public class MMServo implements Servo {
      * */
     public MMServo(HardwareMap hardwareMap, String name)
     {
-        FTCServo= true;
+        FTCServo = true;
         presetsArr = new ArrayList<Double>();
         ftcServoDevice = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class,name);
 

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.MMLib;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
-public abstract class MMPIDSubsystem extends SubsystemBase {
+public abstract class MMPIDSubsystem extends MMPowerSubsystem<Double> {
 
     private final PIDController pidController;
 
@@ -15,8 +15,6 @@ public abstract class MMPIDSubsystem extends SubsystemBase {
     public PIDController getPidController() {
         return pidController;
     }
-
-    public abstract void setPower(double power);
 
     public abstract double getCurrentValue();
 
