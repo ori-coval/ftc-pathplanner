@@ -55,7 +55,7 @@ public class MMRobot extends Robot {
         mmSystems.hardwareMap = hardwareMap;
         mmSystems.controlHub = new CuttleRevHub(hardwareMap, CuttleRevHub.HubTypes.CONTROL_HUB);
         if(type != OpModeType.EXPERIMENTING_NO_EXPANSION) {
-            mmSystems.expansionHub = new CuttleRevHub(hardwareMap, CuttleRevHub.HubTypes.EXPANSION_HUB);
+            mmSystems.expansionHub = new CuttleRevHub(hardwareMap, "Expansion Hub 2");
         }
         mmSystems.gamepadEx1 = new GamepadEx(gamepad1);
         mmSystems.gamepadEx2 = new GamepadEx(gamepad2);
