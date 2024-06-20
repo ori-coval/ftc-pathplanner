@@ -13,6 +13,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+/**
+ * this class represents a wrapper for the default opmode
+ * rn this can be used for the competition teleop (i.e. color and sides)
+ * if it used while calling the side and/or color val it initializes all the subsystems in the robot
+ */
 public abstract class MMTeleOp extends CommandOpMode {
 
     private final MMRobot mmRobot = MMRobot.getInstance();

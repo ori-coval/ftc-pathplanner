@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.MMLib;
 
+
+/**
+ * this class represents a point in R2
+ */
 public class MMPoint2D {
 
     public double x, y;
