@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode.MMLib;
 
-import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
+
+import org.firstinspires.ftc.teamcode.MMLib.Subsystems.MMPowerSubsystem;
 
 public abstract class MMPIDSubsystem extends MMPowerSubsystem<Double> {
 

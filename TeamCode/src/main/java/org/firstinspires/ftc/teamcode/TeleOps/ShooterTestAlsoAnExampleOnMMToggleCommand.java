@@ -10,6 +10,10 @@ import org.firstinspires.ftc.teamcode.Commands.RotateTurretByPid;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMMotor;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMLib.MMToggleCommand;
+import org.firstinspires.ftc.teamcode.MMLib.MMToggleCommand2;
+import org.firstinspires.ftc.teamcode.MMLib.Subsystems.IMMPositionSubsystem;
+import org.firstinspires.ftc.teamcode.MMLib.Subsystems.IMMPowerSubsystem;
+import org.firstinspires.ftc.teamcode.MMLib.Subsystems.MMPowerSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
 import org.firstinspires.ftc.teamcode.SubSystems.ShooterIntake;
@@ -30,14 +34,14 @@ public class ShooterTestAlsoAnExampleOnMMToggleCommand extends MMTeleOp {
 
         mmRobot.mmSystems.shooter = new Shooter();
         mmRobot.mmSystems.shooterIntake = new ShooterIntake();
+        mmRobot.mmSystems.shooterTurret = new ShooterTurret();
 
-        MMMotor turretMotor = mmRobot.mmSystems.controlHub.getMotor(Configuration.SHOOTER_TURRET);
 
         //Turret
 
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whileActiveOnce(
-                new MMToggleCommand<>(
-                        turretMotor::setPower,
+                new MMToggleCommand2<>(
+                        mmRobot.mmSystems.shooterTurret,
                         0.5, 0.
                 )
         );
@@ -58,8 +62,8 @@ public class ShooterTestAlsoAnExampleOnMMToggleCommand extends MMTeleOp {
         //Shooter and Intake
 
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenActive(
-                new MMToggleCommand<>(
-                        mmRobot.mmSystems.shooter::setPower,
+                new MMToggleCommand2<>(
+                        (IMMPowerSubsystem<Double>) mmRobot.mmSystems.shooter,
                         1., 0.,
                         mmRobot.mmSystems.shooter
                 )
@@ -67,8 +71,8 @@ public class ShooterTestAlsoAnExampleOnMMToggleCommand extends MMTeleOp {
 
 
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).toggleWhenActive(
-                new MMToggleCommand<>(
-                        mmRobot.mmSystems.shooter::setPosition,
+                new MMToggleCommand2<>(
+                        (IMMPositionSubsystem<Double>) mmRobot.mmSystems.shooter,
                         0.2, 0.
                 )
         );

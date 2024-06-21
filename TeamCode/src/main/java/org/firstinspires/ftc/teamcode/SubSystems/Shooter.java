@@ -4,11 +4,11 @@ import com.roboctopi.cuttlefish.utils.Direction;
 
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMMotor;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMServo;
-import org.firstinspires.ftc.teamcode.MMLib.MMPowerSubsystem;
+import org.firstinspires.ftc.teamcode.MMLib.Subsystems.MMPowerPositionSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
-public class Shooter extends MMPowerSubsystem<Double> {
+public class Shooter extends MMPowerPositionSubsystem<Double, Double> {
 
     MMRobot mmRobot = MMRobot.getInstance();
 
@@ -29,7 +29,8 @@ public class Shooter extends MMPowerSubsystem<Double> {
         motor2.setPower(power);
     }
 
-    public void setPosition(double pos) {
+    @Override
+    public void setPosition(Double pos) {
         servo.setPosition(pos);
     }
 
