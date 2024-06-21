@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * this class represents a wrapper for the default opmode.
  * rn this can be used for the competition teleop (i.e. color and sides)
- * if it is used while calling the side and/or color val it initializes all the MMRobot with the TELEOP type.
+ * if it is used while calling the side and/or color val it initializes the MMRobot with the TELEOP type.
  * u might also use the constructor that only requires a boolean, that initializes an experimenting teleop,
  * this mode does not initializes any subsystems, it does give u the control hub and depending on
  * the boolean u specified, the expansion hub. this type of teleop will let u initialize all the hardware u need
@@ -112,7 +112,7 @@ public abstract class MMTeleOp extends CommandOpMode {
 
     /**
      * this method lets u add command to run after the init stage. (when the match begins)
-     * @param commandsOnRun
+     * @param commandsOnRun commands to schedule
      */
     public void addCommandsOnRun(Command... commandsOnRun) {
         this.commandsOnRun.add(new InstantCommand().andThen(commandsOnRun));

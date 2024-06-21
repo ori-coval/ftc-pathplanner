@@ -14,10 +14,10 @@ public abstract class MMUtils {
      * in order to calculate the slope of the line, the method requires 2 points.
      * usually it's easier to think about the starting point, and the ending point,
      * but any 2 points will work.
-     * @param x value (f(x))
+     * @param x value
      * @param point1 any point on graph
      * @param point2 any point on graph
-     * @return the value of x in the linear function
+     * @return the value of x in the linear function (f(x))
      */
     public static double mapValuesLinear(double x, MMPoint2D point1, MMPoint2D point2) {
         double m = (point2.y - point1.y) / (point2.x - point1.x);

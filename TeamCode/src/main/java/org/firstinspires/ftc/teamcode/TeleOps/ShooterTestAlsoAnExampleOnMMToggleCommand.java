@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
+import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.StartEndCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -53,21 +54,22 @@ public class ShooterTestAlsoAnExampleOnMMToggleCommand extends MMTeleOp {
                 new RotateTurretByPid(-30)
         );*/
 
+
         //Shooter and Intake
 
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).toggleWhenActive(
                 new MMToggleCommand<>(
-                        (x) -> mmRobot.mmSystems.shooter.setPower(x),
+                        mmRobot.mmSystems.shooter::setPower,
                         1., 0.,
                         mmRobot.mmSystems.shooter
                 )
         );
 
+
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).toggleWhenActive(
                 new MMToggleCommand<>(
-                        (x) -> mmRobot.mmSystems.shooter.setPosition(x),
-                        0.2, 0.,
-                        mmRobot.mmSystems.shooter
+                        mmRobot.mmSystems.shooter::setPosition,
+                        0.2, 0.
                 )
         );
 
@@ -85,7 +87,7 @@ public class ShooterTestAlsoAnExampleOnMMToggleCommand extends MMTeleOp {
 
         mmRobot.mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).toggleWhenActive(
                 new MMToggleCommand<>(
-                        (x) -> mmRobot.mmSystems.shooterIntake.setMotorPower(x),
+                        mmRobot.mmSystems.shooterIntake::setMotorPower,
                         1., 0.,
                         mmRobot.mmSystems.shooterIntake
                 )
