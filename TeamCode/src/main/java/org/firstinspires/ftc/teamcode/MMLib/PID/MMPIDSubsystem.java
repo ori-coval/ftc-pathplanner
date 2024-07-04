@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MMLib;
+package org.firstinspires.ftc.teamcode.MMLib.PID;
 
 import com.arcrobotics.ftclib.controller.PIDController;
 
@@ -17,8 +17,23 @@ public abstract class MMPIDSubsystem extends MMPowerSubsystem<Double> {
         return pidController;
     }
 
+    /**
+     * this method should return the value to be fed into the PID controller
+     * @return subsystem value
+     */
     public abstract double getCurrentValue();
 
+    /**
+     * this method will help u add a FF controller.
+     * @return the power to feed to the system
+     */
+    public double getFeedForwardPower() {
+        return 0;
+    }
+
+    /**
+     * this method will be called once the pidCommand isFinished (atSetPoint)
+     */
     public void stop() {}
 
 }

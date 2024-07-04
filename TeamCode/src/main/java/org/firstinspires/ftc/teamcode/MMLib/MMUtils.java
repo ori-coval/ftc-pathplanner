@@ -28,4 +28,13 @@ public abstract class MMUtils {
         return mapValuesLinear(x.getAsDouble(), point1, point2);
     }
 
+    public static double joystickToServo(double joystick) {
+        return mapValuesLinear(
+                joystick,
+                new MMPoint2D(-1, 0),
+                new MMPoint2D(1, 1)
+        );
+    }
+
+
 }

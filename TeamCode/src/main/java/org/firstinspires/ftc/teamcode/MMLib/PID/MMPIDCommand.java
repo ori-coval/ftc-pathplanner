@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MMLib;
+package org.firstinspires.ftc.teamcode.MMLib.PID;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
@@ -23,7 +23,7 @@ public abstract class MMPIDCommand extends CommandBase {
 
     @Override
     public void execute() {
-        subsystem.setPower(pidController.calculate(subsystem.getCurrentValue()));
+        subsystem.setPower(pidController.calculate(subsystem.getCurrentValue()) + subsystem.getFeedForwardPower());
     }
 
     @Override

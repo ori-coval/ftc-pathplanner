@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands;
 
-import org.firstinspires.ftc.teamcode.MMLib.MMPIDCommand;
+import org.firstinspires.ftc.teamcode.MMLib.PID.MMPIDCommand;
 import org.firstinspires.ftc.teamcode.MMRobot;
 
 public class RotateTurretByPid extends MMPIDCommand {

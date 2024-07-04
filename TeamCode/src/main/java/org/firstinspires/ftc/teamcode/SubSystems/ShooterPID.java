@@ -5,7 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMEncoder;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMMotor;
-import org.firstinspires.ftc.teamcode.MMLib.MMPIDSubsystem;
+import org.firstinspires.ftc.teamcode.MMLib.PID.MMPIDSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 

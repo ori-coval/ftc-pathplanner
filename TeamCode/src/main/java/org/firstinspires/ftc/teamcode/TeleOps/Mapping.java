@@ -31,10 +31,8 @@ public class Mapping extends MMTeleOp {
                     @Override
                     public void execute() {
                         servo.setPosition(
-                                MMUtils.mapValuesLinear(
-                                        mmRobot.mmSystems.gamepadEx1.getLeftX(),
-                                        new MMPoint2D(-1, 0),
-                                        new MMPoint2D(1, 1)
+                                MMUtils.joystickToServo(
+                                        mmRobot.mmSystems.gamepadEx1.getLeftX()
                                 )
                         );
                     }
