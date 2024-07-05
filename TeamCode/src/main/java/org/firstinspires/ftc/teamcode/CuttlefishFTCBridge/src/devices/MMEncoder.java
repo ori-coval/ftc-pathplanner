@@ -46,6 +46,13 @@ public class MMEncoder implements RotaryEncoder
         return hub.bulkData.getEncoderPosition(mPort);
     }
 
+    /**
+     * idk what they did above so this a new one
+     * @return rpm
+     */
+    public double getRPM() {
+        return 60 * (hub.bulkData.getEncoderVelocity(mPort)/encTicks) * direction;
+    }
 
     /**
      * Set the direction of the encoder.

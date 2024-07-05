@@ -36,7 +36,7 @@ public class ShooterPID extends MMPIDSubsystem {
 
     @Override
     public double getCurrentValue() {
-        return encoder.getVelocity();
+        return encoder.getRPM();
     }
 
     @Override
