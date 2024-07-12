@@ -5,9 +5,8 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMServo;
-import org.firstinspires.ftc.teamcode.MMLib.MMPoint2D;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
-import org.firstinspires.ftc.teamcode.MMLib.MMUtils;
+import org.firstinspires.ftc.teamcode.MMLib.Utils.MMUtils;
 import org.firstinspires.ftc.teamcode.MMRobot;
 
 @TeleOp

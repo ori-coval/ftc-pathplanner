@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-import org.firstinspires.ftc.teamcode.MMLib.MMBattery;
+import org.firstinspires.ftc.teamcode.MMLib.Utils.MMBattery;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 
 @TeleOp
