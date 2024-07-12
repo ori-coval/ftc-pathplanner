@@ -7,11 +7,22 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMRevHub;
-import org.firstinspires.ftc.teamcode.SubSystems.ShooterPID;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
+/**
+ * this class should represent ur robot singleton.
+ * <p>
+ * this repo was built in the 2023-2024 CENTERSTAGE OffSeason as Nevo's final project.
+ * this is an EXTENSION of FTCLib and CuttlefishFTCBridge by roboctopi.
+ * ur welcome to (and expected to) change everything to ur liking.
+ * this was all built as a template to help reduce work in the upcoming seasons,
+ * but this under no circumstances should LIMIT ur creativity or ability to grow and learn,
+ * remember, you are your only limit.
+ * </p>
+ * good luck <3
+ */
 public class MMRobot extends Robot {
 
     private static MMRobot instance;
@@ -28,9 +39,7 @@ public class MMRobot extends Robot {
     }
 
     //Systems
-
-    public MMRobotParams mmSystems = new MMRobotParams();
-
+    public MMSystems mmSystems = new MMSystems();
 
     public void init(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         initializeAttributes(type, hardwareMap, gamepad1, gamepad2, telemetry);
@@ -72,7 +81,7 @@ public class MMRobot extends Robot {
 
     private void initTele() {
         //initialize subsystems required for teleop
-        initShooterPID();
+        MMInitMethods.initShooterPID();
     }
 
     private void initAuto() {
@@ -81,11 +90,6 @@ public class MMRobot extends Robot {
 
     private void initDebug() {
         //initialize subsystems required for debug
-    }
-
-    //initSubsystems and GamepadKeys
-    private void initShooterPID() {
-        mmSystems.shooterPID = new ShooterPID();
     }
 
 }

@@ -14,7 +14,10 @@ import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
-public class MMRobotParams {
+/**
+ * this class should help u contain all ur robot
+ */
+public class MMSystems {
 
     public OpModeType opModeType;
     public AllianceColor allianceColor;
