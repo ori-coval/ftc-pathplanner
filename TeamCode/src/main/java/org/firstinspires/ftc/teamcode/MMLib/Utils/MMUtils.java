@@ -31,6 +31,11 @@ public abstract class MMUtils {
         return mapValuesLinear(x.getAsDouble(), point1, point2);
     }
 
+    /**
+     * linear transformation between joystick input to servo's output
+     * @param joystick joystick input
+     * @return servo output
+     */
     public static double joystickToServo(double joystick) {
         return mapValuesLinear(
                 joystick,

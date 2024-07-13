@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.teamcode.MMLib.Examples.ElevatorExample.ExampleElevator;
 import org.firstinspires.ftc.teamcode.SubSystems.ShooterPID;
 
 /**
@@ -14,6 +15,10 @@ public class MMInitMethods {
 
     public static void initShooterPID() {
         MMRobot.getInstance().mmSystems.shooterPID = new ShooterPID();
+    }
+
+    public static void initExampleElevator() {
+        MMRobot.getInstance().mmSystems.exampleElevator = new ExampleElevator();
     }
 
 }

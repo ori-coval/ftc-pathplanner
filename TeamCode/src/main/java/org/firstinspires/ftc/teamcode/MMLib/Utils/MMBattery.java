@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode.MMLib.Utils;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+/**
+ * this class represents ur robot battery
+ */
 public class MMBattery {
 
     private final VoltageSensor battery;

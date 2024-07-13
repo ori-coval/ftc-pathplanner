@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMRevHub;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.ElevatorExample.ExampleElevator;
+import org.firstinspires.ftc.teamcode.MMLib.Utils.MMBattery;
 import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
 import org.firstinspires.ftc.teamcode.SubSystems.ShooterIntake;
 import org.firstinspires.ftc.teamcode.SubSystems.ShooterPID;
@@ -28,6 +30,7 @@ public class MMSystems {
     public GamepadEx gamepadEx1;
     public GamepadEx gamepadEx2;
     public Telemetry telemetry;
+    public MMBattery battery;
 
 
     //Subsystems
@@ -35,6 +38,7 @@ public class MMSystems {
     public ShooterIntake shooterIntake;
     public ShooterPID shooterPID;
     public ShooterTurret shooterTurret;
+    public ExampleElevator exampleElevator;
 
 
 }

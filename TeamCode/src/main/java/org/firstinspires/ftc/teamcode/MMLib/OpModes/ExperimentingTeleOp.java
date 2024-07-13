@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MMLib.Examples;
+package org.firstinspires.ftc.teamcode.MMLib.OpModes;
 
 import android.hardware.TriggerEvent;
 import android.hardware.TriggerEventListener;
@@ -56,10 +56,7 @@ public class ExperimentingTeleOp extends MMTeleOp {
 
     @Override
     public void run() {
-        super.run();
-
         telemetry.addData("isActive", isActiveSupplier.getAsBoolean());
-        telemetry.update();
-
+        super.run();
     }
 }

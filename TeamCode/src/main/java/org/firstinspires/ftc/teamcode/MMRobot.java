@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMRevHub;
+import org.firstinspires.ftc.teamcode.MMLib.Utils.MMBattery;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
@@ -66,6 +67,7 @@ public class MMRobot extends Robot {
         mmSystems.gamepadEx1 = new GamepadEx(gamepad1);
         mmSystems.gamepadEx2 = new GamepadEx(gamepad2);
         mmSystems.telemetry = telemetry;
+        mmSystems.battery = new MMBattery(hardwareMap);
         reset(); //reset the scheduler
     }
 

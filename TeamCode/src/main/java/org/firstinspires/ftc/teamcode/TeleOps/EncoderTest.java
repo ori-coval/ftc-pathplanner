@@ -27,10 +27,7 @@ public class EncoderTest extends MMTeleOp {
 
     @Override
     public void run() {
-        super.run();
-
         telemetry.addData("encoder value", motorEx.getCurrentPosition());
-        telemetry.update();
-
+        super.run();
     }
 }

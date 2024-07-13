@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.MMLib.PID;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 
-public abstract class MMPIDCommand extends CommandBase {
+public class MMPIDCommand extends CommandBase {
 
     private final MMPIDSubsystem subsystem;
     private final double setPoint;

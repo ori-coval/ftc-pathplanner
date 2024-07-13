@@ -21,10 +21,7 @@ public class BatteryTest extends MMTeleOp {
 
     @Override
     public void run() {
-        super.run();
-
         telemetry.addData("Voltage", mmBattery.getVoltage());
-        telemetry.update();
-
+        super.run();
     }
 }

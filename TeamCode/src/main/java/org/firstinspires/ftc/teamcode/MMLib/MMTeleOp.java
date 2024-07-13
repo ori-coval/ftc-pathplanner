@@ -4,6 +4,8 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.InstantCommand;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMRevHub;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
@@ -16,12 +18,13 @@ import java.util.List;
 
 /**
  * this class represents a wrapper for the default opmode.
- * rn this can be used for the competition teleop (i.e. color and sides)
- * if it is used while calling the side and/or color val it initializes the MMRobot with the TELEOP type.
- * u might also use the constructor that only requires a boolean, that initializes an experimenting teleop,
+ * this can be used for the competition teleop (i.e. color and sides)
+ * if it is used while calling the side and/or color val it initializes the MMRobot with the {@link OpModeType#TELEOP} type.
+ * u might also use the constructor that only requires a boolean, that initializes an {@link OpModeType#EXPERIMENTING} teleop,
  * this mode does not initializes any subsystems, it does give u the control hub and depending on
- * the boolean u specified, the expansion hub. this type of teleop will let u initialize all the hardware u need
- * urself in the main method.
+ * the boolean u specified, the expansion hub ({@link OpModeType#EXPERIMENTING_NO_EXPANSION}).
+ * this type of teleop will let u initialize all the hardware u need
+ * urself in the {@link #main()} method.
  */
 public abstract class MMTeleOp extends CommandOpMode {
 
@@ -54,7 +57,7 @@ public abstract class MMTeleOp extends CommandOpMode {
     }
 
     /**
-     * this can be used if ur opmodes are different according to ur robot side.
+     * this can be used if ur opmodes are different according to ur alliance side.
      * (u might also use this if ur opmode represents autonomous)
      * @param allianceColor the color of the alliance
      * @param allianceSide the side of the alliance
@@ -72,7 +75,7 @@ public abstract class MMTeleOp extends CommandOpMode {
      * the order is important in this method,
      * if u run the main method without initializing the robot first u wont be able to do anything really,
      * cause u need the robot instance to get to the subsystems.
-     * and the scheduleCommandAndRun() runs the lists added in the main method.
+     * and the {@link #scheduleCommandsAndRun()} runs the lists added in the main method.
      */
     @Override
     public void initialize() {
@@ -93,10 +96,10 @@ public abstract class MMTeleOp extends CommandOpMode {
     }
 
     /**
-     * this method helps you add runnable or commands that will happen on init or run.
-     * due to the fact that the commandScheduler run only when opmode is active,
+     * this method helps you add {@link Runnable} or {@link Command} that will happen on init or run.
+     * due to the fact that the {@link com.arcrobotics.ftclib.command.CommandScheduler CommandScheduler} run only when opmode is active,
      * you can't run command on init, but you can run runnable on init, and commands right after opmode is active.
-     * use addRunnableOnInit and/or addCommandsOnRun.
+     * use {@link #addRunnableOnInit(Runnable...)} and/or {@link #addCommandsOnRun(Command...)}.
      * leave it empty if you don't need them.
      * this ofc can also be used to add custom buttons (in experimenting) or whatever you might want.
      */
@@ -121,8 +124,8 @@ public abstract class MMTeleOp extends CommandOpMode {
     }
 
     /**
-     * this method runs the methods and schedules the commands that were specified in the main method.
-     * commands and methods that were added with the addRunnableOnInit() and addCommandOnRun()
+     * this method runs the actions and schedules the commands that were specified in the main method.
+     * commands and methods that were added with the {@link #addRunnableOnInit(Runnable...)} and {@link  #addCommandsOnRun(Command...)}
      */
     private void scheduleCommandsAndRun() {
         for(Runnable runnable : runOnInit) {
@@ -134,4 +137,17 @@ public abstract class MMTeleOp extends CommandOpMode {
         }
     }
 
+    /**
+     * the {@link MMRevHub#pullBulkData()} method needs to be called in order to update the (non-i2c) sensors.
+     * the {@link Telemetry#update()} method is used to update the telemetry on every iteration of ur opmode.
+     * <p>
+     * this is ur loop in the opmode.
+     */
+    @Override
+    public void run() {
+        super.run();
+        mmRobot.mmSystems.controlHub.pullBulkData();
+        mmRobot.mmSystems.expansionHub.pullBulkData();
+        telemetry.update();
+    }
 }
