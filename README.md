@@ -1,3 +1,3 @@
-# MISHMASH Robot Template
+# MISHMASH Autonomous Template
 
-This was made in the 2023-2024 CENTERSTAGE Offseason
+This is the repo representing the Autonomous made in the 2023-24 Offseason
