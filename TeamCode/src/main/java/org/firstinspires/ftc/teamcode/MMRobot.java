@@ -14,26 +14,29 @@ import org.firstinspires.ftc.teamcode.Utils.OpModeType;
  * <p>
  * this repo was built in the 2023-2024 CENTERSTAGE OffSeason as Nevo's final project.
  * this is an EXTENSION of FTCLib and CuttlefishFTCBridge by roboctopi.
- * ur welcome to (and expected to) change everything to ur liking.
+ * you're welcome to (and expected to) change everything to your liking.
  * this was all built as a template to help reduce work in the upcoming seasons,
- * but this under no circumstances should LIMIT ur creativity or ability to grow and learn,
+ * but this under no circumstances should LIMIT your creativity or ability to grow and learn,
  * remember, you are your only limit.
  * </p>
  * good luck <3
  */
 public class MMRobot extends Robot {
 
+    /**
+     * the robot instance
+     */
     private static MMRobot instance;
 
+    /**
+     * the get method for the singleton
+     * @return the robot instance
+     */
     public static synchronized MMRobot getInstance() {
         if (instance == null) {
             instance = new MMRobot();
         }
         return instance;
-    }
-
-    public void resetRobot() {
-        instance = null;
     }
 
     //Systems
@@ -55,6 +58,12 @@ public class MMRobot extends Robot {
     }
 
 
+    /**
+     * this initializes your subsystems.
+     * <p>
+     * if experimenting, then this does nothing.
+     * @param type the {@link OpModeType} chosen
+     */
     private void initializeSystems(OpModeType type) {
         if(type == OpModeType.Competition.TELEOP) {
             initTele();
@@ -65,18 +74,26 @@ public class MMRobot extends Robot {
         }
     }
 
+    /**
+     * initialize subsystems required for teleop
+     */
     private void initTele() {
-        //initialize subsystems required for teleop
         //for example:
         MMInitMethods.initShooterPID();
     }
 
+    /**
+     * initialize subsystems required for auto
+     */
     private void initAuto() {
-        //initialize subsystems required for auto
+       //TODO a day before comp
     }
 
+    /**
+     * initialize subsystems required for debug mode
+     */
     private void initDebug() {
-        //initialize subsystems required for debug
+        //TODO when mechanics tells u "hey can u make this servo move in weird ahh ways at 0.000001 speed"
     }
 
 }

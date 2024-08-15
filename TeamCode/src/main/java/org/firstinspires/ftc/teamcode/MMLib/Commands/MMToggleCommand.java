@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MMLib.Utils;
+package org.firstinspires.ftc.teamcode.MMLib.Commands;
 
 import com.arcrobotics.ftclib.command.StartEndCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
@@ -6,8 +6,8 @@ import com.arcrobotics.ftclib.command.Subsystem;
 import java.util.function.Consumer;
 
 /**
- * this command gets a consumer and an on and off state to feed to the consumer.
- * it builds a {@link StartEndCommand} where the {@link StartEndCommand#initialize() start()} method runs the on and the {@link StartEndCommand#end(boolean) end()} runs the off state.
+ * this command gets a consumer, and an ON and OFF state to feed to the consumer.
+ * returns a {@link StartEndCommand} where the {@link StartEndCommand#initialize() start()} method runs the ON, and the {@link StartEndCommand#end(boolean) end()} runs the OFF state.
  * @param <T> the type ur consumer gets
  */
 public class MMToggleCommand<T> extends StartEndCommand {

@@ -9,7 +9,7 @@ public class MMRange {
 
     public MMRange(double start, double end) {
         this.start = start;
-        this. end = end;
+        this.end = end;
     }
 
 }

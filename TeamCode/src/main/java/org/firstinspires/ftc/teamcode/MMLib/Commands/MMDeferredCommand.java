@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MMLib.Utils;
+package org.firstinspires.ftc.teamcode.MMLib.Commands;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.command.SelectCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
 
 import org.firstinspires.ftc.teamcode.MMLib.Examples.OpModes.DeferredCommandTest;
+import org.firstinspires.ftc.teamcode.MMLib.Utils.MMUtils;
 
 import java.util.Set;
 import java.util.function.Supplier;

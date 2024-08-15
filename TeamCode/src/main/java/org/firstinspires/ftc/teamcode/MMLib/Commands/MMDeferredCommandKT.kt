@@ -1,10 +1,11 @@
-package org.firstinspires.ftc.teamcode.MMLib.Utils
+package org.firstinspires.ftc.teamcode.MMLib.Commands
 
 import androidx.core.util.Supplier
 import com.arcrobotics.ftclib.command.Command
 import com.arcrobotics.ftclib.command.CommandBase
 import com.arcrobotics.ftclib.command.InstantCommand
 import com.arcrobotics.ftclib.command.Subsystem
+import org.firstinspires.ftc.teamcode.MMLib.Utils.MMUtils
 
 /**
  * ignore this (it was js for fun hehe :D)

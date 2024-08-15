@@ -4,8 +4,8 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
-import org.firstinspires.ftc.teamcode.MMLib.Utils.MMToggleCommand;
-import org.firstinspires.ftc.teamcode.MMLib.Utils.MMToggleCommand2;
+import org.firstinspires.ftc.teamcode.MMLib.Commands.MMToggleCommand;
+import org.firstinspires.ftc.teamcode.MMLib.Commands.MMToggleCommand2;
 import org.firstinspires.ftc.teamcode.MMLib.SubsystemStructure.IMMPositionSubsystem;
 import org.firstinspires.ftc.teamcode.MMLib.SubsystemStructure.IMMPowerSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
