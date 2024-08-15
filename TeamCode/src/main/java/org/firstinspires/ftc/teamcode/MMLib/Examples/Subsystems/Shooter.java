@@ -4,7 +4,7 @@ import com.roboctopi.cuttlefish.utils.Direction;
 
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMMotor;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMServo;
-import org.firstinspires.ftc.teamcode.MMLib.Subsystems.MMPowerPositionSubsystem;
+import org.firstinspires.ftc.teamcode.MMLib.SubsystemStructure.MMPowerPositionSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 

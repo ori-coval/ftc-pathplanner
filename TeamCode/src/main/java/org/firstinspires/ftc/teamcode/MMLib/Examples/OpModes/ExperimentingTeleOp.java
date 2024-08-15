@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.MMLib.Examples.Commands.ShootBySupplier;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 import java.util.function.BooleanSupplier;
 
@@ -22,7 +23,7 @@ public class ExperimentingTeleOp extends MMTeleOp {
     BooleanSupplier isActiveSupplier = this::getIsActive;
 
     public ExperimentingTeleOp() {
-        super(false);
+        super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
     }
 
     public boolean getIsActive() {
@@ -30,7 +31,7 @@ public class ExperimentingTeleOp extends MMTeleOp {
     }
 
     @Override
-    public void main() {
+    public void onInit() {
         mmRobot.mmSystems.shooter = new Shooter();
 
         Runnable changeStage = () -> isActive = !isActiveSupplier.getAsBoolean();
@@ -49,6 +50,6 @@ public class ExperimentingTeleOp extends MMTeleOp {
     @Override
     public void run() {
         telemetry.addData("isActive", isActiveSupplier.getAsBoolean());
-        super.run();
+        telemetry.update();
     }
 }

@@ -5,8 +5,9 @@ import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
-import org.firstinspires.ftc.teamcode.MMLib.Utils.MMDeferredCommand;
+import org.firstinspires.ftc.teamcode.MMLib.Commands.MMDeferredCommand;
 import org.firstinspires.ftc.teamcode.MMRobot;
+import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,16 +16,17 @@ import java.util.stream.Collectors;
 public class DeferredCommandTest extends MMTeleOp {
 
     public DeferredCommandTest() {
-        super(false);
+        super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
     }
 
+
     @Override
-    public void main() {
+    public void onInit() {
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(
                 new MMDeferredCommand(
-                        InstantCommand::new,
-                        new HashSet<Subsystem>() {{
+                        InstantCommand::new, //example command supplier
+                        new HashSet<Subsystem>() {{ //command requirements
                             add(MMRobot.getInstance().mmSystems.shooter);
                             add(MMRobot.getInstance().mmSystems.shooterIntake);
                         }}

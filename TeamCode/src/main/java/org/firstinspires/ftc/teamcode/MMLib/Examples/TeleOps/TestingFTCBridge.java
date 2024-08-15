@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMMotor;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMRobot;
+import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp
 public class TestingFTCBridge extends MMTeleOp {
@@ -14,11 +15,11 @@ public class TestingFTCBridge extends MMTeleOp {
     MMRobot mmRobot = MMRobot.getInstance();
 
     public TestingFTCBridge() {
-        super(false);
+        super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
     }
 
     @Override
-    public void main() {
+    public void onInit() {
 
         MMMotor motor = mmRobot.mmSystems.controlHub.getMotor(3);
 

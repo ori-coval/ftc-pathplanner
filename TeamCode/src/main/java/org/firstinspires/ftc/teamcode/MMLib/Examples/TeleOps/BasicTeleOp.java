@@ -17,7 +17,7 @@ public class BasicTeleOp extends CommandOpMode {
 
     @Override
     public void initialize() {
-        mmRobot.init(OpModeType.EXPERIMENTING_NO_EXPANSION, hardwareMap, gamepad1, gamepad2, telemetry);
+        mmRobot.init(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION, hardwareMap, gamepad1, gamepad2, telemetry);
 
         mmRobot.mmSystems.shooterPID = new ShooterPID();
 

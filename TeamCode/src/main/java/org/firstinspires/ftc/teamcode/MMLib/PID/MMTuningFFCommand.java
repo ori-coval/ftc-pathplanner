@@ -63,7 +63,7 @@ public class MMTuningFFCommand extends CommandBase {
     }
 
     /**
-     * calculate the distance between the {@link MMPIDSubsystem#getCurrentValue()} and the starting point
+     * calculate the distance between the {@link MMPIDSubsystem#getCurrentValue()} and the {@link #startingPoint}
      * @return the distance between the current value and the starting point
      */
     private double error() {

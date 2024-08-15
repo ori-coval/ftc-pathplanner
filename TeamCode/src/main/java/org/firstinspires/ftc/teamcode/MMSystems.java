@@ -1,12 +1,14 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMRevHub;
-import org.firstinspires.ftc.teamcode.MMLib.Examples.ElevatorExample.ExampleElevator;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.ElevatorPIDExample.ExampleElevator;
 import org.firstinspires.ftc.teamcode.MMLib.Utils.MMBattery;
 import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.ShooterIntake;
@@ -33,7 +35,6 @@ public class MMSystems {
     public Telemetry telemetry;
     public MMBattery battery;
 
-
     //Subsystems
     //For example:
     public Shooter shooter;
@@ -42,5 +43,20 @@ public class MMSystems {
     public ShooterTurret shooterTurret;
     public ExampleElevator exampleElevator;
 
+
+
+    public MMSystems(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
+        this.opModeType = type;
+        this.hardwareMap = hardwareMap;
+        this.controlHub = new MMRevHub(hardwareMap, MMRevHub.HubTypes.CONTROL_HUB);
+        if(type != OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION) {
+            this.expansionHub = new MMRevHub(hardwareMap, "Expansion Hub 2");
+        }
+        this.gamepadEx1 = new GamepadEx(gamepad1);
+        this.gamepadEx2 = new GamepadEx(gamepad2);
+        this.telemetry = telemetry;
+        this.battery = new MMBattery(hardwareMap);
+        CommandScheduler.getInstance().reset(); //reset the scheduler
+    }
 
 }

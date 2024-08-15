@@ -32,15 +32,36 @@ public abstract class MMUtils {
     }
 
     /**
-     * linear transformation between joystick input to servo's output
+     * this method should help u map linearly a range of values from one range to another.
+     * @param x input values
+     * @param rangeInput range of the input
+     * @param rangeOutput range of the output
+     * @return the output on the graph of the linear function created.
+     */
+    public static double mapValuesLinearByRange(double x, MMRange rangeInput, MMRange rangeOutput) {
+        return mapValuesLinear(
+                x,
+                new MMPoint2D(
+                        rangeInput.start,
+                        rangeOutput.start
+                ),
+                new MMPoint2D(
+                        rangeInput.end,
+                        rangeOutput.end
+                )
+        );
+    }
+
+    /**
+     * linear transformation between joystick input to servo output
      * @param joystick joystick input
      * @return servo output
      */
     public static double joystickToServo(double joystick) {
-        return mapValuesLinear(
+        return mapValuesLinearByRange(
                 joystick,
-                new MMPoint2D(-1, 0),
-                new MMPoint2D(1, 1)
+                new MMRange(-1, 1), //joystick range
+                new MMRange(0, 1) //servo range
         );
     }
 

@@ -4,26 +4,27 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
-import org.firstinspires.ftc.teamcode.MMLib.Utils.MMToggleCommand;
-import org.firstinspires.ftc.teamcode.MMLib.Utils.MMToggleCommand2;
-import org.firstinspires.ftc.teamcode.MMLib.Subsystems.IMMPositionSubsystem;
-import org.firstinspires.ftc.teamcode.MMLib.Subsystems.IMMPowerSubsystem;
+import org.firstinspires.ftc.teamcode.MMLib.Commands.MMToggleCommand;
+import org.firstinspires.ftc.teamcode.MMLib.Commands.MMToggleCommand2;
+import org.firstinspires.ftc.teamcode.MMLib.SubsystemStructure.IMMPositionSubsystem;
+import org.firstinspires.ftc.teamcode.MMLib.SubsystemStructure.IMMPowerSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.ShooterIntake;
 import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.ShooterTurret;
+import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp(name = "Nimrod's Shooter")
 public class ShooterTestAlsoAnExampleOnMMToggleCommand extends MMTeleOp {
 
     public ShooterTestAlsoAnExampleOnMMToggleCommand() {
-        super(false);
+        super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
     }
 
     MMRobot mmRobot = MMRobot.getInstance();
 
     @Override
-    public void main() {
+    public void onInit() {
 
         mmRobot.mmSystems.shooter = new Shooter();
         mmRobot.mmSystems.shooterIntake = new ShooterIntake();

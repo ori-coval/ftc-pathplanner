@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MMLib.Examples.TeleOps;
+package org.firstinspires.ftc.teamcode.MMLib.Examples.TeleOps.Comp;
 
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;

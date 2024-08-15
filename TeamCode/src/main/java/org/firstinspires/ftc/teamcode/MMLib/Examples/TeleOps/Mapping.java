@@ -8,12 +8,13 @@ import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMServo;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMLib.Utils.MMUtils;
 import org.firstinspires.ftc.teamcode.MMRobot;
+import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp
 public class Mapping extends MMTeleOp {
 
     public Mapping() {
-        super(false);
+        super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
     }
 
     MMRobot mmRobot = MMRobot.getInstance();
@@ -21,7 +22,7 @@ public class Mapping extends MMTeleOp {
     MMServo servo;
 
     @Override
-    public void main() {
+    public void onInit() {
 
         servo = mmRobot.mmSystems.controlHub.getServo(0);
 

@@ -1,15 +1,15 @@
-package org.firstinspires.ftc.teamcode.MMLib.Utils;
+package org.firstinspires.ftc.teamcode.MMLib.Commands;
 
 import com.arcrobotics.ftclib.command.StartEndCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
 
-import org.firstinspires.ftc.teamcode.MMLib.Subsystems.IMMPositionSubsystem;
-import org.firstinspires.ftc.teamcode.MMLib.Subsystems.IMMPowerSubsystem;
+import org.firstinspires.ftc.teamcode.MMLib.SubsystemStructure.IMMPositionSubsystem;
+import org.firstinspires.ftc.teamcode.MMLib.SubsystemStructure.IMMPowerSubsystem;
 
 /**
- * this command is supposed to help u avoid like maybe one line of duplicated code.
- * very useless. it was meant for the toggleWhenActive.
- * @param <T> the type of ur subsystem
+ * this command is similar to the {@link MMToggleCommand},
+ * while using a more specific input of the {@link com.arcrobotics.ftclib.command.SubsystemBase Subsystem}
+ * @param <T> the type of ur subsystem (probably Double)
  */
 public class MMToggleCommand2<T> extends StartEndCommand {
     public MMToggleCommand2(IMMPowerSubsystem<T> subsystem, T on, T off, Subsystem... requirements) {

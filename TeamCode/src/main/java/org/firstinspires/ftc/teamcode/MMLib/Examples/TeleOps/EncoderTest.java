@@ -4,18 +4,19 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
+import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp
 public class EncoderTest extends MMTeleOp {
 
     public EncoderTest() {
-        super(false);
+        super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
     }
 
     DcMotorEx motorEx;
 
     @Override
-    public void main() {
+    public void onInit() {
 
         motorEx = hardwareMap.get(DcMotorEx.class, "shooter");
 
@@ -28,6 +29,6 @@ public class EncoderTest extends MMTeleOp {
     @Override
     public void run() {
         telemetry.addData("encoder value", motorEx.getCurrentPosition());
-        super.run();
+        telemetry.update();
     }
 }

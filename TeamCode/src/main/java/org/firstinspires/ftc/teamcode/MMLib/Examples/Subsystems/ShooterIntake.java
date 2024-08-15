@@ -4,8 +4,6 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMMotor;
-import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMServo;
-import org.firstinspires.ftc.teamcode.MMLib.Subsystems.MMPowerSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
