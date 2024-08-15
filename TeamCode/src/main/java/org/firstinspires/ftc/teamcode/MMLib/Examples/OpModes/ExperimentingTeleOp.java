@@ -1,21 +1,13 @@
-package org.firstinspires.ftc.teamcode.MMLib.OpModes;
+package org.firstinspires.ftc.teamcode.MMLib.Examples.OpModes;
 
-import android.hardware.TriggerEvent;
-import android.hardware.TriggerEventListener;
-
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.StartEndCommand;
-import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-import org.firstinspires.ftc.teamcode.Commands.ShootBySupplier;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Commands.ShootBySupplier;
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMRobot;
-import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.Shooter;
 
 import java.util.function.BooleanSupplier;
 

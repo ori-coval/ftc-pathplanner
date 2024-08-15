@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MMLib.OpModes;
+package org.firstinspires.ftc.teamcode.MMLib.Examples.OpModes;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Subsystem;

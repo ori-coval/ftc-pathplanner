@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.Commands;
+package org.firstinspires.ftc.teamcode.MMLib.Examples.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.MMRobot;
-import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.Shooter;
 
 public class ShootByPower extends CommandBase {
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TeleOps;
+package org.firstinspires.ftc.teamcode.MMLib.Examples.TeleOps;
 
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.MMLib.Utils.MMToggleCommand2;
 import org.firstinspires.ftc.teamcode.MMLib.Subsystems.IMMPositionSubsystem;
 import org.firstinspires.ftc.teamcode.MMLib.Subsystems.IMMPowerSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
-import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
-import org.firstinspires.ftc.teamcode.SubSystems.ShooterIntake;
-import org.firstinspires.ftc.teamcode.SubSystems.ShooterTurret;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.ShooterIntake;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.ShooterTurret;
 
 @TeleOp(name = "Nimrod's Shooter")
 public class ShooterTestAlsoAnExampleOnMMToggleCommand extends MMTeleOp {

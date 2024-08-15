@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SubSystems;
+package org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems;
 
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMEncoder;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMMotor;
