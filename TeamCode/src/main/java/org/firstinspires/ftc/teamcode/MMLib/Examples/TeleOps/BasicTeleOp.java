@@ -1,13 +1,13 @@
-package org.firstinspires.ftc.teamcode.TeleOps;
+package org.firstinspires.ftc.teamcode.MMLib.Examples.TeleOps;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Commands.ShootByPID;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Commands.ShootByPID;
 import org.firstinspires.ftc.teamcode.MMRobot;
-import org.firstinspires.ftc.teamcode.SubSystems.ShooterPID;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.ShooterPID;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp(name = "Teleop")

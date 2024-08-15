@@ -57,6 +57,8 @@ public class MMRobot extends Robot {
         mmSystems.robotSide = robotSide;
     }
 
+
+    //needs to be moved to MMSystems' constructor
     private void initializeAttributes(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         mmSystems.opModeType = type;
         mmSystems.hardwareMap = hardwareMap;
@@ -83,6 +85,7 @@ public class MMRobot extends Robot {
 
     private void initTele() {
         //initialize subsystems required for teleop
+        //for example:
         MMInitMethods.initShooterPID();
     }
 

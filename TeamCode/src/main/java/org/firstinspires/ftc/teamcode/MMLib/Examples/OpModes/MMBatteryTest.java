@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MMLib.OpModes;
+package org.firstinspires.ftc.teamcode.MMLib.Examples.OpModes;
 
 import org.firstinspires.ftc.teamcode.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMRobot;

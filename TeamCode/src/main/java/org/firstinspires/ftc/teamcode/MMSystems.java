@@ -8,19 +8,20 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMRevHub;
 import org.firstinspires.ftc.teamcode.MMLib.Examples.ElevatorExample.ExampleElevator;
 import org.firstinspires.ftc.teamcode.MMLib.Utils.MMBattery;
-import org.firstinspires.ftc.teamcode.SubSystems.Shooter;
-import org.firstinspires.ftc.teamcode.SubSystems.ShooterIntake;
-import org.firstinspires.ftc.teamcode.SubSystems.ShooterPID;
-import org.firstinspires.ftc.teamcode.SubSystems.ShooterTurret;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.ShooterIntake;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.ShooterPID;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.ShooterTurret;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 /**
- * this class should help u contain all ur robot
+ * this class should contain all ur robot's attributes and systems
  */
 public class MMSystems {
 
+    //Attributes & Hardware
     public OpModeType opModeType;
     public AllianceColor allianceColor;
     public AllianceSide robotSide;
@@ -34,6 +35,7 @@ public class MMSystems {
 
 
     //Subsystems
+    //For example:
     public Shooter shooter;
     public ShooterIntake shooterIntake;
     public ShooterPID shooterPID;
