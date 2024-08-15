@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.RoadRunner.messages;
 
-public final class TankCommandMessage {
+public final class                                                                                                                                                          TankCommandMessage {
     public long timestamp;
     public double voltage;
     public double leftPower;
