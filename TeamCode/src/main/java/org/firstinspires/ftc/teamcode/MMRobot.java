@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.Robot;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMRevHub;
-import org.firstinspires.ftc.teamcode.MMLib.Utils.MMBattery;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
@@ -40,10 +37,10 @@ public class MMRobot extends Robot {
     }
 
     //Systems
-    public MMSystems mmSystems = new MMSystems();
+    public MMSystems mmSystems;
 
     public void init(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
-        initializeAttributes(type, hardwareMap, gamepad1, gamepad2, telemetry);
+        mmSystems = new MMSystems(type, hardwareMap, gamepad1, gamepad2, telemetry);
         initializeSystems(type);
     }
 
@@ -58,27 +55,12 @@ public class MMRobot extends Robot {
     }
 
 
-    //needs to be moved to MMSystems' constructor
-    private void initializeAttributes(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
-        mmSystems.opModeType = type;
-        mmSystems.hardwareMap = hardwareMap;
-        mmSystems.controlHub = new MMRevHub(hardwareMap, MMRevHub.HubTypes.CONTROL_HUB);
-        if(type != OpModeType.EXPERIMENTING_NO_EXPANSION) {
-            mmSystems.expansionHub = new MMRevHub(hardwareMap, "Expansion Hub 2");
-        }
-        mmSystems.gamepadEx1 = new GamepadEx(gamepad1);
-        mmSystems.gamepadEx2 = new GamepadEx(gamepad2);
-        mmSystems.telemetry = telemetry;
-        mmSystems.battery = new MMBattery(hardwareMap);
-        reset(); //reset the scheduler
-    }
-
     private void initializeSystems(OpModeType type) {
-        if(type == OpModeType.TELEOP) {
+        if(type == OpModeType.Competition.TELEOP) {
             initTele();
-        } else if (type == OpModeType.AUTO) {
+        } else if (type == OpModeType.Competition.AUTO) {
             initAuto();
-        } else if(type == OpModeType.DEBUG) {
+        } else if(type == OpModeType.NonCompetition.DEBUG) {
             initDebug();
         }
     }

@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.MMLib.PID;
 
 import com.arcrobotics.ftclib.controller.PIDController;
 
-import org.firstinspires.ftc.teamcode.MMLib.Subsystems.MMPowerSubsystem;
+import org.firstinspires.ftc.teamcode.MMLib.SubsystemStructure.MMPowerSubsystem;
 
 public abstract class MMPIDSubsystem extends MMPowerSubsystem<Double> {
 
@@ -47,10 +47,14 @@ public abstract class MMPIDSubsystem extends MMPowerSubsystem<Double> {
     }
 
     /**
-     * this method will be called once the pidCommand isFinished (atSetPoint)
+     * this method will be called once the {@link MMPIDCommand#isFinished()} (atSetPoint)
      * <p>
      * this is also called when ur done tuning the FF power (using the {@link MMTuningFFCommand})
+     * <p>
+     * u can override it to make sure it stops ur subsystem.
      */
-    public void stop() {}
+    public void stop() {
+        setPower((double) 0);
+    }
 
 }

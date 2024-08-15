@@ -6,11 +6,10 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SelectCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
 
-import org.firstinspires.ftc.teamcode.MMRobot;
+import org.firstinspires.ftc.teamcode.MMLib.Examples.OpModes.DeferredCommandTest;
 
 import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * Defers {@link Command} construction to runtime. Runs the command returned by the supplier when this
@@ -26,7 +25,6 @@ public class MMDeferredCommand extends CommandBase {
     private final Supplier<Command> commandSupplier;
     private Command command = nullCommand;
 
-
     /**
      * Creates a new DeferredCommand that runs the supplied command when initialized, and ends when it
      * ends. Useful for lazily creating commands at runtime. The {@link Supplier} will be called each
@@ -34,7 +32,7 @@ public class MMDeferredCommand extends CommandBase {
      *
      * @param commandSupplier The command supplier
      * @param requireSubsystems The command requirements. This is a {@link Set} to prevent accidental
-         *     omission of command requirements. Use {@link java.util.HashSet#add(Object) HashSet.add(Subsystem)} to easily construct a requirement
+     *     omission of command requirements. Use {@link java.util.HashSet#add(Object) HashSet.add(Subsystem)} to <s>easily</s> (see {@link DeferredCommandTest}) construct a requirement
      *     set.
      */
     public MMDeferredCommand(Supplier<Command> commandSupplier, Set<Subsystem> requireSubsystems) {

@@ -6,7 +6,10 @@ import com.arcrobotics.ftclib.command.CommandBase
 import com.arcrobotics.ftclib.command.InstantCommand
 import com.arcrobotics.ftclib.command.Subsystem
 
-class MMDeferredCommandKT(
+/**
+ * ignore this (it was js for fun hehe :D)
+ */
+private class MMDeferredCommandKT(
         commandSupplier: Supplier<Command>,
         vararg requiredSubsystems: Subsystem
 ) : CommandBase() {

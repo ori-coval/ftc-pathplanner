@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MMLib.Examples.TeleOps;
+package org.firstinspires.ftc.teamcode.MMLib.Examples.TeleOps.Comp;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -16,7 +16,7 @@ public class MMTeleOpBlue extends MMTeleOpTest {
     }
 
     @Override
-    public void main() {
+    public void onInit() {
         addRunnableOnInit(
                 () -> MMRobot.getInstance().mmSystems.shooterPID.setPower(0.5)
         );

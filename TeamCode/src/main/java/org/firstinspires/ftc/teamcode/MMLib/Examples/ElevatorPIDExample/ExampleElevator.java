@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.MMLib.Examples.ElevatorExample;
+package org.firstinspires.ftc.teamcode.MMLib.Examples.ElevatorPIDExample;
 
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMEncoder;
 import org.firstinspires.ftc.teamcode.CuttlefishFTCBridge.src.devices.MMMotor;
@@ -38,9 +38,10 @@ public class ExampleElevator extends MMPIDSubsystem {
     }
 
     /**
-     * get the current value of the elevator.<p>
-     * note that in every elevator it's different,</p>
-     * this is something you are going to have to find urself.
+     * get the current value (height) of the elevator.<p>
+     * note that in every elevator it's different,
+     * this is something you are going to have to find urself. </p>
+     * the method below, represents the CENTERSTAGE elevator's method.
      * @return the height in cm.
      */
     @Override

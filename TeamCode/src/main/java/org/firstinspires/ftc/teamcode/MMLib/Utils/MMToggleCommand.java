@@ -6,8 +6,8 @@ import com.arcrobotics.ftclib.command.Subsystem;
 import java.util.function.Consumer;
 
 /**
- * this command is supposed to help u avoid like maybe one line of duplicated code.
- * very useless. it was meant for the toggleWhenActive.
+ * this command gets a consumer and an on and off state to feed to the consumer.
+ * it builds a {@link StartEndCommand} where the {@link StartEndCommand#initialize() start()} method runs the on and the {@link StartEndCommand#end(boolean) end()} runs the off state.
  * @param <T> the type ur consumer gets
  */
 public class MMToggleCommand<T> extends StartEndCommand {
