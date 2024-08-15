@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
-import org.firstinspires.ftc.teamcode.MMLib.Examples.ElevatorPIDExample.ExampleElevator;
-import org.firstinspires.ftc.teamcode.MMLib.Examples.Subsystems.ShooterPID;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.ElevatorPIDExample.ExampleElevator;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterPID;
 
 /**
  * this class should contain all ur init methods
