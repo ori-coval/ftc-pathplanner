@@ -43,7 +43,7 @@ public abstract class MMTeleOp extends CommandOpMode {
 
 
     /**
-     * use this to choose a {@link OpModeType.NonCompetition  NonComp} opmode.
+     * use this to choose a {@link OpModeType.NonCompetition NonComp} opmode.
      * @param opModeType which non-competition opmode to activate
      */
     public MMTeleOp(OpModeType.NonCompetition opModeType) {
@@ -113,7 +113,7 @@ public abstract class MMTeleOp extends CommandOpMode {
      * <p>
      * this can be used for setting the gripper position for example, or locking everything in place.
      * <p>
-     * if you're using it, don't forget to add the sticker!
+     * if you're using this, don't forget to add the sticker!
      * @param runOnInit methods to run
      */
     public void addRunnableOnInit(Runnable... runOnInit) {

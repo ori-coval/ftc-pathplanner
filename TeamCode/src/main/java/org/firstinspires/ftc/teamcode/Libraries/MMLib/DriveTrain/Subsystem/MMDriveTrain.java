@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Libraries.MMLib;
+package org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Subsystem;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -33,6 +33,7 @@ public class MMDriveTrain extends SubsystemBase {
     private double yawOffset = 0;
 
     public MMDriveTrain() {
+        super(); //register this subsystem, in order to schedule default command later on.
         imu = mmRobot.mmSystems.hardwareMap.get(BNO055IMU.class, Configuration.IMU);
         BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
         imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;

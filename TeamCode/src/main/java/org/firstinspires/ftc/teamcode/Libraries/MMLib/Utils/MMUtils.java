@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.function.DoubleSupplier;
 
 /**
- * this class represents useful method that may help you
+ * this class represents useful methods that may help you
  */
 public abstract class MMUtils {
 
