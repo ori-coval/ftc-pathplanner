@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.ElevatorPIDExample;
 
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMEncoder;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMMotor;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleEncoder;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.PID.MMPIDSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 public class ExampleElevator extends MMPIDSubsystem {
 
     //hardware
-    private final MMMotor motorLeft;
-    private final MMMotor motorRight;
-    private final MMEncoder encoder;
+    private final CuttleMotor motorLeft;
+    private final CuttleMotor motorRight;
+    private final CuttleEncoder encoder;
 
     //control
     private static final double kP = 0;
@@ -26,9 +26,9 @@ public class ExampleElevator extends MMPIDSubsystem {
 
     public ExampleElevator() {
         super(kP, kI, kD, tolerance);
-        motorLeft = new MMMotor(MMRobot.getInstance().mmSystems.expansionHub, Configuration.ELEVATOR_LEFT);
-        motorRight = new MMMotor(MMRobot.getInstance().mmSystems.expansionHub, Configuration.ELEVATOR_RIGHT);
-        encoder = new MMEncoder(MMRobot.getInstance().mmSystems.expansionHub, Configuration.ELEVATOR_ENCODER, TICKS_PER_REV);
+        motorLeft = new CuttleMotor(MMRobot.getInstance().mmSystems.expansionHub, Configuration.ELEVATOR_LEFT);
+        motorRight = new CuttleMotor(MMRobot.getInstance().mmSystems.expansionHub, Configuration.ELEVATOR_RIGHT);
+        encoder = new CuttleEncoder(MMRobot.getInstance().mmSystems.expansionHub, Configuration.ELEVATOR_ENCODER, TICKS_PER_REV);
     }
 
     @Override

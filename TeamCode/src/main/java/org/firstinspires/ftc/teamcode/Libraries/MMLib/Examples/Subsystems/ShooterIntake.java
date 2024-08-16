@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.CRServo;
 
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMMotor;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
@@ -11,7 +11,7 @@ public class ShooterIntake extends SubsystemBase {
 
     MMRobot mmRobot = MMRobot.getInstance();
 
-    MMMotor motor;
+    CuttleMotor motor;
     CRServo crServo;
 
     public ShooterIntake() {

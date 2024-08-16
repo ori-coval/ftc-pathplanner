@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems;
 
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMEncoder;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMMotor;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleEncoder;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.PID.MMPIDSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
@@ -10,8 +10,8 @@ public class ShooterTurret extends MMPIDSubsystem {
 
     MMRobot mmRobot = MMRobot.getInstance();
 
-    MMMotor motor;
-    MMEncoder encoder;
+    CuttleMotor motor;
+    CuttleEncoder encoder;
 
     private final double GEAR_RATIO = (21./95);
     private final double TICKS_PER_REV = 8192;

@@ -5,9 +5,9 @@ import com.roboctopi.cuttlefish.utils.Direction;
 /**
  * Rotary encoder connected through a motor encoder port
  * */
-public class MMEncoder implements RotaryEncoder
+public class CuttleEncoder implements RotaryEncoder
 {
-    public MMRevHub hub;
+    public CuttleRevHub hub;
     private final double encTicks;
     private int direction = 1;
     public int mPort;
@@ -19,7 +19,7 @@ public class MMEncoder implements RotaryEncoder
      * @param port Motor port of the encoder
      * @param countsPerRevolution Number of counts per revolution of the encoder
      * */
-    public MMEncoder(MMRevHub revHub, int port, double countsPerRevolution) {
+    public CuttleEncoder(CuttleRevHub revHub, int port, double countsPerRevolution) {
         hub = revHub;
         encTicks = countsPerRevolution;
         mPort = port;

@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.tasks
 
 import com.roboctopi.cuttlefish.queue.Task
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMServo
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleServo
 
-class ServoPresetTask(val servo: MMServo, val preset: Int): Task
+class ServoPresetTask(val servo: CuttleServo, val preset: Int): Task
 {
     override fun loop(): Boolean
     {

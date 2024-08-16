@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMEncoder;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMMotor;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleEncoder;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.PID.MMPIDSubsystem;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
@@ -18,8 +18,8 @@ public class ShooterPID extends MMPIDSubsystem {
     public static double kD = 0;
     public static double tolerance = 0;
 
-    private final MMMotor motor;
-    private final MMEncoder encoder;
+    private final CuttleMotor motor;
+    private final CuttleEncoder encoder;
 
     private final MMRobot mmRobot = MMRobot.getInstance();
 

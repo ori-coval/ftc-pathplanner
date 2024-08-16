@@ -6,23 +6,23 @@ import com.roboctopi.cuttlefish.localizer.ThreeEncoderLocalizer;
 import com.roboctopi.cuttlefish.queue.TaskQueue;
 import com.roboctopi.cuttlefish.utils.Direction;
 
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMEncoder;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMMotor;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMRevHub;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleEncoder;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.opmodeTypes.GamepadOpMode;
 
 
 public abstract class ExampleInitializedOpmode extends GamepadOpMode {
     // Declare the rev hubs. If you only have one hub connected you can delete one of these
-    public MMRevHub ctrlHub;
-    public MMRevHub expHub;
+    public CuttleRevHub ctrlHub;
+    public CuttleRevHub expHub;
 
 
     // Declare the chassis motors
-    public MMMotor leftFrontMotor ;
-    public MMMotor rightFrontMotor;
-    public MMMotor rightBackMotor ;
-    public MMMotor leftBackMotor  ;
+    public CuttleMotor leftFrontMotor ;
+    public CuttleMotor rightFrontMotor;
+    public CuttleMotor rightBackMotor ;
+    public CuttleMotor leftBackMotor  ;
 
     // Declare the mecanum controller
     public MecanumController chassis;
@@ -45,8 +45,8 @@ public abstract class ExampleInitializedOpmode extends GamepadOpMode {
         If this throws an error, try getting the hubs by name
         You can find the name of the hubs in the config file
         */
-        ctrlHub = new MMRevHub(hardwareMap, MMRevHub.HubTypes.CONTROL_HUB);
-        expHub = new MMRevHub(hardwareMap,"Expansion Hub 1");
+        ctrlHub = new CuttleRevHub(hardwareMap, CuttleRevHub.HubTypes.CONTROL_HUB);
+        expHub = new CuttleRevHub(hardwareMap,"Expansion Hub 1");
 
         /*
         Get the chassis motors
@@ -66,9 +66,9 @@ public abstract class ExampleInitializedOpmode extends GamepadOpMode {
         leftFrontMotor.setDirection(Direction.REVERSE);
 
         //Initialize and set the direction of the encoders
-        MMEncoder leftEncoder  = expHub .getEncoder(0,720*4);
-        MMEncoder sideEncoder  = expHub .getEncoder(3,720*4);
-        MMEncoder rightEncoder = ctrlHub.getEncoder(3,720*4);
+        CuttleEncoder leftEncoder  = expHub .getEncoder(0,720*4);
+        CuttleEncoder sideEncoder  = expHub .getEncoder(3,720*4);
+        CuttleEncoder rightEncoder = ctrlHub.getEncoder(3,720*4);
         rightEncoder.setDirection(Direction.REVERSE);
         sideEncoder.setDirection(Direction.REVERSE);
 

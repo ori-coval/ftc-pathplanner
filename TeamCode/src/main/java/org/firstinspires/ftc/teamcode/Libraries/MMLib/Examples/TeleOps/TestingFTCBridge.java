@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMMotor;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
@@ -21,7 +21,7 @@ public class TestingFTCBridge extends MMTeleOp {
     @Override
     public void onInit() {
 
-        MMMotor motor = mmRobot.mmSystems.controlHub.getMotor(3);
+        CuttleMotor motor = mmRobot.mmSystems.controlHub.getMotor(3);
 
         addRunnableOnInit(
                 () -> motor.setPower(-1)

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Contains a list of preset positions which can be appended to using the addPreset() function.
  *
  * */
-public class MMServo implements Servo {
+public class CuttleServo implements Servo {
 
     private double pos = 0.0;
     public int port;
@@ -19,7 +19,7 @@ public class MMServo implements Servo {
      * Array of preset positions.
      * */
     public ArrayList<Double> presetsArr;
-    MMRevHub hub;
+    CuttleRevHub hub;
     com.qualcomm.robotcore.hardware.Servo ftcServoDevice;
 
     /**
@@ -27,7 +27,7 @@ public class MMServo implements Servo {
      * @param revHub
      * @param servoPort
      * */
-    public MMServo(MMRevHub revHub, int servoPort)
+    public CuttleServo(CuttleRevHub revHub, int servoPort)
     {
         port = servoPort;
         hub = revHub;
@@ -39,7 +39,7 @@ public class MMServo implements Servo {
      * @param hardwareMap hardwareMap object
      * @param name Name of the servo in the config
      * */
-    public MMServo(HardwareMap hardwareMap, String name)
+    public CuttleServo(HardwareMap hardwareMap, String name)
     {
         FTCServo = true;
         presetsArr = new ArrayList<Double>();

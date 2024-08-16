@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMRevHub;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
@@ -155,7 +155,7 @@ public abstract class MMTeleOp extends CommandOpMode {
      * the {@link CommandOpMode#run() super.run()} call, MUST be added in the start of the override block,
      * in order for the {@link CommandScheduler} to run.
      * <p>
-     * the {@link MMRevHub#pullBulkData()} method needs to be called in order to update the (non-i2c) sensors.
+     * the {@link CuttleRevHub#pullBulkData()} method needs to be called in order to update the (non-i2c) sensors.
      * (encoders - for example, wouldn't work otherwise)
      * <p>
      * the {@link Telemetry#update()} method is used to update the telemetry and send information to it.

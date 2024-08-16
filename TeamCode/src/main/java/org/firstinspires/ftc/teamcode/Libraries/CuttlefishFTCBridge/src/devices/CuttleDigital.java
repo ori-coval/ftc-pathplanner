@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices
 /**
  * Generic digital sensor
  * */
-public class MMDigital {
+public class CuttleDigital {
     public int port;
-    public MMRevHub hub;
+    public CuttleRevHub hub;
     /**
      * @param revHub
      * @param digitalPort
      * */
-    public MMDigital(MMRevHub revHub, int digitalPort)
+    public CuttleDigital(CuttleRevHub revHub, int digitalPort)
     {
         hub = revHub;
         port = digitalPort;
