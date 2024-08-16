@@ -38,8 +38,9 @@ public class ExampleElevator extends MMPIDSubsystem {
     }
 
     /**
-     * get the current value (height) of the elevator.<p>
-     * note that in every elevator it's different,
+     * get the current value (height) of the elevator.
+     * <p>
+     * note that it's different in every elevator,
      * this is something you are going to have to find urself. </p>
      * the method below, represents the CENTERSTAGE elevator's method.
      * @return the height in cm.

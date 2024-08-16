@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.OpModes;
+package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.TeleOps;
 
 import com.arcrobotics.ftclib.command.StartEndCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Commands.ShootBySupplier;
@@ -13,18 +14,19 @@ import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 import java.util.function.BooleanSupplier;
 
 
+@Disabled
 @TeleOp(name = "Experimenting")
 public class ExperimentingTeleOp extends MMTeleOp {
 
     MMRobot mmRobot = MMRobot.getInstance();
 
-    boolean isActive = false;
-
-    BooleanSupplier isActiveSupplier = this::getIsActive;
-
     public ExperimentingTeleOp() {
         super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
     }
+
+    boolean isActive = false;
+
+    BooleanSupplier isActiveSupplier = this::getIsActive;
 
     public boolean getIsActive() {
         return isActive;
@@ -49,6 +51,7 @@ public class ExperimentingTeleOp extends MMTeleOp {
 
     @Override
     public void run() {
+        super.run();
         telemetry.addData("isActive", isActiveSupplier.getAsBoolean());
         telemetry.update();
     }

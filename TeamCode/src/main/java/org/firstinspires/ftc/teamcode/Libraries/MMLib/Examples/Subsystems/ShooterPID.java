@@ -13,20 +13,25 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 @Config
 public class ShooterPID extends MMPIDSubsystem {
 
+    MMRobot mmRobot = MMRobot.getInstance();
+
+    //hardware
+    private final CuttleMotor motor;
+    private final CuttleEncoder encoder;
+
+    //control
     public static double kP = 0.01;
     public static double kI = 0;
     public static double kD = 0;
     public static double tolerance = 0;
 
-    private final CuttleMotor motor;
-    private final CuttleEncoder encoder;
-
-    private final MMRobot mmRobot = MMRobot.getInstance();
+    //constants
+    private final double TICKS_PER_REV = 3895.9;
 
     public ShooterPID() {
         super(kP, kI, kD, tolerance);
         this.motor = mmRobot.mmSystems.controlHub.getMotor(Configuration.SHOOTER1);
-        this.encoder = mmRobot.mmSystems.controlHub.getEncoder(Configuration.SHOOTER1, 3895.9);
+        this.encoder = mmRobot.mmSystems.controlHub.getEncoder(Configuration.SHOOTER1, TICKS_PER_REV);
     }
 
     @Override
@@ -46,7 +51,6 @@ public class ShooterPID extends MMPIDSubsystem {
 
     @Override
     public void periodic() {
-        mmRobot.mmSystems.controlHub.pullBulkData();
         telemetry();
     }
 

@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Utils.Configuration;
 /**
  * this class is an example of a mecanum drive train.
  */
-public class SampleDriveTrain extends SubsystemBase {
+public class MMDriveTrain extends SubsystemBase {
 
     final double[][] transformationMatrix = {
             {1, 1, 1}, //frontLeft
@@ -32,7 +32,7 @@ public class SampleDriveTrain extends SubsystemBase {
     private final BNO055IMU imu;
     private double yawOffset = 0;
 
-    public SampleDriveTrain() {
+    public MMDriveTrain() {
         imu = mmRobot.mmSystems.hardwareMap.get(BNO055IMU.class, Configuration.IMU);
         BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
         imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -49,7 +49,7 @@ public class SampleDriveTrain extends SubsystemBase {
 
     }
 
-    public SampleDriveTrain(double lastAngle){
+    public MMDriveTrain(double lastAngle){
         this();
         setYaw(lastAngle);
     }

@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SelectCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
 
-import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.OpModes.DeferredCommandTest;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.TeleOps.DeferredCommandTest;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.MMUtils;
 
 import java.util.Set;

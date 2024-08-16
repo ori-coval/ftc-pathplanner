@@ -8,6 +8,18 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.SubsystemStructure.MMPower
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
+/**
+ * this class represents a subsystem which is both power and position based.
+ * <p>
+ * notice that in those cases if i try to use a command that controls only the setPosition,
+ * and a command that controls only the setPower, they will both require the same subsystem
+ * and be prevented from happening by the {@link com.arcrobotics.ftclib.command.CommandScheduler CommandScheduler},
+ * while they are still physically able to move independently of one another, therefore, there is a logic problem here.
+ * <p>
+ * in this case, the solution is to separate the power and position, into 2 different subsystems.
+ * <p>
+ * see the CENTERSTAGE 2023-24 Intake.Lifter and Intake.Roller subsystems for example.
+ */
 public class Shooter extends MMPowerPositionSubsystem<Double, Double> {
 
     MMRobot mmRobot = MMRobot.getInstance();

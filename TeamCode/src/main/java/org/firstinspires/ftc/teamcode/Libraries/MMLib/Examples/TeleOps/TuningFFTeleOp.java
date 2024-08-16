@@ -9,9 +9,13 @@ import org.firstinspires.ftc.teamcode.MMRobot;
 
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
+/**
+ * obviously checking for friction in a spinwheel is pretty dumb,
+ * but this is an overall example of how to use the TuningFFCommand
+ */
 public class TuningFFTeleOp extends MMTeleOp {
 
-    private final MMRobot mmRobot = MMRobot.getInstance();
+    MMRobot mmRobot = MMRobot.getInstance(); //btw this is line is just to reduce code
 
     public TuningFFTeleOp() {
         super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.OpModes;
+package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.TeleOps;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
@@ -18,7 +18,6 @@ public class DeferredCommandTest extends MMTeleOp {
     public DeferredCommandTest() {
         super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
     }
-
 
     @Override
     public void onInit() {

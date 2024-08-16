@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.OpModes;
+package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.TeleOps;
 
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMRobot;
@@ -10,14 +10,16 @@ public class MMBatteryTest extends MMTeleOp {
         super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
     }
 
+    //notice that its okay to leave it empty.
     @Override
     public void onInit() {}
 
     @Override
     public void run() {
+        super.run();
         telemetry.addData(
                 "Battery",
-                MMRobot.getInstance().mmSystems.battery.getVoltage()
+                MMRobot.getInstance().mmSystems.battery.getPercentage()
         );
         telemetry.update();
     }
