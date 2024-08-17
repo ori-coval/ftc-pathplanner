@@ -8,14 +8,22 @@ package org.firstinspires.ftc.teamcode.Utils;
  * if u dont get along with it, please go back to normal strings configuration.
  * <p>
  * notice that there are some things that i still haven't figured out how to use on cuttle fish,
- * for example: i still couldn't figure out how to use CR Servos,
+ * for example: i still couldn't figure out how to use CR Servos.
  * in this case, i've used the normal string configuration to control it.
  * if u have more things that are missing, u can still combine the 2 methods.
- * im still not sure whether it just doesn't exist, or i don't know how to use it, so feel free to contact roboctopi for confirmation.
+ * im still not sure whether it just doesn't exist, or i don't know how to use it, so feel free to look around their docs and src.
  */
 public class Configuration {
 
+    public static final String IMU = "imu";
+
     //CONTROL HUB
+    //DriveTrain
+    public static final int DRIVE_TRAIN_FRONT_LEFT = 0;
+    public static final int DRIVE_TRAIN_BACK_LEFT = 1;
+    public static final int DRIVE_TRAIN_FRONT_RIGHT = 2;
+    public static final int DRIVE_TRAIN_BACK_RIGHT = 3;
+
     public static final int SHOOTER1 = 0;
     public static final int SHOOTER2 = 1;
     public static final int SHOOTER_INTAKE = 2;

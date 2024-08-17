@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.TeleOps;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Commands.ShootByPID;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.Shoote
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
+@Disabled
 @TeleOp(name = "Teleop")
 public class BasicTeleOp extends CommandOpMode {
 
@@ -17,6 +19,8 @@ public class BasicTeleOp extends CommandOpMode {
 
     @Override
     public void initialize() {
+        //notice that this TeleOp does NOT inherit from MMTeleOp.
+        //long story short, this is not how u wanna do it. (it was just a test for me)
         mmRobot.init(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION, hardwareMap, gamepad1, gamepad2, telemetry);
 
         mmRobot.mmSystems.shooterPID = new ShooterPID();

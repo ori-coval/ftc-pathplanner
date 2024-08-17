@@ -7,8 +7,9 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMRevHub;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.ElevatorPIDExample.ExampleElevator;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Subsystem.MMDriveTrain;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.MMBattery;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterIntake;
@@ -28,8 +29,8 @@ public class MMSystems {
     public AllianceColor allianceColor;
     public AllianceSide robotSide;
     public HardwareMap hardwareMap;
-    public MMRevHub controlHub;
-    public MMRevHub expansionHub;
+    public CuttleRevHub controlHub;
+    public CuttleRevHub expansionHub;
     public GamepadEx gamepadEx1;
     public GamepadEx gamepadEx2;
     public Telemetry telemetry;
@@ -37,6 +38,7 @@ public class MMSystems {
 
     //Subsystems
     //For example:
+    public MMDriveTrain mmDriveTrain;
     public Shooter shooter;
     public ShooterIntake shooterIntake;
     public ShooterPID shooterPID;
@@ -48,9 +50,9 @@ public class MMSystems {
     public MMSystems(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         this.opModeType = type;
         this.hardwareMap = hardwareMap;
-        this.controlHub = new MMRevHub(hardwareMap, MMRevHub.HubTypes.CONTROL_HUB);
+        this.controlHub = new CuttleRevHub(hardwareMap, CuttleRevHub.HubTypes.CONTROL_HUB);
         if(type != OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION) {
-            this.expansionHub = new MMRevHub(hardwareMap, "Expansion Hub 2");
+            this.expansionHub = new CuttleRevHub(hardwareMap, "Expansion Hub 2");
         }
         this.gamepadEx1 = new GamepadEx(gamepad1);
         this.gamepadEx2 = new GamepadEx(gamepad2);

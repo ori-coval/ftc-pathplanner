@@ -8,7 +8,7 @@ import com.arcrobotics.ftclib.command.Subsystem
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.MMUtils
 
 /**
- * ignore this (it was js for fun hehe :D)
+ * ignore this (it was js for fun :p)
  */
 private class MMDeferredCommandKT(
         commandSupplier: Supplier<Command>,

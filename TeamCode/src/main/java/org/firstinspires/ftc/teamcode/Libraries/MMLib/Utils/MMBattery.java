@@ -43,7 +43,7 @@ public class MMBattery {
         return MMUtils.mapValuesLinearByRange(
                 getVoltage(),
                 new MMRange(lowest, highest),
-                new MMRange(0, 100) //turn into numbers that range from 0 to 100. (percentage)
+                new MMRange(0, 100) //turn into numbers that range from 0 to 100 (percentage).
         );
     }
 

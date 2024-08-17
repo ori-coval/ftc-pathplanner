@@ -2,14 +2,16 @@ package org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.TeleOps;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMServo;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleServo;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.MMUtils;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
+@Disabled
 @TeleOp
 public class Mapping extends MMTeleOp {
 
@@ -19,7 +21,7 @@ public class Mapping extends MMTeleOp {
 
     MMRobot mmRobot = MMRobot.getInstance();
 
-    MMServo servo;
+    CuttleServo servo;
 
     @Override
     public void onInit() {

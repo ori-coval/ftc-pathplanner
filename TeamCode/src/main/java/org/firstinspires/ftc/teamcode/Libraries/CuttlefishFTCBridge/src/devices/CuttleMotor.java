@@ -7,8 +7,8 @@ import com.roboctopi.cuttlefish.controller.MotorPositionController;
 /**
  * Cuttlefish DCMotor implementation.
  * */
-public class MMMotor implements Motor {
-    MMRevHub hub;
+public class CuttleMotor implements Motor {
+    CuttleRevHub hub;
     int mPort;
     int sign = 1;
     public MotorPositionController positionController;
@@ -23,7 +23,7 @@ public class MMMotor implements Motor {
      * @param revHub
      * @param port
      * */
-    public MMMotor(MMRevHub revHub, int port)
+    public CuttleMotor(CuttleRevHub revHub, int port)
     {
         hub = revHub;
         mPort = port;
@@ -33,7 +33,7 @@ public class MMMotor implements Motor {
      * @param port
      * @param positionController Preconfigured motor position controller for positional control of the motor
      * */
-    public MMMotor(MMRevHub revHub, int port, MotorPositionController positionController)
+    public CuttleMotor(CuttleRevHub revHub, int port, MotorPositionController positionController)
     {
         hub = revHub;
         mPort = port;

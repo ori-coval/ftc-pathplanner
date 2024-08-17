@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.MMRevHub;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
@@ -43,7 +43,7 @@ public abstract class MMTeleOp extends CommandOpMode {
 
 
     /**
-     * use this to choose a {@link OpModeType.NonCompetition  NonComp} opmode.
+     * use this to choose a {@link OpModeType.NonCompetition NonComp} opmode.
      * @param opModeType which non-competition opmode to activate
      */
     public MMTeleOp(OpModeType.NonCompetition opModeType) {
@@ -96,7 +96,7 @@ public abstract class MMTeleOp extends CommandOpMode {
 
     /**
      * this method helps you add {@link Runnable} or {@link Command} that will happen on init or run.
-     * due to the fact that the {@link com.arcrobotics.ftclib.command.CommandScheduler CommandScheduler} run only when opmode is active,
+     * due to the fact that the {@link CommandScheduler CommandScheduler} run only when opmode is active,
      * you can't run commands on init, but you can run runnables on init. and commands right after the opmode is active.
      * use {@link #addRunnableOnInit(Runnable...)} and/or {@link #addCommandsOnRun(Command...)}.
      * <p>
@@ -113,7 +113,7 @@ public abstract class MMTeleOp extends CommandOpMode {
      * <p>
      * this can be used for setting the gripper position for example, or locking everything in place.
      * <p>
-     * if you're using it, don't forget to add the sticker!
+     * if you're using this, don't forget to add the sticker!
      * @param runOnInit methods to run
      */
     public void addRunnableOnInit(Runnable... runOnInit) {
@@ -155,7 +155,7 @@ public abstract class MMTeleOp extends CommandOpMode {
      * the {@link CommandOpMode#run() super.run()} call, MUST be added in the start of the override block,
      * in order for the {@link CommandScheduler} to run.
      * <p>
-     * the {@link MMRevHub#pullBulkData()} method needs to be called in order to update the (non-i2c) sensors.
+     * the {@link CuttleRevHub#pullBulkData()} method needs to be called in order to update the (non-i2c) sensors.
      * (encoders - for example, wouldn't work otherwise)
      * <p>
      * the {@link Telemetry#update()} method is used to update the telemetry and send information to it.

@@ -3,16 +3,16 @@ package org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices
 /**
  * Generic Analog Sensor
  * */
-public class MMAnalog {
+public class CuttleAnalog {
     public int port;
-    public MMRevHub hub;
+    public CuttleRevHub hub;
 
     /**
      * Generic analog sensor.
      * @param revHub
      * @param analogPort Analog port number
      * */
-    public MMAnalog(MMRevHub revHub, int analogPort)
+    public CuttleAnalog(CuttleRevHub revHub, int analogPort)
     {
         hub = revHub;
         port = analogPort;
