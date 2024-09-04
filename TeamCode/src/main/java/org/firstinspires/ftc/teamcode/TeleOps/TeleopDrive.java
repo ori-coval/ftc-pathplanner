@@ -19,12 +19,14 @@ public class TeleopDrive extends MMTeleOp {
 
     @Override
     public void onInit() {
-        MMInitMethods.initDriveTrain();
 
-        //you can also add a reset button:
-        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-                new ResetFieldOrientedCommand()
-        );
     }
 
+    @Override
+    public void run() {
+        super.run();
+        telemetry.addData("miao","j");
+        telemetry.update();
+
+    }
 }
