@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.MMUtils;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
-@Disabled
 @TeleOp
 public class CartridgeTest extends MMTeleOp {
     public CartridgeTest() {
