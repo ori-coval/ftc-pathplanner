@@ -19,12 +19,12 @@ public class MMDriveCommand extends RunCommand {
 
     public MMDriveCommand() {
         super(
-                () -> mmSystems.mmDriveTrain.fieldOrientedDrive(
+                () -> mmSystems.driveTrain.fieldOrientedDrive(
                         gamepadEx1.getLeftX(),
                         -gamepadEx1.getLeftY(),
                         gamepadEx1.getRightX()
                 ),
-                mmSystems.mmDriveTrain
+                mmSystems.driveTrain
         );
     }
 

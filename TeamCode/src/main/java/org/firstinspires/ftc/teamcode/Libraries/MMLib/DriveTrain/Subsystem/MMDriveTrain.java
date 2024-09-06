@@ -34,6 +34,7 @@ public class MMDriveTrain extends SubsystemBase {
 
     public MMDriveTrain() {
         super(); //register this subsystem, in order to schedule default command later on.
+        register();
         imu = mmRobot.mmSystems.hardwareMap.get(BNO055IMU.class, Configuration.IMU);
         BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
         imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
