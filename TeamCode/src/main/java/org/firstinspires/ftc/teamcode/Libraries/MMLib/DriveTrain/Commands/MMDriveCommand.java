@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.MMSystems;
 /**
  * this class runs the
  * {@link org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Subsystem.MMDriveTrain#fieldOrientedDrive(double, double, double) fieldOrientedDrive()}
- * with {@link com.arcrobotics.ftclib.gamepad.GamepadEx gamepadEx1}.
+ * with {@link GamepadEx gamepadEx1}.
  */
 public class MMDriveCommand extends RunCommand {
 
