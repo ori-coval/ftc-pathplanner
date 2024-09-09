@@ -13,7 +13,7 @@ public class DriveCommand extends RunCommand {
 
     public DriveCommand() {
         super(
-                () -> mmSystems.driveTrain.drive(
+                () -> mmSystems.driveTrain.fieldOrientedDrive(
                         gamepadEx1.getLeftX(),
                         -gamepadEx1.getLeftY(),
                         gamepadEx1.getRightX()
