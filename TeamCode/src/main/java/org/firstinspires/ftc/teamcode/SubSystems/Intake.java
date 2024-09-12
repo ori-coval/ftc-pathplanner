@@ -14,7 +14,7 @@ public class Intake extends SubsystemBase{
 
     CRServo servo;
     public Intake() {
-        servo = mmRobot.mmSystems.hardwareMap.crservo.get(Configuration.INTAKE_SERVO);
+        servo = MMRobot.getInstance().mmSystems.hardwareMap.crservo.get("intakeRoller");
 
     }
 

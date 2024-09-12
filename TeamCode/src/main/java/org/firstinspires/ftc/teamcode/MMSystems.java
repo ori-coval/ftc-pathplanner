@@ -39,7 +39,7 @@ public class MMSystems {
 
     //Subsystems
     //For example:
-    public MMDriveTrain driveTrain;
+    public DriveTrain driveTrain;
 
     public Shooter shooter;
     public ShooterIntake shooterIntake;

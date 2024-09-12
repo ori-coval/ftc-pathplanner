@@ -5,12 +5,16 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.qualcomm.hardware.bosch.BHI260IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.roboctopi.cuttlefish.utils.Direction;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
@@ -38,6 +42,12 @@ public class DriveTrain extends SubsystemBase {
         super(); //register this subsystem, in order to schedule default command later on.
         register();
         imu = mmRobot.mmSystems.hardwareMap.get(BHI260IMU.class, Configuration.IMU);
+        BHI260IMU.Parameters imuParameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD, RevHubOrientationOnRobot.UsbFacingDirection.UP));
+        imuParameters.imuOrientationOnRobot.imuCoordinateSystemOrientationFromPerspectiveOfRobot().toOrientation(
+                AxesReference.INTRINSIC,
+                AxesOrder.ZXY,
+                AngleUnit.DEGREES
+        );
         imu.initialize();
 
         motorFL = new CuttleMotor(mmRobot.mmSystems.controlHub, Configuration.DRIVE_TRAIN_FRONT_LEFT);
@@ -105,12 +115,6 @@ public class DriveTrain extends SubsystemBase {
 
     public double getYawInDegrees() {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + yawOffset;
-    }
-    public double getRollInDegrees() {
-        return imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES) + yawOffset;
-    }
-    public double getPitchInDegrees() {
-        return imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES) + yawOffset;
     }
 
 

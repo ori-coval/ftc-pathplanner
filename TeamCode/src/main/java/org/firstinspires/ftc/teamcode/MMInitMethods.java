@@ -22,9 +22,9 @@ public class MMInitMethods {
     //For example:
 
     public static void initDriveTrain() {
-        mmSystems.driveTrain = new  MMDriveTrain();
+        mmSystems.driveTrain = new DriveTrain();
         mmSystems.driveTrain.setDefaultCommand(
-                new MMDriveCommand()
+                new DriveCommand()
         );
     }
 

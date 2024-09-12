@@ -26,8 +26,8 @@ public class TeleopDrive extends MMTeleOp {
     @Override
     public void run() {
         super.run();
-//        telemetry.addData("yaw",MMRobot.getInstance().mmSystems.driveTrain.getYawInDegrees());
-//        telemetry.update();
+        telemetry.addData("yaw", MMRobot.getInstance().mmSystems.driveTrain.getYawInDegrees());
+        telemetry.update();
     }
 
 }
