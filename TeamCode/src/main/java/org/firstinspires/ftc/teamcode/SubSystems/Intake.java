@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleServo;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
@@ -10,11 +12,13 @@ public class Intake extends SubsystemBase{
 
     MMRobot mmRobot = MMRobot.getInstance();
 
-    CuttleMotor motor;
+    CRServo servo;
     public Intake() {
-        motor = mmRobot.mmSystems.controlHub.getMotor(Configuration.INTAKE);
+        servo = mmRobot.mmSystems.hardwareMap.crservo.get(Configuration.INTAKE_SERVO);
+
     }
 
-    public void setPower(double power){motor.setPower(power);}
+    public void setPower(double power){servo.setPower(power);}
+
 
 }
