@@ -106,7 +106,12 @@ public class DriveTrain extends SubsystemBase {
     public double getYawInDegrees() {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + yawOffset;
     }
-
+    public double getRollInDegrees() {
+        return imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES) + yawOffset;
+    }
+    public double getPitchInDegrees() {
+        return imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES) + yawOffset;
+    }
 
 
 

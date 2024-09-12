@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.teamcode.Commands.DriveCommand;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Subsystem.MMDriveTrain;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.ElevatorPIDExample.ExampleElevator;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterPID;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Commands.MMDriveCommand;
@@ -21,9 +22,9 @@ public class MMInitMethods {
     //For example:
 
     public static void initDriveTrain() {
-        mmSystems.driveTrain = new DriveTrain();
+        mmSystems.driveTrain = new  MMDriveTrain();
         mmSystems.driveTrain.setDefaultCommand(
-                new DriveCommand()
+                new MMDriveCommand()
         );
     }
 
