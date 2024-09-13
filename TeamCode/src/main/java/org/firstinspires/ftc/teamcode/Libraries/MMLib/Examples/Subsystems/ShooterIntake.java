@@ -25,7 +25,7 @@ public class ShooterIntake extends SubsystemBase {
 
     public ShooterIntake() {
         motor = mmRobot.mmSystems.controlHub.getMotor(Configuration.SHOOTER_INTAKE);
-        crServo = mmRobot.mmSystems.hardwareMap.get(CRServo.class, Configuration.INTAKE_SERVO);
+        crServo = mmRobot.mmSystems.hardwareMap.get(CRServo.class, "" /*Configuration.INTAKE_SERVO*/);
     }
 
     public void setMotorPower(double power) {

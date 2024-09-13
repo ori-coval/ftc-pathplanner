@@ -2,7 +2,12 @@ package org.firstinspires.ftc.teamcode.TeleOps;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Subsystem.MMDriveTrain;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
+import org.firstinspires.ftc.teamcode.MMInitMethods;
+import org.firstinspires.ftc.teamcode.MMRobot;
+import org.firstinspires.ftc.teamcode.MMSystems;
+import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp
@@ -15,12 +20,14 @@ public class TeleopDrive extends MMTeleOp {
 
     @Override
     public void onInit() {
-
+        MMInitMethods.initDriveTrain();
     }
 
     @Override
     public void run() {
         super.run();
-
+        telemetry.addData("yaw", MMRobot.getInstance().mmSystems.driveTrain.getYawInDegrees());
+        telemetry.update();
     }
+
 }
