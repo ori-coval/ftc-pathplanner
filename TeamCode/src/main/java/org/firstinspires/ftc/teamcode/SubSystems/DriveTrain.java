@@ -35,20 +35,11 @@ public class DriveTrain extends SubsystemBase {
     private final CuttleMotor motorFL;
     private final CuttleMotor motorBL;
     private final CuttleMotor motorBR;
-    private final BHI260IMU imu;
     private double yawOffset = 0;
 
     public DriveTrain() {
         super(); //register this subsystem, in order to schedule default command later on.
         register();
-        imu = mmRobot.mmSystems.hardwareMap.get(BHI260IMU.class, Configuration.IMU);
-        BHI260IMU.Parameters imuParameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD, RevHubOrientationOnRobot.UsbFacingDirection.UP));
-        imuParameters.imuOrientationOnRobot.imuCoordinateSystemOrientationFromPerspectiveOfRobot().toOrientation(
-                AxesReference.INTRINSIC,
-                AxesOrder.ZXY,
-                AngleUnit.DEGREES
-        );
-        imu.initialize();
 
         motorFL = new CuttleMotor(mmRobot.mmSystems.controlHub, Configuration.DRIVE_TRAIN_FRONT_LEFT);
         motorBL = new CuttleMotor(mmRobot.mmSystems.controlHub, Configuration.DRIVE_TRAIN_BACK_LEFT);
@@ -65,7 +56,7 @@ public class DriveTrain extends SubsystemBase {
 
     public DriveTrain(double lastAngle){
         this();
-        setYaw(lastAngle);
+        mmRobot.mmSystems.imu.setYaw(lastAngle);
     }
 
 
@@ -108,26 +99,10 @@ public class DriveTrain extends SubsystemBase {
 
     public void fieldOrientedDrive(double x, double y, double yaw) {
         Vector2d joystickDirection = new Vector2d(x, y);
-        Vector2d fieldOrientedVector = joystickDirection.rotateBy(-getYawInDegrees());
+        Vector2d fieldOrientedVector = joystickDirection.rotateBy(-mmRobot.mmSystems.imu.getYawInDegrees());
         drive(fieldOrientedVector.getX(), fieldOrientedVector.getY(), yaw);
     }
 
-
-    public double getYawInDegrees() {
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + yawOffset;
-    }
-
-
-
-    public void setYaw(double newYaw) {
-        yawOffset = newYaw - imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES);
-
-    }
-
-
-    public void resetYaw() {
-        setYaw(0);
-    }
 
     public void updateTelemetry(double[] power) {
         FtcDashboard.getInstance().getTelemetry().addData("frontLeft", power[0]);
