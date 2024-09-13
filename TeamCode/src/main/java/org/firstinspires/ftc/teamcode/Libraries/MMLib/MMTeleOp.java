@@ -96,7 +96,7 @@ public abstract class MMTeleOp extends CommandOpMode {
 
     /**
      * this method helps you add {@link Runnable} or {@link Command} that will happen on init or run.
-     * due to the fact that the {@link com.arcrobotics.ftclib.command.CommandScheduler CommandScheduler} run only when opmode is active,
+     * due to the fact that the {@link CommandScheduler CommandScheduler} run only when opmode is active,
      * you can't run commands on init, but you can run runnables on init. and commands right after the opmode is active.
      * use {@link #addRunnableOnInit(Runnable...)} and/or {@link #addCommandsOnRun(Command...)}.
      * <p>
