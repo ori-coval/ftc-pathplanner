@@ -1,17 +1,25 @@
 package org.firstinspires.ftc.teamcode.SubSystems;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.geometry.Vector2d;
-import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.BHI260IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.roboctopi.cuttlefish.utils.Direction;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
+@Config
 public class DriveTrain extends SubsystemBase {
 
     final double[][] transformationMatrix = {
@@ -27,15 +35,11 @@ public class DriveTrain extends SubsystemBase {
     private final CuttleMotor motorFL;
     private final CuttleMotor motorBL;
     private final CuttleMotor motorBR;
-    private final BNO055IMU imu;
     private double yawOffset = 0;
 
     public DriveTrain() {
         super(); //register this subsystem, in order to schedule default command later on.
-        imu = mmRobot.mmSystems.hardwareMap.get(BNO055IMU.class, Configuration.IMU);
-        BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
-        imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        imu.initialize(imuParameters);
+        register();
 
         motorFL = new CuttleMotor(mmRobot.mmSystems.controlHub, Configuration.DRIVE_TRAIN_FRONT_LEFT);
         motorBL = new CuttleMotor(mmRobot.mmSystems.controlHub, Configuration.DRIVE_TRAIN_BACK_LEFT);
@@ -43,14 +47,16 @@ public class DriveTrain extends SubsystemBase {
         motorBR = new CuttleMotor(mmRobot.mmSystems.controlHub, Configuration.DRIVE_TRAIN_BACK_RIGHT);
 
         //TODO: reverse motors as needed
-        motorFL.setDirection(Direction.REVERSE);
+//        motorFR.setDirection(Direction.REVERSE);
         motorBL.setDirection(Direction.REVERSE);
+//        motorBR.setDirection(Direction.REVERSE);
+        motorFL.setDirection(Direction.REVERSE);
 
     }
 
     public DriveTrain(double lastAngle){
         this();
-        setYaw(lastAngle);
+        mmRobot.mmSystems.imu.setYaw(lastAngle);
     }
 
 
@@ -84,6 +90,7 @@ public class DriveTrain extends SubsystemBase {
         motorBL.setPower(power[1]);
         motorFR.setPower(power[2]);
         motorBR.setPower(power[3]);
+        updateTelemetry(power);
     }
     public void drive(double x, double y, double yaw) {
         setMotorPower(joystickToPower(x, y, yaw));
@@ -92,23 +99,17 @@ public class DriveTrain extends SubsystemBase {
 
     public void fieldOrientedDrive(double x, double y, double yaw) {
         Vector2d joystickDirection = new Vector2d(x, y);
-        Vector2d fieldOrientedVector = joystickDirection.rotateBy(-getYawInDegrees());
+        Vector2d fieldOrientedVector = joystickDirection.rotateBy(-mmRobot.mmSystems.imu.getYawInDegrees());
         drive(fieldOrientedVector.getX(), fieldOrientedVector.getY(), yaw);
     }
 
 
-    public double getYawInDegrees() {
-        return imu.getAngularOrientation().firstAngle + yawOffset;
-    }
-
-
-    public void setYaw(double newYaw) {
-        yawOffset = newYaw - imu.getAngularOrientation().firstAngle;
-    }
-
-
-    public void resetYaw() {
-        setYaw(0);
+    public void updateTelemetry(double[] power) {
+        FtcDashboard.getInstance().getTelemetry().addData("frontLeft", power[0]);
+        FtcDashboard.getInstance().getTelemetry().addData("backLeft", power[1]);
+        FtcDashboard.getInstance().getTelemetry().addData("frontRight", power[2]);
+        FtcDashboard.getInstance().getTelemetry().addData("backRight", power[3]);
+        FtcDashboard.getInstance().getTelemetry().update();
     }
 
 }

@@ -24,7 +24,12 @@ public class Configuration {
     public static final int DRIVE_TRAIN_FRONT_RIGHT = 2;
     public static final int DRIVE_TRAIN_BACK_RIGHT = 3;
 
-    public static final int INTAKE = 2;
+    public static final int INTAKE = 0;
+    public static final int ARM_ANGLE_RIGHT = 1;
+    public static final int ARM_ANGEL_LEFT = 2;
+
+
+
 
     public static final int SHOOTER1 = 0;
     public static final int SHOOTER2 = 1;
@@ -33,7 +38,7 @@ public class Configuration {
     public static final int SHOOTER_SERVO = 0;
 
     //this is an example of normal string configuration. (the rest are using cuttlefish for port numbers)
-    public static final String INTAKE_SERVO = "intakeServo"; //1
+    ;
 
     //EXPANSION HUB
     public static final int ELEVATOR_LEFT = 0;

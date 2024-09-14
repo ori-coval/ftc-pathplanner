@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.Commands;
 
-import androidx.annotation.NonNull;
-
 import com.arcrobotics.ftclib.command.RunCommand;
-import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 
 import org.firstinspires.ftc.teamcode.MMRobot;
@@ -16,23 +13,12 @@ public class DriveCommand extends RunCommand {
 
     public DriveCommand() {
         super(
-                () -> mmSystems.mmDriveTrain.fieldOrientedDrive(
-                        gamepadEx1.getLeftX(),
+                () -> mmSystems.driveTrain.fieldOrientedDrive(
+                        -gamepadEx1.getLeftX(),
                         -gamepadEx1.getLeftY(),
-                        gamepadEx1.getRightX()
+                        -gamepadEx1.getRightX()
                 ),
-                mmSystems.mmDriveTrain
+                mmSystems.driveTrain
         );
-    }
-
-    /**
-     * Creates a new RunCommand.  The Runnable will be run continuously until the command
-     * ends.  Does not run when disabled.
-     *
-     * @param toRun        the Runnable to run
-     * @param requirements the subsystems to require
-     */
-    public DriveCommand(@NonNull Runnable toRun, Subsystem... requirements) {
-        super(toRun, requirements);
     }
 }

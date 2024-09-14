@@ -1,12 +1,19 @@
 package org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Subsystem;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.geometry.Vector2d;
+import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.ImuOrientationOnRobot;
 import com.roboctopi.cuttlefish.utils.Direction;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
@@ -29,14 +36,19 @@ public class MMDriveTrain extends SubsystemBase {
     private final CuttleMotor motorFL;
     private final CuttleMotor motorBL;
     private final CuttleMotor motorBR;
-    private final BNO055IMU imu;
+    private final BHI260IMU imu;
     private double yawOffset = 0;
 
     public MMDriveTrain() {
         super(); //register this subsystem, in order to schedule default command later on.
-        imu = mmRobot.mmSystems.hardwareMap.get(BNO055IMU.class, Configuration.IMU);
-        BNO055IMU.Parameters imuParameters = new BNO055IMU.Parameters();
-        imuParameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        register();
+        imu = mmRobot.mmSystems.hardwareMap.get(BHI260IMU.class, Configuration.IMU);
+        BHI260IMU.Parameters imuParameters = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD, RevHubOrientationOnRobot.UsbFacingDirection.UP));
+        imuParameters.imuOrientationOnRobot.imuCoordinateSystemOrientationFromPerspectiveOfRobot().toOrientation(
+                AxesReference.INTRINSIC,
+                AxesOrder.ZXY,
+                AngleUnit.DEGREES
+        );
         imu.initialize(imuParameters);
 
         motorFL = new CuttleMotor(mmRobot.mmSystems.controlHub, Configuration.DRIVE_TRAIN_FRONT_LEFT);
@@ -122,7 +134,7 @@ public class MMDriveTrain extends SubsystemBase {
      * @return the yaw of the robot
      */
     public double getYawInDegrees() {
-        return imu.getAngularOrientation().firstAngle + yawOffset;
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) + yawOffset;
     }
 
     /**
@@ -130,7 +142,7 @@ public class MMDriveTrain extends SubsystemBase {
      * @param newYaw the new yaw
      */
     public void setYaw(double newYaw) {
-        yawOffset = newYaw - imu.getAngularOrientation().firstAngle;
+        yawOffset = newYaw - imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
     }
 
     /**
