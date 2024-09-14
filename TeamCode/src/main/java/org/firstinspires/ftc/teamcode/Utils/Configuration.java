@@ -1,74 +1,44 @@
 package org.firstinspires.ftc.teamcode.Utils;
 
-public class    Configuration {
-    public static final String DRIVE_TRAIN_BACK_LEFT = "backLeft"; //0
-    public static final String DRIVE_TRAIN_BACK_RIGHT = "backRight"; //3
-    public static final String DRIVE_TRAIN_FRONT_LEFT = "frontLeft"; //1
-    public static final String DRIVE_TRAIN_FRONT_RIGHT = "frontRight"; //2
-    public static final String IMU = "imu";
-    public static final String TURRET = "turret";
-    public static final String TURRET_ENCODER = DRIVE_TRAIN_FRONT_RIGHT;
-    public static final String INTAKE_SERVO = "intakeServo";
-    public static final String INTAKE_MOTOR = "intake";
-    public static final String CONVEYOR_SWITCH = "conveyorSwitch";
-    public static final String SAFE_PLACE_SWITCH = "safePlaceSwitch";
-    public static final String ELEVATOR_SWITCH = "elevatorSwitch";
-    public static final String ELEVATOR_RIGHT = "elevatorRight";
-    public static final String ELEVATOR_LEFT = "elevatorLeft";
-    public static final String ELBOW_RIGHT = "elbowRight";
-    public static final String ELBOW_LEFT = "elbowLeft";
-    public static final String CARTRIDGE = "cartridge";
-    public static final String ANTI_TURRET = "antiTurret";
-    public static final String EXTENDER = "extender";
-    public static final String DRONE = "drone";
 
-    public static final String WEB_CAM = "Weiss cam";
+/**
+ * this file should represent ur configurations & ports.<p>
+ * there are some examples here, ur welcome to change it however u want.</p>
+ * please remember that cuttlefish is an experimental library,
+ * if u dont get along with it, please go back to normal strings configuration.
+ * <p>
+ * notice that there are some things that i still haven't figured out how to use on cuttle fish,
+ * for example: i still couldn't figure out how to use CR Servos.
+ * in this case, i've used the normal string configuration to control it.
+ * if u have more things that are missing, u can still combine the 2 methods.
+ * im still not sure whether it just doesn't exist, or i don't know how to use it, so feel free to look around their docs and src.
+ */
+public class Configuration {
+
+    public static final String IMU = "imu";
+
+    //CONTROL HUB
+    //DriveTrain
+    public static final int DRIVE_TRAIN_FRONT_LEFT = 0;
+    public static final int DRIVE_TRAIN_BACK_LEFT = 1;
+    public static final int DRIVE_TRAIN_FRONT_RIGHT = 2;
+    public static final int DRIVE_TRAIN_BACK_RIGHT = 3;
+
+    public static final int INTAKE = 2;
+
+    public static final int SHOOTER1 = 0;
+    public static final int SHOOTER2 = 1;
+    public static final int SHOOTER_INTAKE = 2;
+    public static final int SHOOTER_TURRET = 3;
+    public static final int SHOOTER_SERVO = 0;
+
+    //this is an example of normal string configuration. (the rest are using cuttlefish for port numbers)
+    public static final String INTAKE_SERVO = "intakeServo"; //1
+
+    //EXPANSION HUB
+    public static final int ELEVATOR_LEFT = 0;
+    public static final int ELEVATOR_RIGHT = 1;
+    public static final int ELEVATOR_ENCODER = ELEVATOR_LEFT;
+
 
 }
-
-
-/*
-                      - NAME -                  - TYPE IN CONFIG -             - TYPE IN CODE -
-
-  - CONTROL HUB -
-            MOTORS:
-                    0: backLeft              (GoBilda 5202/3/4 series)            (dcMotor)
-                    1: frontLeft             (GoBilda 5202/3/4 series)            (dcMotor)
-                    2: frontRight            (GoBilda 5202/3/4 series)            (dcMotor)
-                    3: backRight             (GoBilda 5202/3/4 series)            (dcMotor)
-
-            SERVOS:
-                    0:
-                    1:
-                    2:
-                    3:
-                    4: intakeServo           (servo)                              (servo)
-                    5: drone                 (servo)                              (servo)
-
-            DIGITAL DEVICES:
-                    0: conveyorSwitch       (Digital Device)                     (digitalChannel)
-
-            I2C Bus 0:
-                    imu                      (REV internal IMU (BNO055))          (BNO055IMU)
-
-
-
-  - EXPANSION HUB -
-            MOTORS:
-                    0: elevatorLeft            (GoBilda 5202/3/4 series)            (dcMotor)
-                    1: elevatorRight           (GoBilda 5202/3/4 series)            (dcMotor)
-                    2: intake                  (GoBilda 5202/3/4 series)            (dcMotor)
-                    3: turret                  (GoBilda 5202/3/4 series)            (dcMotor)
-
-            SERVOS:
-                    0: extender              (servo)                              (servo)
-                    1: elbowLeft             (servo)                              (servo)
-                    2: elbowRight            (servo)                              (servo)
-                    3: DISABLED (DOESN'T WORK ON THE EXPANSION)
-                    4: cartridge             (servo)                              (servo)
-                    5: antiTurret            (servo)                              (servo)
-
-            Digital Devices:
-                    0: safePlaceSwitch
-                    2: elevatorSwitch
-   */
