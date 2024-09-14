@@ -1,1 +1,0 @@
-# MISHMASH Autonomous Template
