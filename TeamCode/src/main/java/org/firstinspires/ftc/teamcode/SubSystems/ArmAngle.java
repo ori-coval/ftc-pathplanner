@@ -16,9 +16,9 @@ public class ArmAngle extends SubsystemBase {
     enum POSITION {
         IN(0),
         OUT(1);
-        private double Position;
+        private double IntakeArmPosition;
         private POSITION(double position) {
-            this.Position = position;
+            this.IntakeArmPosition = position;
         }
     }
 
