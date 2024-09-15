@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Subsystem.MMDri
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.ElevatorPIDExample.ExampleElevator;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterPID;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Commands.MMDriveCommand;
+import org.firstinspires.ftc.teamcode.SubSystems.ArmAngle;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 
 /**
@@ -35,5 +36,7 @@ public class MMInitMethods {
     public static void initExampleElevator() {
         mmSystems.exampleElevator = new ExampleElevator();
     }
+
+    public static void initArmAngle(){mmSystems.armAngle = new ArmAngle();}
 
 }

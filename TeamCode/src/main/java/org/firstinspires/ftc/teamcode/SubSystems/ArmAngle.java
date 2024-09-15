@@ -13,15 +13,28 @@ public class ArmAngle extends SubsystemBase {
     CuttleServo servoRight;
     CuttleServo servoLeft;
 
-    public ArmAngle(){
+    enum POSITION {
+        IN(0),
+        OUT(1);
+        private double Position;
+        private POSITION(double position) {
+            this.Position = position;
+        }
+    }
+
+
+    public ArmAngle() {
         servoRight = new CuttleServo(mmRobot.mmSystems.controlHub, Configuration.ARM_ANGLE_RIGHT);
         servoLeft = new CuttleServo(mmRobot.mmSystems.controlHub, Configuration.ARM_ANGEL_LEFT);
     }
 
-    public void setPosition(double position){
+    public void setPosition(double position) {
         servoLeft.setPosition(position);
         servoRight.setPosition(position);
     }
 
+    public double getPosition() {
+        return servoRight.getPosition();
+    }
 
 }
