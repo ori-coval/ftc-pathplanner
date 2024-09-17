@@ -7,6 +7,8 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.Shoote
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Commands.MMDriveCommand;
 import org.firstinspires.ftc.teamcode.SubSystems.ArmAngle;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.SubSystems.Intake;
+import org.firstinspires.ftc.teamcode.SubSystems.LinearIntake;
 
 /**
  * this class should contain all ur init methods
@@ -38,5 +40,8 @@ public class MMInitMethods {
     }
 
     public static void initArmAngle(){mmSystems.armAngle = new ArmAngle();}
+
+    public static void initLinearIntake(){mmSystems.linearIntake = new LinearIntake();}
+    public static void initIntake(){mmSystems.intake = new Intake();}
 
 }

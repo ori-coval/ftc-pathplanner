@@ -30,7 +30,7 @@ public class ArmAngle extends SubsystemBase {
 
     public void setPosition(double position) {
         servoLeft.setPosition(position);
-        servoRight.setPosition(position);
+        servoRight.setPosition(1-position);
     }
 
     public double getPosition() {
