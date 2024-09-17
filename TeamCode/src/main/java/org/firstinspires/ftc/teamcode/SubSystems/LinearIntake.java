@@ -25,6 +25,10 @@ public class LinearIntake extends SubsystemBase {
         LeftServo.setPosition(position);
     }
 
+    public double getPosition(){
+        return RightServo.getPosition();
+    }
+
 
 
 }

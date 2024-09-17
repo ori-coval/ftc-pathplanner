@@ -13,6 +13,7 @@ public class Intake extends SubsystemBase{
     MMRobot mmRobot = MMRobot.getInstance();
 
     CRServo servo;
+    public boolean isRoll = false;
     public Intake() {
         servo = MMRobot.getInstance().mmSystems.hardwareMap.crservo.get("intakeRoller");
 

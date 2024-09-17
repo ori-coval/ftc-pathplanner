@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
+import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Commands.IntakeByPower;
+import org.firstinspires.ftc.teamcode.Commands.IntakeByToggle;
+import org.firstinspires.ftc.teamcode.Commands.LinearIntakeCommand;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Commands.ResetFieldOrientedCommand;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Subsystem.MMDriveTrain;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
@@ -23,10 +26,14 @@ public class TeleopDrive extends MMTeleOp {
     @Override
     public void onInit() {
         MMInitMethods.initDriveTrain();
+        MMInitMethods.initIntake();
 
-        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-                new ResetFieldOrientedCommand()
-        );
+        Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger>0.1);
+        leftTriggerCondition.toggleWhenActive(new LinearIntakeCommand());
+
+        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new IntakeByToggle());
+
+        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ResetFieldOrientedCommand());
 
     }
 
