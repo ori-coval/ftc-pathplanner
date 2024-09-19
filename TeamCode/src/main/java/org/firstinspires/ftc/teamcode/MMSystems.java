@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.Shoote
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterTurret;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.MMIMU;
 import org.firstinspires.ftc.teamcode.SubSystems.ArmAngle;
+import org.firstinspires.ftc.teamcode.SubSystems.Crab;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.LinearIntake;
@@ -58,6 +59,7 @@ public class MMSystems {
     public ArmAngle armAngle;
     public LinearIntake linearIntake;
     public Intake intake;
+    public Crab crab;
 
 
 

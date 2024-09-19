@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.ElevatorPIDExampl
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterPID;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Commands.MMDriveCommand;
 import org.firstinspires.ftc.teamcode.SubSystems.ArmAngle;
+import org.firstinspires.ftc.teamcode.SubSystems.Crab;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.LinearIntake;
@@ -43,5 +44,6 @@ public class MMInitMethods {
 
     public static void initLinearIntake(){mmSystems.linearIntake = new LinearIntake();}
     public static void initIntake(){mmSystems.intake = new Intake();}
+    public static void initCrab(){mmSystems.crab = new Crab();}
 
 }

@@ -8,19 +8,19 @@ import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp
-public class AnotherTeleopTest extends MMTeleOp {
+public class ScoringTest extends MMTeleOp {
     MMRobot robot = MMRobot.getInstance();
-    public AnotherTeleopTest() {
+    public ScoringTest() {
         super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
     }
+
     @Override
-    public void onInit() {
-        MMInitMethods.initLinearIntake();
-    }
+    public void onInit() {MMInitMethods.initCrab();}
 
     @Override
     public void run() {
         super.run();
-        robot.mmSystems.linearIntake.setPosition(gamepad1.left_trigger);
+        robot.mmSystems.crab.setPosition(gamepad1.left_trigger);
+
     }
 }
