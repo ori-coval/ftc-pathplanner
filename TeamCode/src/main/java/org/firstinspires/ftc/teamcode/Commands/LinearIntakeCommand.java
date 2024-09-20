@@ -10,14 +10,8 @@ public class LinearIntakeCommand extends CommandBase{
     MMRobot robot = MMRobot.getInstance();
 
     @Override
-    public void initialize() {
-
-    }
-
-    @Override
     public void execute() {
         robot.mmSystems.linearIntake.setPosition(robot.mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)/4);
-        super.execute();
     }
 
     @Override

@@ -27,7 +27,7 @@ public class Configuration {
     public static final int INTAKE = 0;
     public static final int ARM_ANGLE_RIGHT = 3;
     public static final int ARM_ANGEL_LEFT = 2;
-    public static final int CRAB_SCORING = 1;
+    public static final int CLAW_SCORING = 2;
 
 
 

@@ -13,12 +13,12 @@ public class ArmAngle extends SubsystemBase {
     CuttleServo servoRight;
     CuttleServo servoLeft;
 
-    enum POSITION {
+    public enum Position {
         IN(0),
         OUT(1);
-        private double IntakeArmPosition;
-        private POSITION(double position) {
-            this.IntakeArmPosition = position;
+        public double intakeArmPosition;
+        Position(double position) {
+            this.intakeArmPosition = position;
         }
     }
 

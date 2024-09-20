@@ -6,16 +6,28 @@ import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
-public class Crab extends SubsystemBase {
+public class Claw extends SubsystemBase {
 
     MMRobot robot = MMRobot.getInstance();
 
     CuttleServo servo;
+
+    public enum State {
+        CLOSE(0.25), OPEN(0);
+
+        public double position;
+
+        State(double position){
+            this.position = position;
+        }
+    }
+
+
     final double CLOSE = 0.2;
     final double OPEN = 0.7;
 
-    public Crab(){
-        servo = new CuttleServo(robot.mmSystems.controlHub,Configuration.CRAB_SCORING);
+    public Claw(){
+        servo = new CuttleServo(robot.mmSystems.controlHub,Configuration.CLAW_SCORING);
     }
 
     public void setPosition(double position){

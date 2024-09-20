@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.teamcode.Commands.DriveCommand;
-import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Subsystem.MMDriveTrain;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.ElevatorPIDExample.ExampleElevator;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterPID;
-import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Commands.MMDriveCommand;
 import org.firstinspires.ftc.teamcode.SubSystems.ArmAngle;
-import org.firstinspires.ftc.teamcode.SubSystems.Crab;
+import org.firstinspires.ftc.teamcode.SubSystems.Claw;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.Intake;
 import org.firstinspires.ftc.teamcode.SubSystems.LinearIntake;
@@ -40,10 +38,19 @@ public class MMInitMethods {
         mmSystems.exampleElevator = new ExampleElevator();
     }
 
-    public static void initArmAngle(){mmSystems.armAngle = new ArmAngle();}
+    public static void initArmAngle() {
+        mmSystems.armAngle = new ArmAngle();
+    }
 
-    public static void initLinearIntake(){mmSystems.linearIntake = new LinearIntake();}
-    public static void initIntake(){mmSystems.intake = new Intake();}
-    public static void initCrab(){mmSystems.crab = new Crab();}
+    public static void initLinearIntake() {
+        mmSystems.linearIntake = new LinearIntake();
+    }
+    public static void initIntake() {
+        mmSystems.intake = new Intake();
+    }
+    public static void initClaw() {
+        mmSystems.claw = new Claw();
+    }
+
 
 }
