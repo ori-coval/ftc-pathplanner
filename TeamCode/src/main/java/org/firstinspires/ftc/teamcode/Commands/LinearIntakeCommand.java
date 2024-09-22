@@ -12,6 +12,7 @@ public class LinearIntakeCommand extends CommandBase{
     @Override
     public void execute() {
         robot.mmSystems.linearIntake.setPosition(robot.mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)/4);
+   //TODO: tuning
     }
 
     @Override

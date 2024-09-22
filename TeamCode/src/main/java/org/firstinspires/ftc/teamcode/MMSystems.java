@@ -16,10 +16,10 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.Shoote
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterPID;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterTurret;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.MMIMU;
-import org.firstinspires.ftc.teamcode.SubSystems.ArmAngle;
+import org.firstinspires.ftc.teamcode.SubSystems.IntakeArm;
 import org.firstinspires.ftc.teamcode.SubSystems.Claw;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
-import org.firstinspires.ftc.teamcode.SubSystems.Intake;
+import org.firstinspires.ftc.teamcode.SubSystems.RollerIntake;
 import org.firstinspires.ftc.teamcode.SubSystems.LinearIntake;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
@@ -53,9 +53,9 @@ public class MMSystems {
     public ShooterPID shooterPID;
     public ShooterTurret shooterTurret;
     public ExampleElevator exampleElevator;
-    public ArmAngle armAngle;
+    public IntakeArm armAngle;
     public LinearIntake linearIntake;
-    public Intake intake;
+    public RollerIntake intake;
     public Claw claw;
 
 

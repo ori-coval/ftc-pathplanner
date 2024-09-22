@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import org.firstinspires.ftc.teamcode.Commands.DriveCommand;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.ElevatorPIDExample.ExampleElevator;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterPID;
-import org.firstinspires.ftc.teamcode.SubSystems.ArmAngle;
+import org.firstinspires.ftc.teamcode.SubSystems.IntakeArm;
 import org.firstinspires.ftc.teamcode.SubSystems.Claw;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
-import org.firstinspires.ftc.teamcode.SubSystems.Intake;
+import org.firstinspires.ftc.teamcode.SubSystems.RollerIntake;
 import org.firstinspires.ftc.teamcode.SubSystems.LinearIntake;
 
 /**
@@ -39,14 +39,14 @@ public class MMInitMethods {
     }
 
     public static void initArmAngle() {
-        mmSystems.armAngle = new ArmAngle();
+        mmSystems.armAngle = new IntakeArm();
     }
 
     public static void initLinearIntake() {
         mmSystems.linearIntake = new LinearIntake();
     }
     public static void initIntake() {
-        mmSystems.intake = new Intake();
+        mmSystems.intake = new RollerIntake();
     }
     public static void initClaw() {
         mmSystems.claw = new Claw();
