@@ -4,18 +4,29 @@ import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 
-@TeleOp
-public class NormalTeleOpTest extends CommandOpMode {
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
+import org.firstinspires.ftc.teamcode.MMInitMethods;
+import org.firstinspires.ftc.teamcode.MMRobot;
+import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
-    CRServo servo;
+@TeleOp
+public class NormalTeleOpTest extends MMTeleOp {
+    MMRobot robot = MMRobot.getInstance();
+
+    public NormalTeleOpTest(){
+        super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
+    }
 
     @Override
-    public void initialize() {
-        servo = hardwareMap.get(CRServo.class, "servo");
+    public void onInit() {
+        MMInitMethods.initArmAngle();
     }
 
     @Override
     public void run() {
         super.run();
+        MMRobot.getInstance().mmSystems.armAngle.setPosition(gamepad1.left_trigger);
+//        telemetry.addData("position",MMRobot.getInstance().mmSystems.armAngle.getPosition());
+        telemetry.update();
     }
 }

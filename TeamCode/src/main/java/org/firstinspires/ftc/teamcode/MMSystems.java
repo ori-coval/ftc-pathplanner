@@ -3,10 +3,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -18,10 +16,13 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.Shoote
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterPID;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.Subsystems.ShooterTurret;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.MMIMU;
+import org.firstinspires.ftc.teamcode.SubSystems.ArmAngle;
+import org.firstinspires.ftc.teamcode.SubSystems.Claw;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
+import org.firstinspires.ftc.teamcode.SubSystems.Intake;
+import org.firstinspires.ftc.teamcode.SubSystems.LinearIntake;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
-import org.firstinspires.ftc.teamcode.Utils.Configuration;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 /**
@@ -52,6 +53,10 @@ public class MMSystems {
     public ShooterPID shooterPID;
     public ShooterTurret shooterTurret;
     public ExampleElevator exampleElevator;
+    public ArmAngle armAngle;
+    public LinearIntake linearIntake;
+    public Intake intake;
+    public Claw claw;
 
 
 
