@@ -14,8 +14,8 @@ public class ScoringArm extends SubsystemBase {
     CuttleServo servoLeft;
 
     public ScoringArm(){
-        servoRight = new CuttleServo(robot.mmSystems.controlHub, Configuration.)
-        servoLeft = new CuttleServo(robot.mmSystems.controlHub, Configuration.)
+//        servoRight = new CuttleServo(robot.mmSystems.controlHub, Configuration.)
+//        servoLeft = new CuttleServo(robot.mmSystems.controlHub, Configuration.)
     }
 
 

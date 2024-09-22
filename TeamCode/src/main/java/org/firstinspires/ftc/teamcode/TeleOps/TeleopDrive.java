@@ -31,7 +31,7 @@ public class TeleopDrive extends MMTeleOp {
         MMInitMethods.initLinearIntake();
 
         Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.1);
-        leftTriggerCondition.toggleWhenActive(
+        leftTriggerCondition.whenActive(
                 new LinearIntakeCommand()
         );
 
