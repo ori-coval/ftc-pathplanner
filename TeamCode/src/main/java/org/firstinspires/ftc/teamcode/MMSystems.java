@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import org.firstinspires.ftc.teamcode.Commands.DriveCommand;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Examples.ElevatorPIDExample.ExampleElevator;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.Utils.MMBattery;
@@ -61,6 +62,40 @@ public class MMSystems {
     public Elevator elevator;
 
 
+    public void initDriveTrain() {
+        driveTrain = new DriveTrain();
+        driveTrain.setDefaultCommand(
+                new DriveCommand()
+        );
+    }
+
+    public void initShooterPID() {
+        shooterPID = new ShooterPID();
+    }
+
+    public void initExampleElevator() {
+        exampleElevator = new ExampleElevator();
+    }
+
+    public  void initArmAngle() {
+        armAngle = new IntakeArm();
+    }
+
+    public
+    void initLinearIntake() {
+        linearIntake = new LinearIntake();
+    }
+    public void initIntake() {
+        intake = new RollerIntake();
+    }
+    public void initClaw() {
+        claw = new Claw();
+    }
+    public void initElevator() {
+        elevator = new Elevator();
+    }
+
+
 
     public MMSystems(OpModeType type, HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) {
         this.opModeType = type;
@@ -76,5 +111,4 @@ public class MMSystems {
         this.imu = new MMIMU(hardwareMap);
         CommandScheduler.getInstance().reset(); //reset the scheduler
     }
-
 }

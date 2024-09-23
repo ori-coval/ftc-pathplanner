@@ -8,17 +8,19 @@ import org.firstinspires.ftc.teamcode.SubSystems.LinearIntake;
 
 public class LinearIntakeCommand extends CommandBase{
 
-    MMRobot robot = MMRobot.getInstance();
-    LinearIntake linearIntake;
+    public LinearIntakeCommand(){
+        addRequirements(MMRobot.getInstance().mmSystems.linearIntake);
+    }
+
 
     @Override
     public void execute() {
-        robot.mmSystems.linearIntake.setPosition(robot.mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
+        MMRobot.getInstance().mmSystems.linearIntake.setPosition(MMRobot.getInstance().mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
    //TODO: tuning
     }
 
     @Override
     public void end(boolean interrupted) {
-        linearIntake.setPosition(0);
+        MMRobot.getInstance().mmSystems.linearIntake.setPosition(0);
     }
 }

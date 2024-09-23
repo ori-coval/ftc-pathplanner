@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Commands.IntakeByToggle;
 import org.firstinspires.ftc.teamcode.Commands.LinearIntakeCommand;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Commands.ResetFieldOrientedCommand;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
-import org.firstinspires.ftc.teamcode.MMInitMethods;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.PID.MMPIDCommand;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.SubSystems.IntakeArm;
 import org.firstinspires.ftc.teamcode.SubSystems.Claw;
@@ -21,14 +21,17 @@ public class TeleopDrive extends MMTeleOp {
 
     MMRobot robot = MMRobot.getInstance();
     public TeleopDrive() {
-        super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
+        super(OpModeType.NonCompetition.EXPERIMENTING);
     }
 
     @Override
     public void onInit() {
-        MMInitMethods.initDriveTrain();
-        MMInitMethods.initIntake();
-        MMInitMethods.initLinearIntake();
+
+        MMRobot.getInstance().mmSystems.initDriveTrain();
+        MMRobot.getInstance().mmSystems.initIntake();
+        MMRobot.getInstance().mmSystems.initLinearIntake();
+        MMRobot.getInstance().mmSystems.initElevator();
+
 
         Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.1);
         leftTriggerCondition.whenActive(
@@ -56,6 +59,23 @@ public class TeleopDrive extends MMTeleOp {
         );
 
 
+        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
+                new MMPIDCommand( //up to 15cm
+                        MMRobot.getInstance().mmSystems.elevator,
+                        15
+                )
+        );
+
+        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(
+                new MMPIDCommand(
+                        MMRobot.getInstance().mmSystems.elevator,
+                        0
+                )
+        );
+
+
+
+
     }
 
     @Override
@@ -65,6 +85,7 @@ public class TeleopDrive extends MMTeleOp {
                 "yaw",
                 MMRobot.getInstance().mmSystems.imu.getYawInDegrees()
         );
+        telemetry.addData("meow",MMRobot.getInstance().mmSystems.elevator.getHeight());
         telemetry.update();
     }
 

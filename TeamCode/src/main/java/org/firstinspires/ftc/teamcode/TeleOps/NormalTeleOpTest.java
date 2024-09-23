@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.PID.MMPIDCommand;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.PID.MMTuningFFCommand;
-import org.firstinspires.ftc.teamcode.MMInitMethods;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
@@ -23,7 +20,7 @@ public class NormalTeleOpTest extends MMTeleOp {
     @Override
     public void onInit() {
 
-        MMInitMethods.initElevator();
+        MMRobot.getInstance().mmSystems.initElevator();
 
         //creating custom command-bindings for tuning: (using dashboard)
 
