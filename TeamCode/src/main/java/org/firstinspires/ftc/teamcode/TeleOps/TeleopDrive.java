@@ -87,6 +87,8 @@ public class TeleopDrive extends MMTeleOp {
         );
         telemetry.addData("meow",MMRobot.getInstance().mmSystems.elevator.getHeight());
         telemetry.update();
+        telemetry.addData("linerServo",MMRobot.getInstance().mmSystems.linearIntake.getPosition());
+        telemetry.update();
     }
 
 }
