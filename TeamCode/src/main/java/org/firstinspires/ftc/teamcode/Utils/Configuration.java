@@ -25,8 +25,8 @@ public class Configuration {
     public static final int DRIVE_TRAIN_BACK_RIGHT = 3;
 
     public static final int INTAKE = 0;
-    public static final int ARM_ANGLE_RIGHT = 3;
-    public static final int ARM_ANGEL_LEFT = 2;
+    public static final int ARM_ANGLE_RIGHT = 5;
+    public static final int ARM_ANGEL_LEFT = 4;
     public static final int CLAW_SCORING = 2;
 
 

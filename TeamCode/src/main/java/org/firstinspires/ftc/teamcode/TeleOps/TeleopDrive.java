@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -31,6 +32,10 @@ public class TeleopDrive extends MMTeleOp {
         MMRobot.getInstance().mmSystems.initIntake();
         MMRobot.getInstance().mmSystems.initLinearIntake();
         MMRobot.getInstance().mmSystems.initElevator();
+        MMRobot.getInstance().mmSystems.initArmAngle();
+
+//        MMRobot.getInstance().mmSystems.elevator.updateToDashboard();
+
 
 
         Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.1);
@@ -85,10 +90,14 @@ public class TeleopDrive extends MMTeleOp {
                 "yaw",
                 MMRobot.getInstance().mmSystems.imu.getYawInDegrees()
         );
+
         telemetry.addData("meow",MMRobot.getInstance().mmSystems.elevator.getHeight());
-        telemetry.update();
         telemetry.addData("linerServo",MMRobot.getInstance().mmSystems.linearIntake.getPosition());
+        telemetry.addData("intakeArm",MMRobot.getInstance().mmSystems.armAngle.getPosition());
         telemetry.update();
+
+        FtcDashboard.getInstance().getTelemetry().addData("height",MMRobot.getInstance().mmSystems.elevator.getHeight());
+        FtcDashboard.getInstance().getTelemetry().update();
     }
 
 }
