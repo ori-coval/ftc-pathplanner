@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.teamcode.MMRobot;
 
-public class RollerIntake extends SubsystemBase{
+public class
+RollerIntake extends SubsystemBase{
 
     MMRobot mmRobot = MMRobot.getInstance();
 

@@ -16,11 +16,11 @@ public class Elevator extends MMPIDSubsystem {
 
     CuttleMotor motorRight;
     CuttleMotor motorLeft;
-    CuttleEncoder motorLeftEncoder;
+    public CuttleEncoder motorLeftEncoder;
 
-    final double TicksForRotation = 145.1;
+    final double TICKS_PER_REV = 384.5;
     final double LEVELS = 4;
-    final double SPROCKET_PERIMETER = 20.9;
+    final double SPROCKET_PERIMETER = 6.56592;
 
     public static final double KP = 0.03;
     public static final double KI = 0;
@@ -32,11 +32,11 @@ public class Elevator extends MMPIDSubsystem {
         super(KP,KI,KD,TOLERANCE);
         this.motorRight = new CuttleMotor(robot.mmSystems.expansionHub,(Configuration.ELEVATOR_RIGHT));
         this.motorLeft = new CuttleMotor(robot.mmSystems.expansionHub,(Configuration.ELEVATOR_LEFT));
-        this.motorLeftEncoder = new CuttleEncoder(robot.mmSystems.expansionHub,Configuration.ELEVATOR_ENCODER,145.1);
+        this.motorLeftEncoder = new CuttleEncoder(robot.mmSystems.expansionHub,Configuration.ELEVATOR_ENCODER,TICKS_PER_REV);
     }
 
     public double getHeight(){
-        return motorLeftEncoder.getCounts() * (LEVELS * SPROCKET_PERIMETER);
+        return ((motorLeftEncoder.getCounts() / TICKS_PER_REV)*SPROCKET_PERIMETER*LEVELS) ;
     }
 
     @Override

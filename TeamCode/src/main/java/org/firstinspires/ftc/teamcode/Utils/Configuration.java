@@ -24,6 +24,7 @@ public class Configuration {
     public static final int DRIVE_TRAIN_FRONT_RIGHT = 2;
     public static final int DRIVE_TRAIN_BACK_RIGHT = 3;
 
+
     public static final String AUTO_DRIVE_TRAIN_FRONT_LEFT = "leftFront";
     public static final String AUTO_DRIVE_TRAIN_BACK_LEFT = "leftBack";
     public static final String AUTO_DRIVE_TRAIN_FRONT_RIGHT = "rightBack";
@@ -39,6 +40,11 @@ public class Configuration {
     public static final int ARM_ANGLE_RIGHT = 5;
     public static final int ARM_ANGEL_LEFT = 4;
     public static final int CLAW_SCORING = 2;
+
+
+
+    public static final int SCORING_ARM_RIGHT = 4;
+    public static final int SCORING_ARM_LEFT = 5;
 
 
 

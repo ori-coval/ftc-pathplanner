@@ -10,16 +10,33 @@ public class ScoringArm extends SubsystemBase {
 
     MMRobot robot = MMRobot.getInstance();
 
-    CuttleServo servoRight;
-    CuttleServo servoLeft;
+    public enum Position {
+        SCORING(0),
+        IN(0);
+        public double scoringArmPosition;
 
-    public ScoringArm(){
-//        servoRight = new CuttleServo(robot.mmSystems.controlHub, Configuration.)
-//        servoLeft = new CuttleServo(robot.mmSystems.controlHub, Configuration.)
+        Position(double position) {
+            this.scoringArmPosition = position;
+        }
     }
 
 
+    CuttleServo servoRight;
+    CuttleServo servoLeft;
 
+    public ScoringArm() {
+        servoRight = new CuttleServo(robot.mmSystems.controlHub, Configuration.SCORING_ARM_RIGHT);
+        servoLeft = new CuttleServo(robot.mmSystems.controlHub, Configuration.SCORING_ARM_LEFT);
+    }
+
+    public void setPosition(double position) {
+        servoRight.setPosition(position);
+        servoLeft.setPosition(position);
+    }
+
+    public double getPosition() {
+        return servoRight.getPosition();
+    }
 
 
 }
