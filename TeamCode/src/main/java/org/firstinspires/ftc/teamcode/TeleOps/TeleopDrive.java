@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -36,10 +37,10 @@ public class TeleopDrive extends MMTeleOp {
 
 
 
-        Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.1);
-        leftTriggerCondition.whenActive(
-                new LinearIntakeCommand(leftTriggerCondition)
-        );
+       //Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.1);
+       //leftTriggerCondition.whenActive(
+       //        new LinearIntakeCommand(leftTriggerCondition)
+       //);
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
                 new IntakeByToggle()
@@ -65,7 +66,7 @@ public class TeleopDrive extends MMTeleOp {
      MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
              new MMPIDCommand( //up to 15cm
                      MMRobot.getInstance().mmSystems.elevator,
-                     15
+                     23
              )
      );
 
@@ -81,21 +82,23 @@ public class TeleopDrive extends MMTeleOp {
     @Override
     public void run() {
         super.run();
+//        MMRobot.getInstance().mmSystems.elevator.motorLeft.setPower((double)gamepad1.left_trigger   *0.4);
+//        MMRobot.getInstance().mmSystems.elevator.motorRight.setPower((double)gamepad1.right_trigger *0.4);
+//        MMRobot.getInstance().mmSystems.elevator.setPower((double)gamepad1.left_trigger);
         MMRobot.getInstance().mmSystems.expansionHub.pullBulkData();
-        telemetry.addData(
-                "yaw",
-                MMRobot.getInstance().mmSystems.imu.getYawInDegrees()
-        );
+//        telemetry.addData(
+//                "yaw",
+//                MMRobot.getInstance().mmSystems.imu.getYawInDegrees()
+//        );
 
         telemetry.addData("meow",MMRobot.getInstance().mmSystems.elevator.getHeight());
         telemetry.addData("Ticks",MMRobot.getInstance().mmSystems.elevator.motorLeftEncoder.getCounts());
-//        telemetry.addData("linerServo",MMRobot.getInstance().mmSystems.linearIntake.getPosition());
-//        telemetry.addData("intakeArm",MMRobot.getInstance().mmSystems.armAngle.getPosition());
         telemetry.update();
+
         MMRobot.getInstance().mmSystems.elevator.updateToDashboard();
 
-      // FtcDashboard.getInstance().getTelemetry().addData("height",MMRobot.getInstance().mmSystems.elevator.getHeight());
-      // FtcDashboard.getInstance().getTelemetry().update();
+//       FtcDashboard.getInstance().getTelemetry().addData("height",MMRobot.getInstance().mmSystems.elevator.getHeight());
+//       FtcDashboard.getInstance().getTelemetry().update();
     }
 
 }
