@@ -24,16 +24,14 @@ package org.firstinspires.ftc.teamcode;
 
 import static com.qualcomm.robotcore.util.TypeConversion.byteArrayToInt;
 
+import com.arcrobotics.ftclib.geometry.Pose2d;
+import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchDevice;
 import com.qualcomm.robotcore.hardware.configuration.annotations.DeviceProperties;
 import com.qualcomm.robotcore.hardware.configuration.annotations.I2cDeviceType;
 import com.qualcomm.robotcore.util.TypeConversion;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -328,7 +326,7 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynch> 
      * in field coordinates. <br><br>
      * This overrides the current position. <br><br>
      * <strong>Using this feature to track your robot's position in field coordinates:</strong> <br>
-     * When you start your code, send a Pose2D that describes the starting position on the field of your robot. <br>
+     * When you start your code, send a Pose2d that describes the starting position on the field of your robot. <br>
      * Say you're on the red alliance, your robot is against the wall and closer to the audience side,
      * and the front of your robot is pointing towards the center of the field.
      * You can send a setPosition with something like -600mm x, -1200mm Y, and 90 degrees. The pinpoint would then always
@@ -342,12 +340,12 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynch> 
      * to determine your location. Then when you pull a new position from your secondary sensor,
      * send a setPosition command with the new position. The Pinpoint will then track your movement
      * relative to that new, more accurate position.
-     * @param pos a Pose2D describing the robot's new position.
+     * @param pos a Pose2d describing the robot's new position.
      */
-    public Pose2D setPosition(Pose2D pos){
-        writeByteArray(Register.X_POSITION,(floatToByteArray((float) pos.getX(DistanceUnit.MM), ByteOrder.LITTLE_ENDIAN)));
-        writeByteArray(Register.Y_POSITION,(floatToByteArray((float) pos.getY(DistanceUnit.MM),ByteOrder.LITTLE_ENDIAN)));
-        writeByteArray(Register.H_ORIENTATION,(floatToByteArray((float) pos.getHeading(AngleUnit.RADIANS),ByteOrder.LITTLE_ENDIAN)));
+    public Pose2d setPosition(Pose2d pos){
+        writeByteArray(Register.X_POSITION,(floatToByteArray((float) pos.getX(), ByteOrder.LITTLE_ENDIAN)));
+        writeByteArray(Register.Y_POSITION,(floatToByteArray((float) pos.getY(),ByteOrder.LITTLE_ENDIAN)));
+        writeByteArray(Register.H_ORIENTATION,(floatToByteArray((float) pos.getHeading(),ByteOrder.LITTLE_ENDIAN)));
         return pos;
     }
 
@@ -450,27 +448,25 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynch> 
     public float getYOffset(){return readFloat(Register.Y_POD_OFFSET);}
 
     /**
-     * @return a Pose2D containing the estimated position of the robot
+     * @return a Pose2d containing the estimated position of the robot
      */
-    public Pose2D getPosition(){
-        return new Pose2D(DistanceUnit.MM,
+    public Pose2d getPosition(){
+        return new Pose2d(
                 xPosition,
                 yPosition,
-                AngleUnit.RADIANS,
-                hOrientation);
+                new Rotation2d(hOrientation));
     }
 
 
 
     /**
-     * @return a Pose2D containing the estimated velocity of the robot, velocity is unit per second
+     * @return a Pose2d containing the estimated velocity of the robot, velocity is unit per second
      */
-    public Pose2D getVelocity(){
-        return new Pose2D(DistanceUnit.MM,
-                xVelocity,
-                yVelocity,
-                AngleUnit.RADIANS,
-                hVelocity);
+    public Pose2d getVelocity(){
+        return new Pose2d(
+                xPosition,
+                yPosition,
+                new Rotation2d(hVelocity));
     }
 
 
