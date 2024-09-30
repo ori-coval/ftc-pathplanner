@@ -14,8 +14,8 @@ public class IntakeArm extends SubsystemBase {
     CuttleServo servoLeft;
 
     public enum Position {
-        IN(0.4),
-        OUT(1);
+        IN(1),
+        OUT(0.4);
         public double intakeArmPosition;
         Position(double position) {
             this.intakeArmPosition = position;

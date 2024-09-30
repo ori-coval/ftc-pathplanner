@@ -37,22 +37,22 @@ public class TeleopDrive extends MMTeleOp {
 
 
 
-       //Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.1);
-       //leftTriggerCondition.whenActive(
-       //        new LinearIntakeCommand(leftTriggerCondition)
-       //);
+       Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.1);
+       leftTriggerCondition.whenActive(
+               new LinearIntakeCommand(leftTriggerCondition)
+       );
 
-        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
-                new IntakeByToggle()
-        );
+//        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
+//                new IntakeByToggle()
+//        );
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new ResetFieldOrientedCommand()
         );
 
-        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
-                new ClawSetState(robot.mmSystems.claw, Claw.State.OPEN)
-        );
+//        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
+//                new ClawSetState(robot.mmSystems.claw, Claw.State.OPEN)
+//        );
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
                 new IntakeArmSetState(robot.mmSystems.armAngle, IntakeArm.Position.IN)
@@ -66,7 +66,7 @@ public class TeleopDrive extends MMTeleOp {
      MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
              new MMPIDCommand( //up to 15cm
                      MMRobot.getInstance().mmSystems.elevator,
-                     23
+                     48
              )
      );
 
@@ -82,8 +82,6 @@ public class TeleopDrive extends MMTeleOp {
     @Override
     public void run() {
         super.run();
-//        MMRobot.getInstance().mmSystems.elevator.motorLeft.setPower((double)gamepad1.left_trigger   *0.4);
-//        MMRobot.getInstance().mmSystems.elevator.motorRight.setPower((double)gamepad1.right_trigger *0.4);
 //        MMRobot.getInstance().mmSystems.elevator.setPower((double)gamepad1.left_trigger);
         MMRobot.getInstance().mmSystems.expansionHub.pullBulkData();
 //        telemetry.addData(
@@ -91,11 +89,13 @@ public class TeleopDrive extends MMTeleOp {
 //                MMRobot.getInstance().mmSystems.imu.getYawInDegrees()
 //        );
 
-        telemetry.addData("meow",MMRobot.getInstance().mmSystems.elevator.getHeight());
-        telemetry.addData("Ticks",MMRobot.getInstance().mmSystems.elevator.motorLeftEncoder.getCounts());
+//        telemetry.addData("meow",MMRobot.getInstance().mmSystems.elevator.getHeight());
+//        telemetry.addData("Ticks",MMRobot.getInstance().mmSystems.elevator.motorLeftEncoder.getCounts());
         telemetry.update();
 
         MMRobot.getInstance().mmSystems.elevator.updateToDashboard();
+
+        MMRobot.getInstance().mmSystems.intake.setPower(gamepad1.right_trigger);
 
 //       FtcDashboard.getInstance().getTelemetry().addData("height",MMRobot.getInstance().mmSystems.elevator.getHeight());
 //       FtcDashboard.getInstance().getTelemetry().update();

@@ -25,8 +25,8 @@ public class ScoringArm extends SubsystemBase {
     CuttleServo servoLeft;
 
     public ScoringArm() {
-        servoRight = new CuttleServo(robot.mmSystems.controlHub, Configuration.SCORING_ARM_RIGHT);
-        servoLeft = new CuttleServo(robot.mmSystems.controlHub, Configuration.SCORING_ARM_LEFT);
+        servoRight = new CuttleServo(robot.mmSystems.expansionHub, Configuration.SCORING_ARM_RIGHT);
+        servoLeft = new CuttleServo(robot.mmSystems.expansionHub, Configuration.SCORING_ARM_LEFT);
     }
 
     public void setPosition(double position) {

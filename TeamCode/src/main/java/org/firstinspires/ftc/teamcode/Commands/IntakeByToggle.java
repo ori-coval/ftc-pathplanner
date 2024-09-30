@@ -16,10 +16,10 @@ public class IntakeByToggle extends CommandBase {
     public void initialize() {
         if (intake.isRoll) {
             intake.setPower(0);
-            intake.isRoll = false;
+            intake.setIsRoll(false);
         } else {
             intake.setPower(1);
-            intake.isRoll = true;
+            intake.setIsRoll(true);
         }
     }
 

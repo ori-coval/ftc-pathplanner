@@ -44,7 +44,7 @@ public class Elevator extends MMPIDSubsystem {
     }
 
     public double getHeight(){
-        return ((getTicks() / TICKS_PER_REV)*SPROCKET_PERIMETER*LEVELS) ;
+        return ((getTicks() / TICKS_PER_REV) * SPROCKET_PERIMETER * LEVELS) ;
     }
 
     @Override

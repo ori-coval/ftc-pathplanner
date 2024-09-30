@@ -37,14 +37,14 @@ public class Configuration {
 
 
     public static final int INTAKE = 0;
-    public static final int ARM_ANGLE_RIGHT = 5;
-    public static final int ARM_ANGEL_LEFT = 4;
+    public static final int ARM_ANGLE_RIGHT = 2;
+    public static final int ARM_ANGEL_LEFT = 3;
     public static final int CLAW_SCORING = 2;
 
 
 
-    public static final int SCORING_ARM_RIGHT = 4;
-    public static final int SCORING_ARM_LEFT = 5;
+    public static final int SCORING_ARM_RIGHT = 0;
+    public static final int SCORING_ARM_LEFT = 1;
 
 
 
