@@ -32,6 +32,7 @@ import com.acmerobotics.roadrunner.ftc.DownsampledWriter;
 import com.acmerobotics.roadrunner.ftc.FlightRecorder;
 import com.acmerobotics.roadrunner.ftc.LazyImu;
 import com.acmerobotics.roadrunner.ftc.LynxFirmware;
+import com.arcrobotics.ftclib.kinematics.Odometry;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -54,6 +55,10 @@ import java.util.List;
 public class MecanumDrive {
 
 
+    public Odometry getOdometry() {
+        return null;
+    }
+
     public static class Params {
 
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
@@ -62,14 +67,14 @@ public class MecanumDrive {
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
 
         // drive model parameters
-        public double inPerTick = 1;
+        public double inPerTick = 0.552;
         public double lateralInPerTick = inPerTick;
-        public double trackWidthTicks = 0;
+        public double trackWidthTicks = 457.7;
 
         // feedforward parameters (in tick units)
-        public double kS = 0;
-        public double kV = 0;
-        public double kA = 0;
+        public double kS = 0.5;
+        public double kV = 0.5;
+        public double kA = 0.5;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -81,13 +86,13 @@ public class MecanumDrive {
         public double maxAngAccel = Math.PI;
 
         // path controller gains
-        public double axialGain = 0.0;
-        public double lateralGain = 0.0;
-        public double headingGain = 0.0; // shared with turn
+        public double axialGain = 0.5;
+        public double lateralGain = 0.5;
+        public double headingGain = 0.5; // shared with turn
 
-        public double axialVelGain = 0.0;
-        public double lateralVelGain = 0.0;
-        public double headingVelGain = 0.0; // shared with turn
+        public double axialVelGain = 0.5;
+        public double lateralVelGain = 0.5;
+        public double headingVelGain = 0.5; // shared with turn
     }
 
     public final GoBildaPinpointDriver odo;
@@ -112,7 +117,7 @@ public class MecanumDrive {
 
     public final VoltageSensor voltageSensor;
 
-    public final LazyImu lazyImu;
+
     public Pose2d pose;
 
     private final LinkedList<Pose2d> poseHistory = new LinkedList<>();
@@ -123,7 +128,7 @@ public class MecanumDrive {
     private final DownsampledWriter mecanumCommandWriter = new DownsampledWriter("MECANUM_COMMAND", 50_000_000);
 
 
-    public MecanumDrive(HardwareMap hardwareMap, Pose2d pose ) {
+    public MecanumDrive(HardwareMap hardwareMap, Pose2d pose) {
         this.pose = pose;
 
         LynxFirmware.throwIfModulesAreOutdated(hardwareMap);
@@ -135,7 +140,7 @@ public class MecanumDrive {
         // TODO: make sure your config has motors with these names (or change them)
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
 
-        odo = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
+        odo = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
 
         odo.setOffsets(-84.0, -168.0);
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
@@ -157,13 +162,9 @@ public class MecanumDrive {
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        lazyImu = new LazyImu(hardwareMap, "imu", new RevHubOrientationOnRobot(
-                PARAMS.logoFacingDirection, PARAMS.usbFacingDirection));
-
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
         FlightRecorder.write("MECANUM_PARAMS", PARAMS);
-
 
 
     }
@@ -379,7 +380,7 @@ public class MecanumDrive {
 
         estimatedPoseWriter.write(new PoseMessage(pose));
 
-        return new PoseVelocity2d(new Vector2d(odo.getVelX(), odo.getVelY()) , odo.getHeadingVelocity());
+        return new PoseVelocity2d(new Vector2d(odo.getVelX(), odo.getVelY()), odo.getHeadingVelocity());
     }
 
     private void drawPoseHistory(Canvas c) {
@@ -415,3 +416,5 @@ public class MecanumDrive {
         );
     }
 }
+
+

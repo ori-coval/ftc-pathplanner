@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.Libraries.RoadRunner.tuning;
+    package org.firstinspires.ftc.teamcode.Libraries.RoadRunner.tuning;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.reflection.ReflectionConfig;
-import com.acmerobotics.roadrunner.MotorFeedforward;
+    import com.acmerobotics.dashboard.FtcDashboard;
+    import com.acmerobotics.dashboard.config.reflection.ReflectionConfig;
+    import com.acmerobotics.roadrunner.MotorFeedforward;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.AngularRampLogger;
 import com.acmerobotics.roadrunner.ftc.DeadWheelDirectionDebugger;
@@ -14,15 +14,18 @@ import com.acmerobotics.roadrunner.ftc.ForwardPushTest;
 import com.acmerobotics.roadrunner.ftc.ForwardRampLogger;
 import com.acmerobotics.roadrunner.ftc.LateralPushTest;
 import com.acmerobotics.roadrunner.ftc.LateralRampLogger;
-import com.acmerobotics.roadrunner.ftc.ManualFeedforwardTuner;
+    import com.acmerobotics.roadrunner.ftc.LazyImu;
+    import com.acmerobotics.roadrunner.ftc.ManualFeedforwardTuner;
 import com.acmerobotics.roadrunner.ftc.MecanumMotorDirectionDebugger;
-import com.qualcomm.hardware.lynx.LynxModule;
+    import com.arcrobotics.ftclib.kinematics.Odometry;
+    import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
-import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
+    import org.firstinspires.ftc.teamcode.GoBildaPinpointDriver;
+    import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.TankDrive;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.ThreeDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.TwoDeadWheelLocalizer;
@@ -60,31 +63,33 @@ public final class TuningOpModes {
                 List<Encoder> parEncs = new ArrayList<>(), perpEncs = new ArrayList<>();
 
 
+                // Assuming md.odo needs to be of type Odometry or a similar interface
+                Odometry odometry; // or create an instance if necessary
+                odometry = md.getOdometry();
+
+                LazyImu GoBildaPinpointDriver = null;
                 return new DriveView(
-                    DriveType.MECANUM,
+                        DriveType.MECANUM,
                         MecanumDrive.PARAMS.inPerTick,
                         MecanumDrive.PARAMS.maxWheelVel,
                         MecanumDrive.PARAMS.minProfileAccel,
                         MecanumDrive.PARAMS.maxProfileAccel,
                         hardwareMap.getAll(LynxModule.class),
-                        Arrays.asList(
-                                md.leftFront,
-                                md.leftBack
-                        ),
-                        Arrays.asList(
-                                md.rightFront,
-                                md.rightBack
-                        ),
-                        leftEncs,
-                        rightEncs,
-                        parEncs,
-                        perpEncs,
-                        md.lazyImu,
+                        Arrays.asList(md.leftFront, md.leftBack),
+                        Arrays.asList(md.rightFront, md.rightBack),
+                        new ArrayList<Encoder>(),
+                        new ArrayList<Encoder>(),
+                        new ArrayList<Encoder>(),
+                        new ArrayList<Encoder>(),
+                        GoBildaPinpointDriver, // Ensure it's of the correct type
                         md.voltageSensor,
-                        () -> new MotorFeedforward(MecanumDrive.PARAMS.kS,
+                        () -> new MotorFeedforward(
+                                MecanumDrive.PARAMS.kS,
                                 MecanumDrive.PARAMS.kV / MecanumDrive.PARAMS.inPerTick,
-                                MecanumDrive.PARAMS.kA / MecanumDrive.PARAMS.inPerTick)
+                                MecanumDrive.PARAMS.kA / MecanumDrive.PARAMS.inPerTick
+                        )
                 );
+
             };
         } else {
             throw new RuntimeException();

@@ -1,33 +1,35 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
+import org.firstinspires.ftc.teamcode.GoBildaPinpointDriver;
 
-public class Practice extends LinearOpMode {
+
+@Config
+@Autonomous(name = "practice", group = "Autonomous")
+
+public final class Practice extends LinearOpMode {
+
+
+   //public final GoBildaPinpointDriver;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        Pose2d beginPose = new Pose2d(0, 60, 90);
+        MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
-        MecanumDrive drive = new MecanumDrive(hardwareMap,new Pose2d(0,0,Math.toRadians(0)));
+        waitForStart();
 
-
-        Action trajectoryAction = drive.actionBuilder(drive.pose)
-                .splineTo(new Vector2d(10,10),Math.PI/2).build();
-
-
-
-
-
-
-
-
-
-
-
-
+        Actions.runBlocking(
+        drive.actionBuilder(beginPose)
+        .splineTo(new Vector2d(30, 30), Math.PI / 2)
+        .splineTo(new Vector2d(0, -20), Math.PI)
+                .build());
     }
 }
