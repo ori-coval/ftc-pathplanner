@@ -30,11 +30,10 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.VelConstraint;
 import com.acmerobotics.roadrunner.ftc.DownsampledWriter;
 import com.acmerobotics.roadrunner.ftc.FlightRecorder;
-import com.acmerobotics.roadrunner.ftc.LazyImu;
 import com.acmerobotics.roadrunner.ftc.LynxFirmware;
 import com.arcrobotics.ftclib.kinematics.Odometry;
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -61,20 +60,15 @@ public class MecanumDrive {
 
     public static class Params {
 
-        public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
-                RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
-
         // drive model parameters
-        public double inPerTick = 0.552;
+        public double inPerTick = 0.5;
         public double lateralInPerTick = inPerTick;
-        public double trackWidthTicks = 457.7;
+        public double trackWidthTicks = 0.5;
 
         // feedforward parameters (in tick units)
-        public double kS = 0.5;
-        public double kV = 0.5;
-        public double kA = 0.5;
+        public double kS = 0.2;
+        public double kV = 0.2;
+        public double kA = 0.2;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -86,13 +80,13 @@ public class MecanumDrive {
         public double maxAngAccel = Math.PI;
 
         // path controller gains
-        public double axialGain = 0.5;
-        public double lateralGain = 0.5;
-        public double headingGain = 0.5; // shared with turn
+        public double axialGain = 0.2;
+        public double lateralGain = 0.2;
+        public double headingGain = 0.2; // shared with turn
 
-        public double axialVelGain = 0.5;
-        public double lateralVelGain = 0.5;
-        public double headingVelGain = 0.5; // shared with turn
+        public double axialVelGain = 0.2;
+        public double lateralVelGain = 0.2;
+        public double headingVelGain = 0.2; // shared with turn
     }
 
     public final GoBildaPinpointDriver odo;
@@ -220,7 +214,6 @@ public class MecanumDrive {
                 leftBack.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
-
                 return false;
             }
 

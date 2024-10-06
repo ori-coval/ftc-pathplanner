@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.Drawing;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
-import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.TankDrive;
+
 
 public class LocalizationTest extends LinearOpMode {
     @Override
@@ -18,7 +18,7 @@ public class LocalizationTest extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         if (TuningOpModes.DRIVE_CLASS.equals(MecanumDrive.class)) {
-            MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
+            MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(61.81, -62.68, 90));
 
             waitForStart();
 
@@ -43,19 +43,7 @@ public class LocalizationTest extends LinearOpMode {
                 Drawing.drawRobot(packet.fieldOverlay(), drive.pose);
                 FtcDashboard.getInstance().sendTelemetryPacket(packet);
             }
-        } else if (TuningOpModes.DRIVE_CLASS.equals(TankDrive.class)) {
-            TankDrive drive = new TankDrive(hardwareMap, new Pose2d(0, 0, 0));
 
-            waitForStart();
-
-            while (opModeIsActive()) {
-                drive.setDrivePowers(new PoseVelocity2d(
-                        new Vector2d(
-                                -gamepad1.left_stick_y,
-                                0.0
-                        ),
-                        -gamepad1.right_stick_x
-                ));
 
                 drive.updatePoseEstimate();
 
@@ -69,8 +57,5 @@ public class LocalizationTest extends LinearOpMode {
                 Drawing.drawRobot(packet.fieldOverlay(), drive.pose);
                 FtcDashboard.getInstance().sendTelemetryPacket(packet);
             }
-        } else {
-            throw new RuntimeException();
-        }
     }
 }

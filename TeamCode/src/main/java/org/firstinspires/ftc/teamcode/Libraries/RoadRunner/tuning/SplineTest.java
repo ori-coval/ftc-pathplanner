@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
-import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.TankDrive;
 
 @Config
 @Autonomous(name = "practice", group = "Autonomous")
@@ -27,8 +26,8 @@ public final class SplineTest extends LinearOpMode {
                         .splineTo(new Vector2d(30, 30), Math.PI / 2)
                         .splineTo(new Vector2d(0, 60), Math.PI)
                         .build());
-        } else if (TuningOpModes.DRIVE_CLASS.equals(TankDrive.class)) {
-            TankDrive drive = new TankDrive(hardwareMap, beginPose);
+
+
 
             waitForStart();
 
