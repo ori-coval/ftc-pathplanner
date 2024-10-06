@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.SubSystems.Claw;
 import org.firstinspires.ftc.teamcode.SubSystems.DriveTrain;
 import org.firstinspires.ftc.teamcode.SubSystems.RollerIntake;
 import org.firstinspires.ftc.teamcode.SubSystems.LinearIntake;
+import org.firstinspires.ftc.teamcode.SubSystems.ScoringArm;
 import org.firstinspires.ftc.teamcode.Utils.AllianceColor;
 import org.firstinspires.ftc.teamcode.Utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
@@ -55,8 +56,9 @@ public class MMSystems {
     public ShooterPID shooterPID;
     public ShooterTurret shooterTurret;
     public ExampleElevator exampleElevator;
-    public IntakeArm armAngle;
+    public IntakeArm intakeArm;
     public LinearIntake linearIntake;
+    public ScoringArm scoringArm;
     public RollerIntake intake;
     public Claw claw;
     public Elevator elevator;
@@ -77,8 +79,8 @@ public class MMSystems {
         exampleElevator = new ExampleElevator();
     }
 
-    public  void initArmAngle() {
-        armAngle = new IntakeArm();
+    public  void initIntakeArm() {
+        intakeArm = new IntakeArm();
     }
 
     public
@@ -88,12 +90,9 @@ public class MMSystems {
     public void initIntake() {
         intake = new RollerIntake();
     }
-    public void initClaw() {
-        claw = new Claw();
-    }
-    public void initElevator() {
-        elevator = new Elevator();
-    }
+    public void initScoringArm(){scoringArm = new ScoringArm();}
+    public void initClaw() {claw = new Claw();}
+    public void initElevator() {elevator = new Elevator();}
 
 
 

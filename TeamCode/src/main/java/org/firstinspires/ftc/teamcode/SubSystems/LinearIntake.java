@@ -19,8 +19,8 @@ public class LinearIntake extends SubsystemBase {
         leftServo = new CuttleServo(MMRobot.getInstance().mmSystems.controlHub, 1);
     }
     public void setPosition(double position) {
-        rightServo.setPosition(1-position/MAX_OPENING_VALUE);
-        leftServo.setPosition (position/MAX_OPENING_VALUE);
+        rightServo.setPosition(1-position*MAX_OPENING_VALUE);
+        leftServo.setPosition (position  *MAX_OPENING_VALUE);
     }
 
     public double getPosition() {

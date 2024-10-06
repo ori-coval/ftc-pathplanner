@@ -20,7 +20,6 @@ public class NormalTeleOpTest extends MMTeleOp {
 
     @Override
     public void onInit() {
-        motor = new CuttleMotor(MMRobot.getInstance().mmSystems.controlHub, 3);
 
 
     }
@@ -28,7 +27,6 @@ public class NormalTeleOpTest extends MMTeleOp {
     @Override
     public void run() {
         super.run();
-        motor.setPower(gamepad1.left_trigger- gamepad1.right_trigger);
 
     }
 }

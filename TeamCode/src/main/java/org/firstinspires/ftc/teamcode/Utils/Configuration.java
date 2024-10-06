@@ -37,9 +37,9 @@ public class Configuration {
 
 
     public static final int INTAKE = 0;
-    public static final int ARM_ANGLE_RIGHT = 2;
-    public static final int ARM_ANGEL_LEFT = 3;
-    public static final int CLAW_SCORING = 2;
+    public static final int ARM_INTAKE_RIGHT = 2;
+    public static final int ARM_INTAKE_LEFT = 3;
+    public static final int CLAW_SCORING = 4;
 
 
 

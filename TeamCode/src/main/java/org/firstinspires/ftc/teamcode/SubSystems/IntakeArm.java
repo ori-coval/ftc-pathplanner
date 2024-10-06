@@ -15,7 +15,10 @@ public class IntakeArm extends SubsystemBase {
 
     public enum Position {
         IN(1),
-        OUT(0.4);
+        OUT(0.4),
+        MID(0.65);
+
+        //TODO: check tuning
         public double intakeArmPosition;
         Position(double position) {
             this.intakeArmPosition = position;
@@ -24,8 +27,8 @@ public class IntakeArm extends SubsystemBase {
 
 
     public IntakeArm() {
-        servoRight = new CuttleServo(mmRobot.mmSystems.controlHub, Configuration.ARM_ANGLE_RIGHT);
-        servoLeft = new CuttleServo(mmRobot.mmSystems.controlHub, Configuration.ARM_ANGEL_LEFT);
+        servoRight = new CuttleServo(mmRobot.mmSystems.controlHub, Configuration.ARM_INTAKE_RIGHT);
+        servoLeft = new CuttleServo(mmRobot.mmSystems.controlHub, Configuration.ARM_INTAKE_LEFT);
     }
 
     public void setPosition(double position) {

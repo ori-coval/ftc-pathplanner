@@ -11,7 +11,7 @@ public class ScoringArm extends SubsystemBase {
     MMRobot robot = MMRobot.getInstance();
 
     public enum Position {
-        SCORING(0),
+        SCORING(0.85),
         IN(0);
         public double scoringArmPosition;
 
