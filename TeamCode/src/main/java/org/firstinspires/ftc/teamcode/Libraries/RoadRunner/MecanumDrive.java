@@ -58,6 +58,10 @@ public class MecanumDrive {
         return null;
     }
 
+    public TrajectoryActionBuilder actionBuilder(Vector2d beginPose) {
+        return null;
+    }
+
     public static class Params {
 
         // drive model parameters
@@ -122,8 +126,8 @@ public class MecanumDrive {
     private final DownsampledWriter mecanumCommandWriter = new DownsampledWriter("MECANUM_COMMAND", 50_000_000);
 
 
-    public MecanumDrive(HardwareMap hardwareMap, Pose2d pose) {
-        this.pose = pose;
+    public MecanumDrive(HardwareMap hardwareMap, Vector2d pose) {
+        //this.pose = pose;
 
         LynxFirmware.throwIfModulesAreOutdated(hardwareMap);
 
@@ -393,8 +397,9 @@ public class MecanumDrive {
         c.strokePolyline(xPoints, yPoints);
     }
 
-    public TrajectoryActionBuilder actionBuilder(Pose2d beginPose) {
-        return new TrajectoryActionBuilder(
+    public TrajectoryActionBuilder actionBuilder(Pose2d beginPose1, Pose2d beginPose2, Pose2d beginPose) {
+        TrajectoryActionBuilder trajectoryActionBuilder;
+        trajectoryActionBuilder = new TrajectoryActionBuilder(
                 TurnAction::new,
                 FollowTrajectoryAction::new,
                 new TrajectoryBuilderParams(
@@ -407,7 +412,10 @@ public class MecanumDrive {
                 defaultTurnConstraints,
                 defaultVelConstraint, defaultAccelConstraint
         );
+        return trajectoryActionBuilder;
     }
+
 }
+
 
 

@@ -11,33 +11,32 @@ import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
 
 
 @Config
-@Autonomous(name = "AutofarRed", group = "Autonomous")
+@Autonomous(name = "AutofarBlue", group = "Autonomous")
 
-public final class AutofarRed extends LinearOpMode {
+public final class AutofarBlue extends LinearOpMode {
 
 
-   //public final GoBildaPinpointDriver;
+    //public final GoBildaPinpointDriver;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Vector2d beginPose = new Vector2d(-18.27, -62.68);
+        Vector2d beginPose = new Vector2d(-15.36, 62.68);
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         waitForStart();
 
         Actions.runBlocking(
-        drive.actionBuilder(beginPose)
-        .splineTo(new Vector2d(-41.57, -55.98), Math.toRadians(180.00))
-                .waitSeconds(200)
-        .splineTo(new Vector2d(-55.98, -55.4), Math.toRadians(90.00))
-                .waitSeconds(700)
-        .splineTo(new Vector2d(36.76 , -28.9) , Math.toRadians(16.19))
-                .waitSeconds(700)
-        .splineTo(new Vector2d(-56.13 , -61.08) , Math.toRadians(199.11))
-                .waitSeconds(700)
+                drive.actionBuilder(beginPose)
+//                 .splineTo(new Vector2d(-54.24, 58.17), Math.toRadians(90))
+//                     .waitSeconds(200)
+                 .splineTo(new Vector2d(54.24, 58.17), Math.toRadians(90.00))
+                     .waitSeconds(700)
+                 .splineTo(new Vector2d(37.2 , 27.3) , Math.toRadians(90.00))
+                     .waitSeconds(700)
+                 .splineTo(new Vector2d(54.24, 58.17), Math.toRadians(90.00))
+                     .waitSeconds(700)
 
-
-                .build());
+                        .build());
 
         telemetry.addData("x", drive.pose.position.x);
         telemetry.addData("y", drive.pose.position.y);
