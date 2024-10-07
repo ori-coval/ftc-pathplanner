@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -20,7 +21,7 @@ public final class AutofarRed extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Vector2d beginPose = new Vector2d(-18.27, -62.68);
+        Pose2d beginPose = new Pose2d(-15.36, 62.68 , 90);
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         waitForStart();

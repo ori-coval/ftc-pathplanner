@@ -15,7 +15,7 @@ public final class ManualFeedbackTuner extends LinearOpMode {
 
     public void runOpMode(Pose2d beginPose) throws InterruptedException {
         if (TuningOpModes.DRIVE_CLASS.equals(MecanumDrive.class)) {
-            MecanumDrive drive = new MecanumDrive(hardwareMap, new Vector2d(0, 0));
+            MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
 
             waitForStart();
 

@@ -58,7 +58,7 @@ public class MecanumDrive {
         return null;
     }
 
-    public TrajectoryActionBuilder actionBuilder(Vector2d beginPose) {
+    public TrajectoryActionBuilder actionBuilder(Pose2d beginPose) {
         return null;
     }
 
@@ -126,7 +126,7 @@ public class MecanumDrive {
     private final DownsampledWriter mecanumCommandWriter = new DownsampledWriter("MECANUM_COMMAND", 50_000_000);
 
 
-    public MecanumDrive(HardwareMap hardwareMap, Vector2d pose) {
+    public MecanumDrive(HardwareMap hardwareMap, Pose2d pose) {
         //this.pose = pose;
 
         LynxFirmware.throwIfModulesAreOutdated(hardwareMap);
