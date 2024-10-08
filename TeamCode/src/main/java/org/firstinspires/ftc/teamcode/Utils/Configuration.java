@@ -44,7 +44,7 @@ public class Configuration {
 
 
     public static final int SCORING_ARM_RIGHT = 0;
-    public static final int SCORING_ARM_LEFT = 1;
+    public static final int SCORING_ARM_LEFT = 1 ;
 
 
 

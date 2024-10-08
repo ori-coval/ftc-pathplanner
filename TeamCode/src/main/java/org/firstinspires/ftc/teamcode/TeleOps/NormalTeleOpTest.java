@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 public class NormalTeleOpTest extends MMTeleOp {
 
     public NormalTeleOpTest(){
-        super(OpModeType.NonCompetition.EXPERIMENTING_NO_EXPANSION);
+        super(OpModeType.NonCompetition.EXPERIMENTING);
     }
 
     CuttleMotor motor;
@@ -21,6 +22,11 @@ public class NormalTeleOpTest extends MMTeleOp {
     @Override
     public void onInit() {
 
+//        CRServo s1 = hardwareMap.crservo.get("s1");
+//        CRServo s2 = hardwareMap.crservo.get("s2");
+//        CRServo s3 = hardwareMap.crservo.get("s3");
+//        CRServo s4 = hardwareMap.crservo.get("s4");
+//        CRServo s5 = hardwareMap.crservo.get("s5");
 
     }
 
