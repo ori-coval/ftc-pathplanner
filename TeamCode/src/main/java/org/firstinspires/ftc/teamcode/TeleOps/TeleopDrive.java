@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
-import com.acmerobotics.dashboard.FtcDashboard;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -16,7 +16,6 @@ import org.firstinspires.ftc.teamcode.Libraries.MMLib.PID.MMPIDCommand;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.SubSystems.Claw;
 import org.firstinspires.ftc.teamcode.SubSystems.IntakeArm;
-import org.firstinspires.ftc.teamcode.SubSystems.ScoringArm;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp
@@ -39,15 +38,13 @@ public class TeleopDrive extends MMTeleOp {
         MMRobot.getInstance().mmSystems.initClaw();
 
 
-//       Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.05);
-//       leftTriggerCondition.whenActive(
-//               new LinearIntakeCommand(leftTriggerCondition)
-//       );
-//
-//        leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.05);
-//        leftTriggerCondition.whenActive(
-//                new IntakeArmSetState(MMRobot.getInstance().mmSystems.intakeArm, IntakeArm.Position.MID)
-//        );
+        Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.05);
+         leftTriggerCondition.whenActive(
+                 new ParallelCommandGroup(
+                         new IntakeArmSetState(MMRobot.getInstance().mmSystems.intakeArm, IntakeArm.Position.MID),
+                         new LinearIntakeCommand(leftTriggerCondition)
+                 )
+         );
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
                 new IntakeByToggle()
