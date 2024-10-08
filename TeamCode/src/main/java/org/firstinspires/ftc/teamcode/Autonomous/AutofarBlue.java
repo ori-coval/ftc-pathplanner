@@ -20,7 +20,7 @@ public final class AutofarBlue extends LinearOpMode {
     //public final GoBildaPinpointDriver;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode()  {
         Pose2d beginPose = new Pose2d(-15.36 ,62.68, 90);
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 

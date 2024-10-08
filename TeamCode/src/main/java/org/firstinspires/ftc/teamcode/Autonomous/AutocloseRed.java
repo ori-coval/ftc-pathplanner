@@ -20,7 +20,7 @@ public final class AutocloseRed extends LinearOpMode {
     //public final GoBildaPinpointDriver;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode()  {
         Pose2d beginPose = new Pose2d(-15.04, -62.57, Math.toRadians(90.00));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 

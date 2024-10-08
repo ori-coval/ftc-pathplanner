@@ -31,7 +31,7 @@ import com.acmerobotics.roadrunner.VelConstraint;
 import com.acmerobotics.roadrunner.ftc.DownsampledWriter;
 import com.acmerobotics.roadrunner.ftc.FlightRecorder;
 import com.acmerobotics.roadrunner.ftc.LynxFirmware;
-import com.arcrobotics.ftclib.kinematics.Odometry;
+import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.qualcomm.hardware.lynx.LynxModule;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -40,6 +40,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.messages.DriveCommandMessage;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.messages.MecanumCommandMessage;
@@ -54,13 +55,7 @@ import java.util.List;
 public class MecanumDrive {
 
 
-    public Odometry getOdometry() {
-        return null;
-    }
 
-    public TrajectoryActionBuilder actionBuilder(Pose2d beginPose) {
-        return null;
-    }
 
     public static class Params {
 
@@ -140,12 +135,12 @@ public class MecanumDrive {
 
         odo = hardwareMap.get(GoBildaPinpointDriver.class, "odo");
 
-        odo.setOffsets(-84.0, -168.0);
+        odo.setOffsets(0.00, 0.00);
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
         odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
 
         odo.resetPosAndIMU();
-
+        odo.setPosition(new com.arcrobotics.ftclib.geometry.Pose2d(pose.position.x , pose.position.y ,new Rotation2d(pose.heading.toDouble())));
         leftFront = hardwareMap.get(DcMotorEx.class, Configuration.AUTO_DRIVE_TRAIN_FRONT_LEFT);
         leftBack = hardwareMap.get(DcMotorEx.class, Configuration.AUTO_DRIVE_TRAIN_BACK_LEFT);
         rightBack = hardwareMap.get(DcMotorEx.class, Configuration.AUTO_DRIVE_TRAIN_BACK_RIGHT);
@@ -157,8 +152,9 @@ public class MecanumDrive {
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // TODO: reverse motor directions if needed
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
@@ -167,7 +163,8 @@ public class MecanumDrive {
 
     }
 
-    public void setDrivePowers(PoseVelocity2d powers) {
+    public void
+    setDrivePowers(PoseVelocity2d powers) {
         MecanumKinematics.WheelVelocities<Time> wheelVels = new MecanumKinematics(1).inverse(
                 PoseVelocity2dDual.constant(powers, 1));
 
@@ -397,7 +394,8 @@ public class MecanumDrive {
         c.strokePolyline(xPoints, yPoints);
     }
 
-    public TrajectoryActionBuilder actionBuilder(Pose2d beginPose1, Pose2d beginPose2, Pose2d beginPose) {
+    public TrajectoryActionBuilder actionBuilder(
+            Pose2d beginPose) {
         TrajectoryActionBuilder trajectoryActionBuilder;
         trajectoryActionBuilder = new TrajectoryActionBuilder(
                 TurnAction::new,

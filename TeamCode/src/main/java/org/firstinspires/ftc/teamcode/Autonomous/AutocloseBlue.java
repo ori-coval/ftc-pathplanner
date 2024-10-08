@@ -7,7 +7,6 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
 
 
@@ -20,8 +19,8 @@ public final class AutocloseBlue extends LinearOpMode {
     //public final GoBildaPinpointDriver;
 
     @Override
-    public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(23.67, 62.77, Math.toRadians(270.00));
+    public void runOpMode()  {
+        Pose2d beginPose = new Pose2d(23.67, 62.77, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         waitForStart();
