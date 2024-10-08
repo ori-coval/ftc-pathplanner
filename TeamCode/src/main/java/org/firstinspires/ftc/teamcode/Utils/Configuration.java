@@ -42,8 +42,8 @@ public class Configuration {
     public static final int CLAW_SCORING = 4;
 
 
-    public static final int RIGHT_LINEAR_INTAKE = 0;
-    public static final int LEFT_LINEAR_INTAKE = 1;
+    public static final int RIGHT_LINEAR_INTAKE = 1;
+    public static final int LEFT_LINEAR_INTAKE = 0;
 
     public static final int SCORING_ARM_RIGHT = 0;
     public static final int SCORING_ARM_LEFT = 1 ;

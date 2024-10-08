@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.SubSystems.RollerIntake;
 
 public class IntakeByToggle extends CommandBase {
-    RollerIntake intake = MMRobot.getInstance().mmSystems.intake;
+    RollerIntake intake = MMRobot.getInstance().mmSystems.rollerIntake;
 
     public IntakeByToggle() {
         this.addRequirements(intake);

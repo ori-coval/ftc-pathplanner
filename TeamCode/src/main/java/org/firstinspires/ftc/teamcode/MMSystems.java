@@ -59,7 +59,7 @@ public class MMSystems {
     public IntakeArm intakeArm;
     public LinearIntake linearIntake;
     public ScoringArm scoringArm;
-    public RollerIntake intake;
+    public RollerIntake rollerIntake;
     public Claw claw;
     public Elevator elevator;
 
@@ -88,7 +88,7 @@ public class MMSystems {
         linearIntake = new LinearIntake();
     }
     public void initIntake() {
-        intake = new RollerIntake();
+        rollerIntake = new RollerIntake();
     }
     public void initScoringArm(){scoringArm = new ScoringArm();}
     public void initClaw() {claw = new Claw();}
