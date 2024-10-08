@@ -1,11 +1,16 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Commands.IntakeArmSetState;
 import org.firstinspires.ftc.teamcode.Commands.LinearIntakeCommand;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMRobot;
+
+import org.firstinspires.ftc.teamcode.SubSystems.Claw;
+import org.firstinspires.ftc.teamcode.SubSystems.IntakeArm;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp
@@ -48,6 +53,13 @@ public class TeleopDrive extends MMTeleOp {
 //        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
 //                new ClawSetState(robot.mmSystems.claw, Claw.State.OPEN)
 //      );
+        Trigger leftTriggerCondition = new Trigger(()-> gamepad1.left_trigger > 0.05);
+         leftTriggerCondition.whenActive(
+                 new ParallelCommandGroup(
+                         new IntakeArmSetState(MMRobot.getInstance().mmSystems.intakeArm, IntakeArm.Position.MID),
+                         new LinearIntakeCommand(leftTriggerCondition)
+                 )
+         );
 
 //        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(
 //                new IntakeArmSetState(robot.mmSystems.intakeArm, IntakeArm.Position.MID)

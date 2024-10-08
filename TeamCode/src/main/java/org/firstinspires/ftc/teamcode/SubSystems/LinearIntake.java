@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleServo;
 import org.firstinspires.ftc.teamcode.MMRobot;
+import org.firstinspires.ftc.teamcode.Utils.Configuration;
 
 public class LinearIntake extends SubsystemBase {
 
@@ -15,8 +16,8 @@ public class LinearIntake extends SubsystemBase {
     final double MAX_OPENING_VALUE = 0.7;
 
     public LinearIntake() {
-        rightServo = new CuttleServo(MMRobot.getInstance().mmSystems.controlHub, 0);
-        leftServo = new CuttleServo(MMRobot.getInstance().mmSystems.controlHub, 1);
+        rightServo = new CuttleServo(MMRobot.getInstance().mmSystems.controlHub, Configuration.RIGHT_LINEAR_INTAKE);
+        leftServo = new CuttleServo(MMRobot.getInstance().mmSystems.controlHub, Configuration.LEFT_LINEAR_INTAKE);
     }
     public void setPosition(double position) {
         rightServo.setPosition(1-position*MAX_OPENING_VALUE);
