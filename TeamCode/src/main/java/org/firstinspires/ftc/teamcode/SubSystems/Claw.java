@@ -13,7 +13,7 @@ public class Claw extends SubsystemBase {
     CuttleServo servo;
 
     public enum State {
-        CLOSE(0.25), OPEN(0);
+        CLOSE(1), OPEN(0.3);
         //TODO: check tuning
         public double position;
 
@@ -22,9 +22,6 @@ public class Claw extends SubsystemBase {
         }
     }
 
-
-    final double CLOSE = 0.8;
-    final double OPEN = 0.35;
 
     public Claw(){
         servo = new CuttleServo(robot.mmSystems.expansionHub,Configuration.CLAW_SCORING);

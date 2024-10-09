@@ -1,26 +1,21 @@
 package org.firstinspires.ftc.teamcode.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.InstantCommand;
 
+import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.SubSystems.RollerIntake;
 
-public class IntakeByPower extends CommandBase {
-    RollerIntake intake;
+public class IntakeByPower extends InstantCommand {
     double power;
 
     public IntakeByPower(double power){
         this.power = power;
-        this.addRequirements(intake);
+        this.addRequirements(MMRobot.getInstance().mmSystems.rollerIntake);
     }
 
     @Override
     public void initialize() {
-        intake.setPower(power);
+        MMRobot.getInstance().mmSystems.rollerIntake.setPower(power);
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        intake.setPower(0);
-    }
-
 }

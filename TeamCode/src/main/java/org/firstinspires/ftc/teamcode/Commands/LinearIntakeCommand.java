@@ -6,10 +6,14 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.MMRobot;
 
+import java.util.function.DoubleSupplier;
+
 public class LinearIntakeCommand extends CommandBase{
     Trigger trigger;
+    DoubleSupplier position;
 
-    public LinearIntakeCommand(Trigger trigger){
+    public LinearIntakeCommand(Trigger trigger, DoubleSupplier position){
+        this.position = position;
         this.trigger = trigger;
         addRequirements(MMRobot.getInstance().mmSystems.linearIntake);
     }
@@ -17,11 +21,12 @@ public class LinearIntakeCommand extends CommandBase{
 
     @Override
     public void execute() {
-        MMRobot.getInstance().mmSystems.linearIntake.setPosition(MMRobot.getInstance().mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
+        MMRobot.getInstance().mmSystems.linearIntake.setPosition(position.getAsDouble());
     }
 
     @Override
     public boolean isFinished() {
+//        return false;
         return !trigger.get();
     }
 
