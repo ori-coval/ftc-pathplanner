@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.CommandGroup;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ParallelDeadlineGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 
 import org.firstinspires.ftc.teamcode.Commands.IntakeArmSetState;
@@ -28,6 +29,8 @@ public class Intake extends ParallelDeadlineGroup {
     public void end(boolean interrupted) {
         super.end(interrupted);
         CommandScheduler.getInstance().schedule(
+                new IntakeArmSetState(IntakeArm.Position.MID),
+                new WaitCommand(400),
                 new IntakeArmSetState(IntakeArm.Position.IN),
                 new IntakeByPower(0),
                 new SetLinearPosition(0)

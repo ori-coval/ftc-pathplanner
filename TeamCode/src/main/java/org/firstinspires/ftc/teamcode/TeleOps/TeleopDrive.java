@@ -1,16 +1,24 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.CommandGroup.ElevatorBackTo_0;
 import org.firstinspires.ftc.teamcode.CommandGroup.Intake;
 import org.firstinspires.ftc.teamcode.CommandGroup.Scoring;
+import org.firstinspires.ftc.teamcode.Commands.ClawSetState;
 import org.firstinspires.ftc.teamcode.Commands.IntakeArmSetState;
 import org.firstinspires.ftc.teamcode.Commands.LinearIntakeCommand;
+import org.firstinspires.ftc.teamcode.Commands.ScoringArmSetState;
+import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMRobot;
+import org.firstinspires.ftc.teamcode.SubSystems.Claw;
+import org.firstinspires.ftc.teamcode.SubSystems.Elevator;
 import org.firstinspires.ftc.teamcode.SubSystems.IntakeArm;
+import org.firstinspires.ftc.teamcode.SubSystems.ScoringArm;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
 @TeleOp
@@ -33,87 +41,59 @@ public class TeleopDrive extends MMTeleOp {
         MMRobot.getInstance().mmSystems.initScoringArm();
         MMRobot.getInstance().mmSystems.initClaw();
 
+        // REGION init
         addRunnableOnInit(
                 () -> MMRobot.getInstance().mmSystems.linearIntake.setPosition(0)
         );
         addCommandsOnRun(
-                new IntakeArmSetState(IntakeArm.Position.IN)
+                new IntakeArmSetState(IntakeArm.Position.IN),
+                new ClawSetState(MMRobot.getInstance().mmSystems.claw,Claw.State.OPEN),
+                new ScoringArmSetState(MMRobot.getInstance().mmSystems.scoringArm, ScoringArm.Position.IN)
         );
-
+        // ENDREGION
 
 
         Trigger leftTriggerCondition = new Trigger(
-                () -> MMRobot.getInstance().mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05
+            () -> MMRobot.getInstance().mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05
         );
-
         leftTriggerCondition.whenActive(
                 new Intake(leftTriggerCondition, ()->gamepad1.left_trigger)
         );
 
+        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
+                new ClawSetState(robot.mmSystems.claw, Claw.State.OPEN)
+        );
 
-//
-//        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(
-//                new ResetFieldOrientedCommand()
-//        );
-//
-//        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
-//                new ClawSetState(robot.mmSystems.claw, Claw.State.OPEN)
-//      );
+        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
+                new ElevatorBackTo_0()
+        );
 
+        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(
+                new Scoring(
+                        MMRobot.getInstance().mmSystems.elevator,
+                        MMRobot.getInstance().mmSystems.scoringArm,
+                        MMRobot.getInstance().mmSystems.claw,
+                        MMRobot.getInstance().mmSystems.elevator.LOW_BASCET
+                )
+        );
 
-//     MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
-//             new MMPIDCommand(
-//                     MMRobot.getInstance().mmSystems.elevator,
-//                     73
-//             )
-//     );
-//
-//     MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(
-//             new MMPIDCommand(
-//                     MMRobot.getInstance().mmSystems.elevator,
-//                     42
-//             )
-//     );
-//
-//        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
-//                new MMPIDCommand(
-//                        MMRobot.getInstance().mmSystems.elevator,
-//                        1
-//                )
-//        );
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
                 new Scoring(
                         MMRobot.getInstance().mmSystems.elevator,
                         MMRobot.getInstance().mmSystems.scoringArm,
                         MMRobot.getInstance().mmSystems.claw,
-                        20
+                        MMRobot.getInstance().mmSystems.elevator.HIGH_BASKET
                 )
         );
+
+
 
     }
 
     @Override
     public void run() {
         super.run();
-
-//        MMRobot.getInstance().mmSystems.expansionHub.pullBulkData();
-//        telemetry.addData("yaw", MMRobot.getInstance().mmSystems.imu.getYawInDegrees());
-//        telemetry.update();
-
-
-
-/*
-        telemetry.addData("meow",MMRobot.getInstance().mmSystems.elevator.getHeight());
-        telemetry.addData("Ticks",MMRobot.getInstance().mmSystems.elevator.motorLeftEncoder.getCounts());
-        telemetry.update();
-
-
-
-        MMRobot.getInstance().mmSystems.elevator.updateToDashboard();
-        MMRobot.getInstance().mmSystems.elevator.updateToDashboard();
-       FtcDashboard.getInstance().getTelemetry().addData("height",MMRobot.getInstance().mmSystems.elevator.getHeight());
-       FtcDashboard.getInstance().getTelemetry().update();
-*/
+        MMRobot.getInstance().mmSystems.expansionHub.pullBulkData();
 
 
     }

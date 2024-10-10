@@ -13,6 +13,7 @@ public class ScoringArm extends SubsystemBase {
     public enum Position {
         SCORING(0.85),
         IN(0);
+
         public double scoringArmPosition;
 
         Position(double position) {

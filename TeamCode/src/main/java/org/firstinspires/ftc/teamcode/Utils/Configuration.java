@@ -64,7 +64,7 @@ public class Configuration {
     //EXPANSION HUB
     public static final int ELEVATOR_RIGHT = 0;
     public static final int ELEVATOR_LEFT = 1;
-    public static final int ELEVATOR_ENCODER = ELEVATOR_RIGHT;
+    public static final int ELEVATOR_ENCODER = ELEVATOR_LEFT;
 
 
 }

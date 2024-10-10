@@ -14,7 +14,6 @@ public class Claw extends SubsystemBase {
 
     public enum State {
         CLOSE(1), OPEN(0.3);
-        //TODO: check tuning
         public double position;
 
         State(double position){

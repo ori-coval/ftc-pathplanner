@@ -1,12 +1,17 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
+
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import org.firstinspires.ftc.teamcode.CommandGroup.Scoring;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleMotor;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.PID.MMPIDCommand;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.Utils.OpModeType;
 
@@ -17,22 +22,43 @@ public class NormalTeleOpTest extends MMTeleOp {
         super(OpModeType.NonCompetition.EXPERIMENTING);
     }
 
-    CuttleMotor motor;
-
     @Override
     public void onInit() {
 
-//        CRServo s1 = hardwareMap.crservo.get("s1");
-//        CRServo s2 = hardwareMap.crservo.get("s2");
-//        CRServo s3 = hardwareMap.crservo.get("s3");
-//        CRServo s4 = hardwareMap.crservo.get("s4");
-//        CRServo s5 = hardwareMap.crservo.get("s5");
+        MMRobot.getInstance().mmSystems.initDriveTrain();
+        MMRobot.getInstance().mmSystems.initIntake();
+        MMRobot.getInstance().mmSystems.initLinearIntake();
+        MMRobot.getInstance().mmSystems.initElevator();
+        MMRobot.getInstance().mmSystems.initIntakeArm();
+        MMRobot.getInstance().mmSystems.initScoringArm();
+        MMRobot.getInstance().mmSystems.initClaw();
+
+
+
+//        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
+//                new MMPIDCommand(MMRobot.getInstance().mmSystems.elevator,20)
+//        );
+//
+//
+//        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(
+//                new Scoring(
+//                        MMRobot.getInstance().mmSystems.elevator,
+//                        MMRobot.getInstance().mmSystems.scoringArm,
+//                        MMRobot.getInstance().mmSystems.claw,
+//                        MMRobot.getInstance().mmSystems.elevator.LOW_BASCET
+//                )
+//        );
+
 
     }
 
     @Override
     public void run() {
         super.run();
+
+        MMRobot.getInstance().mmSystems.expansionHub.pullBulkData();
+
+
 
     }
 }

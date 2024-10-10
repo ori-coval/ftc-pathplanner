@@ -17,7 +17,7 @@ RollerIntake extends SubsystemBase{
 
     }
 
-    public void setPower(double power){servo.setPower(power);}
+    public void setPower(double power){servo.setPower(-power);}
 
     public void setIsRoll(Boolean isRoll){this.isRoll = isRoll;}
 

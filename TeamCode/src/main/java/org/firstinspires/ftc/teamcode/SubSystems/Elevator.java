@@ -27,9 +27,13 @@ public class Elevator extends MMPIDSubsystem {
     public static double kP = 0.08;
     public static double kI = 0;
     public static double kD = 0;
-    public static double TOLERANCE = 1;
+    public static double TOLERANCE = 2;
 
     double ticksOfset = 0;
+
+    public final double LOW_BASCET = 40;
+    public final double HIGH_BASKET = 73;
+
 
 
     public Elevator() {
@@ -44,7 +48,7 @@ public class Elevator extends MMPIDSubsystem {
     }
 
     public double getHeight(){
-        return ((getTicks() / TICKS_PER_REV) * SPROCKET_PERIMETER * LEVELS) ;
+        return -1*((getTicks() / TICKS_PER_REV) * SPROCKET_PERIMETER * LEVELS) ;
     }
 
     @Override
@@ -70,12 +74,18 @@ public class Elevator extends MMPIDSubsystem {
         motorRight.setPower(power);
     }
 
+    @Override
+    public void periodic() {
+        updateToDashboard();
+    }
+
     public void updateToDashboard(){
         FtcDashboard.getInstance().getTelemetry().addData("motorLeftPower", motorLeft.getPower());
         FtcDashboard.getInstance().getTelemetry().addData("motorRightPower",motorRight.getPower());
         FtcDashboard.getInstance().getTelemetry().addData("height",getHeight());
         FtcDashboard.getInstance().getTelemetry().addData("target", getPidController().getSetPoint());
         FtcDashboard.getInstance().getTelemetry().update();
+
     }
 
     @Override
