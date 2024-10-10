@@ -60,7 +60,7 @@ public class MecanumDrive {
     public static class Params {
 
         // drive model parameters
-        public double inPerTick = 0.5;
+        public double inPerTick = 1;
         public double lateralInPerTick = inPerTick;
         public double trackWidthTicks = 0.5;
 
@@ -137,9 +137,8 @@ public class MecanumDrive {
 
         odo.setOffsets(0.00, 0.00);
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
-        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.REVERSED);
 
-        odo.resetPosAndIMU();
         odo.setPosition(new com.arcrobotics.ftclib.geometry.Pose2d(pose.position.x , pose.position.y ,new Rotation2d(pose.heading.toDouble())));
         leftFront = hardwareMap.get(DcMotorEx.class, Configuration.AUTO_DRIVE_TRAIN_FRONT_LEFT);
         leftBack = hardwareMap.get(DcMotorEx.class, Configuration.AUTO_DRIVE_TRAIN_BACK_LEFT);
@@ -151,9 +150,11 @@ public class MecanumDrive {
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // TODO: reverse motor directions if needed
+//         TODO: reverse motor directions if needed
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+//        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+//        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
@@ -364,7 +365,7 @@ public class MecanumDrive {
     public PoseVelocity2d updatePoseEstimate() {
 
         odo.bulkUpdate();
-        pose = new Pose2d(odo.getPosX(), odo.getPosY(), odo.getHeading());
+        pose = new Pose2d(odo.getPosX()/ 25.4 , odo.getPosY() / 25.4, odo.getHeading());
 
 
         poseHistory.add(pose);
