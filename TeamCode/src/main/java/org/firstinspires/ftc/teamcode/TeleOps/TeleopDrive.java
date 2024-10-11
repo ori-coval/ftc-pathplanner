@@ -42,7 +42,6 @@ public class TeleopDrive extends MMTeleOp {
         MMRobot.getInstance().mmSystems.initScoringArm();
         MMRobot.getInstance().mmSystems.initClaw();
 
-        // REGION init
         addRunnableOnInit(
                 () -> MMRobot.getInstance().mmSystems.linearIntake.setPosition(0)
         );
@@ -51,7 +50,6 @@ public class TeleopDrive extends MMTeleOp {
                 new ClawSetState(MMRobot.getInstance().mmSystems.claw,Claw.State.OPEN),
                 new ScoringArmSetState(MMRobot.getInstance().mmSystems.scoringArm, ScoringArm.Position.IN)
         );
-        // ENDREGION
 
 
         Trigger leftTriggerCondition = new Trigger(
@@ -62,13 +60,6 @@ public class TeleopDrive extends MMTeleOp {
         );
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
-                new ClawSetState(robot.mmSystems.claw, Claw.State.OPEN)
-        );
-        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(
-                new ClawSetState(robot.mmSystems.claw, Claw.State.CLOSE)
-        );
-
-        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new ElevatorBackTo_0()
         );
 
