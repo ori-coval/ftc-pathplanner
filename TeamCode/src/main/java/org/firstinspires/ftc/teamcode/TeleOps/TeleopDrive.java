@@ -58,7 +58,7 @@ public class TeleopDrive extends MMTeleOp {
             () -> MMRobot.getInstance().mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05
         );
         leftTriggerCondition.whenActive(
-                new Intake(leftTriggerCondition, ()->gamepad1.left_trigger)
+                new Intake(leftTriggerCondition)
         );
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
