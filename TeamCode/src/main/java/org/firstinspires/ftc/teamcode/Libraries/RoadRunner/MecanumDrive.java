@@ -74,7 +74,8 @@ public final class MecanumDrive {
         // drive model parameters
         public double inPerTick = 0.52216188661;
         public double lateralInPerTick = 0.3986887715637615;
-        public double trackWidthTicks = -204937.56858023896;
+        public double trackWidthTicks = 0.0
+                ;
 
         // feedforward parameters (in tick units)
         public double kS = 0.7280900723357591;
@@ -316,6 +317,7 @@ public final class MecanumDrive {
             targetPoseWriter.write(new PoseMessage(txWorldTarget.value()));
 
             PoseVelocity2d robotVelRobot = updatePoseEstimate();
+
 
             PoseVelocity2dDual<Time> command = new HolonomicController(
                     PARAMS.axialGain, PARAMS.lateralGain, PARAMS.headingGain,

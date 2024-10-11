@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Libraries.RoadRunner;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.DualNum;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.Time;
 import com.acmerobotics.roadrunner.Twist2dDual;
@@ -21,11 +22,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.messages.TwoDeadWheelInputsMessage;
 
+
 @Config
 public final class TwoDeadWheelLocalizer implements Localizer {
     public static class Params {
-        public double parYTicks = -130028.77291960508; // y position of the parallel encoder (in tick units)
-        public double perpXTicks = -115173.97273154678; // x position of the perpendicular encoder (in tick units)
+        public double parYTicks = 0.0; // y position of the parallel encoder (in tick units)
+        public double perpXTicks = 0.0; // x position of the perpendicular encoder (in tick units)
     }
 
     public static Params PARAMS = new Params();
@@ -59,8 +61,10 @@ public final class TwoDeadWheelLocalizer implements Localizer {
     }
 
     public Twist2dDual<Time> update() {
-        PositionVelocityPair parPosVel = par.getPositionAndVelocity();
-        PositionVelocityPair perpPosVel = perp.getPositionAndVelocity();
+        PositionVelocityPair parPosVel = par.getPositionAndVelocity() ;
+        PositionVelocityPair perpPosVel = perp.getPositionAndVelocity() ;
+
+//        pose = new Pose2d(par.getPositionAndVelocity()/ 25.4 , perp.getPositionAndVelocity() / 25.4, .getHeading());
 
         YawPitchRollAngles angles = imu.getRobotYawPitchRollAngles();
         AngularVelocity angularVelocity = imu.getRobotAngularVelocity(AngleUnit.RADIANS);

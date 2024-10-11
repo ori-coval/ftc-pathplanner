@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.Libraries.RoadRunner.MecanumDrive;
 
 @Config
-@Autonomous(name = "AutofarRed", group = "Autonomous")
-public class Practice extends CommandOpMode {
+@Autonomous(name = "AutocloseRed", group = "Autonomous")
+public class AutocloseRed extends CommandOpMode {
 
     Action traj;
 
@@ -27,7 +27,7 @@ public class Practice extends CommandOpMode {
 
                 .turn(Math.toRadians(90))
                 .lineToX(-50.93)
-                //.setTangent(Math.toRadians(180))
+                .setTangent(Math.toRadians(180))
 
                 .build();
 
@@ -42,6 +42,7 @@ public class Practice extends CommandOpMode {
         Actions.runBlocking(
 
                 traj
+                
         );
 
 
