@@ -59,7 +59,7 @@ public class TeleopDrive extends MMTeleOp {
             () -> MMRobot.getInstance().mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05
         );
         leftTriggerCondition.whenActive(
-                new Intake(leftTriggerCondition, ()->gamepad1.left_trigger)
+                new Intake(leftTriggerCondition)
         );
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(
@@ -67,10 +67,6 @@ public class TeleopDrive extends MMTeleOp {
         );
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
-                new ClawSetState(robot.mmSystems.claw, Claw.State.OPEN)
-        );
-
-        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new ElevatorBackTo_0()
         );
 

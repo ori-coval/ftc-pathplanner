@@ -17,9 +17,9 @@ public class Intake extends ParallelDeadlineGroup {
 
     Trigger trigger;
 
-    public Intake(Trigger trigger, DoubleSupplier LinearIntakePose) {
+    public Intake(Trigger trigger) {
         super(
-                new LinearIntakeCommand(trigger, LinearIntakePose),
+                new LinearIntakeCommand(trigger),
                 new IntakeArmSetState(IntakeArm.Position.OUT),
                 new IntakeByPower(1)
         );

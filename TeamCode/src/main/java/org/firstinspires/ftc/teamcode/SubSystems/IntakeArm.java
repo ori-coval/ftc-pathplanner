@@ -16,7 +16,7 @@ public class IntakeArm extends SubsystemBase {
     public enum Position {
         IN(0.4),
         OUT(0.935),
-        MID(0.65);
+        MID(0.71);
 
         //TODO: check tuning
         public double intakeArmPosition;
