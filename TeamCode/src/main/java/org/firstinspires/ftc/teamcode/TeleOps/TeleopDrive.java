@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Commands.IntakeArmSetState;
 import org.firstinspires.ftc.teamcode.Commands.LinearIntakeCommand;
 import org.firstinspires.ftc.teamcode.Commands.ScoringArmSetState;
 import org.firstinspires.ftc.teamcode.Libraries.CuttlefishFTCBridge.src.devices.CuttleRevHub;
+import org.firstinspires.ftc.teamcode.Libraries.MMLib.DriveTrain.Commands.ResetFieldOrientedCommand;
 import org.firstinspires.ftc.teamcode.Libraries.MMLib.MMTeleOp;
 import org.firstinspires.ftc.teamcode.MMRobot;
 import org.firstinspires.ftc.teamcode.SubSystems.Claw;
@@ -85,7 +86,9 @@ public class TeleopDrive extends MMTeleOp {
                         MMRobot.getInstance().mmSystems.elevator.HIGH_BASKET
                 )
         );
-
+        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
+                new ResetFieldOrientedCommand()
+        );
 
 
     }
@@ -94,7 +97,8 @@ public class TeleopDrive extends MMTeleOp {
     public void run() {
         super.run();
         MMRobot.getInstance().mmSystems.expansionHub.pullBulkData();
-
+        telemetry.addData("imu: ", MMRobot.getInstance().mmSystems.imu.getYawInDegrees());
+        telemetry.update();
 
     }
 
