@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.CommandGroup.ElevatorBackTo_0;
 import org.firstinspires.ftc.teamcode.CommandGroup.Intake;
+import org.firstinspires.ftc.teamcode.CommandGroup.OutTakeRoller;
 import org.firstinspires.ftc.teamcode.CommandGroup.Scoring;
 import org.firstinspires.ftc.teamcode.Commands.ClawSetState;
 import org.firstinspires.ftc.teamcode.Commands.IntakeArmSetState;
@@ -42,6 +43,7 @@ public class TeleopDrive extends MMTeleOp {
         MMRobot.getInstance().mmSystems.initScoringArm();
         MMRobot.getInstance().mmSystems.initClaw();
 
+
         addRunnableOnInit(
                 () -> MMRobot.getInstance().mmSystems.linearIntake.setPosition(0)
         );
@@ -52,11 +54,16 @@ public class TeleopDrive extends MMTeleOp {
         );
 
 
+
         Trigger leftTriggerCondition = new Trigger(
             () -> MMRobot.getInstance().mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.05
         );
         leftTriggerCondition.whenActive(
                 new Intake(leftTriggerCondition)
+        );
+
+        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whenPressed(
+                new OutTakeRoller()
         );
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(

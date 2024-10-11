@@ -16,14 +16,16 @@ public class OnlyFTesting extends MMTeleOp {
         super(OpModeType.NonCompetition.EXPERIMENTING);
     }
 
+
+
     @Override
     public void onInit() {
-
+        MMRobot.getInstance().mmSystems.initLinearIntake();
     }
 
     @Override
     public void run() {
         super.run();
-
+        MMRobot.getInstance().mmSystems.linearIntake.setPosition(0.1);
     }
 }
