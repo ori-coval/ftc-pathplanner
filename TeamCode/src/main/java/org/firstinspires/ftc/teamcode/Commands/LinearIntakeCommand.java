@@ -11,9 +11,9 @@ import org.firstinspires.ftc.teamcode.MMRobot;
 public class LinearIntakeCommand extends CommandBase{
     Trigger trigger;
     private final double TRIG_INPUT_START = 0;
-    private final double TRIG_INPUT_END = 0;
+    private final double TRIG_INPUT_END = 1;
     private final double TRIG_OUTPUT_START = 0;
-    private final double TRIG_OUTPUT_END = 0.8;
+    private final double TRIG_OUTPUT_END = 0.4;
 
     public LinearIntakeCommand(Trigger trigger){
         this.trigger = trigger;
@@ -26,7 +26,7 @@ public class LinearIntakeCommand extends CommandBase{
                 MMUtils.mapValuesLinearByRange(
                         MMRobot.getInstance().mmSystems.gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER),
                         new MMRange(TRIG_INPUT_START, TRIG_INPUT_END),
-                        new MMRange(TRIG_OUTPUT_START, TRIG_OUTPUT_START)
+                        new MMRange(TRIG_OUTPUT_START, TRIG_OUTPUT_END)
                 )
         );
     }
