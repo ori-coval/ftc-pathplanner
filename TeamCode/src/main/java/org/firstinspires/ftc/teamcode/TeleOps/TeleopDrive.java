@@ -62,10 +62,6 @@ public class TeleopDrive extends MMTeleOp {
         );
 
         MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(
-                new ClawSetState(robot.mmSystems.claw, Claw.State.OPEN)
-        );
-
-        MMRobot.getInstance().mmSystems.gamepadEx1.getGamepadButton(GamepadKeys.Button.A).whenPressed(
                 new ElevatorBackTo_0()
         );
 
