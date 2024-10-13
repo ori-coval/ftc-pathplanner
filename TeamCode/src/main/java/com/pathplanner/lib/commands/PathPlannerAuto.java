@@ -1,5 +1,7 @@
 package com.pathplanner.lib.commands;
 
+import android.content.res.AssetManager;
+
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.Subsystem;
@@ -10,6 +12,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -52,12 +56,15 @@ public class PathPlannerAuto extends CommandBase {
    * @param autoName Name of the auto to get the pose from
    * @return Starting pose from the given auto
    */
-  public static Pose2d getStaringPoseFromAutoFile(String autoName) {
-    try (BufferedReader br =
-                 new BufferedReader(
-                         new FileReader(
-                                 new File(
-                                         Filesystem.getDeployDirectory(), "pathplanner/autos/" + autoName + ".auto")))) {
+  public static Pose2d getStartingPoseFromAutoFile(String autoName) {
+    try {
+      // Access the AssetManager
+      AssetManager assetManager = AutoBuilder.context.getAssets();
+
+      // Open the input stream for the specified auto file
+      InputStream inputStream = assetManager.open("deploy/pathplanner/autos/" + autoName + ".auto");
+      BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
       StringBuilder fileContentBuilder = new StringBuilder();
       String line;
       while ((line = br.readLine()) != null) {
@@ -79,11 +86,14 @@ public class PathPlannerAuto extends CommandBase {
    * @return List of paths in the auto
    */
   public static List<PathPlannerPath> getPathGroupFromAutoFile(String autoName) {
-    try (BufferedReader br =
-                 new BufferedReader(
-                         new FileReader(
-                                 new File(
-                                         Filesystem.getDeployDirectory(), "pathplanner/autos/" + autoName + ".auto")))) {
+    try {
+      // Access the AssetManager
+      AssetManager assetManager = AutoBuilder.context.getAssets();
+
+      // Open the input stream for the specified auto file
+      InputStream inputStream = assetManager.open("deploy/pathplanner/autos/" + autoName + ".auto");
+      BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
       StringBuilder fileContentBuilder = new StringBuilder();
       String line;
       while ((line = br.readLine()) != null) {
@@ -92,6 +102,7 @@ public class PathPlannerAuto extends CommandBase {
 
       String fileContent = fileContentBuilder.toString();
       JSONObject json = (JSONObject) new JSONParser().parse(fileContent);
+
       boolean choreoAuto = json.get("choreoAuto") != null && (boolean) json.get("choreoAuto");
       return pathsFromCommandJson((JSONObject) json.get("command"), choreoAuto);
     } catch (Exception e) {

@@ -1,5 +1,9 @@
 package com.pathplanner.lib.auto;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.AssetManager;
+
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.pathplanner.lib.commands.*;
@@ -11,19 +15,18 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.GeometryUtil;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.ReplanningConfig;
-import edu.wpi.first.wpilibj.Filesystem;
+
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -36,12 +39,19 @@ public class AutoBuilder {
   private static Consumer<Pose2d> resetPose;
   private static BooleanSupplier shouldFlipPath;
 
+  @SuppressLint("StaticFieldLeak")
+  public static Context context;
+
   // Pathfinding builders
   private static boolean pathfindingConfigured = false;
   private static QuadFunction<Pose2d, PathConstraints, Double, Double, Command>
       pathfindToPoseCommandBuilder;
   private static TriFunction<PathPlannerPath, PathConstraints, Double, Command>
       pathfindThenFollowPathCommandBuilder;
+
+  public static void setContext(Context context) {
+    AutoBuilder.context = context.getApplicationContext();
+  }
 
   /**
    * Configures the AutoBuilder for a holonomic drivetrain.
@@ -352,18 +362,25 @@ public class AutoBuilder {
    * @return List of all auto names
    */
   public static List<String> getAllAutoNames() {
-    File[] autoFiles = new File(Filesystem.getDeployDirectory(), "pathplanner/autos").listFiles();
+    AssetManager assetManager = context.getAssets();
+    List<String> autoNames = new ArrayList<>();
 
-    if (autoFiles == null) {
-      return new ArrayList<>();
+    try {
+      // List files in the "pathplanner/autos" directory within assets
+      String[] autoFiles = assetManager.list("deploy/pathplanner/autos");
+      if (autoFiles != null) {
+        for (String file : autoFiles) {
+          // Only add .auto files to the list
+          if (file.endsWith(".auto")) {
+            autoNames.add(file.substring(0, file.lastIndexOf(".")));
+          }
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace(); // Handle the exception
     }
 
-    return Stream.of(autoFiles)
-        .filter(file -> !file.isDirectory())
-        .map(File::getName)
-        .filter(name -> name.endsWith(".auto"))
-        .map(name -> name.substring(0, name.lastIndexOf(".")))
-        .collect(Collectors.toList());
+    return autoNames;
   }
 
   /**
@@ -388,11 +405,14 @@ public class AutoBuilder {
    * @return an auto command for the given auto name
    */
   public static Command buildAuto(String autoName) {
-    try (BufferedReader br =
-        new BufferedReader(
-            new FileReader(
-                new File(
-                    Filesystem.getDeployDirectory(), "pathplanner/autos/" + autoName + ".auto")))) {
+    try {
+      // Access the AssetManager
+      AssetManager assetManager = context.getAssets();
+
+      // Open the input stream for the specified auto file
+      InputStream inputStream = assetManager.open("deploy/pathplanner/autos/" + autoName + ".auto");
+      BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
       StringBuilder fileContentBuilder = new StringBuilder();
       String line;
       while ((line = br.readLine()) != null) {

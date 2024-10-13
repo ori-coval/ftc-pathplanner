@@ -1,6 +1,9 @@
 package com.pathplanner.lib.path;
 
+import android.content.res.AssetManager;
+
 import com.arcrobotics.ftclib.command.Command;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.CommandUtil;
 import com.pathplanner.lib.missingWpilibClasses.Pair;
 import com.pathplanner.lib.missingWpilibClasses.math.MathUtil;
@@ -10,10 +13,11 @@ import com.pathplanner.lib.missingWpilibClasses.math.geometry.Translation2d;
 import com.pathplanner.lib.missingWpilibClasses.math.kinematics.ChassisSpeeds;
 import com.pathplanner.lib.util.GeometryUtil;
 
-import edu.wpi.first.wpilibj.Filesystem;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.json.simple.JSONArray;
@@ -280,11 +284,14 @@ public class PathPlannerPath {
    * @return PathPlannerPath created from the given file name
    */
   public static PathPlannerPath fromPathFile(String pathName) {
-    try (BufferedReader br =
-        new BufferedReader(
-            new FileReader(
-                new File(
-                    Filesystem.getDeployDirectory(), "pathplanner/paths/" + pathName + ".path")))) {
+    try {
+      // Access the AssetManager
+      AssetManager assetManager = AutoBuilder.context.getAssets();
+
+      // Open the input stream for the specified path file
+      InputStream inputStream = assetManager.open("deploy/pathplanner/paths/" + pathName + ".path");
+      BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
       StringBuilder fileContentBuilder = new StringBuilder();
       String line;
       while ((line = br.readLine()) != null) {
@@ -294,8 +301,7 @@ public class PathPlannerPath {
       String fileContent = fileContentBuilder.toString();
       JSONObject json = (JSONObject) new JSONParser().parse(fileContent);
 
-      PathPlannerPath path = PathPlannerPath.fromJson(json);
-      return path;
+      return PathPlannerPath.fromJson(json);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -309,10 +315,14 @@ public class PathPlannerPath {
    * @return PathPlannerPath created from the given Choreo trajectory file
    */
   public static PathPlannerPath fromChoreoTrajectory(String trajectoryName) {
-    try (BufferedReader br =
-        new BufferedReader(
-            new FileReader(
-                new File(Filesystem.getDeployDirectory(), "choreo/" + trajectoryName + ".traj")))) {
+    try {
+      // Access the AssetManager
+      AssetManager assetManager = AutoBuilder.context.getAssets();
+
+      // Open the input stream for the specified trajectory file
+      InputStream inputStream = assetManager.open("choreo/" + trajectoryName + ".traj");
+      BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
       StringBuilder fileContentBuilder = new StringBuilder();
       String line;
       while ((line = br.readLine()) != null) {
@@ -345,26 +355,26 @@ public class PathPlannerPath {
         state.holonomicAngularVelocityRps = Optional.of(angularVelRps);
         state.curvatureRadPerMeter = 0.0; // Not encoded, only used for diff drive anyway
         state.constraints =
-            new PathConstraints(
-                Double.POSITIVE_INFINITY,
-                Double.POSITIVE_INFINITY,
-                Double.POSITIVE_INFINITY,
-                Double.POSITIVE_INFINITY);
+                new PathConstraints(
+                        Double.POSITIVE_INFINITY,
+                        Double.POSITIVE_INFINITY,
+                        Double.POSITIVE_INFINITY,
+                        Double.POSITIVE_INFINITY);
 
         trajStates.add(state);
       }
 
       PathPlannerPath path =
-          new PathPlannerPath(
-              new PathConstraints(
-                  Double.POSITIVE_INFINITY,
-                  Double.POSITIVE_INFINITY,
-                  Double.POSITIVE_INFINITY,
-                  Double.POSITIVE_INFINITY),
-              new GoalEndState(
-                  trajStates.get(trajStates.size() - 1).velocityMps,
-                  trajStates.get(trajStates.size() - 1).targetHolonomicRotation,
-                  true));
+              new PathPlannerPath(
+                      new PathConstraints(
+                              Double.POSITIVE_INFINITY,
+                              Double.POSITIVE_INFINITY,
+                              Double.POSITIVE_INFINITY,
+                              Double.POSITIVE_INFINITY),
+                      new GoalEndState(
+                              trajStates.get(trajStates.size() - 1).velocityMps,
+                              trajStates.get(trajStates.size() - 1).targetHolonomicRotation,
+                              true));
 
       List<PathPoint> pathPoints = new ArrayList<>();
       for (var state : trajStates) {

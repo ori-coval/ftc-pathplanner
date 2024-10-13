@@ -1,10 +1,8 @@
 package com.pathplanner.lib.missingWpilibClasses.math.geometry;
 
-/**
- * A two-dimensional position that includes a {@link Vector2d} and
- * a heading angle. Look at {@link Vector2d} for information on what
- * some of these methods do.
- */
+
+import com.arcrobotics.ftclib.geometry.Twist2d;
+
 public class Pose2d {
     private final Translation2d m_translation;
     private final Rotation2d m_rotation;

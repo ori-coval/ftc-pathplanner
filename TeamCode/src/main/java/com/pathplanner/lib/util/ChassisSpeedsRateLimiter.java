@@ -1,11 +1,7 @@
 package com.pathplanner.lib.util;
 
 import com.pathplanner.lib.missingWpilibClasses.math.MathSharedStore;
-import com.pathplanner.lib.missingWpilibClasses.math.VecBuilder;
-import com.pathplanner.lib.missingWpilibClasses.math.Vector;
 import com.pathplanner.lib.missingWpilibClasses.math.kinematics.ChassisSpeeds;
-import com.pathplanner.lib.missingWpilibClasses.math.numbers.N2;
-import com.pathplanner.lib.missingWpilibClasses.math.MathUtil;
 
 /**
  * Essentially a slew rate limiter for chassis speeds
@@ -63,43 +59,5 @@ public class ChassisSpeedsRateLimiter {
   public void setRateLimits(double translationRateLimit, double rotationRateLimit) {
     this.translationRateLimit = translationRateLimit;
     this.rotationRateLimit = rotationRateLimit;
-  }
-
-  /**
-   * Calculate the limited chassis speeds for a given input
-   *
-   * @param input The target chassis speeds
-   * @return The limited chassis speeds
-   */
-  public ChassisSpeeds calculate(ChassisSpeeds input) {
-    double currentTime = MathSharedStore.getTimestamp();
-    double elapsedTime = currentTime - prevTime;
-
-    prevVal.omegaRadiansPerSecond +=
-        MathUtil.clamp(
-            input.omegaRadiansPerSecond - prevVal.omegaRadiansPerSecond,
-            -rotationRateLimit * elapsedTime,
-            rotationRateLimit * elapsedTime);
-
-    Vector<N2> prevVelVector =
-        VecBuilder.fill(prevVal.vxMetersPerSecond, prevVal.vyMetersPerSecond);
-    Vector<N2> targetVelVector = VecBuilder.fill(input.vxMetersPerSecond, input.vyMetersPerSecond);
-    Vector<N2> deltaVelVector = new Vector<>(targetVelVector.minus(prevVelVector));
-    double maxDelta = translationRateLimit * elapsedTime;
-
-    if (deltaVelVector.norm() > maxDelta) {
-      Vector<N2> deltaUnitVector = deltaVelVector.div(deltaVelVector.norm());
-      Vector<N2> limitedDelta = deltaUnitVector.times(maxDelta);
-      Vector<N2> nextVelVector = new Vector<>(prevVelVector.plus(limitedDelta));
-
-      prevVal.vxMetersPerSecond = nextVelVector.get(0, 0);
-      prevVal.vyMetersPerSecond = nextVelVector.get(1, 0);
-    } else {
-      prevVal.vxMetersPerSecond = targetVelVector.get(0, 0);
-      prevVal.vyMetersPerSecond = targetVelVector.get(1, 0);
-    }
-
-    prevTime = currentTime;
-    return prevVal;
   }
 }
