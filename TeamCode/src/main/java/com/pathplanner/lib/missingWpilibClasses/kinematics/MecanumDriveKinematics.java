@@ -96,16 +96,16 @@ public class MecanumDriveKinematics{
             ChassisSpeeds chassisSpeeds, Translation2d centerOfRotationMeters) {
         // We have a new center of rotation. We need to compute the matrix again.
         if (!centerOfRotationMeters.equals(m_prevCoR)) {
-            var fl = m_frontLeftWheelMeters.minus(centerOfRotationMeters);
-            var fr = m_frontRightWheelMeters.minus(centerOfRotationMeters);
-            var rl = m_rearLeftWheelMeters.minus(centerOfRotationMeters);
-            var rr = m_rearRightWheelMeters.minus(centerOfRotationMeters);
+            Translation2d fl = m_frontLeftWheelMeters.minus(centerOfRotationMeters);
+            Translation2d fr = m_frontRightWheelMeters.minus(centerOfRotationMeters);
+            Translation2d rl = m_rearLeftWheelMeters.minus(centerOfRotationMeters);
+            Translation2d rr = m_rearRightWheelMeters.minus(centerOfRotationMeters);
 
             setInverseKinematics(fl, fr, rl, rr);
             m_prevCoR = centerOfRotationMeters;
         }
 
-        var chassisSpeedsVector = new SimpleMatrix(3, 1);
+        SimpleMatrix chassisSpeedsVector = new SimpleMatrix(3, 1);
         chassisSpeedsVector.setColumn(
                 0,
                 0,
@@ -113,7 +113,7 @@ public class MecanumDriveKinematics{
                 chassisSpeeds.vyMetersPerSecond,
                 chassisSpeeds.omegaRadiansPerSecond);
 
-        var wheelsVector = m_inverseKinematics.mult(chassisSpeedsVector);
+        SimpleMatrix wheelsVector = m_inverseKinematics.mult(chassisSpeedsVector);
         return new MecanumDriveWheelSpeeds(
                 wheelsVector.get(0, 0),
                 wheelsVector.get(1, 0),
@@ -141,7 +141,7 @@ public class MecanumDriveKinematics{
      * @return The resulting chassis speed.
      */
     public ChassisSpeeds toChassisSpeeds(MecanumDriveWheelSpeeds wheelSpeeds) {
-        var wheelSpeedsVector = new SimpleMatrix(4, 1);
+        SimpleMatrix wheelSpeedsVector = new SimpleMatrix(4, 1);
         wheelSpeedsVector.setColumn(
                 0,
                 0,
@@ -149,7 +149,7 @@ public class MecanumDriveKinematics{
                 wheelSpeeds.frontRightMetersPerSecond,
                 wheelSpeeds.rearLeftMetersPerSecond,
                 wheelSpeeds.rearRightMetersPerSecond);
-        var chassisSpeedsVector = m_forwardKinematics.mult(wheelSpeedsVector);
+        SimpleMatrix chassisSpeedsVector = m_forwardKinematics.mult(wheelSpeedsVector);
 
         return new ChassisSpeeds(
                 chassisSpeedsVector.get(0, 0),

@@ -159,7 +159,7 @@ public class PathPlannerAuto extends CommandBase {
             || type.equals("parallel")
             || type.equals("race")
             || type.equals("deadline")) {
-      for (var cmdJson : (JSONArray) data.get("commands")) {
+      for (Object cmdJson : (JSONArray) data.get("commands")) {
         paths.addAll(pathsFromCommandJson((JSONObject) cmdJson, choreoPaths));
       }
     }

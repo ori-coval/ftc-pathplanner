@@ -5,19 +5,31 @@ import android.content.res.AssetManager;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.missingWpilibClasses.Pair;
 import com.pathplanner.lib.missingWpilibClasses.math.geometry.Translation2d;
-import com.pathplanner.lib.path.*;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.PathPoint;
+import com.pathplanner.lib.path.PathSegment;
 import com.pathplanner.lib.util.GeometryUtil;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Implementation of AD* running locally in a background thread
@@ -219,9 +231,9 @@ public class LocalADStar implements Pathfinder {
           List<Pair<Translation2d, Translation2d>> obs, Translation2d currentRobotPos) {
     Set<GridPosition> newObs = new HashSet<>();
 
-    for (var obstacle : obs) {
-      var gridPos1 = getGridPos(obstacle.getFirst());
-      var gridPos2 = getGridPos(obstacle.getSecond());
+    for (Pair<Translation2d, Translation2d> obstacle : obs) {
+      GridPosition gridPos1 = getGridPos(obstacle.getFirst());
+      GridPosition gridPos2 = getGridPos(obstacle.getSecond());
 
       int minX = Math.min(gridPos1.x, gridPos2.x);
       int maxX = Math.max(gridPos1.x, gridPos2.x);
@@ -362,7 +374,7 @@ public class LocalADStar implements Pathfinder {
     List<GridPosition> path = new ArrayList<>();
     path.add(sStart);
 
-    var s = sStart;
+    GridPosition s = sStart;
 
     for (int k = 0; k < 200; k++) {
       HashMap<GridPosition, Double> gList = new HashMap<>();
@@ -371,8 +383,8 @@ public class LocalADStar implements Pathfinder {
         gList.put(x, g.get(x));
       }
 
-      Map.Entry<GridPosition, Double> min = Map.entry(sGoal, Double.POSITIVE_INFINITY);
-      for (var entry : gList.entrySet()) {
+      Map.Entry<GridPosition, Double> min = new AbstractMap.SimpleEntry<>(sGoal, Double.POSITIVE_INFINITY);
+      for (Map.Entry<GridPosition, Double> entry : gList.entrySet()) {
         if (entry.getValue() < min.getValue()) {
           min = entry;
         }
@@ -572,12 +584,12 @@ public class LocalADStar implements Pathfinder {
   private void computeOrImprovePath(
       GridPosition sStart, GridPosition sGoal, Set<GridPosition> obstacles) {
     while (true) {
-      var sv = topKey();
+      Pair<GridPosition, Pair<Double, Double>> sv = topKey();
       if (sv == null) {
         break;
       }
-      var s = sv.getFirst();
-      var v = sv.getSecond();
+      GridPosition s = sv.getFirst();
+      Pair<Double, Double> v = sv.getSecond();
 
       if (comparePair(v, key(sStart, sStart)) >= 0 && rhs.get(sStart).equals(g.get(sStart))) {
         break;
@@ -696,7 +708,7 @@ public class LocalADStar implements Pathfinder {
 
   private Pair<GridPosition, Pair<Double, Double>> topKey() {
     Map.Entry<GridPosition, Pair<Double, Double>> min = null;
-    for (var entry : open.entrySet()) {
+    for (Map.Entry<GridPosition, Pair<Double, Double>> entry : open.entrySet()) {
       if (min == null || comparePair(entry.getValue(), min.getValue()) < 0) {
         min = entry;
       }
@@ -760,7 +772,7 @@ public class LocalADStar implements Pathfinder {
     @Override
     public boolean equals(Object obj) {
       if (obj instanceof GridPosition) {
-        var other = (GridPosition) obj;
+        GridPosition other = (GridPosition) obj;
         return x == other.x && y == other.y;
       } else {
         return false;

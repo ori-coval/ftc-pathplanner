@@ -70,11 +70,11 @@ public class FollowPathCommand extends CommandBase {
     this.replanningConfig = replanningConfig;
     this.shouldFlipPath = shouldFlipPath;
 
-    Set<Subsystem> driveRequirements = Set.of(requirements);
+    Set<Subsystem> driveRequirements = new HashSet<>(Arrays.asList(requirements));
     m_requirements.addAll(driveRequirements);
 
     for (EventMarker marker : this.originalPath.getEventMarkers()) {
-      var reqs = marker.getCommand().getRequirements();
+      Set<Subsystem> reqs = marker.getCommand().getRequirements();
 
       if (!Collections.disjoint(driveRequirements, reqs)) {
         throw new IllegalArgumentException(
@@ -170,7 +170,7 @@ public class FollowPathCommand extends CommandBase {
       // Time to trigger this event command
       Pair<Double, Command> event = untriggeredEvents.remove(0);
 
-      for (var runningCommand : currentEventCommands.entrySet()) {
+      for (Map.Entry<Command, Boolean> runningCommand : currentEventCommands.entrySet()) {
         if (!runningCommand.getValue()) {
           continue;
         }

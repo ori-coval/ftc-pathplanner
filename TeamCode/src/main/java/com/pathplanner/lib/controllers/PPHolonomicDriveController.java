@@ -141,7 +141,7 @@ public class PPHolonomicDriveController implements PathFollowingController {
       maxAngVel = Math.min(angVelConstraint, maxAngVelModule);
     }
 
-    var rotationConstraints =
+    TrapezoidProfile.Constraints rotationConstraints =
         new TrapezoidProfile.Constraints(
             maxAngVel, targetState.constraints.getMaxAngularAccelerationRpsSq());
 

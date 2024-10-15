@@ -36,16 +36,25 @@ public class CommandUtil {
     String type = (String) commandJson.get("type");
     JSONObject data = (JSONObject) commandJson.get("data");
 
-      return switch (type) {
-          case "wait" -> waitCommandFromData(data);
-          case "named" -> namedCommandFromData(data);
-          case "path" -> pathCommandFromData(data, loadChoreoPaths);
-          case "sequential" -> sequentialGroupFromData(data, loadChoreoPaths);
-          case "parallel" -> parallelGroupFromData(data, loadChoreoPaths);
-          case "race" -> raceGroupFromData(data, loadChoreoPaths);
-          case "deadline" -> deadlineGroupFromData(data, loadChoreoPaths);
-          default -> Commands.none();
-      };
+    switch (type) {
+      case "wait":
+        return waitCommandFromData(data);
+      case "named":
+        return namedCommandFromData(data);
+      case "path":
+        return pathCommandFromData(data, loadChoreoPaths);
+      case "sequential":
+        return sequentialGroupFromData(data, loadChoreoPaths);
+      case "parallel":
+        return parallelGroupFromData(data, loadChoreoPaths);
+      case "race":
+        return raceGroupFromData(data, loadChoreoPaths);
+      case "deadline":
+        return deadlineGroupFromData(data, loadChoreoPaths);
+      default:
+        return Commands.none();
+    }
+
 
   }
 
@@ -71,7 +80,7 @@ public class CommandUtil {
 
   private static Command sequentialGroupFromData(JSONObject dataJson, boolean loadChoreoPaths) {
     SequentialCommandGroup group = new SequentialCommandGroup();
-    for (var cmdJson : (JSONArray) dataJson.get("commands")) {
+    for (Object cmdJson : (JSONArray) dataJson.get("commands")) {
       group.addCommands(commandFromJson((JSONObject) cmdJson, loadChoreoPaths));
     }
     return group;
@@ -79,7 +88,7 @@ public class CommandUtil {
 
   private static Command parallelGroupFromData(JSONObject dataJson, boolean loadChoreoPaths) {
     ParallelCommandGroup group = new ParallelCommandGroup();
-    for (var cmdJson : (JSONArray) dataJson.get("commands")) {
+    for (Object cmdJson : (JSONArray) dataJson.get("commands")) {
       group.addCommands(commandFromJson((JSONObject) cmdJson, loadChoreoPaths));
     }
     return group;
@@ -87,7 +96,7 @@ public class CommandUtil {
 
   private static Command raceGroupFromData(JSONObject dataJson, boolean loadChoreoPaths) {
     ParallelRaceGroup group = new ParallelRaceGroup();
-    for (var cmdJson : (JSONArray) dataJson.get("commands")) {
+    for (Object cmdJson : (JSONArray) dataJson.get("commands")) {
       group.addCommands(commandFromJson((JSONObject) cmdJson, loadChoreoPaths));
     }
     return group;

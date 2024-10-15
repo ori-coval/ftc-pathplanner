@@ -146,7 +146,7 @@ public class ChassisSpeeds {
             double omegaRadiansPerSecond,
             Rotation2d robotAngle) {
         // CCW rotation out of chassis frame
-        var rotated = new Translation2d(vxMetersPerSecond, vyMetersPerSecond).rotateBy(robotAngle);
+        Translation2d rotated = new Translation2d(vxMetersPerSecond, vyMetersPerSecond).rotateBy(robotAngle);
         return new ChassisSpeeds(rotated.getX(), rotated.getY(), omegaRadiansPerSecond);
     }
 
