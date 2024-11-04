@@ -55,7 +55,7 @@ public class AutoDrivetrain extends SubsystemBase {
         super(); //register this subsystem, in order to schedule default command later on.
 
         odometry = hardwareMap.get(GoBildaPinpointDriver.class, "odometry");
-        odometry.setOffsets(0, 0);
+        odometry.setOffsets(10, 0);
         odometry.setEncoderResolution(13.26291192f * 1000);
         odometry.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         odometry.resetPosAndIMU();
