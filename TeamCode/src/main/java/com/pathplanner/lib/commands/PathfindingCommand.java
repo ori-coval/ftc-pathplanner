@@ -239,8 +239,8 @@ public class PathfindingCommand extends CommandBase {
 
         // Use the closest 2 states to interpolate what the time offset should be
         // This will account for the delay in pathfinding
-        var closestState1 = currentTrajectory.getState(closestState1Idx);
-        var closestState2 = currentTrajectory.getState(closestState2Idx);
+        PathPlannerTrajectory.State closestState1 = currentTrajectory.getState(closestState1Idx);
+        PathPlannerTrajectory.State closestState2 = currentTrajectory.getState(closestState2Idx);
 
         ChassisSpeeds fieldRelativeSpeeds =
             ChassisSpeeds.fromRobotRelativeSpeeds(currentSpeeds, currentPose.getRotation());

@@ -110,7 +110,7 @@ public final class RuntimeLoader<T> {
                                 throw new IOException(getLoadErrorMessage(ule));
                             }
 
-                            var parentFile = jniLibrary.getParentFile();
+                            File parentFile = jniLibrary.getParentFile();
                             if (parentFile == null) {
                                 throw new IOException("JNI library has no parent file");
                             }
@@ -181,7 +181,7 @@ public final class RuntimeLoader<T> {
                         throw new IOException(getLoadErrorMessage(ule));
                     }
 
-                    var parentFile = jniLibrary.getParentFile();
+                    File parentFile = jniLibrary.getParentFile();
                     if (parentFile == null) {
                         throw new IOException("JNI library has no parent file");
                     }

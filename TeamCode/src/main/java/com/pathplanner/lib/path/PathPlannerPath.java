@@ -13,16 +13,21 @@ import com.pathplanner.lib.missingWpilibClasses.math.geometry.Translation2d;
 import com.pathplanner.lib.missingWpilibClasses.math.kinematics.ChassisSpeeds;
 import com.pathplanner.lib.util.GeometryUtil;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /** A PathPlanner path. NOTE: This is not a trajectory and isn't directly followed. */
 public class PathPlannerPath {
@@ -333,7 +338,7 @@ public class PathPlannerPath {
       JSONObject json = (JSONObject) new JSONParser().parse(fileContent);
 
       List<PathPlannerTrajectory.State> trajStates = new ArrayList<>();
-      for (var s : (JSONArray) json.get("samples")) {
+      for (Object s : (JSONArray) json.get("samples")) {
         JSONObject sample = (JSONObject) s;
         PathPlannerTrajectory.State state = new PathPlannerTrajectory.State();
 
@@ -377,7 +382,7 @@ public class PathPlannerPath {
                               true));
 
       List<PathPoint> pathPoints = new ArrayList<>();
-      for (var state : trajStates) {
+      for (PathPlannerTrajectory.State state : trajStates) {
         pathPoints.add(new PathPoint(state.positionMeters));
       }
 
@@ -386,7 +391,7 @@ public class PathPlannerPath {
 
       List<Pair<Double, Command>> eventCommands = new ArrayList<>();
       if (json.containsKey("eventMarkers")) {
-        for (var m : (JSONArray) json.get("eventMarkers")) {
+        for (Object m : (JSONArray) json.get("eventMarkers")) {
           JSONObject marker = (JSONObject) m;
 
           double timestamp = ((Number) marker.get("timestamp")).doubleValue();
@@ -419,15 +424,15 @@ public class PathPlannerPath {
     List<ConstraintsZone> constraintZones = new ArrayList<>();
     List<EventMarker> eventMarkers = new ArrayList<>();
 
-    for (var rotJson : (JSONArray) pathJson.get("rotationTargets")) {
+    for (Object rotJson : (JSONArray) pathJson.get("rotationTargets")) {
       rotationTargets.add(RotationTarget.fromJson((JSONObject) rotJson));
     }
 
-    for (var zoneJson : (JSONArray) pathJson.get("constraintZones")) {
+    for (Object zoneJson : (JSONArray) pathJson.get("constraintZones")) {
       constraintZones.add(ConstraintsZone.fromJson((JSONObject) zoneJson));
     }
 
-    for (var markerJson : (JSONArray) pathJson.get("eventMarkers")) {
+    for (Object markerJson : (JSONArray) pathJson.get("eventMarkers")) {
       eventMarkers.add(EventMarker.fromJson((JSONObject) markerJson));
     }
 
@@ -756,11 +761,12 @@ public class PathPlannerPath {
       // Throw out rotation targets, event markers, and constraint zones since we are skipping all
       // of the path
       return new PathPlannerPath(
-          List.of(
-              startingPose.getTranslation(),
-              robotNextControl,
-              endPrevControl,
-              getPoint(numPoints() - 1).position),
+          Arrays.asList(
+                      startingPose.getTranslation(),
+                      robotNextControl,
+                      endPrevControl,
+                      getPoint(numPoints() - 1).position
+              ),
           Collections.emptyList(),
           Collections.emptyList(),
           Collections.emptyList(),
@@ -801,7 +807,7 @@ public class PathPlannerPath {
         // We can use the bezier points
         List<Translation2d> replannedBezier = new ArrayList<>();
         replannedBezier.addAll(
-            List.of(startingPose.getTranslation(), robotNextControl, joinPrevControl));
+                Arrays.asList(startingPose.getTranslation(), robotNextControl, joinPrevControl));
         replannedBezier.addAll(bezierPoints);
 
         // keep all rotations, markers, and zones and increment waypoint pos by 1
@@ -858,7 +864,7 @@ public class PathPlannerPath {
       // Throw out rotation targets, event markers, and constraint zones since we are skipping all
       // of the path
       return new PathPlannerPath(
-          List.of(startingPose.getTranslation(), robotNextControl, joinPrevControl, joinAnchor),
+              Arrays.asList(startingPose.getTranslation(), robotNextControl, joinPrevControl, joinAnchor),
           Collections.emptyList(),
           Collections.emptyList(),
           Collections.emptyList(),
@@ -905,7 +911,7 @@ public class PathPlannerPath {
 
     List<Translation2d> replannedBezier = new ArrayList<>();
     replannedBezier.addAll(
-        List.of(
+            Arrays.asList(
             startingPose.getTranslation(),
             robotNextControl,
             joinPrevControl,
@@ -1068,7 +1074,7 @@ public class PathPlannerPath {
                   true));
 
       List<PathPoint> pathPoints = new ArrayList<>();
-      for (var state : mirroredStates) {
+      for (PathPlannerTrajectory.State state : mirroredStates) {
         pathPoints.add(new PathPoint(state.positionMeters));
       }
 

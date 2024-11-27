@@ -28,7 +28,7 @@ public class NamedCommands {
    * @param commands the list of commands to register
    */
   public static void registerCommands(List<Pair<String, Command>> commands) {
-    for (var pair : commands) {
+    for (Pair<String, Command> pair : commands) {
       registerCommand(pair.getFirst(), pair.getSecond());
     }
   }

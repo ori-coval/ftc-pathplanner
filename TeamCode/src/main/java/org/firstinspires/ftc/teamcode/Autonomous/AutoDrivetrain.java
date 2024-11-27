@@ -41,7 +41,7 @@ public class AutoDrivetrain extends SubsystemBase {
     private final CuttleMotor motorFL;
     private final CuttleMotor motorBL;
     private final CuttleMotor motorBR;
-    private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(1, 3);
+    private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1);
 
     MecanumDriveKinematics kinematics = new MecanumDriveKinematics(
             new Translation2d(),
@@ -55,8 +55,8 @@ public class AutoDrivetrain extends SubsystemBase {
         super(); //register this subsystem, in order to schedule default command later on.
 
         odometry = hardwareMap.get(GoBildaPinpointDriver.class, "odometry");
-        odometry.setOffsets(0, 0);
-        odometry.setEncoderResolution(13.26291192f * 1000);
+        odometry.setOffsets(0, -10);
+        odometry.setEncoderResolution(13.26291192f);// * 1000);
         odometry.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
         odometry.resetPosAndIMU();
         //TODO add recalibrateIMU function to onInit
@@ -66,8 +66,8 @@ public class AutoDrivetrain extends SubsystemBase {
         motorFR = new CuttleMotor(mmRobot.mmSystems.controlHub, Configuration.DRIVE_TRAIN_FRONT_RIGHT);
         motorBR = new CuttleMotor(mmRobot.mmSystems.controlHub, Configuration.DRIVE_TRAIN_BACK_RIGHT);
 
-        motorBL.setDirection(Direction.REVERSE);
-        motorFL.setDirection(Direction.REVERSE);
+        motorBR.setDirection(Direction.REVERSE);
+        motorFR.setDirection(Direction.REVERSE);
 
         AutoBuilder.setContext(context);
 
@@ -77,10 +77,10 @@ public class AutoDrivetrain extends SubsystemBase {
                 odometry::getVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
                 this::drive, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
                 new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                        new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                        new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-                        4.5, // Max module speed, in m/s
-                        0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                        new PIDConstants(1.0, 0.0, 0.0), // Translation PID constants
+                        new PIDConstants(1.0, 0.0, 0.0), // Rotation PID constants
+                        0.5, // Max module speed, in m/s
+                        0.1, // Drive base radius in meters. Distance from robot center to furthest module.
                         new ReplanningConfig() // Default path replanning config. See the API for the options here
                 ),
                 ()->false,
@@ -99,6 +99,14 @@ public class AutoDrivetrain extends SubsystemBase {
         motorFR.setPower(feedforward.calculate(speeds.frontRightMetersPerSecond));
         motorBR.setPower(feedforward.calculate(speeds.rearRightMetersPerSecond));
     }
+    public  void  drive(double speed) {
+
+        motorFL.setPower(speed);
+        motorBL.setPower(speed);
+        motorFR.setPower(speed);
+        motorBR.setPower(speed);
+    }
+
 
     @Override
     public void periodic() {
