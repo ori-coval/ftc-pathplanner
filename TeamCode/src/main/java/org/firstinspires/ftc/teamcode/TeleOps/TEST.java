@@ -29,7 +29,7 @@ public class TEST extends MMTeleOp {
         motor.setPower(gamepad1.left_trigger);
         MMRobot.getInstance().mmSystems.expansionHub.pullBulkData();
         telemetry.addData("meow",encoder.getCounts());
-       telemetry.update();sad
+       telemetry.update();
 
     }
 }
